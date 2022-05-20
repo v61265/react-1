@@ -47,7 +47,6 @@ const webpackConfig = {
   },
   output: {
     filename: '[name].[contenthash].bundle.js',
-    chunkFilename: '[name].[chunkhash].chunk.js',
     path: path.resolve(__dirname, './dist/'),
     library: '@readr-media/react-qa',
     libraryTarget: 'umd',
