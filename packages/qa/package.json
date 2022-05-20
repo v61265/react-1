@@ -5,7 +5,11 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack serve -c dev/webpack.config.js"
+    "dev": "make dev",
+    "build": "make build",
+    "clean": "make clean",
+    "build-dist": "make build-dist",
+    "build-lib": "make build-lib"
   },
   "repository": {
     "type": "git",
