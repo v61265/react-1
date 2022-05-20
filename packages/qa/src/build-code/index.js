@@ -13,7 +13,7 @@ const _ = {
 /**
  *
  * @export
- * @param {Object} data - Data for Dual Channel Root React Component
+ * @param {Object} data - Data for @readr-media/react-qa react component
  * @param {Object} webpackAssets - webpack bundles and chunks
  * @param {string[]} webpackAssets.chunks - webpack common chunks
  * @param {string[]} webpackAssets.bundles - webpack bundles
@@ -50,10 +50,10 @@ export function buildEmbeddedCode(data, webpackAssets) {
     </script>
     <div id=${uuid}></div>
     ${_.map(chunks, chunk => {
-      return `<script type="text/javascript" crossorigin src="${chunk}"></script>`
+      return `<script type="text/javascript" defer crossorigin src="${chunk}"></script>`
     }).join('')}
     ${_.map(bundles, bundle => {
-      return `<script type="text/javascript" crossorigin src="${bundle}"></script>`
+      return `<script type="text/javascript" defer crossorigin src="${bundle}"></script>`
     }).join('')}
   `
 }

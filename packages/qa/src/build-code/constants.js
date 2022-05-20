@@ -1,5 +1,5 @@
-const namespace = '__readrMediaEmbedCode'
-const pkgName = 'qa'
+const namespace = '@readr-media'
+const pkgName = 'react-qa'
 
 const webpack = {
   entryName: 'main',
