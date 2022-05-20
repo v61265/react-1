@@ -14,7 +14,6 @@ module.exports = {
     hot: false,
     host: '0.0.0.0',
     port: 8080,
-    watchFiles: [path.resolve(__dirname, '../src/app/*.js'), path.resolve(__dirname, '../src/app/**/*.js')],
   },
   module: {
     rules: [
