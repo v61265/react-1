@@ -13,8 +13,8 @@ build-dist:
 	NODE_ENV=production npx webpack --config webpack.config.js
 
 build-lib:
-	@echo "$(P) Build webpack chunks, bundles and webpack-assets.json"
-	NODE_ENV=production npx babel src --out-dir lib --copy-files
+	@echo "$(P) Transpile es6, jsx and (typescript) to es5"
+	NODE_ENV=production npx babel src --out-dir lib --copy-files --root-mode upward
 
 build: clean build-dist build-lib
 
