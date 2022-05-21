@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Section from './layout/Section'
-import CommentForm from './textareaForm/CommentForm'
+import CommentForm from './comment-form/CommentForm'
 import useRecaptcha from '../hooks/useRecaptcha'
 
 export default function Feedback() {
