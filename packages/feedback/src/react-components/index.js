@@ -4,6 +4,7 @@ import Section from './layout/Section'
 import ThumbsForm from './thumbs-form/ThumbsForm'
 import CommentForm from './comment-form/CommentForm'
 import useRecaptcha from '../hooks/useRecaptcha'
+import Comments from './comments/Comments'
 
 export default function Feedback() {
   const { verified } = useRecaptcha()
@@ -23,6 +24,9 @@ export default function Feedback() {
       <Section>
         <ThumbsForm onSubmit={thumbsFormSubmitHandler} />
         {verified && <CommentForm onSubmit={commentFormSubmitHandler} />}
+      </Section>
+      <Section>
+        <Comments />
       </Section>
     </>
   )
