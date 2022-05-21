@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Section from './layout/Section'
+import ThumbsForm from './thumbs-form/ThumbsForm'
 import CommentForm from './comment-form/CommentForm'
 import useRecaptcha from '../hooks/useRecaptcha'
 
@@ -12,13 +13,15 @@ export default function Feedback() {
     return true
   }
 
-  if (verified) {
-    console.log('show comment form!')
+  const thumbsFormSubmitHandler = (thumbValue) => {
+    console.log(`send thumbValue '${thumbValue}' to BE`);
+    return true
   }
 
   return (
     <>
       <Section>
+        <ThumbsForm onSubmit={thumbsFormSubmitHandler} />
         {verified && <CommentForm onSubmit={commentFormSubmitHandler} />}
       </Section>
     </>
