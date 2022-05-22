@@ -2,10 +2,14 @@ import Checkbox from './form/checkbox'
 import Question from './question'
 import React, { useState } from 'react'
 import cloneDeep from 'lodash/cloneDeep'
-import { RawDraftContentState } from 'draft-js'
+import difference from 'lodash/difference'
+import intersection from 'lodash/intersection'
+// import { RawDraftContentState } from 'draft-js'
 
 const _ = {
   cloneDeep,
+  difference,
+  intersection,
 }
 
 /**
@@ -16,7 +20,7 @@ const _ = {
 export default function QA({form}) {
   if (!Array.isArray(form?.fields)) {
     return (
-      <h3>There is no question to anwser</h3>
+      <h3>There is no question to answer</h3>
     )
   }
 
@@ -83,20 +87,21 @@ export default function QA({form}) {
 function matchCondition(answer, condition) {
   switch (condition.compare) {
     case 'not': {
-      return (
-        answer?.[0] !== condition.option[0].value
-      )
+      // Check if there is no any answer to match any option
+      return _.intersection(answer, condition?.option?.map(o => o.value)).length === 0
     }
-    case 'include':
+    case 'include': {
+      // Check if answers include all options
+      return _.intersection(answer, condition?.option?.map(o => o.value)).length === condition.option.length
+    }
     case 'exclude': {
       // TODO: add compare logics
       return  false
     }
     case 'is':
     default: {
-      return (
-        answer?.[0] === condition.option[0].value
-      )
+      // Check if exactly match
+      return _.difference(answer, condition?.option?.map(o => o.value)).length === 0
     }
   }
 }
