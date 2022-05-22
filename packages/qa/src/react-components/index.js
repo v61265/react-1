@@ -102,21 +102,21 @@ function matchCondition(answer, condition) {
 }
 
 /**
+ *  For loop all form conditions,
+ *  and check if user anwsers matches any of those form conditions.
+ *  If matched, return the matched form condition.
+ *  Otherwise, return `null`
  *  @param {string[][]} userAnswers
  *  @param {import('./typedef').FormCondition[]} formConditions
  *  @return {import('./typedef').FormCondition}
  */
 function matchConditions(userAnswers, formConditions) {
   let matchedFormCondition = null
-  // For loop all form conditions,
-  // and check if user anwsers matches any of those form conditions.
-  // If matched, return the matched form condition.
-  // Otherwise, return `null`
   for(const fc of formConditions) {
     let matches = []
     for (const c of fc.condition) {
       const questionNo = c.formField.number
-      matches.push(matchCondition(userAnswers[c.formField.number], c))
+      matches.push(matchCondition(userAnswers[questionNo], c))
     }
     let matched = false
     if (fc.type === 'AND') {
@@ -138,7 +138,7 @@ function matchConditions(userAnswers, formConditions) {
  *  This function
  *  1. copies the form data object to avoid modifying the original one.
  *  2. sorts `questions` and `conditions` according to `sortOrder` and `order` properties.
- *  3. adds `number` property in `questions` and `conditons[].condition[].formField`
+ *  3. adds `number` property in `questions[]` and `conditons[].condition[].formField`
  *
  *  @param {import('./typedef').Form} form
  *  @return {import('./typedef').Form} new deep copy of form
@@ -151,6 +151,13 @@ function createFormData(form) {
     return a.sortOrder - b.sortOrder
   })
 
+  // Raw question object has `id` and `sortOrder` properties.
+  // `id` is auto incremented by database;
+  // `sortOrder` is manually input by editors.
+  //  We need to handle the corner cases like
+  //  1. `sortOrder`s are identical
+  //  2. questions' order is not equal to `id`s' order
+  //  Therefore, we append the `number` property in each question.
   applyQuestionNumber(copyForm.fields)
 
   if (Array.isArray(copyForm?.conditions)) {
