@@ -39,7 +39,7 @@ export default function QA({form}) {
       if (answer) {
         // TODO: render Answer component
         return (
-        <div>render answer {JSON.stringify(answer)}</div>)
+          <div>render answer {JSON.stringify(copyForm.answers?.find(a => a.id === answer.id))}</div>)
       }
 
       if (goOut) {
@@ -113,7 +113,7 @@ function matchCondition(answer, condition) {
 
 /**
  *  For loop all form conditions,
- *  and check if user anwsers matches any of those form conditions.
+ *  and check if user answers matches any of those form conditions.
  *  If matched, return the matched form condition.
  *  Otherwise, return `null`
  *  @param {string[][]} userAnswers
@@ -183,7 +183,7 @@ function createFormData(form) {
 }
 
 /**
- *  Since we have multiple choice question, we use array to store anwsers of a question.
+ *  Since we have multiple choice question, we use array to store answers of a question.
  *  Therefore, empty user answers are a two dimension array.
  *
  *  @param {number} questionNumber

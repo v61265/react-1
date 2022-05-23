@@ -44,6 +44,6 @@ import { RawDraftContentState } from 'draft-js'
 /**
  *  @typedef {Object} Form
  *  @property {Question[]} fields
- *  @property {Answer[]} anwsers
+ *  @property {Answer[]} answers
  *  @property {FormCondition[]} conditions
  */
