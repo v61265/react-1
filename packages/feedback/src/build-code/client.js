@@ -1,9 +1,8 @@
 import "regenerator-runtime/runtime";
-
 import buildConst from './constants'
 import React from 'react'
-import ReactDOM from 'react-dom'
-import FeedbackComponent from '../app'
+import { createRoot } from 'react-dom/client'
+import FeedbackComponent from '../react-components'
 
 const namespace = buildConst.namespace
 const pkg = buildConst.pkgName
@@ -15,6 +14,6 @@ if (Array.isArray(dataArr) && dataArr.length > 0) {
   const data = dataArr.shift()
   const { uuid, ...dataOfFeedback } = data
   const container = document.getElementById(uuid)
-  const root = ReactDOM.creatRoot(container)
-  root.render(<FeedbackComponent {...dataOfFeedback } />)
+  const root = createRoot(container)
+  root.render(<FeedbackComponent {...dataOfFeedback} />)
 }
