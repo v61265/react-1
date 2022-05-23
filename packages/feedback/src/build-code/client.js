@@ -16,5 +16,5 @@ if (Array.isArray(dataArr) && dataArr.length > 0) {
   const { uuid, ...dataOfFeedback } = data
   const container = document.getElementById(uuid)
   const root = ReactDOM.creatRoot(container)
-  root.render(<FeedbackComponent {...dataOfFeedback />)
+  root.render(<FeedbackComponent {...dataOfFeedback } />)
 }
