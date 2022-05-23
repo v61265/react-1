@@ -1,0 +1,53 @@
+{
+  "name": "@readr-media/react-qa-list",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "make dev",
+    "build": "make build",
+    "clean": "make clean",
+    "build-dist": "make build-dist",
+    "build-lib": "make build-lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/readr-media/react.git",
+    "directory": "packages/qa-list"
+  },
+  "keywords": [
+    "react",
+    "readr",
+    "Feedback"
+  ],
+  "author": "yihsuanlee",
+  "license": "MIT",
+  "dependencies": {
+    "react": "18.1.0",
+    "react-dom": "^18.1.0",
+    "styled-components": "5.3.5"
+  },
+  "devDependencies": {
+    "@svgr/webpack": "^6.2.1",
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.1",
+    "@babel/eslint-parser": "^7.11.4",
+    "@babel/preset-env": "^7.17.12",
+    "@babel/preset-react": "^7.17.12",
+    "babel-eslint": "^10.0.3",
+    "babel-loader": "^8.2.5",
+    "eslint": "^7.7.0",
+    "eslint-config-prettier": "^6.9.0",
+    "eslint-plugin-babel": "^5.3.0",
+    "html-webpack-plugin": "^5.5.0",
+    "prettier": "1.19.1",
+    "webpack": "^5.72.1",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.9.0"
+  },
+  "files": [
+    "lib",
+    "dist"
+  ]
+}
