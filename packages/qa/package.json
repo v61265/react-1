@@ -25,6 +25,8 @@
   "author": "nickli",
   "license": "MIT",
   "dependencies": {
+    "draft-js": "^0.11.7",
+    "lodash": "^4.17.21",
     "react": "18.1.0",
     "react-dom": "^18.1.0",
     "styled-components": "5.3.5"
