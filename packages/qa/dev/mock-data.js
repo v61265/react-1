@@ -1,4 +1,4 @@
-const form = {
+export default {
   "fields": [
     {
       "id": "10",
@@ -241,7 +241,7 @@ const form = {
   ],
   "conditions": [
     {
-      "order": 2,
+      "order": 1,
       "type": "AND",
       "condition": [
         {
@@ -253,11 +253,13 @@ const form = {
           "option": [
             {
               "id": "24",
-              "name": "checkbox  選項 A"
+              "name": "checkbox  選項 A",
+              "value": "a",
             },
             {
               "id": "32",
-              "name": "checkbox 選項 B"
+              "name": "checkbox 選項 B",
+              "value": "b",
             }
           ]
         }
@@ -270,7 +272,127 @@ const form = {
       }
     },
     {
+      "order": 2,
+      "type": "OR",
+      "condition": [
+        {
+          "formField": {
+            "name": "測試 checkbox（複選題）",
+            "id": "11"
+          },
+          "compare": "include",
+          "option": [
+            {
+              "id": "24",
+              "name": "checkbox  選項 A",
+              "value": "a",
+            },
+          ]
+        },
+        {
+          "formField": {
+            "name": "測試 checkbox（複選題）",
+            "id": "11"
+          },
+          "compare": "include",
+          "option": [
+            {
+              "id": "32",
+              "name": "checkbox  選項 B",
+              "value": "b",
+            },
+          ]
+        },
+        {
+          "formField": {
+            "name": "測試 checkbox（複選題）",
+            "id": "11"
+          },
+          "compare": "include",
+          "option": [
+            {
+              "id": "26",
+              "name": "checkbox  選項 C",
+              "value": "c",
+            },
+          ]
+        },
+        {
+          "formField": {
+            "name": "測試 checkbox（複選題）",
+            "id": "11"
+          },
+          "compare": "include",
+          "option": [
+            {
+              "id": "30",
+              "name": "checkbox  選項 D",
+              "value": "d",
+            },
+          ]
+        }
+      ],
+      "next": null,
+      "goOut": "",
+      "answer": {
+        "id": "3",
+        "name": "Answer A"
+      }
+    },
+    {
       "order": 3,
+      "type": "AND",
+      "condition": [
+        {
+          "formField": {
+            "name": "測試 dropdown (單選題，選項大於等於 4)",
+            "id": "10"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "40",
+              "name": "dropdown 選項 D",
+              "value": "d",
+            }
+          ]
+        }
+      ],
+      "next": null,
+      "goOut": "",
+      "answer": {
+        "id": "4",
+        "name": "Answer B"
+      }
+    },
+    {
+      "order": 4,
+      "type": "AND",
+      "condition": [
+        {
+          "formField": {
+            "name": "測試 dropdown (單選題，選項大於等於 4)",
+            "id": "10"
+          },
+          "compare": "not",
+          "option": [
+            {
+              "id": "40",
+              "name": "dropdown 選項 D",
+              "value": "d",
+            }
+          ]
+        }
+      ],
+      "next": {
+        "id": "11",
+        "name": "測試 checkbox（複選題）",
+      },
+      "goOut": "",
+      "answer": null
+    },
+    {
+      "order": 5,
       "type": "OR",
       "condition": [
         {
@@ -282,7 +404,8 @@ const form = {
           "option": [
             {
               "id": "34",
-              "name": "radio 選項 A"
+              "name": "radio 選項 A",
+              "value": "a",
             }
           ]
         },
@@ -295,7 +418,8 @@ const form = {
           "option": [
             {
               "id": "35",
-              "name": "radio 選項 B"
+              "name": "radio 選項 B",
+              "value": "b",
             }
           ]
         },
@@ -308,96 +432,18 @@ const form = {
           "option": [
             {
               "id": "36",
-              "name": "radio 選項 C"
+              "name": "radio 選項 C",
+              "value": "c",
             }
           ]
         }
       ],
       "next": {
         "id": "10",
-        "name": "測試 dropdown (單選題，選項大於等於 4)"
+        "name": "測試 dropdown (單選題，選項大於等於 4)",
       },
       "goOut": "",
       "answer": null
     },
-    {
-      "order": 4,
-      "type": "AND",
-      "condition": [
-        {
-          "formField": {
-            "name": "測試 dropdown (單選題，選項大於等於 4)",
-            "id": "10"
-          },
-          "compare": "is",
-          "option": [
-            {
-              "id": "40",
-              "name": "dropdown 選項 D"
-            }
-          ]
-        }
-      ],
-      "next": null,
-      "goOut": "",
-      "answer": {
-        "id": "4",
-        "name": "Answer B"
-      }
-    },
-    {
-      "order": 5,
-      "type": "AND",
-      "condition": [
-        {
-          "formField": {
-            "name": "測試 dropdown (單選題，選項大於等於 4)",
-            "id": "10"
-          },
-          "compare": "not",
-          "option": [
-            {
-              "id": "40",
-              "name": "dropdown 選項 D"
-            }
-          ]
-        }
-      ],
-      "next": {
-        "id": "11",
-        "name": "測試 checkbox（複選題）"
-      },
-      "goOut": "",
-      "answer": null
-    },
-    {
-      "order": 1,
-      "type": "AND",
-      "condition": [
-        {
-          "formField": {
-            "name": "測試 checkbox（複選題）",
-            "id": "11"
-          },
-          "compare": "not",
-          "option": [
-            {
-              "id": "24",
-              "name": "checkbox  選項 A"
-            },
-            {
-              "id": "32",
-              "name": "checkbox 選項 B"
-            }
-          ]
-        }
-      ],
-      "next": null,
-      "goOut": "",
-      "answer": {
-        "id": "3",
-        "name": "Answer A"
-      }
-    }
   ]
 }
