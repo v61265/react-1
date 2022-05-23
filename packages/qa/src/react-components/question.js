@@ -25,6 +25,7 @@ export default function Question(props) {
     case 'multiple':
     case 'checkbox': {
       // TODO: add Checkbox component
+      optionsJsx = (<div>render checkbox</div>)
       break
     }
 
