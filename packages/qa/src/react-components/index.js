@@ -29,7 +29,7 @@ export default function QA({form}) {
   const emptyUserAnswers = createEmptyUserAnswers(copyForm.fields.length)
 
   const [userAnswers, setUserAnswers] = useState(emptyUserAnswers)
-  const [currentQuestion, setCurrnetQuestion] = useState(copyForm.fields[0])
+  const [currentQuestion, setCurrentQuestion] = useState(copyForm.fields[0])
 
   // The question has been answered
   if (userAnswers[currentQuestion.number]?.length > 0) {
@@ -38,7 +38,8 @@ export default function QA({form}) {
       const { answer, next, goOut } = matchedFormCondition
       if (answer) {
         // TODO: render Answer component
-        return (<div>render answer</div>)
+        return (
+        <div>render answer {JSON.stringify(answer)}</div>)
       }
 
       if (goOut) {
@@ -53,10 +54,9 @@ export default function QA({form}) {
       }
 
       // Go to next queustion
-      setCurrnetQuestion(next)
+      setCurrentQuestion(copyForm.fields.find((q) => q.id === next.id))
     }
   }
-
 
   return (
     <Question
@@ -85,6 +85,11 @@ export default function QA({form}) {
  *  @return {boolean}
  */
 function matchCondition(answer, condition) {
+  // no answer
+  if (answer.length === 0) {
+    return false
+  }
+
   switch (condition.compare) {
     case 'not': {
       // Check if there is no any answer to match any option
