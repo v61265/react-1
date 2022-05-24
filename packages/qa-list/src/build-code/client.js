@@ -2,8 +2,8 @@ import "regenerator-runtime/runtime";
 
 import buildConst from "./constants";
 import React from "react";
-import ReactDOM from "react-dom";
-import QAListComponent from "../app";
+import { createRoot } from "react-dom/client";
+import QAListComponent from "../react-components";
 
 const namespace = buildConst.namespace;
 const pkg = buildConst.pkgName;
@@ -15,6 +15,6 @@ if (Array.isArray(dataArr) && dataArr.length > 0) {
   const data = dataArr.shift();
   const { uuid, ...dataOfQAlist } = data;
   const container = document.getElementById(uuid);
-  const root = ReactDOM.creatRoot(container);
+  const root = createRoot(container);
   root.render(<QAListComponent {...dataOfQAlist} />);
 }
