@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Editor, EditorState, convertFromRaw } from "draft-js";
 import decorators from "../draft/entity-decorator";
 import { atomicBlockRenderer } from "../draft/block-redender-fn";
-import SubmitBt from './buttons'
+import SubmitBt from "./buttons";
 const blockRendererFn = (block) => {
   const atomicBlockObj = atomicBlockRenderer(block);
   return atomicBlockObj;
@@ -96,6 +96,7 @@ export default function Result({ resultData }) {
   const editorState = EditorState.createWithContent(contentState, decorators);
   console.log(resultData, editorState);
   const updateTime = new Date(resultData.updatedAt || resultData.createdAt);
+  console.log(updateTime, resultData);
   const formattedTime = `${updateTime.getFullYear()}/${updateTime.getMonth() +
     1}/${updateTime.getDate()}`;
   return (
@@ -109,8 +110,9 @@ export default function Result({ resultData }) {
           blockRendererFn={blockRendererFn}
         />
       </InfoWrapper>
-      <ButtonWrapper><SubmitBt title='開始查詢' /></ButtonWrapper>
-
+      <ButtonWrapper>
+        <SubmitBt title='開始查詢' />
+      </ButtonWrapper>
     </ResultWrapper>
   );
 }
