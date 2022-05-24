@@ -1,3 +1,4 @@
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const fs = require("fs");
 const path = require("path");
 const pkg = require("./package.json");
@@ -92,7 +93,7 @@ const webpackConfig = {
       },
     },
   },
-  plugins: [new BundleListPlugin()],
+  plugins: [new BundleListPlugin()/*, new BundleAnalyzerPlugin()*/],
 };
 
 module.exports = webpackConfig;
