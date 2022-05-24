@@ -6,15 +6,15 @@ help:
 
 dev: 
 	@echo "$(P) Start webpack dev server"
-	NODE_ENV=development npx webpack serve -c dev/webpack.config.js
+	NODE_ENV=development yarn webpack serve -c dev/webpack.config.js
 
 build-dist: 
 	@echo "$(P) Build webpack chunks, bundles and webpack-assets.json"
-	NODE_ENV=production npx webpack --config webpack.config.js
+	NODE_ENV=production yarn webpack --config webpack.config.js
 
 build-lib:
 	@echo "$(P) Transpile es6, jsx and (typescript) to es5"
-	NODE_ENV=production npx babel src --out-dir lib --copy-files --root-mode upward
+	NODE_ENV=production yarn babel src --out-dir lib --copy-files --root-mode upward
 
 build: clean build-dist build-lib
 

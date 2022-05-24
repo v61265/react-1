@@ -1,6 +1,6 @@
 {
-  "name": "@readr-media/react-qa",
-  "version": "1.0.0-beta.1",
+  "name": "@readr-media/react-embed-code-generator",
+  "version": "1.0.0-beta.2",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -19,18 +19,19 @@
   "keywords": [
     "react",
     "readr",
+    "embed code",
+    "embed code generator",
     "QA",
-    "Q&A"
+    "QA list",
+    "Feedback"
   ],
-  "author": "nickli",
   "license": "MIT",
   "dependencies": {
-    "draft-js": "^0.11.7",
+    "@readr-media/react-feedback": "1.0.0-beta.0",
+    "@readr-media/react-qa": "1.0.0-beta.1",
+    "@readr-media/react-qa-list": "1.0.0-beta.1",
     "lodash": "^4.17.21",
-    "react": "18.1.0",
-    "react-dom": "^18.1.0",
     "serialize-javascript": "^6.0.0",
-    "styled-components": "5.3.5",
     "uuid": "^8.3.2"
   },
   "files": [
