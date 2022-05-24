@@ -1,5 +1,5 @@
 import FeedbackComponent from '@readr-media/react-feedback/lib/react-components'
-import QAComponent from '@readr-media/react-qa/lib/react-components'
+import QuestionnaireComponent from '@readr-media/react-questionnaire/lib/react-components'
 import QAListComponent from '@readr-media/react-qa-list/lib/react-components'
 import React from 'react'
 import { createRoot } from 'react-dom/client'
@@ -11,8 +11,8 @@ const pkgComponentArr = [
     Component: FeedbackComponent,
   },
   {
-    name: 'react-qa',
-    Component: QAComponent,
+    name: 'react-questionnaire',
+    Component: QuestionnaireComponent,
   },
   {
     name: 'react-qa-list',
