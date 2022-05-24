@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import useUser from './use-user';
 import { getLikes, giveLikes } from '../api'
 
-export default function useThumbsUp() {
+export default function useThumbsUp(formId, fieldId) {
   const [thumbsUp, setThumbsUp] = useState(null)
   const originalThumbUpRef = useRef(null)
   const { userId } = useUser()
@@ -30,9 +30,9 @@ export default function useThumbsUp() {
     try {
       const result = await giveLikes({
         name: userId,
-        form: "2",
+        form: formId,
         responseTime: new Date,
-        field: "6",
+        field: fieldId,
         userFeedback: thumbUp
       })
       console.log('result', result)
@@ -44,7 +44,11 @@ export default function useThumbsUp() {
   useEffect(() => {
     const getThumbsUp = async () => {
       try {
-        const result = await getLikes()
+        const result = await getLikes({
+          form: formId,
+          field: fieldId,
+        })
+        console.log('result', result)
         if (result?.data) {
           const { like, dislike } = result.data
           const thumbsValue = { thumbUp: like, thumbDown: dislike }

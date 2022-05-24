@@ -7,7 +7,8 @@ import useUser from './use-user'
 const initialCommentCount = 3
 const moreCommentCount = 10
 
-export default function useComments() {
+export default function useComments(formId, fieldId) {
+  console.log('useComments', formId, fieldId)
   const [showingComments, setShowingComments] = useState([])
   const [noMoreComment, setNoMoreComment] = useState(false)
   const hidingCommentsRef = useRef([])
@@ -24,6 +25,8 @@ export default function useComments() {
   const fetchComments = useCallback(async (showCommentCount, firstTime = false) => {
     try {
       const result = await getFeedbacks({
+        form: formId,
+        field: fieldId,
         take: takeRef.current,
         skip: skipRef.current,
       })
@@ -77,9 +80,9 @@ export default function useComments() {
     try {
       const result = await postFeedback({
         name: userId,
-        form: "3",
+        form: formId,
         responseTime: date,
-        field: "7",
+        field: fieldId,
         userFeedback: textareaValue
       })
       console.log('result', result)

@@ -24,14 +24,14 @@ const ThumbWrapper = styled.div`
 
 
 
-export default function ThumbsField({ field }) {
+export default function ThumbsField({ formId, field }) {
   const [thumbUpChecked, setThumbUpChecked] = useState(false)
   const [thumbDownChecked, setThumbDownChecked] = useState(false)
   const [thumbUpPressing, setThumbUpPressing] = useState(false)
   const [thumbDownPressing, setThumbDownPressing] = useState(false)
   const timerRef = useRef(null)
   const initialMounted = useRef(true)
-  const { thumbsUp, giveThumbUp } = useThumbsUp()
+  const { thumbsUp, giveThumbUp } = useThumbsUp(formId, field.id)
 
   useEffect(() => {
     if (initialMounted.current) {

@@ -46,10 +46,10 @@ const Button = styled.button`
 `
 
 
-export default function CommentField({ field, verified }) {
+export default function CommentField({ formId, field, verified }) {
   const [enableSumbit, setEnableSubmit] = useState(false)
   const [textareaValue, setTextareaValue] = useState('')
-  const { comments, noMoreComment, loadMoreComments, postComment } = useComments()
+  const { comments, noMoreComment, loadMoreComments, postComment } = useComments(formId, field.id)
   console.log(`show comments count: ${comments.length}`)
 
   const textareaChangedHandler = (e) => {

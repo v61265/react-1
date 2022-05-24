@@ -29,9 +29,9 @@ export default function CustomForm({ form, verified }) {
       {form.fields.map((field) => {
         switch (field.type) {
           case 'text':
-            return <CommentField key={field.id} field={field} verified={verified} />
+            return <CommentField key={field.id} formId={form.id} field={field} verified={verified} />
           case 'single':
-            return <ThumbsField key={field.id} field={field} />
+            return <ThumbsField key={field.id} formId={form.id} field={field} />
           default:
             return (<FieldWrapper key={field.id}></FieldWrapper>)
         }
