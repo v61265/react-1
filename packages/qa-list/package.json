@@ -1,5 +1,5 @@
 {
-  "name": "@readr-media/react-qa",
+  "name": "@readr-media/react-qa-list",
   "version": "1.0.0-beta.1",
   "description": "",
   "main": "lib/index.js",
@@ -14,15 +14,15 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/readr-media/react.git",
-    "directory": "packages/qa"
+    "directory": "packages/qa-list"
   },
   "keywords": [
     "react",
     "readr",
-    "QA",
-    "Q&A"
+    "Q&A",
+    "QA"
   ],
-  "author": "nickli",
+  "author": "yihsuanlee",
   "license": "MIT",
   "dependencies": {
     "draft-js": "^0.11.7",

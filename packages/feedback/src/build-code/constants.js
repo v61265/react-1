@@ -1,4 +1,4 @@
-const namespace = '__readrMediaEmbedCode'
+const namespace = '@readr-media'
 const pkgName = 'react-feedback'
 
 const webpack = {

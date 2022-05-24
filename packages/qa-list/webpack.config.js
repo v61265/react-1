@@ -1,8 +1,7 @@
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const fs = require('fs')
-const path = require('path')
-const pkg = require('./package.json')
-
+const fs = require("fs");
+const path = require("path");
+const pkg = require("./package.json");
 
 const webpackAssets = {
   chunks: [],
@@ -50,7 +49,7 @@ const webpackConfig = {
   output: {
     filename: "[name].[contenthash].bundle.js",
     path: path.resolve(__dirname, "./dist/"),
-    library: "@readr-media/react-qa",
+    library: "@readr-media/react-qa-list",
     libraryTarget: "umd",
   },
   module: {
@@ -86,11 +85,6 @@ const webpackConfig = {
           name: "immutablevendor",
           filename: '[name].[chunkhash].chunk.js',
         },
-        lodashVendor: {
-          test: /[\\/]node_modules[\\/](lodash)[\\/]/,
-          name: "lodashvendor",
-          filename: '[name].[chunkhash].chunk.js',
-        },
         vendor: {
           test: /[\\/]node_modules[\\/]/,
           name: "vendor",
@@ -99,7 +93,7 @@ const webpackConfig = {
       },
     },
   },
-  plugins: [new BundleListPlugin()/*, new BundleAnalyzerPlugin()*/ ],
-}
+  plugins: [new BundleListPlugin()/*, new BundleAnalyzerPlugin()*/],
+};
 
 module.exports = webpackConfig;
