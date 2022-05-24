@@ -103,7 +103,7 @@ export default function ThumbsField({ formId, field }) {
 
   return (
     <Wrapper>
-      <Title>這個結果符合實際情況嗎?</Title>
+      <Title>{field.name}</Title>
       <ThumbWrapper>
         <ThumbField {...thumbUpProps} />
         <ThumbField {...thumbDownProps} />
