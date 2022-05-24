@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import heroIcon from "file-loader!../assets/heroIcon.png";
 
 const Wrapper = styled.div`
   margin: 20px;
@@ -10,17 +9,6 @@ const Wrapper = styled.div`
   align-items: center;
   @media (min-width: 768px) {
     margin: 40px auto 24px auto;
-  }
-`;
-
-const HeroIcon = styled.div`
-  width: 80px;
-  height: 80px;
-  background: url(${heroIcon});
-  background-size: cover;
-  @media (min-width: 768px) {
-    width: 100px;
-    height: 100px;
   }
 `;
 
@@ -60,13 +48,40 @@ const LandingDesc = styled.p`
   color: #000928;
 `;
 
-export default function Landing({ title, updateTime, description }) {
+const HeroImage = styled.img`
+  max-width: 100%;
+  display: none;
+  @media (min-width: 768px) {
+    display: block;
+  }
+`;
+
+const MobileHeroImage = styled.img`
+  max-width: 100%;
+  @media (min-width: 768px) {
+    display: none;
+  }
+`;
+
+export default function Landing({ form }) {
+  function formatTime(time) {
+    const d = new Date(time);
+    return `${d.getFullYear()}.${("0" + (d.getMonth() + 1)).slice(-2)}.${(
+      "0" + d.getDate()
+    ).slice(-2)} ${("0" + d.getHours()).slice(-2)}:${(
+      "0" + d.getMinutes()
+    ).slice(-2)}`;
+  }
   return (
     <Wrapper>
-      <HeroIcon />
-      <LandingTitle>{title}</LandingTitle>
-      <LandingUpdateTime>{updateTime}</LandingUpdateTime>
-      <LandingDesc>{description}</LandingDesc>
+      <HeroImage src={form.heroImage?.resized?.original} alt={form.name} />
+      <MobileHeroImage
+        src={form.mobileImage?.resized?.original}
+        alt={form.name}
+      />
+      <LandingTitle>{form.name}</LandingTitle>
+      <LandingUpdateTime>{formatTime(form.updateTime)}</LandingUpdateTime>
+      <LandingDesc>{form.content?.blocks?.[0]?.text}</LandingDesc>
     </Wrapper>
   );
 }
