@@ -1,5 +1,3 @@
-import "regenerator-runtime/runtime";
-
 import buildConst from "./constants";
 import React from "react";
 import { createRoot } from "react-dom/client";
