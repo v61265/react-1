@@ -65,17 +65,6 @@ const webpackConfig = {
         test: /\.svg$/,
         use: ["@svgr/webpack"],
       },
-      {
-        test: /\.(png|jpe?g|gif)$/i,
-        use: [
-          {
-            loader: "file-loader",
-          },
-        ],
-        options: {
-          publicPath: "assets",
-        },
-      },
     ],
   },
   optimization: {
