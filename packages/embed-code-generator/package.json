@@ -1,0 +1,38 @@
+{
+  "name": "@readr-media/react-embed-code-generator",
+  "version": "1.0.0-beta.1",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "make dev",
+    "build": "make build",
+    "clean": "make clean",
+    "build-dist": "make build-dist",
+    "build-lib": "make build-lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/readr-media/react.git",
+    "directory": "packages/qa"
+  },
+  "keywords": [
+    "react",
+    "readr",
+    "embed code",
+    "embed code generator",
+    "QA",
+    "QA list",
+    "Feedback"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@readr-media/react-feedback": "1.0.0-beta.0",
+    "@readr-media/react-qa": "1.0.0-beta.1",
+    "@readr-media/react-qa-list": "1.0.0-beta.1"
+  },
+  "files": [
+    "lib",
+    "dist"
+  ]
+}
