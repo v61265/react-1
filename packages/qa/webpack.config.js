@@ -1,3 +1,4 @@
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const fs = require('fs')
 const path = require('path')
 const pkg = require('./package.json')
@@ -61,10 +62,6 @@ const webpackConfig = {
           presets: ['@babel/preset-env', '@babel/preset-react'],
         },
       },
-      {
-        test: /\.svg$/,
-        use: ['@svgr/webpack'],
-      },
     ],
   },
   optimization: {
@@ -78,6 +75,21 @@ const webpackConfig = {
           name: "reactvendor",
           filename: '[name].[chunkhash].chunk.js',
         },
+        draftjsVendor: {
+          test: /[\\/]node_modules[\\/](draft-js)[\\/]/,
+          name: "draftjsvendor",
+          filename: '[name].[chunkhash].chunk.js',
+        },
+        immutableVendor: {
+          test: /[\\/]node_modules[\\/](immutable)[\\/]/,
+          name: "immutablevendor",
+          filename: '[name].[chunkhash].chunk.js',
+        },
+        lodashVendor: {
+          test: /[\\/]node_modules[\\/](lodash)[\\/]/,
+          name: "lodashvendor",
+          filename: '[name].[chunkhash].chunk.js',
+        },
         vendor: {
           test: /[\\/]node_modules[\\/]/,
           name: "vendor",
@@ -86,7 +98,7 @@ const webpackConfig = {
       },
     },
   },
-  plugins: [new BundleListPlugin()],
+  plugins: [new BundleListPlugin()/*, new BundleAnalyzerPlugin()*/ ],
 }
 
 module.exports = webpackConfig

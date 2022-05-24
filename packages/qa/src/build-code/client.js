@@ -1,6 +1,6 @@
 import buildConst from './constants'
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import QAComponent from '../react-components'
 
 const namespace = buildConst.namespace
