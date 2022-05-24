@@ -1,4 +1,6 @@
 import Radio from './form/radio'
+import Checkbox from './form/checkbox'
+import Dropdown from './form/dropdown'
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
@@ -18,17 +20,24 @@ const SubmitBt = styled.div`
  */
 export default function Question(props) {
   const [answer, setAnswer] = useState([])
-
   let optionsJsx = null
   switch (props.type) {
     // TODO: check what's difference between multiple and checkbox with HC.
     case 'multiple':
     case 'checkbox': {
       // TODO: add Checkbox component
-      optionsJsx = (<div>render checkbox</div>)
+      optionsJsx = (
+        <Checkbox 
+          title={props.name}
+          options={props.options}
+          checkedValue={answer}
+          onChange={(value) => {setAnswer(value)}}
+        />
+      )
+        
       break
     }
-
+    
     case 'text': {
       // TODO: add TextArea Component
       break
@@ -36,7 +45,28 @@ export default function Question(props) {
 
     // TODO: discuss with HC
     // since we have to decide to render Radio component or Dropdown component here
-    case 'single':
+    case 'single': {
+      if(props.options.length >=4){
+        optionsJsx = (
+          <Dropdown
+            title={props.name}
+            options={props.options}
+            checkedValue={answer?.[0]}
+            onChange={(value) => {setAnswer([value])}}
+          />
+        )
+      }else {
+        optionsJsx = (
+          <Radio
+            title={props.name}
+            options={props.options}
+            checkedValue={answer?.[0]}
+            onChange={(value) => {setAnswer([value])}}
+          />
+        )
+      }
+      break
+    }
     default: {
       optionsJsx = (
         <Radio
