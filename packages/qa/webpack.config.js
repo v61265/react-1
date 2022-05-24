@@ -3,77 +3,78 @@ const fs = require('fs')
 const path = require('path')
 const pkg = require('./package.json')
 
+
 const webpackAssets = {
   chunks: [],
   bundles: [],
-}
+};
 
-const isProduction = process.env.NODE_ENV === 'production'
+const isProduction = process.env.NODE_ENV === "production";
 
 function BundleListPlugin() {}
 
 BundleListPlugin.prototype.apply = function(compiler) {
-  const cdnLinkPrefix = `https://unpkg.com/${pkg.name}@${pkg.version}/dist`
-  const distDir = './dist'
+  const cdnLinkPrefix = `https://unpkg.com/${pkg.name}@${pkg.version}/dist`;
+  const distDir = "./dist";
 
-  compiler.hooks.emit.tap('BundleListPlugin', function(compilation) {
+  compiler.hooks.emit.tap("BundleListPlugin", function(compilation) {
     for (const filename in compilation.assets) {
-      const isBundle = filename.endsWith('bundle.js')
+      const isBundle = filename.endsWith("bundle.js");
       const scriptSrc = isProduction
         ? `${cdnLinkPrefix}/${filename}`
-        : `/dist/${filename}`
+        : `/dist/${filename}`;
 
       if (isBundle) {
-        webpackAssets.bundles.push(scriptSrc)
+        webpackAssets.bundles.push(scriptSrc);
       } else {
-        webpackAssets.chunks.push(scriptSrc)
+        webpackAssets.chunks.push(scriptSrc);
       }
     }
 
     if (!fs.existsSync(distDir)) {
-      fs.mkdirSync(distDir)
+      fs.mkdirSync(distDir);
     }
 
     fs.writeFileSync(
       path.resolve(__dirname, `${distDir}/webpack-assets.json`),
       JSON.stringify(webpackAssets)
-    )
-  })
-}
+    );
+  });
+};
 
 const webpackConfig = {
-  mode: isProduction ? 'production' : 'development',
+  mode: isProduction ? "production" : "development",
   entry: {
-    main: path.resolve(__dirname, './src/build-code/client.js'),
+    main: path.resolve(__dirname, "./src/build-code/client.js"),
   },
   output: {
-    filename: '[name].[contenthash].bundle.js',
-    path: path.resolve(__dirname, './dist/'),
-    library: '@readr-media/react-qa',
-    libraryTarget: 'umd',
+    filename: "[name].[contenthash].bundle.js",
+    path: path.resolve(__dirname, "./dist/"),
+    library: "@readr-media/react-qa",
+    libraryTarget: "umd",
   },
   module: {
     rules: [
       {
         test: /\.jsx?$/,
-        loader: 'babel-loader',
+        loader: "babel-loader",
         exclude: /node_modules/,
         options: {
-          presets: ['@babel/preset-env', '@babel/preset-react'],
+          presets: ["@babel/preset-env", "@babel/preset-react"],
         },
       },
     ],
   },
   optimization: {
     splitChunks: {
-      chunks: 'all',
+      chunks: "all",
       maxInitialRequests: Infinity,
       minSize: 0,
       cacheGroups: {
         reactVendor: {
           test: /[\\/]node_modules[\\/](react|react-dom|styled-components)[\\/]/,
           name: "reactvendor",
-          filename: '[name].[chunkhash].chunk.js',
+          filename: "[name].[chunkhash].chunk.js",
         },
         draftjsVendor: {
           test: /[\\/]node_modules[\\/](draft-js)[\\/]/,
@@ -93,7 +94,7 @@ const webpackConfig = {
         vendor: {
           test: /[\\/]node_modules[\\/]/,
           name: "vendor",
-          filename: '[name].[chunkhash].chunk.js',
+          filename: "[name].[chunkhash].chunk.js",
         },
       },
     },
@@ -101,4 +102,4 @@ const webpackConfig = {
   plugins: [new BundleListPlugin()/*, new BundleAnalyzerPlugin()*/ ],
 }
 
-module.exports = webpackConfig
+module.exports = webpackConfig;

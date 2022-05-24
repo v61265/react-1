@@ -1,3 +1,4 @@
+
 import Checkbox from './form/checkbox'
 import Question from './question'
 import Result from './form/result'
@@ -58,7 +59,9 @@ export default function QA({form}) {
     }
   }
 
+
   return (
+
     <Question
       key={currentQuestion.id}
       {...currentQuestion}
