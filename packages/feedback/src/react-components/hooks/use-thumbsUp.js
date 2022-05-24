@@ -9,10 +9,8 @@ export default function useThumbsUp(formId, fieldId) {
   const { userId } = useUser()
 
   const giveThumbUp = async (thumbUp) => {
-    console.log(`send thumbUp '${thumbUp}' to BE`);
     // add thumbUp statistic before sending request
     const originalThumbUp = originalThumbUpRef.current
-    console.log(originalThumbUp)
     if (thumbUp) {
       setThumbsUp({
         thumbUp: originalThumbUp.thumbUp + 1,
@@ -35,9 +33,8 @@ export default function useThumbsUp(formId, fieldId) {
         field: fieldId,
         userFeedback: thumbUp
       })
-      console.log('result', result)
     } catch (error) {
-      console.log('error', error)
+      // do nothing for now
     }
   }
 
@@ -48,17 +45,14 @@ export default function useThumbsUp(formId, fieldId) {
           form: formId,
           field: fieldId,
         })
-        console.log('result', result)
         if (result?.data) {
           const { like, dislike } = result.data
           const thumbsValue = { thumbUp: like, thumbDown: dislike }
           originalThumbUpRef.current = thumbsValue
           setThumbsUp(thumbsValue)
-        } else {
-          console.log('respond not as expected', result)
         }
       } catch (error) {
-        console.log('error', error)
+        // do nothing for now
       }
     }
     getThumbsUp()

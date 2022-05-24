@@ -50,7 +50,6 @@ export default function ThumbsField({ formId, field }) {
       if (thumbDownChecked) {
         thumbValue = false
       }
-      console.log('start sending request!', thumbValue)
       giveThumbUp(thumbValue)
       timerRef.current = null;
     }, 1000)

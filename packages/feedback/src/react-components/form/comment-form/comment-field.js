@@ -50,7 +50,6 @@ export default function CommentField({ formId, field, verified }) {
   const [enableSumbit, setEnableSubmit] = useState(false)
   const [textareaValue, setTextareaValue] = useState('')
   const { comments, noMoreComment, loadMoreComments, postComment } = useComments(formId, field.id)
-  console.log(`show comments count: ${comments.length}`)
 
   const textareaChangedHandler = (e) => {
     const value = e.target.value
@@ -64,7 +63,6 @@ export default function CommentField({ formId, field, verified }) {
     if (!textareaValue.trim()) {
       return
     }
-    console.log(textareaValue)
     await postComment(textareaValue)
 
     setTextareaValue('')

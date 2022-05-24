@@ -8,7 +8,6 @@ const initialCommentCount = 3
 const moreCommentCount = 10
 
 export default function useComments(formId, fieldId) {
-  console.log('useComments', formId, fieldId)
   const [showingComments, setShowingComments] = useState([])
   const [noMoreComment, setNoMoreComment] = useState(false)
   const hidingCommentsRef = useRef([])
@@ -30,12 +29,9 @@ export default function useComments(formId, fieldId) {
         take: takeRef.current,
         skip: skipRef.current,
       })
-      console.log('result', result)
       if (result?.data) {
         const { data: { formResults }, skip } = result.data
         skipRef.current = skip
-        console.log(formResults, skip)
-
         if (firstTime) {
           takeRef.current = 2 * moreCommentCount
         }
@@ -46,17 +42,15 @@ export default function useComments(formId, fieldId) {
           setNoMoreComment(true)
         }
         const commentsToShow = hidingCommentsRef.current.splice(0, showCommentCount)
-        console.log(commentsToShow)
         setShowingComments(showingComments => [...showingComments, ...commentsToShow])
       }
     } catch (error) {
-      console.log('error', error)
+      // do nothing for now
     }
   })
 
   const loadMoreComments = async () => {
     if (hidingCommentsRef.current.length < moreCommentCount && !noMoreComment) {
-      console.log(`need to fetch more feedbacks take:${takeRef.current} skip:${skipRef.current}`)
       fetchComments(moreCommentCount)
     } else {
       const commentsToShow = hidingCommentsRef.current.splice(0, moreCommentCount)
@@ -65,7 +59,6 @@ export default function useComments(formId, fieldId) {
   }
 
   const postComment = async (textareaValue) => {
-    console.log(`send comment '${textareaValue}' to BE`);
     const date = new Date
 
     // add comment before sending request
@@ -85,9 +78,8 @@ export default function useComments(formId, fieldId) {
         field: fieldId,
         userFeedback: textareaValue
       })
-      console.log('result', result)
     } catch (error) {
-      console.log(error)
+      // do nothing for now
     }
   }
 
