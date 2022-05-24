@@ -1,6 +1,6 @@
 {
   "name": "@readr-media/react-qa",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0-beta.1",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -29,7 +29,9 @@
     "lodash": "^4.17.21",
     "react": "18.1.0",
     "react-dom": "^18.1.0",
-    "styled-components": "5.3.5"
+    "serialize-javascript": "^6.0.0",
+    "styled-components": "5.3.5",
+    "uuid": "^8.3.2"
   },
   "files": [
     "lib",
