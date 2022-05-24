@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import Textarea from './Texarea'
+import Textarea from './texarea'
 
 const Form = styled.form`
   display: flex;
@@ -52,19 +52,18 @@ export default function TextareaForm({ onSubmit }) {
     setEnableSubmit(!!value)
     setTextareaValue(value)
   }
-  const submitHandler = (e) => {
+
+  const submitHandler = async (e) => {
     e.preventDefault();
 
     if (!textareaValue.trim()) {
       return
     }
     console.log(textareaValue)
+    await onSubmit(textareaValue)
 
-    const successful = onSubmit(textareaValue)
-    if (successful) {
-      setTextareaValue('')
-      setEnableSubmit(false)
-    }
+    setTextareaValue('')
+    setEnableSubmit(false)
   }
   return (
     <Form onSubmit={submitHandler}>

@@ -1,32 +1,28 @@
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 import Section from './layout/Section'
-import ThumbsForm from './thumbs-form/ThumbsForm'
-import CommentForm from './comment-form/CommentForm'
-import useRecaptcha from '../hooks/useRecaptcha'
-import Comments from './comments/Comments'
+import ThumbsForm from './thumbs-form/thumbs-form'
+import CommentForm from './comment-form/comment-form'
+import useRecaptcha from './hooks/use-recaptcha'
+import Comments from './comments/comments'
+import useComments from './hooks/use-comments';
+import useThumbsUp from './hooks/use-thumbsUp'
+
 
 export default function Feedback() {
   const { verified } = useRecaptcha()
-
-  const commentFormSubmitHandler = (textareaValue) => {
-    console.log(`send comment '${textareaValue}' to BE`);
-    return true
-  }
-
-  const thumbsFormSubmitHandler = (thumbValue) => {
-    console.log(`send thumbValue '${thumbValue}' to BE`);
-    return true
-  }
+  const { comments, noMoreComment, loadMoreComments, postComment } = useComments()
+  const { thumbsUp, giveThumbUp } = useThumbsUp()
+  console.log(`show comments count: ${comments.length}`)
 
   return (
     <>
       <Section>
-        <ThumbsForm onSubmit={thumbsFormSubmitHandler} />
-        {verified && <CommentForm onSubmit={commentFormSubmitHandler} />}
+        <ThumbsForm onSubmit={giveThumbUp} thumbs={thumbsUp} />
+        {verified && <CommentForm onSubmit={postComment} />}
       </Section>
       <Section>
-        <Comments />
+        <Comments comments={comments} onExpand={loadMoreComments} noMoreComment={noMoreComment} />
       </Section>
     </>
   )
