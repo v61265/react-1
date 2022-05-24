@@ -48,10 +48,10 @@ const webpackConfig = {
     main: path.resolve(__dirname, "./src/build-code/client.js"),
   },
   output: {
-    filename: "[name].[contenthash].bundle.js",
-    path: path.resolve(__dirname, "./dist/"),
-    library: "@readr-media/react-qa",
-    libraryTarget: "umd",
+    filename: '[name].[contenthash].bundle.js',
+    path: path.resolve(__dirname, './dist/'),
+    library: '@readr-media/react-questionnaire',
+    libraryTarget: 'umd',
   },
   module: {
     rules: [

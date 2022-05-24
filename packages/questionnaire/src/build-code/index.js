@@ -13,7 +13,7 @@ const _ = {
 /**
  *
  * @export
- * @param {Object} data - Data for @readr-media/react-qa react component
+ * @param {Object} data - Data for @readr-media/react-questionnaire react component
  * @param {Object} webpackAssets - webpack bundles and chunks
  * @param {string[]} webpackAssets.chunks - webpack common chunks
  * @param {string[]} webpackAssets.bundles - webpack bundles

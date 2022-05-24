@@ -19,7 +19,7 @@ const _ = {
  *  @param {import('./typedef').Form} opts.form
  *  @return {React.ReactElement}
  */
-export default function QA({form}) {
+export default function Questionnaire({form}) {
   if (!Array.isArray(form?.fields)) {
     return (
       <h3>There is no question to answer</h3>

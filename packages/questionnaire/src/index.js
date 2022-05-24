@@ -1,7 +1,7 @@
-import QA from './react-components'
+import Questionnaire from './react-components'
 import { buildEmbeddedCode } from './build-code'
 
 export default {
-  ReactComponent: QA,
+  ReactComponent: Questionnaire,
   buildEmbeddedCode,
 }

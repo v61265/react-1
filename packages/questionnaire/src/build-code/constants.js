@@ -1,5 +1,5 @@
 const namespace = '@readr-media'
-const pkgName = 'react-qa'
+const pkgName = 'react-questionnaire'
 
 const webpack = {
   entryName: 'main',
