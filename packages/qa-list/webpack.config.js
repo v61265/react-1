@@ -61,10 +61,6 @@ const webpackConfig = {
           presets: ["@babel/preset-env", "@babel/preset-react"],
         },
       },
-      {
-        test: /\.svg$/,
-        use: ["@svgr/webpack"],
-      },
     ],
   },
   optimization: {
@@ -77,6 +73,16 @@ const webpackConfig = {
           test: /[\\/]node_modules[\\/](react|react-dom|styled-components)[\\/]/,
           name: "reactvendor",
           filename: "[name].[chunkhash].chunk.js",
+        },
+        draftjsVendor: {
+          test: /[\\/]node_modules[\\/](draft-js)[\\/]/,
+          name: "draftjsvendor",
+          filename: '[name].[chunkhash].chunk.js',
+        },
+        immutableVendor: {
+          test: /[\\/]node_modules[\\/](immutable)[\\/]/,
+          name: "immutablevendor",
+          filename: '[name].[chunkhash].chunk.js',
         },
         vendor: {
           test: /[\\/]node_modules[\\/]/,
