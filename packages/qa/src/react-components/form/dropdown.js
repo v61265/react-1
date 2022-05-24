@@ -108,17 +108,17 @@ export default function Dropdown({title=defaultTitle,...props}) {
     inputRef.current.focus();
     inputRef.current.style.borderColor = "#04295e"
   };
-
   const toggleList = () => {
     setIsListOpen((isListOpen)=>!isListOpen)
     focusInput()
   }
   const chooseOption = (option)=>{
     toggleList()
-    props.onChange(option)
+    props.onChange(option.value)
+    inputRef.current.children[0].value = option.name
   }
   const optionItem = props.options.map((option) =>
-    <DropdownOption onClick={() => chooseOption(option.value)} key={`option-${option.id}`}>
+    <DropdownOption onClick={() => chooseOption(option)} key={`option-${option.id}`}>
       {option.name}
     </DropdownOption>);
 
@@ -128,7 +128,7 @@ export default function Dropdown({title=defaultTitle,...props}) {
       <Title>{title}</Title>
       <DropdownWrapper>
         <DropdownInput ref={inputRef} onClick={toggleList}>
-          <input readOnly placeholder='請選擇' defaultValue={props.checkedValue} />
+          <input readOnly placeholder='請選擇'  />
           <span className='arrow'></span>
         </DropdownInput>        
         {isListOpen &&

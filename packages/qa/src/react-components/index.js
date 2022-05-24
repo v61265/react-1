@@ -1,5 +1,6 @@
 import Checkbox from './form/checkbox'
 import Question from './question'
+import Result from './form/result'
 import React, { useState } from 'react'
 import cloneDeep from 'lodash/cloneDeep'
 import difference from 'lodash/difference'
@@ -30,16 +31,15 @@ export default function QA({form}) {
 
   const [userAnswers, setUserAnswers] = useState(emptyUserAnswers)
   const [currentQuestion, setCurrentQuestion] = useState(copyForm.fields[0])
-
   // The question has been answered
   if (userAnswers[currentQuestion.number]?.length > 0) {
     const matchedFormCondition = matchConditions(userAnswers, copyForm.conditions)
     if (matchedFormCondition) {
       const { answer, next, goOut } = matchedFormCondition
       if (answer) {
-        // TODO: render Answer component
         return (
-          <div>render answer {JSON.stringify(copyForm.answers?.find(a => a.id === answer.id))}</div>)
+          <Result  resultData={copyForm.answers?.find(a => a.id === answer.id)}/>
+          )
       }
 
       if (goOut) {

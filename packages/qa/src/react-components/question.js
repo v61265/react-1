@@ -2,13 +2,9 @@ import Radio from './form/radio'
 import Checkbox from './form/checkbox'
 import Dropdown from './form/dropdown'
 import React, { useState } from 'react'
-import styled from 'styled-components'
+import SubmitBt from './form/buttons'
 
-const SubmitBt = styled.div`
-  width: 50px;
-  height: 50px;
-  background-color: pink;
-`
+
 
 /**
  *  @typedef {Object} QuestionProps
@@ -82,14 +78,14 @@ export default function Question(props) {
     <>
       {optionsJsx}
       {/* TODO: change SubmitBt to 依軒's version */}
-      <SubmitBt onClick={() => {
+      <SubmitBt title='下一步' disabled={answer.length===0} onClick={() => {
         if (answer.length === 0) {
           // User did not answer the question.
           // Do nothing.
           return
         }
         props.onAnswer(answer)
-      }}>submit</SubmitBt>
+      }}/>
     </>
   )
 }
