@@ -1,84 +1,87 @@
-import Question from './question'
-import Result from './form/result'
-import React, { useState } from 'react'
-import cloneDeep from 'lodash/cloneDeep'
-import difference from 'lodash/difference'
-import intersection from 'lodash/intersection'
+import Question from "./question";
+import QuestionCard from "./form/question-card";
+import Result from "./form/result";
+import React, { useState } from "react";
+import cloneDeep from "lodash/cloneDeep";
+import difference from "lodash/difference";
+import intersection from "lodash/intersection";
 // import { RawDraftContentState } from 'draft-js'
-import Landing from '../../../qa/src/react-components/landing'
+import Landing from "../../../qa/src/react-components/landing";
 const _ = {
   cloneDeep,
   difference,
   intersection,
-}
+};
 
 /**
  *  @param {Object} opts
  *  @param {import('./typedef').Form} opts.form
  *  @return {React.ReactElement}
  */
-export default function Questionnaire({form}) {
+export default function Questionnaire({ form }) {
   if (!Array.isArray(form?.fields)) {
-    return (
-      <h3>There is no question to answer</h3>
-    )
+    return <h3>There is no question to answer</h3>;
   }
 
-  const copyForm = createFormData(form)
+  const copyForm = createFormData(form);
 
-  const emptyUserAnswers = createEmptyUserAnswers(copyForm.fields.length)
+  const emptyUserAnswers = createEmptyUserAnswers(copyForm.fields.length);
 
-  const [userAnswers, setUserAnswers] = useState(emptyUserAnswers)
-  const [currentQuestion, setCurrentQuestion] = useState(copyForm.fields[0])
+  const [userAnswers, setUserAnswers] = useState(emptyUserAnswers);
+  const [currentQuestion, setCurrentQuestion] = useState(copyForm.fields[0]);
   // The question has been answered
   if (userAnswers[currentQuestion.number]?.length > 0) {
-    const matchedFormCondition = matchConditions(userAnswers, copyForm.conditions)
+    const matchedFormCondition = matchConditions(
+      userAnswers,
+      copyForm.conditions
+    );
     if (matchedFormCondition) {
-      const { answer, next, goOut } = matchedFormCondition
+      const { answer, next, goOut } = matchedFormCondition;
       if (answer) {
         return (
-          <Result  resultData={copyForm.answers?.find(a => a.id === answer.id)}/>
-          )
+          <Result
+            resultData={copyForm.answers?.find((a) => a.id === answer.id)}
+          />
+        );
       }
 
       if (goOut) {
         // TODO: render GoOut component
-        return (<div>render goOut component</div>)
+        return <div>render goOut component</div>;
       }
 
       if (!next) {
         // The program should not enter this condition.
         // If it does, then the form data is created wrongly.
-        return (<div>Next question is not specified</div>)
+        return <div>Next question is not specified</div>;
       }
 
       // Go to next queustion
-      setCurrentQuestion(copyForm.fields.find((q) => q.id === next.id))
+      setCurrentQuestion(copyForm.fields.find((q) => q.id === next.id));
     }
   }
 
-
   return (
     <React.Fragment>
-      {userAnswers[0].length === 0 &&
-        <Landing form={form.form}/>
-      }
-      <Question
-        key={currentQuestion.id}
-        {...currentQuestion}
-        onAnswer={
-          /**
-           *  @param {string[]} a
-           */
-          (a) => {
-            const newUserAnswers = [...userAnswers]
-            newUserAnswers[currentQuestion.number] = a
-            setUserAnswers(newUserAnswers)
+      {userAnswers[0].length === 0 && <Landing form={form.form} />}
+      <QuestionCard isFristPage={userAnswers[0].length === 0}>
+        <Question
+          key={currentQuestion.id}
+          {...currentQuestion}
+          onAnswer={
+            /**
+             *  @param {string[]} a
+             */
+            (a) => {
+              const newUserAnswers = [...userAnswers];
+              newUserAnswers[currentQuestion.number] = a;
+              setUserAnswers(newUserAnswers);
+            }
           }
-        }
-      />
+        />
+      </QuestionCard>
     </React.Fragment>
-  )
+  );
 }
 
 /**
@@ -92,26 +95,41 @@ export default function Questionnaire({form}) {
 function matchCondition(answer, condition) {
   // no answer
   if (answer.length === 0) {
-    return false
+    return false;
   }
 
   switch (condition.compare) {
-    case 'not': {
+    case "not": {
       // Check if there is no any answer to match any option
-      return _.intersection(answer, condition?.option?.map(o => o.value)).length === 0
+      return (
+        _.intersection(
+          answer,
+          condition?.option?.map((o) => o.value)
+        ).length === 0
+      );
     }
-    case 'include': {
+    case "include": {
       // Check if answers include all options
-      return _.intersection(answer, condition?.option?.map(o => o.value)).length === condition.option.length
+      return (
+        _.intersection(
+          answer,
+          condition?.option?.map((o) => o.value)
+        ).length === condition.option.length
+      );
     }
-    case 'exclude': {
+    case "exclude": {
       // TODO: add compare logics
-      return  false
+      return false;
     }
-    case 'is':
+    case "is":
     default: {
       // Check if exactly match
-      return _.difference(answer, condition?.option?.map(o => o.value)).length === 0
+      return (
+        _.difference(
+          answer,
+          condition?.option?.map((o) => o.value)
+        ).length === 0
+      );
     }
   }
 }
@@ -126,27 +144,27 @@ function matchCondition(answer, condition) {
  *  @return {import('./typedef').FormCondition}
  */
 function matchConditions(userAnswers, formConditions) {
-  let matchedFormCondition = null
-  for(const fc of formConditions) {
-    let matches = []
+  let matchedFormCondition = null;
+  for (const fc of formConditions) {
+    let matches = [];
     for (const c of fc.condition) {
-      const questionNo = c.formField.number
-      matches.push(matchCondition(userAnswers[questionNo], c))
+      const questionNo = c.formField.number;
+      matches.push(matchCondition(userAnswers[questionNo], c));
     }
-    let matched = false
-    if (fc.type === 'AND') {
-      matched = matches.indexOf(false) === -1
-    } else /* cs.type === 'OR'*/ {
-      matched = matches.indexOf(true) > -1
+    let matched = false;
+    if (fc.type === "AND") {
+      matched = matches.indexOf(false) === -1;
+    } /* cs.type === 'OR'*/ else {
+      matched = matches.indexOf(true) > -1;
     }
 
     if (matched) {
-      matchedFormCondition = fc
-      break
+      matchedFormCondition = fc;
+      break;
     }
   }
 
-  return matchedFormCondition
+  return matchedFormCondition;
 }
 
 /**
@@ -159,12 +177,12 @@ function matchConditions(userAnswers, formConditions) {
  *  @return {import('./typedef').Form} new deep copy of form
  */
 function createFormData(form) {
-  const copyForm = _.cloneDeep(form)
+  const copyForm = _.cloneDeep(form);
 
   // sort question by sortOrder
   copyForm.fields.sort((a, b) => {
-    return a.sortOrder - b.sortOrder
-  })
+    return a.sortOrder - b.sortOrder;
+  });
 
   // Raw question object has `id` and `sortOrder` properties.
   // `id` is auto incremented by database;
@@ -173,18 +191,18 @@ function createFormData(form) {
   //  1. `sortOrder`s are identical
   //  2. questions' order is not equal to `id`s' order
   //  Therefore, we append the `number` property in each question.
-  applyQuestionNumber(copyForm.fields)
+  applyQuestionNumber(copyForm.fields);
 
   if (Array.isArray(copyForm?.conditions)) {
     // sort conditions by order
     copyForm.conditions.sort((a, b) => {
-      return a.order - b.order
-    })
+      return a.order - b.order;
+    });
 
-    applyQuestionNumberInConditions(copyForm.conditions, copyForm.fields)
+    applyQuestionNumberInConditions(copyForm.conditions, copyForm.fields);
   }
 
-  return copyForm
+  return copyForm;
 }
 
 /**
@@ -195,11 +213,11 @@ function createFormData(form) {
  *  @return {string[][]}
  */
 function createEmptyUserAnswers(questionNumber) {
-  const rtn = []
-  for(let i = 0; i < questionNumber; i++) {
-    rtn.push([])
+  const rtn = [];
+  for (let i = 0; i < questionNumber; i++) {
+    rtn.push([]);
   }
-  return rtn
+  return rtn;
 }
 
 /**
@@ -210,9 +228,9 @@ function createEmptyUserAnswers(questionNumber) {
  */
 function applyQuestionNumber(questions) {
   // append question number
-  for(let i = 0; i< questions.length; i++) {
-    const q = questions[i]
-    q.number = i
+  for (let i = 0; i < questions.length; i++) {
+    const q = questions[i];
+    q.number = i;
   }
 }
 
@@ -223,12 +241,13 @@ function applyQuestionNumber(questions) {
  *  @param {import('./typedef').Question[]} questions
  */
 function applyQuestionNumberInConditions(formConditions, questions) {
-  for(const fc of formConditions) {
-    for(const c of fc.condition) {
+  for (const fc of formConditions) {
+    for (const c of fc.condition) {
       if (c.formField) {
-        c.formField.number = questions.find((q) => q.id === c.formField.id)?.number
+        c.formField.number = questions.find(
+          (q) => q.id === c.formField.id
+        )?.number;
       }
     }
   }
 }
-
