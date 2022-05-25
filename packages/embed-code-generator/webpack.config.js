@@ -72,6 +72,7 @@ const webpackConfig = {
       },
     ],
   },
+  /*
   optimization: {
     splitChunks: {
       chunks: 'all',
@@ -111,6 +112,7 @@ const webpackConfig = {
       },
     },
   },
+  */
   plugins: [new BundleListPlugin()/*, new BundleAnalyzerPlugin()*/ ],
 }
 
