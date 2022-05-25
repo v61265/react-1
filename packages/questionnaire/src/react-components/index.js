@@ -64,7 +64,7 @@ export default function Questionnaire({ form }) {
 
   return (
     <DefaultLayout>
-      {userAnswers[0].length === 0 && <Landing form={form.form} />}
+      {userAnswers[0].length === 0 && <Landing form={form} />}
       <QuestionCard isFristPage={userAnswers[0].length === 0}>
         <Question
           key={currentQuestion.id}

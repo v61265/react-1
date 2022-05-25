@@ -63,6 +63,11 @@ const MobileHeroImage = styled.img`
   }
 `;
 
+/**
+ *  @param {Object} opts
+ *  @param {import('./typedef').Form} opts.form
+ *  @return React.ReactElement
+ */
 export default function Landing({ form }) {
   function formatTime(time) {
     const d = new Date(time);
