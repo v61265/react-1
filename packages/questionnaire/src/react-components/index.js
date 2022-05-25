@@ -6,7 +6,8 @@ import cloneDeep from "lodash/cloneDeep";
 import difference from "lodash/difference";
 import intersection from "lodash/intersection";
 // import { RawDraftContentState } from 'draft-js'
-import Landing from './landing'
+import Landing from "./landing";
+import DefaultLayout from "./layout/default-layout";
 const _ = {
   cloneDeep,
   difference,
@@ -62,7 +63,7 @@ export default function Questionnaire({ form }) {
   }
 
   return (
-    <React.Fragment>
+    <DefaultLayout>
       {userAnswers[0].length === 0 && <Landing form={form.form} />}
       <QuestionCard isFristPage={userAnswers[0].length === 0}>
         <Question
@@ -80,7 +81,7 @@ export default function Questionnaire({ form }) {
           }
         />
       </QuestionCard>
-    </React.Fragment>
+    </DefaultLayout>
   );
 }
 
