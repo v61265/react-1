@@ -1,5 +1,3 @@
-
-import Checkbox from './form/checkbox'
 import Question from './question'
 import Result from './form/result'
 import React, { useState } from 'react'
@@ -7,7 +5,7 @@ import cloneDeep from 'lodash/cloneDeep'
 import difference from 'lodash/difference'
 import intersection from 'lodash/intersection'
 // import { RawDraftContentState } from 'draft-js'
-
+import Landing from '../../../qa/src/react-components/landing'
 const _ = {
   cloneDeep,
   difference,
@@ -61,21 +59,25 @@ export default function Questionnaire({form}) {
 
 
   return (
-
-    <Question
-      key={currentQuestion.id}
-      {...currentQuestion}
-      onAnswer={
-        /**
-         *  @param {string[]} a
-         */
-        (a) => {
-          const newUserAnswers = [...userAnswers]
-          newUserAnswers[currentQuestion.number] = a
-          setUserAnswers(newUserAnswers)
-        }
+    <React.Fragment>
+      {userAnswers[0].length === 0 &&
+        <Landing form={form.form}/>
       }
-    />
+      <Question
+        key={currentQuestion.id}
+        {...currentQuestion}
+        onAnswer={
+          /**
+           *  @param {string[]} a
+           */
+          (a) => {
+            const newUserAnswers = [...userAnswers]
+            newUserAnswers[currentQuestion.number] = a
+            setUserAnswers(newUserAnswers)
+          }
+        }
+      />
+    </React.Fragment>
   )
 }
 
