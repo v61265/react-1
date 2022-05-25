@@ -23,7 +23,7 @@ const InfoWrapper = styled.div`
     padding: 32px 40px;
   }
   .DraftEditor-root {
-    font-family: "Noto Sans CJK TC";
+    font-family: "Noto Sans CJK TC", sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -70,7 +70,7 @@ const ButtonWrapper = styled.div`
 `;
 
 const ResultName = styled.h1`
-  font-family: "Noto Serif TC";
+  font-family: "Noto Serif TC", sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 24px;
@@ -82,7 +82,7 @@ const ResultName = styled.h1`
 `;
 
 const UpdateTime = styled.p`
-  font-family: "Noto Sans CJK TC";
+  font-family: "Noto Sans CJK TC", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;

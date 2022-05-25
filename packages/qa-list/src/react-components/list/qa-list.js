@@ -11,7 +11,7 @@ const List = styled.div`
 `;
 
 const ListTitle = styled.h2`
-  font-family: "Noto Serif TC";
+  font-family: "Noto Serif TC", sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 24px;

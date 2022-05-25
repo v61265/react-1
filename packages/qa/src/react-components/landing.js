@@ -15,7 +15,7 @@ const Wrapper = styled.div`
 const LandingTitle = styled.h1`
   margin-top: 12px;
   margin-bottom: 0;
-  font-family: "Noto Serif TC";
+  font-family: "Noto Serif TC", sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 36px;
@@ -29,7 +29,7 @@ const LandingTitle = styled.h1`
 const LandingUpdateTime = styled.p`
   margin-top: 8px;
   margin-bottom: 0;
-  font-family: "Noto Sans CJK TC";
+  font-family: "Noto Sans CJK TC", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -40,7 +40,7 @@ const LandingUpdateTime = styled.p`
 const LandingDesc = styled.p`
   margin-top: 24px;
   margin-bottom: 0;
-  font-family: "Noto Sans CJK TC";
+  font-family: "Noto Sans CJK TC", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
