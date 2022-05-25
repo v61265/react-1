@@ -2,11 +2,13 @@ import React, { useEffect, useState, useRef } from 'react'
 import styled from 'styled-components';
 
 import ThumbField from './thumb-field';
+import useThumbsUp from '../../hooks/use-thumbsUp';
 
-const Form = styled.form`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 20px 0;
 `
 
 const Title = styled.p`
@@ -21,13 +23,15 @@ const ThumbWrapper = styled.div`
 `
 
 
-export default function ThumbsForm({ onSubmit, thumbs }) {
+
+export default function ThumbsField({ formId, field }) {
   const [thumbUpChecked, setThumbUpChecked] = useState(false)
   const [thumbDownChecked, setThumbDownChecked] = useState(false)
   const [thumbUpPressing, setThumbUpPressing] = useState(false)
   const [thumbDownPressing, setThumbDownPressing] = useState(false)
   const timerRef = useRef(null)
   const initialMounted = useRef(true)
+  const { thumbsUp, giveThumbUp } = useThumbsUp(formId, field.id)
 
   useEffect(() => {
     if (initialMounted.current) {
@@ -46,8 +50,7 @@ export default function ThumbsForm({ onSubmit, thumbs }) {
       if (thumbDownChecked) {
         thumbValue = false
       }
-      console.log('start sending request!', thumbValue)
-      onSubmit(thumbValue)
+      giveThumbUp(thumbValue)
       timerRef.current = null;
     }, 1000)
 
@@ -84,7 +87,7 @@ export default function ThumbsForm({ onSubmit, thumbs }) {
     checked: thumbUpChecked,
     pressing: thumbUpPressing,
     label: '符合',
-    statistic: thumbs ? thumbs.thumbUp : null,
+    statistic: thumbsUp ? thumbsUp.thumbUp : null,
   }
 
   const thumbDownProps = {
@@ -94,15 +97,16 @@ export default function ThumbsForm({ onSubmit, thumbs }) {
     checked: thumbDownChecked,
     pressing: thumbDownPressing,
     label: '不符合',
-    statistic: thumbs ? thumbs.thumbDown : null,
+    statistic: thumbsUp ? thumbsUp.thumbDown : null,
   }
 
-
-  return <Form>
-    <Title>這個結果符合實際情況嗎?</Title>
-    <ThumbWrapper>
-      <ThumbField {...thumbUpProps} />
-      <ThumbField {...thumbDownProps} />
-    </ThumbWrapper>
-  </Form>
+  return (
+    <Wrapper>
+      <Title>{field.name}</Title>
+      <ThumbWrapper>
+        <ThumbField {...thumbUpProps} />
+        <ThumbField {...thumbDownProps} />
+      </ThumbWrapper>
+    </Wrapper>
+  )
 }

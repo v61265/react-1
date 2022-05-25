@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 const Wrapper = styled.div`
   width: 100%;
-  margin-top: 20px;
 `
 
 const Textarea = styled.textarea`
@@ -21,6 +20,6 @@ const Textarea = styled.textarea`
 
 export default function CustomTextarea(props) {
   return <Wrapper>
-    <Textarea placeholder="跟大家分享你的經驗..." name="feedback-post" onChange={props.onChange} value={props.textAreaValue} />
+    <Textarea placeholder={props.placeholder} name="feedback-post" onChange={props.onChange} value={props.textAreaValue} />
   </Wrapper>
 }

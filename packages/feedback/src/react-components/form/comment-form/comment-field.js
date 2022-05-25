@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react'
+import styled from 'styled-components'
 
+import Comments from '../comments/comments'
 import Textarea from './texarea'
+import useComments from '../../hooks/use-comments'
 
-const Form = styled.form`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 20px 0;
 `
 
 const ButtonWrapper = styled.div`
@@ -43,9 +46,10 @@ const Button = styled.button`
 `
 
 
-export default function TextareaForm({ onSubmit }) {
+export default function CommentField({ formId, field, verified }) {
   const [enableSumbit, setEnableSubmit] = useState(false)
   const [textareaValue, setTextareaValue] = useState('')
+  const { comments, noMoreComment, loadMoreComments, postComment } = useComments(formId, field.id)
 
   const textareaChangedHandler = (e) => {
     const value = e.target.value
@@ -54,23 +58,26 @@ export default function TextareaForm({ onSubmit }) {
   }
 
   const submitHandler = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     if (!textareaValue.trim()) {
       return
     }
-    console.log(textareaValue)
-    await onSubmit(textareaValue)
+    await postComment(textareaValue)
 
     setTextareaValue('')
     setEnableSubmit(false)
   }
+
   return (
-    <Form onSubmit={submitHandler}>
-      <Textarea textAreaValue={textareaValue} onChange={textareaChangedHandler} />
-      <ButtonWrapper>
-        <Button disabled={!enableSumbit}>送出</Button>
-      </ButtonWrapper>
-    </Form>
+    <Wrapper>
+      {verified && (<>
+        <Textarea placeholder={field.name} textAreaValue={textareaValue} onChange={textareaChangedHandler} />
+        <ButtonWrapper>
+          <Button disabled={!enableSumbit} onClick={submitHandler}>送出</Button>
+        </ButtonWrapper>
+      </>)}
+      <Comments comments={comments} onExpand={loadMoreComments} noMoreComment={noMoreComment} />
+    </Wrapper>
   )
 }
