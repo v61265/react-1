@@ -13,6 +13,13 @@ import styled from "styled-components";
 const Label = styled.label`
   display: flex;
   align-items: center;
+  font-family: "Noto Sans CJK TC", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 200%;
+  color: #000928;
+  margin-top: 4px;
   &:hover {
     cursor: pointer;
     .radiomark {
@@ -51,8 +58,21 @@ const Radiomark = styled.div`
     `}
 `;
 
+const RadioTitle = styled.h3`
+  font-family: "Noto Sans CJK TC", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 200%;
+  color: #000928;
+  margin: 0;
+`;
+
+const Wrapper = styled.div`
+  margin-bottom: 24px;
+`;
+
 export default function Radio(props) {
-  console.log({});
   const optionsJsx = props.options?.map((o, index) => (
     <React.Fragment key={index}>
       <Label htmlFor={`option-${o.id}`}>
@@ -70,13 +90,12 @@ export default function Radio(props) {
         />
         {o.name}
       </Label>
-      <br />
     </React.Fragment>
   ));
   return (
-    <>
-      <h3>{props.title}</h3>
+    <Wrapper>
+      <RadioTitle>{props.title}</RadioTitle>
       {optionsJsx}
-    </>
+    </Wrapper>
   );
 }
