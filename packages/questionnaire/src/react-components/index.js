@@ -5,7 +5,7 @@ import cloneDeep from 'lodash/cloneDeep'
 import difference from 'lodash/difference'
 import intersection from 'lodash/intersection'
 // import { RawDraftContentState } from 'draft-js'
-import Landing from '../../../qa/src/react-components/landing'
+import Landing from './landing'
 const _ = {
   cloneDeep,
   difference,
