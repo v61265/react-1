@@ -42,8 +42,21 @@ import { RawDraftContentState } from 'draft-js'
  */
 
 /**
+ *  @typedef {Object} ImageObj
+ *  @property {Object} resized
+ *  @property {string} original
+ */
+
+/**
  *  @typedef {Object} Form
  *  @property {Question[]} fields
  *  @property {Answer[]} answers
  *  @property {FormCondition[]} conditions
+ *  @property {string} name
+ *  @property {Object} [content]
+ *  @property {Object[]} content.blocks
+ *  @property {string} content.blocks[].text
+ *  @property {string} [updateTime]
+ *  @property {ImageObj} [heroImage]
+ *  @property {ImageObj} [mobileImage]
  */
