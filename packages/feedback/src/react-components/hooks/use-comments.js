@@ -11,6 +11,7 @@ export default function useComments(formId, fieldId) {
   const [showingComments, setShowingComments] = useState([])
   const [noMoreComment, setNoMoreComment] = useState(false)
   const hidingCommentsRef = useRef([])
+  const allCommentsRef = useRef([])
   const skipRef = useRef(0)
   const takeRef = useRef(initialCommentCount + 2 * moreCommentCount)
   const { userId } = useUser()
@@ -23,6 +24,7 @@ export default function useComments(formId, fieldId) {
 
   const fetchComments = useCallback(async (showCommentCount, firstTime = false) => {
     try {
+      console.log('fetchComments')
       const result = await getFeedbacks({
         form: formId,
         field: fieldId,
@@ -36,8 +38,24 @@ export default function useComments(formId, fieldId) {
           takeRef.current = 2 * moreCommentCount
         }
         if (formResults.length) {
-          const comments = formResults.map(({ id, name, result, responseTime }) => ({ id, name, content: result, date: convertDateFromISO8601(responseTime) }))
+          const comments = formResults.filter(
+            ({ id }) => !allCommentsRef.current.some((oldComment) => (oldComment.id === id))
+          ).map(({
+            id,
+            name,
+            result,
+            responseTime
+          }) => ({
+            id,
+            name,
+            content: result,
+            date: convertDateFromISO8601(responseTime)
+          }))
+          if (comments.length !== formResults.length) {
+            console.log('filter repitition')
+          }
           hidingCommentsRef.current = [...hidingCommentsRef.current, ...comments]
+          allCommentsRef.current = [...allCommentsRef.current, ...comments]
         } else {
           setNoMoreComment(true)
         }
