@@ -12,7 +12,7 @@ const _ = {
 /**
  *
  * @export
- * @param {('react-qa'|'react-qa-list'|'react-feedback')} pkgName
+ * @param {('react-questionnaire'|'react-qa-list'|'react-feedback')} pkgName
  * @param {Object} data - Data for @readr-media/react-(qa|qa-list|feedback) react component
  * @param {Object} webpackAssets - webpack bundles and chunks
  * @param {string[]} webpackAssets.chunks - webpack common chunks
