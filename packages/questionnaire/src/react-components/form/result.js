@@ -94,9 +94,7 @@ const UpdateTime = styled.p`
 export default function Result({ resultData }) {
   const contentState = convertFromRaw(resultData.content);
   const editorState = EditorState.createWithContent(contentState, decorators);
-  console.log(resultData, editorState);
   const updateTime = new Date(resultData.updatedAt || resultData.createdAt);
-  console.log(updateTime, resultData);
   const formattedTime = `${updateTime.getFullYear()}/${updateTime.getMonth() +
     1}/${updateTime.getDate()}`;
   return (
@@ -111,7 +109,7 @@ export default function Result({ resultData }) {
         />
       </InfoWrapper>
       <ButtonWrapper>
-        <SubmitBt title='開始查詢' />
+        <SubmitBt title='重新查詢' onClick={() => window.location.reload()} />
       </ButtonWrapper>
     </ResultWrapper>
   );
