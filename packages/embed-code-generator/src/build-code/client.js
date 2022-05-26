@@ -1,3 +1,4 @@
+import "regenerator-runtime/runtime";
 import FeedbackComponent from '@readr-media/react-feedback/lib/react-components'
 import QuestionnaireComponent from '@readr-media/react-questionnaire/lib/react-components'
 import QAListComponent from '@readr-media/react-qa-list/lib/react-components'

@@ -1,3 +1,4 @@
+import "regenerator-runtime/runtime";
 import Quetionnaire from '../src/react-components'
 import React from 'react'
 import axios from 'axios'

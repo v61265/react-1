@@ -11,6 +11,9 @@ query {
     type
     active
     content
+    feedback
+    updatedAt
+    createdAt
     heroImage {
       resized {
         w480 w800 w1200 w1600 w2400 original
@@ -26,6 +29,8 @@ query {
       id
       name
       content
+      createdAt
+      updatedAt
       heroImage {
         resized {
           w480 w800 w1200 w1600 w2400 original
