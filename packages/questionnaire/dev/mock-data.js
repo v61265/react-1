@@ -5100,5 +5100,4 @@ export default {
   }
 ]
 }
-}
 
