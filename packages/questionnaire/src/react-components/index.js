@@ -1,6 +1,6 @@
 import Question from "./question";
-import QuestionCard from "./form/question-card";
-import Result from "./form/result";
+import QuestionCard from "./question-card";
+import Result from "./result";
 import React, { useState } from "react";
 import cloneDeep from "lodash/cloneDeep";
 import difference from "lodash/difference";

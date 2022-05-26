@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { Editor, EditorState, convertFromRaw } from "draft-js";
-import decorators from "../draft/entity-decorator";
-import { atomicBlockRenderer } from "../draft/block-redender-fn";
-import SubmitBt from "./buttons";
+import decorators from "./draft/entity-decorator";
+import { atomicBlockRenderer } from "./draft/block-redender-fn";
+import SubmitBt from "./form/buttons";
 const blockRendererFn = (block) => {
   const atomicBlockObj = atomicBlockRenderer(block);
   return atomicBlockObj;
