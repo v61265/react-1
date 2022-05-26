@@ -17,9 +17,10 @@ const _ = {
 /**
  *  @param {Object} opts
  *  @param {import('./typedef').Form} opts.form
+ *  @param {boolean} [opts.enableDebugViewer=false]
  *  @return {React.ReactElement}
  */
-export default function Questionnaire({ form }) {
+export default function Questionnaire({ form, enableDebugViewer=false }) {
   if (!Array.isArray(form?.fields)) {
     return <h3>There is no question to answer</h3>;
   }
@@ -30,6 +31,17 @@ export default function Questionnaire({ form }) {
 
   const [userAnswers, setUserAnswers] = useState(emptyUserAnswers);
   const [currentQuestion, setCurrentQuestion] = useState(copyForm.fields[0]);
+  const [currentFormCondition, setCurrentFormCondition] = useState(null)
+
+  let debugViewerJsx = null
+  if (enableDebugViewer) {
+    debugViewerJsx = (
+      <div style={{ position: 'fixed', right: '10px', top: '30%', height: '50vh', overflow: 'scroll'}}>
+        <pre id="json">{currentFormCondition ? JSON.stringify(currentFormCondition, null, 4) : 'No form condition matched'}</pre>
+      </div>
+    )
+  }
+
   // The question has been answered
   if (userAnswers[currentQuestion.number]?.length > 0) {
     const matchedFormCondition = matchConditions(
@@ -37,12 +49,20 @@ export default function Questionnaire({ form }) {
       copyForm.conditions
     );
     if (matchedFormCondition) {
+      if (enableDebugViewer) {
+        if (matchedFormCondition.id !== currentFormCondition?.id) {
+          setCurrentFormCondition(matchedFormCondition)
+        }
+      }
       const { answer, next, goOut } = matchedFormCondition;
       if (answer) {
         return (
-          <Result
-            resultData={copyForm.answers?.find((a) => a.id === answer.id)}
-          />
+          <>
+            {debugViewerJsx}
+            <Result
+              resultData={copyForm.answers?.find((a) => a.id === answer.id)}
+            />
+          </>
         );
       }
 
@@ -64,6 +84,7 @@ export default function Questionnaire({ form }) {
 
   return (
     <DefaultLayout>
+      {debugViewerJsx}
       {userAnswers[0].length === 0 && <Landing form={form} />}
       <QuestionCard isFristPage={userAnswers[0].length === 0}>
         <Question
