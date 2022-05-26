@@ -8,6 +8,8 @@ import intersection from "lodash/intersection";
 // import { RawDraftContentState } from 'draft-js'
 import Landing from "./landing";
 import DefaultLayout from "./layout/default-layout";
+import { EmbeddedCodeBlock } from './draft/embedded-code';
+
 const _ = {
   cloneDeep,
   difference,
@@ -61,6 +63,14 @@ export default function Questionnaire({ form, enableDebugViewer=false }) {
             <Result
               resultData={copyForm.answers?.find((a) => a.id === answer.id)}
             />
+            <div style={{ marginTop: '60px'}}>
+              <EmbeddedCodeBlock getData={() => {
+                return {
+                  caption: '',
+                  embeddedCode: form?.feedback || '',
+                }
+              }} />
+            </div>
           </>
         );
       }
