@@ -1,485 +1,2285 @@
 export default {
-  id: "1",
-  name: "好像確診了，怎麼辦？",
-  content: {
-    blocks: [
-      {
-        key: "edm64",
-        data: {},
-        text: "迅速查詢確診相關資訊。這裡放短短的敘述。這裡放短短的敘述。",
-        type: "unstyled",
-        depth: 0,
-        entityRanges: [],
-        inlineStyleRanges: [],
-      },
-    ],
-    entityMap: {},
+  "id": "2",
+  "name": "我（好像）確診了怎麼辦？臺灣 COVID-19 確診、隔離最新資訊查詢器",
+  "slug": "covid19_policy_taiwan",
+  "type": "questionniare",
+  "active": true,
+  "heroImage": {
+    "resized": {
+      "w480": "https://storage.googleapis.com/statics-editools-prod/images/e3b5a812-5c38-4d29-bf2c-33123e6898dc-w480.png",
+      "w800": "https://storage.googleapis.com/statics-editools-prod/images/e3b5a812-5c38-4d29-bf2c-33123e6898dc-w800.png",
+      "w1200": "",
+      "w1600": "https://storage.googleapis.com/statics-editools-prod/images/e3b5a812-5c38-4d29-bf2c-33123e6898dc-w1600.png",
+      "w2400": "https://storage.googleapis.com/statics-editools-prod/images/e3b5a812-5c38-4d29-bf2c-33123e6898dc-w2400.png",
+      "original": "https://storage.googleapis.com/statics-editools-prod/images/e3b5a812-5c38-4d29-bf2c-33123e6898dc.png"
+    }
   },
-  heroImage: {
-    id: "3",
-    resized: {
-      original:
-        "https://storage.googleapis.com/statics-editools-dev/images/48fb802e-8c15-4d2f-9e5a-262bf355bf22.png",
-    },
-  },
-  mobileImage: {
-    id: "2",
-    resized: {
-      original:
-      "https://storage.googleapis.com/statics-editools-dev/images/d1a0d1dc-49db-435e-b1a8-6b3bbd4e1263.jpg",
-    },
-  },
-  updateTime: "2022-05-18T16:00:00.000Z",
-  fields: [
+  "mobileImage": null,
+  "updateTime": null,
+  "answers": [
     {
-      id: "10",
-      name: "測試 dropdown (單選題，選項大於等於 4)",
-      type: "single",
-      sortOrder: 2,
-      options: [
-        {
-          id: "37",
-          name: "dropdown 選項 A",
-          value: "a",
-        },
-        {
-          id: "38",
-          name: "dropdown 選項 B",
-          value: "b",
-        },
-        {
-          id: "39",
-          name: "dropdown 選項 C",
-          value: "c",
-        },
-        {
-          id: "40",
-          name: "dropdown 選項 D",
-          value: "d",
-        },
-      ],
+      "id": "17",
+      "name": "請依症狀隔離治療或叫救護車送醫。",
+      "heroImage": null,
+      "mobileImage": null
     },
     {
-      id: "11",
-      name: "測試 checkbox（複選題）",
-      type: "multiple",
-      sortOrder: 3,
-      options: [
-        {
-          id: "26",
-          name: "checkbox 選項 C",
-          value: "c",
-        },
-        {
-          id: "24",
-          name: "checkbox  選項 A",
-          value: "a",
-        },
-        {
-          id: "30",
-          name: "checkbox  選項 D",
-          value: "d",
-        },
-        {
-          id: "32",
-          name: "checkbox 選項 B",
-          value: "b",
-        },
-      ],
+      "id": "18",
+      "name": "請依症狀情形至集中檢疫所或居家照護、住院治療。",
+      "heroImage": null,
+      "mobileImage": null
     },
     {
-      id: "9",
-      name: "測試 radio（單選題，選項小於等於 3 個）",
-      type: "single",
-      sortOrder: 1,
-      options: [
-        {
-          id: "34",
-          name: "radio 選項 A",
-          value: "a",
-        },
-        {
-          id: "35",
-          name: "radio 選項 B",
-          value: "b",
-        },
-        {
-          id: "36",
-          name: "radio 選項 C",
-          value: "c",
-        },
-      ],
+      "id": "19",
+      "name": "請依症狀情形居家照護或住院治療。",
+      "heroImage": null,
+      "mobileImage": null
     },
+    {
+      "id": "4",
+      "name": "請進行快篩檢測。",
+      "heroImage": null,
+      "mobileImage": null
+    },
+    {
+      "id": "25",
+      "name": "A25",
+      "heroImage": null,
+      "mobileImage": null
+    },
+    {
+      "id": "5",
+      "name": "請進行快篩檢測。",
+      "heroImage": null,
+      "mobileImage": null
+    },
+    {
+      "id": "13",
+      "name": "可經綠色通道安排治療。",
+      "heroImage": null,
+      "mobileImage": null
+    },
+    {
+      "id": "21",
+      "name": "請進行自主防疫。",
+      "heroImage": null,
+      "mobileImage": null
+    },
+    {
+      "id": "7",
+      "name": "入境時篩檢並進行隔離。",
+      "heroImage": null,
+      "mobileImage": null
+    },
+    {
+      "id": "12",
+      "name": "你可進行居家照護。",
+      "heroImage": null,
+      "mobileImage": null
+    },
+    {
+      "id": "14",
+      "name": "可經綠色通道安排治療。",
+      "heroImage": null,
+      "mobileImage": null
+    },
+    {
+      "id": "22",
+      "name": "你需要進行居家隔離及自主防疫。",
+      "heroImage": null,
+      "mobileImage": null
+    },
+    {
+      "id": "3",
+      "name": "請至醫院交由醫生評估。",
+      "heroImage": null,
+      "mobileImage": null
+    },
+    {
+      "id": "6",
+      "name": "請進行快篩檢測。",
+      "heroImage": null,
+      "mobileImage": null
+    },
+    {
+      "id": "11",
+      "name": "你可進行居家照護。",
+      "heroImage": null,
+      "mobileImage": null
+    },
+    {
+      "id": "15",
+      "name": "你可叫救護車儘速至醫院治療。",
+      "heroImage": null,
+      "mobileImage": null
+    },
+    {
+      "id": "24",
+      "name": "請視訊醫生問診。",
+      "heroImage": null,
+      "mobileImage": null
+    },
+    {
+      "id": "26",
+      "name": "請依症狀居家照護或住院治療。",
+      "heroImage": null,
+      "mobileImage": null
+    },
+    {
+      "id": "2",
+      "name": "請視訊醫生問診，評估你的身體狀況跟快篩結果。",
+      "heroImage": null,
+      "mobileImage": null
+    },
+    {
+      "id": "23",
+      "name": "請至醫院交由醫生評估。",
+      "heroImage": null,
+      "mobileImage": null
+    },
+    {
+      "id": "20",
+      "name": "請依症狀居家照護或住院治療。",
+      "heroImage": null,
+      "mobileImage": null
+    },
+    {
+      "id": "1",
+      "name": "請至醫院或篩檢站進行 PCR 檢測。",
+      "heroImage": null,
+      "mobileImage": null
+    },
+    {
+      "id": "16",
+      "name": "請依症狀至集中檢疫所或居家照護、住院治療。",
+      "heroImage": null,
+      "mobileImage": null
+    },
+    {
+      "id": "9",
+      "name": "請依症狀，至集中檢疫所或住院治療。",
+      "heroImage": null,
+      "mobileImage": null
+    },
+    {
+      "id": "10",
+      "name": "請進行居家照護並觀察自身症狀。",
+      "heroImage": null,
+      "mobileImage": null
+    },
+    {
+      "id": "8",
+      "name": "請依症狀情形至集中檢疫所或居家照護、住院治療。",
+      "heroImage": null,
+      "mobileImage": null
+    }
   ],
-  answers: [
+  "fields": [
     {
-      id: "3",
-      name: "Answer A",
-      content: {
-        blocks: [
-          {
-            key: "d3s5d",
-            data: {},
-            text: "結果內容測試。",
-            type: "unstyled",
-            depth: 0,
-            entityRanges: [],
-            inlineStyleRanges: [],
-          },
-          {
-            key: "5lpms",
-            data: {},
-            text: "顏色變換。",
-            type: "unstyled",
-            depth: 0,
-            entityRanges: [
-              {
-                key: 0,
-                length: 4,
-                offset: 0,
-              },
-            ],
-            inlineStyleRanges: [],
-          },
-          {
-            key: "299cc",
-            data: {},
-            text: "放一張圖。",
-            type: "unstyled",
-            depth: 0,
-            entityRanges: [],
-            inlineStyleRanges: [],
-          },
-          {
-            key: "2bld0",
-            data: {},
-            text: "",
-            type: "unstyled",
-            depth: 0,
-            entityRanges: [],
-            inlineStyleRanges: [],
-          },
-          {
-            key: "fap0a",
-            data: {},
-            text: " ",
-            type: "atomic",
-            depth: 0,
-            entityRanges: [
-              {
-                key: 1,
-                length: 1,
-                offset: 0,
-              },
-            ],
-            inlineStyleRanges: [],
-          },
-          {
-            key: "39tn",
-            data: {},
-            text: "",
-            type: "unstyled",
-            depth: 0,
-            entityRanges: [],
-            inlineStyleRanges: [],
-          },
-        ],
-        entityMap: {
-          "0": {
-            data: {
-              color: "#ED883F",
-            },
-            type: "COLORTEXT",
-            mutability: "MUTABLE",
-          },
-          "1": {
-            data: {
-              id: "2",
-              desc: "",
-              name: "meme",
-              resized: {
-                original:
-                  "https://storage.googleapis.com/statics-editools-dev/images/d1a0d1dc-49db-435e-b1a8-6b3bbd4e1263.jpg",
-              },
-              imageFile: {
-                url: "/images/d1a0d1dc-49db-435e-b1a8-6b3bbd4e1263.jpg",
-              },
-            },
-            type: "image",
-            mutability: "IMMUTABLE",
-          },
+      "id": "1",
+      "name": "你是否有以下經歷？",
+      "type": "multiple",
+      "status": "published",
+      "sortOrder": 1,
+      "options": [
+        {
+          "id": "1",
+          "name": "我 PCR 陽性確診",
+          "sortOrder": null,
+          "value": "1"
         },
-      },
-      updatedAt: "2022-05-24T14:16:00.865Z",
-      createdAt: "2022-05-21T17:21:58.759Z",
+        {
+          "id": "2",
+          "name": "我快篩的結果是陽性",
+          "sortOrder": 2,
+          "value": "2"
+        },
+        {
+          "id": "3",
+          "name": "與我同住的人確診",
+          "sortOrder": null,
+          "value": "3"
+        },
+        {
+          "id": "4",
+          "name": "我疑似接觸到確診者",
+          "sortOrder": null,
+          "value": "4"
+        },
+        {
+          "id": "5",
+          "name": "自國外入境者",
+          "sortOrder": null,
+          "value": "5"
+        }
+      ]
     },
     {
-      id: "4",
-      name: "Answer B",
-      content: {
-        blocks: [
-          {
-            key: "5kj83",
-            data: {},
-            text: "大標。",
-            type: "header-two",
-            depth: 0,
-            entityRanges: [],
-            inlineStyleRanges: [],
-          },
-          {
-            key: "dsgfs",
-            data: {},
-            text: "測試內容。",
-            type: "unstyled",
-            depth: 0,
-            entityRanges: [],
-            inlineStyleRanges: [],
-          },
-          {
-            key: "e2bpa",
-            data: {},
-            text: "測試 link。",
-            type: "unstyled",
-            depth: 0,
-            entityRanges: [
-              {
-                key: 0,
-                length: 7,
-                offset: 0,
-              },
-            ],
-            inlineStyleRanges: [],
-          },
-          {
-            key: "apdtu",
-            data: {},
-            text: "",
-            type: "unstyled",
-            depth: 0,
-            entityRanges: [],
-            inlineStyleRanges: [],
-          },
-        ],
-        entityMap: {
-          "0": {
-            data: {
-              url: "readr.tw",
-            },
-            type: "LINK",
-            mutability: "MUTABLE",
-          },
+      "id": "4",
+      "name": "你是否懷孕？",
+      "type": "single",
+      "status": "published",
+      "sortOrder": 4,
+      "options": [
+        {
+          "id": "20",
+          "name": "我沒有懷孕",
+          "sortOrder": null,
+          "value": "1"
         },
-      },
-      updatedAt: "2022-05-24T14:15:54.551Z",
-      createdAt: "2022-05-21T16:59:45.983Z",
+        {
+          "id": "21",
+          "name": "我懷孕超過 36 週",
+          "sortOrder": null,
+          "value": "2"
+        },
+        {
+          "id": "22",
+          "name": "我懷孕了，還沒超過 36 週",
+          "sortOrder": null,
+          "value": "3"
+        }
+      ]
     },
+    {
+      "id": "5",
+      "name": "你的疫苗接種狀況？",
+      "type": "single",
+      "status": "published",
+      "sortOrder": 5,
+      "options": [
+        {
+          "id": "23",
+          "name": "我已打滿 3 劑疫苗",
+          "sortOrder": null,
+          "value": "1"
+        },
+        {
+          "id": "24",
+          "name": "我尚未打滿 3 劑疫苗 ",
+          "sortOrder": null,
+          "value": "2"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "name": "你現在的身體狀況如何？",
+      "type": "single",
+      "status": "published",
+      "sortOrder": 2,
+      "options": [
+        {
+          "id": "8",
+          "name": "沒有症狀",
+          "sortOrder": null,
+          "value": "1"
+        },
+        {
+          "id": "9",
+          "name": "輕症（發燒、咳嗽、喉嚨痛、全身無力、肌肉酸痛、嘔吐、腹瀉、頭痛、喪失味覺嗅覺）",
+          "sortOrder": null,
+          "value": "2"
+        },
+        {
+          "id": "10",
+          "name": "重症（呼吸困難、嚴重肺炎、呼吸道窘迫症候群或多重器官衰竭、休克、昏倒、胸痛）",
+          "sortOrder": null,
+          "value": "3"
+        },
+        {
+          "id": "11",
+          "name": "我無法判斷",
+          "sortOrder": null,
+          "value": "4"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "name": "你是否符合以下身份或條件？",
+      "type": "single",
+      "status": "published",
+      "sortOrder": 3,
+      "options": [
+        {
+          "id": "12",
+          "name": "都不是",
+          "sortOrder": null,
+          "value": "1"
+        },
+        {
+          "id": "13",
+          "name": "滿 70 歲",
+          "sortOrder": null,
+          "value": "2"
+        },
+        {
+          "id": "14",
+          "name": "滿 65 歲",
+          "sortOrder": null,
+          "value": "3"
+        },
+        {
+          "id": "15",
+          "name": "65-69 歲且獨居",
+          "sortOrder": null,
+          "value": "4"
+        },
+        {
+          "id": "16",
+          "name": "是 6 歲以下兒童",
+          "sortOrder": null,
+          "value": "5"
+        },
+        {
+          "id": "17",
+          "name": "是 2 歲以下幼兒",
+          "sortOrder": null,
+          "value": "6"
+        },
+        {
+          "id": "19",
+          "name": "小於 3 個月的寶寶，有發燒",
+          "sortOrder": null,
+          "value": "8"
+        },
+        {
+          "id": "18",
+          "name": "1 歲以下寶寶，且發燒超過 39 度",
+          "sortOrder": null,
+          "value": "7"
+        },
+        {
+          "id": "26",
+          "name": "居住在原住民地區",
+          "sortOrder": null,
+          "value": "8"
+        },
+        {
+          "id": "27",
+          "name": "居住在離島地區",
+          "sortOrder": null,
+          "value": "9"
+        }
+      ]
+    }
   ],
-  conditions: [
+  "conditions": [
     {
-      order: 1,
-      type: "AND",
-      condition: [
+      "id": "22",
+      "type": "AND",
+      "order": 1,
+      "condition": [
         {
-          formField: {
-            name: "測試 checkbox（複選題）",
-            id: "11",
+          "id": "22",
+          "formField": {
+            "id": "2",
+            "name": "你現在的身體狀況如何？"
           },
-          compare: "include",
-          option: [
+          "compare": "include",
+          "option": [
             {
-              id: "24",
-              name: "checkbox  選項 A",
-              value: "a",
+              "id": "8",
+              "name": "沒有症狀",
+              "value": "1"
             },
             {
-              id: "32",
-              name: "checkbox 選項 B",
-              value: "b",
-            },
-          ],
+              "id": "9",
+              "name": "輕症（發燒、咳嗽、喉嚨痛、全身無力、肌肉酸痛、嘔吐、腹瀉、頭痛、喪失味覺嗅覺）",
+              "value": "2"
+            }
+          ]
         },
+        {
+          "id": "25",
+          "formField": {
+            "id": "4",
+            "name": "你是否懷孕？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "21",
+              "name": "我懷孕超過 36 週",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "id": "14",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "1",
+              "name": "我 PCR 陽性確診",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "id": "18",
+          "formField": {
+            "id": "3",
+            "name": "你是否符合以下身份或條件？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "12",
+              "name": "都不是",
+              "value": "1"
+            }
+          ]
+        }
       ],
-      next: null,
-      goOut: "",
-      answer: {
-        id: "4",
-        name: "Answer B",
+      "answer": {
+        "id": "9",
+        "name": "請依症狀，至集中檢疫所或住院治療。"
       },
+      "next": null,
+      "goOut": ""
     },
     {
-      order: 2,
-      type: "OR",
-      condition: [
+      "id": "23",
+      "type": "AND",
+      "order": 1,
+      "condition": [
         {
-          formField: {
-            name: "測試 checkbox（複選題）",
-            id: "11",
+          "id": "22",
+          "formField": {
+            "id": "2",
+            "name": "你現在的身體狀況如何？"
           },
-          compare: "include",
-          option: [
+          "compare": "include",
+          "option": [
             {
-              id: "24",
-              name: "checkbox  選項 A",
-              value: "a",
+              "id": "8",
+              "name": "沒有症狀",
+              "value": "1"
             },
-          ],
+            {
+              "id": "9",
+              "name": "輕症（發燒、咳嗽、喉嚨痛、全身無力、肌肉酸痛、嘔吐、腹瀉、頭痛、喪失味覺嗅覺）",
+              "value": "2"
+            }
+          ]
         },
         {
-          formField: {
-            name: "測試 checkbox（複選題）",
-            id: "11",
+          "id": "14",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
           },
-          compare: "include",
-          option: [
+          "compare": "is",
+          "option": [
             {
-              id: "32",
-              name: "checkbox  選項 B",
-              value: "b",
-            },
-          ],
+              "id": "1",
+              "name": "我 PCR 陽性確診",
+              "value": "1"
+            }
+          ]
         },
         {
-          formField: {
-            name: "測試 checkbox（複選題）",
-            id: "11",
+          "id": "18",
+          "formField": {
+            "id": "3",
+            "name": "你是否符合以下身份或條件？"
           },
-          compare: "include",
-          option: [
+          "compare": "is",
+          "option": [
             {
-              id: "26",
-              name: "checkbox  選項 C",
-              value: "c",
-            },
-          ],
-        },
-        {
-          formField: {
-            name: "測試 checkbox（複選題）",
-            id: "11",
-          },
-          compare: "include",
-          option: [
-            {
-              id: "30",
-              name: "checkbox  選項 D",
-              value: "d",
-            },
-          ],
-        },
+              "id": "12",
+              "name": "都不是",
+              "value": "1"
+            }
+          ]
+        }
       ],
-      next: null,
-      goOut: "",
-      answer: {
-        id: "3",
-        name: "Answer A",
+      "answer": null,
+      "next": {
+        "id": "4",
+        "name": "你是否懷孕？"
       },
+      "goOut": ""
     },
     {
-      order: 3,
-      type: "AND",
-      condition: [
+      "id": "27",
+      "type": "AND",
+      "order": 1,
+      "condition": [
         {
-          formField: {
-            name: "測試 dropdown (單選題，選項大於等於 4)",
-            id: "10",
+          "id": "22",
+          "formField": {
+            "id": "2",
+            "name": "你現在的身體狀況如何？"
           },
-          compare: "is",
-          option: [
+          "compare": "include",
+          "option": [
             {
-              id: "40",
-              name: "dropdown 選項 D",
-              value: "d",
+              "id": "8",
+              "name": "沒有症狀",
+              "value": "1"
             },
-          ],
+            {
+              "id": "9",
+              "name": "輕症（發燒、咳嗽、喉嚨痛、全身無力、肌肉酸痛、嘔吐、腹瀉、頭痛、喪失味覺嗅覺）",
+              "value": "2"
+            }
+          ]
         },
+        {
+          "id": "27",
+          "formField": {
+            "id": "4",
+            "name": "你是否懷孕？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "20",
+              "name": "我沒有懷孕",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "id": "14",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "1",
+              "name": "我 PCR 陽性確診",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "id": "18",
+          "formField": {
+            "id": "3",
+            "name": "你是否符合以下身份或條件？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "12",
+              "name": "都不是",
+              "value": "1"
+            }
+          ]
+        }
       ],
-      next: null,
-      goOut: "",
-      answer: {
-        id: "4",
-        name: "Answer B",
+      "answer": {
+        "id": "11",
+        "name": "你可進行居家照護。"
       },
+      "next": null,
+      "goOut": ""
     },
     {
-      order: 4,
-      type: "AND",
-      condition: [
+      "id": "26",
+      "type": "AND",
+      "order": 1,
+      "condition": [
         {
-          formField: {
-            name: "測試 dropdown (單選題，選項大於等於 4)",
-            id: "10",
+          "id": "22",
+          "formField": {
+            "id": "2",
+            "name": "你現在的身體狀況如何？"
           },
-          compare: "not",
-          option: [
+          "compare": "include",
+          "option": [
             {
-              id: "40",
-              name: "dropdown 選項 D",
-              value: "d",
+              "id": "8",
+              "name": "沒有症狀",
+              "value": "1"
             },
-          ],
+            {
+              "id": "9",
+              "name": "輕症（發燒、咳嗽、喉嚨痛、全身無力、肌肉酸痛、嘔吐、腹瀉、頭痛、喪失味覺嗅覺）",
+              "value": "2"
+            }
+          ]
         },
+        {
+          "id": "26",
+          "formField": {
+            "id": "4",
+            "name": "你是否懷孕？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "22",
+              "name": "我懷孕了，還沒超過 36 週",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "id": "14",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "1",
+              "name": "我 PCR 陽性確診",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "id": "18",
+          "formField": {
+            "id": "3",
+            "name": "你是否符合以下身份或條件？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "12",
+              "name": "都不是",
+              "value": "1"
+            }
+          ]
+        }
       ],
-      next: {
-        id: "11",
-        name: "測試 checkbox（複選題）",
+      "answer": {
+        "id": "10",
+        "name": "請進行居家照護並觀察自身症狀。"
       },
-      goOut: "",
-      answer: null,
+      "next": null,
+      "goOut": ""
     },
     {
-      order: 5,
-      type: "OR",
-      condition: [
+      "id": "28",
+      "type": "AND",
+      "order": 1,
+      "condition": [
         {
-          formField: {
-            name: "測試 radio（單選題，選項小於等於 3 個）",
-            id: "9",
+          "id": "22",
+          "formField": {
+            "id": "2",
+            "name": "你現在的身體狀況如何？"
           },
-          compare: "is",
-          option: [
+          "compare": "include",
+          "option": [
             {
-              id: "34",
-              name: "radio 選項 A",
-              value: "a",
+              "id": "8",
+              "name": "沒有症狀",
+              "value": "1"
             },
-          ],
+            {
+              "id": "9",
+              "name": "輕症（發燒、咳嗽、喉嚨痛、全身無力、肌肉酸痛、嘔吐、腹瀉、頭痛、喪失味覺嗅覺）",
+              "value": "2"
+            }
+          ]
         },
         {
-          formField: {
-            name: "測試 radio（單選題，選項小於等於 3 個）",
-            id: "9",
+          "id": "38",
+          "formField": {
+            "id": "3",
+            "name": "你是否符合以下身份或條件？"
           },
-          compare: "is",
-          option: [
+          "compare": "is",
+          "option": [
             {
-              id: "35",
-              name: "radio 選項 B",
-              value: "b",
-            },
-          ],
+              "id": "16",
+              "name": "是 6 歲以下兒童",
+              "value": "5"
+            }
+          ]
         },
         {
-          formField: {
-            name: "測試 radio（單選題，選項小於等於 3 個）",
-            id: "9",
+          "id": "14",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
           },
-          compare: "is",
-          option: [
+          "compare": "is",
+          "option": [
             {
-              id: "36",
-              name: "radio 選項 C",
-              value: "c",
-            },
-          ],
-        },
+              "id": "1",
+              "name": "我 PCR 陽性確診",
+              "value": "1"
+            }
+          ]
+        }
       ],
-      next: {
-        id: "10",
-        name: "測試 dropdown (單選題，選項大於等於 4)",
+      "answer": {
+        "id": "12",
+        "name": "你可進行居家照護。"
       },
-      goOut: "",
-      answer: null,
+      "next": null,
+      "goOut": ""
     },
-  ],
-};
+    {
+      "id": "29",
+      "type": "AND",
+      "order": 1,
+      "condition": [
+        {
+          "id": "23",
+          "formField": {
+            "id": "2",
+            "name": "你現在的身體狀況如何？"
+          },
+          "compare": "include",
+          "option": [
+            {
+              "id": "10",
+              "name": "重症（呼吸困難、嚴重肺炎、呼吸道窘迫症候群或多重器官衰竭、休克、昏倒、胸痛）",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "id": "32",
+          "formField": {
+            "id": "3",
+            "name": "你是否符合以下身份或條件？"
+          },
+          "compare": "include",
+          "option": [
+            {
+              "id": "13",
+              "name": "滿 70 歲",
+              "value": "2"
+            },
+            {
+              "id": "15",
+              "name": "65-69 歲且獨居",
+              "value": "4"
+            },
+            {
+              "id": "16",
+              "name": "是 6 歲以下兒童",
+              "value": "5"
+            },
+            {
+              "id": "18",
+              "name": "1 歲以下寶寶，且發燒超過 39 度",
+              "value": "7"
+            }
+          ]
+        },
+        {
+          "id": "14",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "1",
+              "name": "我 PCR 陽性確診",
+              "value": "1"
+            }
+          ]
+        }
+      ],
+      "answer": {
+        "id": "13",
+        "name": "可經綠色通道安排治療。"
+      },
+      "next": null,
+      "goOut": ""
+    },
+    {
+      "id": "30",
+      "type": "AND",
+      "order": 1,
+      "condition": [
+        {
+          "id": "23",
+          "formField": {
+            "id": "2",
+            "name": "你現在的身體狀況如何？"
+          },
+          "compare": "include",
+          "option": [
+            {
+              "id": "10",
+              "name": "重症（呼吸困難、嚴重肺炎、呼吸道窘迫症候群或多重器官衰竭、休克、昏倒、胸痛）",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "id": "14",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "1",
+              "name": "我 PCR 陽性確診",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "id": "18",
+          "formField": {
+            "id": "3",
+            "name": "你是否符合以下身份或條件？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "12",
+              "name": "都不是",
+              "value": "1"
+            }
+          ]
+        }
+      ],
+      "answer": null,
+      "next": {
+        "id": "4",
+        "name": "你是否懷孕？"
+      },
+      "goOut": ""
+    },
+    {
+      "id": "31",
+      "type": "AND",
+      "order": 1,
+      "condition": [
+        {
+          "id": "23",
+          "formField": {
+            "id": "2",
+            "name": "你現在的身體狀況如何？"
+          },
+          "compare": "include",
+          "option": [
+            {
+              "id": "10",
+              "name": "重症（呼吸困難、嚴重肺炎、呼吸道窘迫症候群或多重器官衰竭、休克、昏倒、胸痛）",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "id": "25",
+          "formField": {
+            "id": "4",
+            "name": "你是否懷孕？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "21",
+              "name": "我懷孕超過 36 週",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "id": "14",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "1",
+              "name": "我 PCR 陽性確診",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "id": "18",
+          "formField": {
+            "id": "3",
+            "name": "你是否符合以下身份或條件？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "12",
+              "name": "都不是",
+              "value": "1"
+            }
+          ]
+        }
+      ],
+      "answer": {
+        "id": "14",
+        "name": "可經綠色通道安排治療。"
+      },
+      "next": null,
+      "goOut": ""
+    },
+    {
+      "id": "32",
+      "type": "AND",
+      "order": 1,
+      "condition": [
+        {
+          "id": "23",
+          "formField": {
+            "id": "2",
+            "name": "你現在的身體狀況如何？"
+          },
+          "compare": "include",
+          "option": [
+            {
+              "id": "10",
+              "name": "重症（呼吸困難、嚴重肺炎、呼吸道窘迫症候群或多重器官衰竭、休克、昏倒、胸痛）",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "id": "28",
+          "formField": {
+            "id": "4",
+            "name": "你是否懷孕？"
+          },
+          "compare": "include",
+          "option": [
+            {
+              "id": "20",
+              "name": "我沒有懷孕",
+              "value": "1"
+            },
+            {
+              "id": "22",
+              "name": "我懷孕了，還沒超過 36 週",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "id": "14",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "1",
+              "name": "我 PCR 陽性確診",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "id": "18",
+          "formField": {
+            "id": "3",
+            "name": "你是否符合以下身份或條件？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "12",
+              "name": "都不是",
+              "value": "1"
+            }
+          ]
+        }
+      ],
+      "answer": {
+        "id": "15",
+        "name": "你可叫救護車儘速至醫院治療。"
+      },
+      "next": null,
+      "goOut": ""
+    },
+    {
+      "id": "33",
+      "type": "AND",
+      "order": 1,
+      "condition": [
+        {
+          "id": "24",
+          "formField": {
+            "id": "2",
+            "name": "你現在的身體狀況如何？"
+          },
+          "compare": "include",
+          "option": [
+            {
+              "id": "11",
+              "name": "我無法判斷",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "id": "31",
+          "formField": {
+            "id": "3",
+            "name": "你是否符合以下身份或條件？"
+          },
+          "compare": "include",
+          "option": [
+            {
+              "id": "13",
+              "name": "滿 70 歲",
+              "value": "2"
+            },
+            {
+              "id": "15",
+              "name": "65-69 歲且獨居",
+              "value": "4"
+            },
+            {
+              "id": "18",
+              "name": "1 歲以下寶寶，且發燒超過 39 度",
+              "value": "7"
+            }
+          ]
+        },
+        {
+          "id": "14",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "1",
+              "name": "我 PCR 陽性確診",
+              "value": "1"
+            }
+          ]
+        }
+      ],
+      "answer": {
+        "id": "16",
+        "name": "請依症狀至集中檢疫所或居家照護、住院治療。"
+      },
+      "next": null,
+      "goOut": ""
+    },
+    {
+      "id": "34",
+      "type": "AND",
+      "order": 1,
+      "condition": [
+        {
+          "id": "24",
+          "formField": {
+            "id": "2",
+            "name": "你現在的身體狀況如何？"
+          },
+          "compare": "include",
+          "option": [
+            {
+              "id": "11",
+              "name": "我無法判斷",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "id": "14",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "1",
+              "name": "我 PCR 陽性確診",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "id": "18",
+          "formField": {
+            "id": "3",
+            "name": "你是否符合以下身份或條件？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "12",
+              "name": "都不是",
+              "value": "1"
+            }
+          ]
+        }
+      ],
+      "answer": null,
+      "next": {
+        "id": "4",
+        "name": "你是否懷孕？"
+      },
+      "goOut": ""
+    },
+    {
+      "id": "35",
+      "type": "AND",
+      "order": 1,
+      "condition": [
+        {
+          "id": "24",
+          "formField": {
+            "id": "2",
+            "name": "你現在的身體狀況如何？"
+          },
+          "compare": "include",
+          "option": [
+            {
+              "id": "11",
+              "name": "我無法判斷",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "id": "26",
+          "formField": {
+            "id": "4",
+            "name": "你是否懷孕？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "22",
+              "name": "我懷孕了，還沒超過 36 週",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "id": "14",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "1",
+              "name": "我 PCR 陽性確診",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "id": "18",
+          "formField": {
+            "id": "3",
+            "name": "你是否符合以下身份或條件？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "12",
+              "name": "都不是",
+              "value": "1"
+            }
+          ]
+        }
+      ],
+      "answer": {
+        "id": "17",
+        "name": "請依症狀隔離治療或叫救護車送醫。"
+      },
+      "next": null,
+      "goOut": ""
+    },
+    {
+      "id": "36",
+      "type": "AND",
+      "order": 1,
+      "condition": [
+        {
+          "id": "24",
+          "formField": {
+            "id": "2",
+            "name": "你現在的身體狀況如何？"
+          },
+          "compare": "include",
+          "option": [
+            {
+              "id": "11",
+              "name": "我無法判斷",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "id": "25",
+          "formField": {
+            "id": "4",
+            "name": "你是否懷孕？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "21",
+              "name": "我懷孕超過 36 週",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "id": "14",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "1",
+              "name": "我 PCR 陽性確診",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "id": "18",
+          "formField": {
+            "id": "3",
+            "name": "你是否符合以下身份或條件？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "12",
+              "name": "都不是",
+              "value": "1"
+            }
+          ]
+        }
+      ],
+      "answer": {
+        "id": "18",
+        "name": "請依症狀情形至集中檢疫所或居家照護、住院治療。"
+      },
+      "next": null,
+      "goOut": ""
+    },
+    {
+      "id": "37",
+      "type": "AND",
+      "order": 1,
+      "condition": [
+        {
+          "id": "24",
+          "formField": {
+            "id": "2",
+            "name": "你現在的身體狀況如何？"
+          },
+          "compare": "include",
+          "option": [
+            {
+              "id": "11",
+              "name": "我無法判斷",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "id": "38",
+          "formField": {
+            "id": "3",
+            "name": "你是否符合以下身份或條件？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "16",
+              "name": "是 6 歲以下兒童",
+              "value": "5"
+            }
+          ]
+        },
+        {
+          "id": "14",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "1",
+              "name": "我 PCR 陽性確診",
+              "value": "1"
+            }
+          ]
+        }
+      ],
+      "answer": {
+        "id": "19",
+        "name": "請依症狀情形居家照護或住院治療。"
+      },
+      "next": null,
+      "goOut": ""
+    },
+    {
+      "id": "38",
+      "type": "AND",
+      "order": 1,
+      "condition": [
+        {
+          "id": "24",
+          "formField": {
+            "id": "2",
+            "name": "你現在的身體狀況如何？"
+          },
+          "compare": "include",
+          "option": [
+            {
+              "id": "11",
+              "name": "我無法判斷",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "id": "27",
+          "formField": {
+            "id": "4",
+            "name": "你是否懷孕？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "20",
+              "name": "我沒有懷孕",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "id": "14",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "1",
+              "name": "我 PCR 陽性確診",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "id": "18",
+          "formField": {
+            "id": "3",
+            "name": "你是否符合以下身份或條件？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "12",
+              "name": "都不是",
+              "value": "1"
+            }
+          ]
+        }
+      ],
+      "answer": {
+        "id": "20",
+        "name": "請依症狀居家照護或住院治療。"
+      },
+      "next": null,
+      "goOut": ""
+    },
+    {
+      "id": "39",
+      "type": "AND",
+      "order": 1,
+      "condition": [
+        {
+          "id": "24",
+          "formField": {
+            "id": "2",
+            "name": "你現在的身體狀況如何？"
+          },
+          "compare": "include",
+          "option": [
+            {
+              "id": "11",
+              "name": "我無法判斷",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "id": "37",
+          "formField": {
+            "id": "3",
+            "name": "你是否符合以下身份或條件？"
+          },
+          "compare": "include",
+          "option": [
+            {
+              "id": "26",
+              "name": "居住在原住民地區",
+              "value": "8"
+            },
+            {
+              "id": "27",
+              "name": "居住在離島地區",
+              "value": "9"
+            }
+          ]
+        },
+        {
+          "id": "14",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "1",
+              "name": "我 PCR 陽性確診",
+              "value": "1"
+            }
+          ]
+        }
+      ],
+      "answer": {
+        "id": "20",
+        "name": "請依症狀居家照護或住院治療。"
+      },
+      "next": null,
+      "goOut": ""
+    },
+    {
+      "id": "40",
+      "type": "AND",
+      "order": 1,
+      "condition": [
+        {
+          "id": "29",
+          "formField": {
+            "id": "5",
+            "name": "你的疫苗接種狀況？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "23",
+              "name": "我已打滿 3 劑疫苗",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "id": "15",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "3",
+              "name": "與我同住的人確診",
+              "value": "3"
+            }
+          ]
+        }
+      ],
+      "answer": {
+        "id": "21",
+        "name": "請進行自主防疫。"
+      },
+      "next": null,
+      "goOut": ""
+    },
+    {
+      "id": "41",
+      "type": "AND",
+      "order": 1,
+      "condition": [
+        {
+          "id": "30",
+          "formField": {
+            "id": "5",
+            "name": "你的疫苗接種狀況？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "24",
+              "name": "我尚未打滿 3 劑疫苗 ",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "id": "15",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "3",
+              "name": "與我同住的人確診",
+              "value": "3"
+            }
+          ]
+        }
+      ],
+      "answer": {
+        "id": "22",
+        "name": "你需要進行居家隔離及自主防疫。"
+      },
+      "next": null,
+      "goOut": ""
+    },
+    {
+      "id": "42",
+      "type": "AND",
+      "order": 1,
+      "condition": [
+        {
+          "id": "33",
+          "formField": {
+            "id": "3",
+            "name": "你是否符合以下身份或條件？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "17",
+              "name": "是 2 歲以下幼兒",
+              "value": "6"
+            }
+          ]
+        },
+        {
+          "id": "16",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "2",
+              "name": "我快篩的結果是陽性",
+              "value": "2"
+            },
+            {
+              "id": "3",
+              "name": "與我同住的人確診",
+              "value": "3"
+            }
+          ]
+        }
+      ],
+      "answer": {
+        "id": "23",
+        "name": "請至醫院交由醫生評估。"
+      },
+      "next": null,
+      "goOut": ""
+    },
+    {
+      "id": "43",
+      "type": "AND",
+      "order": 1,
+      "condition": [
+        {
+          "id": "39",
+          "formField": {
+            "id": "3",
+            "name": "你是否符合以下身份或條件？"
+          },
+          "compare": "not",
+          "option": [
+            {
+              "id": "17",
+              "name": "是 2 歲以下幼兒",
+              "value": "6"
+            }
+          ]
+        },
+        {
+          "id": "16",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "2",
+              "name": "我快篩的結果是陽性",
+              "value": "2"
+            },
+            {
+              "id": "3",
+              "name": "與我同住的人確診",
+              "value": "3"
+            }
+          ]
+        }
+      ],
+      "answer": {
+        "id": "24",
+        "name": "請視訊醫生問診。"
+      },
+      "next": null,
+      "goOut": ""
+    },
+    {
+      "id": "44",
+      "type": "AND",
+      "order": 1,
+      "condition": [
+        {
+          "id": "39",
+          "formField": {
+            "id": "3",
+            "name": "你是否符合以下身份或條件？"
+          },
+          "compare": "not",
+          "option": [
+            {
+              "id": "17",
+              "name": "是 2 歲以下幼兒",
+              "value": "6"
+            }
+          ]
+        },
+        {
+          "id": "17",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "1",
+              "name": "我 PCR 陽性確診",
+              "value": "1"
+            },
+            {
+              "id": "3",
+              "name": "與我同住的人確診",
+              "value": "3"
+            }
+          ]
+        }
+      ],
+      "answer": {
+        "id": "26",
+        "name": "請依症狀居家照護或住院治療。"
+      },
+      "next": null,
+      "goOut": ""
+    },
+    {
+      "id": "45",
+      "type": "AND",
+      "order": 1,
+      "condition": [
+        {
+          "id": "11",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "2",
+              "name": "我快篩的結果是陽性",
+              "value": "2"
+            }
+          ]
+        }
+      ],
+      "answer": {
+        "id": "21",
+        "name": "請進行自主防疫。"
+      },
+      "next": null,
+      "goOut": ""
+    },
+    {
+      "id": "11",
+      "type": "OR",
+      "order": 1,
+      "condition": [
+        {
+          "id": "13",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "include",
+          "option": [
+            {
+              "id": "5",
+              "name": "自國外入境者",
+              "value": "5"
+            }
+          ]
+        }
+      ],
+      "answer": {
+        "id": "7",
+        "name": "入境時篩檢並進行隔離。"
+      },
+      "next": null,
+      "goOut": ""
+    },
+    {
+      "id": "12",
+      "type": "OR",
+      "order": 1,
+      "condition": [
+        {
+          "id": "15",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "3",
+              "name": "與我同住的人確診",
+              "value": "3"
+            }
+          ]
+        }
+      ],
+      "answer": null,
+      "next": {
+        "id": "5",
+        "name": "你的疫苗接種狀況？"
+      },
+      "goOut": ""
+    },
+    {
+      "id": "13",
+      "type": "OR",
+      "order": 1,
+      "condition": [
+        {
+          "id": "16",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "2",
+              "name": "我快篩的結果是陽性",
+              "value": "2"
+            },
+            {
+              "id": "3",
+              "name": "與我同住的人確診",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "id": "12",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "4",
+              "name": "我疑似接觸到確診者",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "id": "17",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "1",
+              "name": "我 PCR 陽性確診",
+              "value": "1"
+            },
+            {
+              "id": "3",
+              "name": "與我同住的人確診",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "id": "11",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "2",
+              "name": "我快篩的結果是陽性",
+              "value": "2"
+            }
+          ]
+        }
+      ],
+      "answer": null,
+      "next": {
+        "id": "3",
+        "name": "你是否符合以下身份或條件？"
+      },
+      "goOut": ""
+    },
+    {
+      "id": "14",
+      "type": "OR",
+      "order": 1,
+      "condition": [
+        {
+          "id": "14",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "1",
+              "name": "我 PCR 陽性確診",
+              "value": "1"
+            }
+          ]
+        }
+      ],
+      "answer": null,
+      "next": {
+        "id": "2",
+        "name": "你現在的身體狀況如何？"
+      },
+      "goOut": ""
+    },
+    {
+      "id": "15",
+      "type": "AND",
+      "order": 1,
+      "condition": [
+        {
+          "id": "11",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "2",
+              "name": "我快篩的結果是陽性",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "id": "18",
+          "formField": {
+            "id": "3",
+            "name": "你是否符合以下身份或條件？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "12",
+              "name": "都不是",
+              "value": "1"
+            }
+          ]
+        }
+      ],
+      "answer": {
+        "id": "1",
+        "name": "請至醫院或篩檢站進行 PCR 檢測。"
+      },
+      "next": null,
+      "goOut": ""
+    },
+    {
+      "id": "16",
+      "type": "AND",
+      "order": 1,
+      "condition": [
+        {
+          "id": "36",
+          "formField": {
+            "id": "3",
+            "name": "你是否符合以下身份或條件？"
+          },
+          "compare": "include",
+          "option": [
+            {
+              "id": "13",
+              "name": "滿 70 歲",
+              "value": "2"
+            },
+            {
+              "id": "14",
+              "name": "滿 65 歲",
+              "value": "3"
+            },
+            {
+              "id": "15",
+              "name": "65-69 歲且獨居",
+              "value": "4"
+            },
+            {
+              "id": "26",
+              "name": "居住在原住民地區",
+              "value": "8"
+            },
+            {
+              "id": "27",
+              "name": "居住在離島地區",
+              "value": "9"
+            }
+          ]
+        },
+        {
+          "id": "11",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "2",
+              "name": "我快篩的結果是陽性",
+              "value": "2"
+            }
+          ]
+        }
+      ],
+      "answer": {
+        "id": "2",
+        "name": "請視訊醫生問診，評估你的身體狀況跟快篩結果。"
+      },
+      "next": null,
+      "goOut": ""
+    },
+    {
+      "id": "17",
+      "type": "AND",
+      "order": 1,
+      "condition": [
+        {
+          "id": "20",
+          "formField": {
+            "id": "3",
+            "name": "你是否符合以下身份或條件？"
+          },
+          "compare": "include",
+          "option": [
+            {
+              "id": "17",
+              "name": "是 2 歲以下幼兒",
+              "value": "6"
+            },
+            {
+              "id": "19",
+              "name": "小於 3 個月的寶寶，有發燒",
+              "value": "8"
+            },
+            {
+              "id": "18",
+              "name": "1 歲以下寶寶，且發燒超過 39 度",
+              "value": "7"
+            }
+          ]
+        },
+        {
+          "id": "11",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "2",
+              "name": "我快篩的結果是陽性",
+              "value": "2"
+            }
+          ]
+        }
+      ],
+      "answer": {
+        "id": "3",
+        "name": "請至醫院交由醫生評估。"
+      },
+      "next": null,
+      "goOut": ""
+    },
+    {
+      "id": "18",
+      "type": "AND",
+      "order": 1,
+      "condition": [
+        {
+          "id": "19",
+          "formField": {
+            "id": "3",
+            "name": "你是否符合以下身份或條件？"
+          },
+          "compare": "include",
+          "option": [
+            {
+              "id": "13",
+              "name": "滿 70 歲",
+              "value": "2"
+            },
+            {
+              "id": "14",
+              "name": "滿 65 歲",
+              "value": "3"
+            },
+            {
+              "id": "15",
+              "name": "65-69 歲且獨居",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "id": "12",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "4",
+              "name": "我疑似接觸到確診者",
+              "value": "4"
+            }
+          ]
+        }
+      ],
+      "answer": {
+        "id": "4",
+        "name": "請進行快篩檢測。"
+      },
+      "next": null,
+      "goOut": ""
+    },
+    {
+      "id": "19",
+      "type": "AND",
+      "order": 1,
+      "condition": [
+        {
+          "id": "12",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "4",
+              "name": "我疑似接觸到確診者",
+              "value": "4"
+            }
+          ]
+        },
+        {
+          "id": "18",
+          "formField": {
+            "id": "3",
+            "name": "你是否符合以下身份或條件？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "12",
+              "name": "都不是",
+              "value": "1"
+            }
+          ]
+        }
+      ],
+      "answer": {
+        "id": "5",
+        "name": "請進行快篩檢測。"
+      },
+      "next": null,
+      "goOut": ""
+    },
+    {
+      "id": "20",
+      "type": "AND",
+      "order": 1,
+      "condition": [
+        {
+          "id": "20",
+          "formField": {
+            "id": "3",
+            "name": "你是否符合以下身份或條件？"
+          },
+          "compare": "include",
+          "option": [
+            {
+              "id": "17",
+              "name": "是 2 歲以下幼兒",
+              "value": "6"
+            },
+            {
+              "id": "19",
+              "name": "小於 3 個月的寶寶，有發燒",
+              "value": "8"
+            },
+            {
+              "id": "18",
+              "name": "1 歲以下寶寶，且發燒超過 39 度",
+              "value": "7"
+            }
+          ]
+        },
+        {
+          "id": "12",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "4",
+              "name": "我疑似接觸到確診者",
+              "value": "4"
+            }
+          ]
+        }
+      ],
+      "answer": {
+        "id": "6",
+        "name": "請進行快篩檢測。"
+      },
+      "next": null,
+      "goOut": ""
+    },
+    {
+      "id": "21",
+      "type": "AND",
+      "order": 1,
+      "condition": [
+        {
+          "id": "22",
+          "formField": {
+            "id": "2",
+            "name": "你現在的身體狀況如何？"
+          },
+          "compare": "include",
+          "option": [
+            {
+              "id": "8",
+              "name": "沒有症狀",
+              "value": "1"
+            },
+            {
+              "id": "9",
+              "name": "輕症（發燒、咳嗽、喉嚨痛、全身無力、肌肉酸痛、嘔吐、腹瀉、頭痛、喪失味覺嗅覺）",
+              "value": "2"
+            }
+          ]
+        },
+        {
+          "id": "31",
+          "formField": {
+            "id": "3",
+            "name": "你是否符合以下身份或條件？"
+          },
+          "compare": "include",
+          "option": [
+            {
+              "id": "13",
+              "name": "滿 70 歲",
+              "value": "2"
+            },
+            {
+              "id": "15",
+              "name": "65-69 歲且獨居",
+              "value": "4"
+            },
+            {
+              "id": "18",
+              "name": "1 歲以下寶寶，且發燒超過 39 度",
+              "value": "7"
+            }
+          ]
+        },
+        {
+          "id": "14",
+          "formField": {
+            "id": "1",
+            "name": "你是否有以下經歷？"
+          },
+          "compare": "is",
+          "option": [
+            {
+              "id": "1",
+              "name": "我 PCR 陽性確診",
+              "value": "1"
+            }
+          ]
+        }
+      ],
+      "answer": {
+        "id": "8",
+        "name": "請依症狀情形至集中檢疫所或居家照護、住院治療。"
+      },
+      "next": null,
+      "goOut": ""
+    }
+  ]
+}
+
