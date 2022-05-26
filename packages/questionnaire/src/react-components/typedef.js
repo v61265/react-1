@@ -60,4 +60,5 @@ import { RawDraftContentState } from 'draft-js'
  *  @property {string} [updateTime]
  *  @property {ImageObj} [heroImage]
  *  @property {ImageObj} [mobileImage]
+ *  @property {string} [feedback]
  */
