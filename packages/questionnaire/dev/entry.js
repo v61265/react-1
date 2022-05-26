@@ -1,7 +1,8 @@
-import React from 'react'
 import Quetionnaire from '../src/react-components'
+import React from 'react'
+import axios from 'axios'
+import mockForm from './mock-data.json'
 import { createRoot } from 'react-dom/client'
-import mockForm from './mock-data'
 
 const reactRootId = 'root'
 const container = document.getElementById(reactRootId)
