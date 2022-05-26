@@ -2,8 +2,8 @@ import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { Parser } from "htmlparser2";
 
-function parseEmbeddedCode(embeddedCode) {
-  const script = {};
+export function parseEmbeddedCode(embeddedCode) {
+  let script = {};
   const scripts = [];
   let scriptTagStart = false;
   const parser = new Parser({
@@ -21,7 +21,8 @@ function parseEmbeddedCode(embeddedCode) {
     onclosetag: (tagname) => {
       if (tagname === "script" && scriptTagStart) {
         scriptTagStart = false;
-        scripts.push(script);
+        scripts.push({}, script);
+        script = {};
       }
     },
   });
@@ -30,6 +31,9 @@ function parseEmbeddedCode(embeddedCode) {
   return {
     embeddedCodeWithoutScript: embeddedCode.replace(
       /<script(.+?)\/script>/g,
+      ""
+    ).replace(
+      /\x3Cscript(.+?)\/script>/g,
       ""
     ),
     scripts,
