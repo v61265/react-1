@@ -112,6 +112,7 @@ function matchCondition(answer, condition) {
     case "include": {
       // Check if answers include all options
       return (
+        answer.length >= condition?.option?.length &&
         _.intersection(
           answer,
           condition?.option?.map((o) => o.value)
@@ -126,6 +127,7 @@ function matchCondition(answer, condition) {
     default: {
       // Check if exactly match
       return (
+        answer.length === condition?.option?.length &&
         _.difference(
           answer,
           condition?.option?.map((o) => o.value)
