@@ -7,4 +7,4 @@ const reactRootId = 'root'
 const container = document.getElementById(reactRootId)
 const root = createRoot(container)
 
-root.render(<Quetionnaire form={mockForm} />)
+root.render(<Quetionnaire form={mockForm} enableDebugViewer={true}/>)
