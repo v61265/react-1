@@ -76,8 +76,15 @@ export default function Questionnaire({ form, enableDebugViewer=false }) {
         return <div>Next question is not specified</div>;
       }
 
+      const nextQ = copyForm.fields.find((q) => q.id === next.id)
+      if (nextQ.id === currentQuestion.id) {
+        return <div>Next question is not configured right. The next question name is {nextQ.name}.</div>
+      }
+
       // Go to next queustion
-      setCurrentQuestion(copyForm.fields.find((q) => q.id === next.id));
+      setCurrentQuestion(nextQ);
+    } else {
+      return <Result resultData={{name: 'There is no matched condition'}}></Result>
     }
   }
 
