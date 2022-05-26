@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { Editor, EditorState, convertFromRaw } from "draft-js";
-import decorators from "../draft/entity-decorator";
-import { atomicBlockRenderer } from "../draft/block-redender-fn";
-import SubmitBt from "./buttons";
+import decorators from "./draft/entity-decorator";
+import { atomicBlockRenderer } from "./draft/block-redender-fn";
+import SubmitBt from "./form/buttons";
 const blockRendererFn = (block) => {
   const atomicBlockObj = atomicBlockRenderer(block);
   return atomicBlockObj;
@@ -92,7 +92,11 @@ const UpdateTime = styled.p`
 `;
 
 export default function Result({ resultData }) {
-  const contentState = convertFromRaw(resultData.content);
+  const content = resultData.content || {
+    blocks: [],
+    entityMap: {},
+  }
+  const contentState = convertFromRaw(content);
   const editorState = EditorState.createWithContent(contentState, decorators);
   const updateTime = new Date(resultData.updatedAt || resultData.createdAt);
   const formattedTime = `${updateTime.getFullYear()}/${updateTime.getMonth() +
