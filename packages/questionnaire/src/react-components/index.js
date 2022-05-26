@@ -73,18 +73,33 @@ export default function Questionnaire({ form, enableDebugViewer=false }) {
       if (!next) {
         // The program should not enter this condition.
         // If it does, then the form data is created wrongly.
-        return <div>Next question is not specified</div>;
+        return (
+          <>
+            {debugViewerJsx}
+            <Result resultData={{name: `Next question is not specified`}}></Result>
+          </>
+        )
       }
 
       const nextQ = copyForm.fields.find((q) => q.id === next.id)
       if (nextQ.id === currentQuestion.id) {
-        return <div>Next question is not configured right. The next question name is {nextQ.name}.</div>
+        return (
+          <>
+            {debugViewerJsx}
+            <Result resultData={{name: `Next question is not configured right. The next question name is ${nextQ.name}`}}></Result>
+          </>
+        )
       }
 
       // Go to next queustion
       setCurrentQuestion(nextQ);
     } else {
-      return <Result resultData={{name: 'There is no matched condition'}}></Result>
+      return (
+        <>
+          {debugViewerJsx}
+          <Result resultData={{name: 'There is no matched condition'}}></Result>
+        </>
+      )
     }
   }
 
