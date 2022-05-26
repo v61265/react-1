@@ -127,13 +127,15 @@ export default function Checkbox({
       <label
         className='container'
         htmlFor={`option-${option.id}`}
-        onChange={(e) => chooseOption(e.target.value)}
       >
         {option.name}
         <input
           type='checkbox'
           id={`option-${option.id}`}
           value={option.value}
+          onChange={(e) => {
+            chooseOption(e.target.value)
+          }}
         />
         <span className='checkmark'></span>
       </label>
