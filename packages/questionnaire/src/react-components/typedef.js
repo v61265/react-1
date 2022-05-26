@@ -9,6 +9,7 @@ import { RawDraftContentState } from 'draft-js'
 
 /**
  *  @typedef {Object} FormCondition
+ *  @property {string} id
  *  @property {number} order
  *  @property {('AND'|'OR')} type
  *  @property {Condition[]} condition

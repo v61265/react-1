@@ -92,7 +92,11 @@ const UpdateTime = styled.p`
 `;
 
 export default function Result({ resultData }) {
-  const contentState = convertFromRaw(resultData.content);
+  const content = resultData.content || {
+    blocks: [],
+    entityMap: {},
+  }
+  const contentState = convertFromRaw(content);
   const editorState = EditorState.createWithContent(contentState, decorators);
   const updateTime = new Date(resultData.updatedAt || resultData.createdAt);
   const formattedTime = `${updateTime.getFullYear()}/${updateTime.getMonth() +
