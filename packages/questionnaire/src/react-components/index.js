@@ -1,7 +1,7 @@
 import Question from "./question";
 import QuestionCard from "./question-card";
 import Result from "./result";
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import cloneDeep from "lodash/cloneDeep";
 import difference from "lodash/difference";
 import intersection from "lodash/intersection";
@@ -25,9 +25,8 @@ export default function Questionnaire({ form, enableDebugViewer=false }) {
     return <h3>There is no question to answer</h3>;
   }
 
-  const copyForm = createFormData(form);
-
-  const emptyUserAnswers = createEmptyUserAnswers(copyForm.fields.length);
+  const copyForm = useMemo(() => createFormData(form), [form]);
+  const emptyUserAnswers = useMemo(() => createEmptyUserAnswers(copyForm.fields.length), [copyForm.fields.length]);
 
   const [userAnswers, setUserAnswers] = useState(emptyUserAnswers);
   const [currentQuestion, setCurrentQuestion] = useState(copyForm.fields[0]);
