@@ -40,7 +40,7 @@ const Wrapper = styled.button`
     @media (min-width: 1201px) {
       .normal {
         display: block;
-      }  
+      }
     }
   }
 
@@ -99,16 +99,18 @@ export default function CommentItem({ comment }) {
   const [contentTooLong, setContentTooLong] = useState(false)
   const contentRef = useRef()
 
-  useEffect(() => {
-    const isMobile = window.innerWidth < 768
-    const limit = isMobile ? 96 : 216
-    if (contentRef.current) {
-      const height = contentRef.current.clientHeight
-      if (height > limit) {
-        setContentTooLong(true)
-      }
-    }
-  }, [])
+  // Temporarily disable 展開全部
+  // due to some behavior errors
+  //useEffect(() => {
+  //  const isMobile = window.innerWidth < 768
+  //  const limit = isMobile ? 96 : 216
+  //  if (contentRef.current) {
+  //    const height = contentRef.current.clientHeight
+  //    if (height > limit) {
+  //      setContentTooLong(true)
+  //    }
+  //  }
+  //}, [])
 
   const feedbackClickedHandler = (e) => {
     setIsPressing(false)
@@ -118,16 +120,28 @@ export default function CommentItem({ comment }) {
       setContentExpand((contentExpand) => !contentExpand)
     }
   }
+  return (
+    <Wrapper>
+      <Header>
+        <Time>{comment.date}</Time>
+      </Header>
+      <Content ref={contentRef} >{comment.content}</Content>
+    </Wrapper>
+  )
 
-  return <Wrapper contentExpand={contentExpand} onMouseOver={() => { setIsHovering(true) }} onMouseOut={() => { setIsHovering(false) }} onMouseDown={() => { setIsPressing(true) }} onMouseUp={feedbackClickedHandler}>
-    <Header>
-      <Time>{comment.date}</Time>
-      <SVGWrapper>
-        < CommentStrongSvg className="strong" />
-        <CommentSvg className="normal" />
-      </SVGWrapper>
-    </Header>
-    <Content contentTooLong={contentTooLong} contentExpand={contentExpand} ref={contentRef} >{comment.content}</Content>
-    {contentTooLong && !contentExpand && <Hint>展開全部</Hint>}
-  </Wrapper >
+  // Temporarily disable 展開全部
+  // due to some behavior errors
+  //return <Wrapper contentExpand={contentExpand} onMouseOver={() => { setIsHovering(true) }} onMouseOut={() => { setIsHovering(false) }} onMouseDown={() => { setIsPressing(true) }} onMouseUp={feedbackClickedHandler}>
+  //  <Header>
+  //    <Time>{comment.date}</Time>
+  //    {[>
+  //    <SVGWrapper>
+  //      < CommentStrongSvg className="strong" />*
+  //      <CommentSvg className="normal" />
+  //    </SVGWrapper>
+  //    */}
+  //  </Header>
+  //  <Content contentTooLong={contentTooLong} contentExpand={contentExpand} ref={contentRef} >{comment.content}</Content>
+  //  {contentTooLong && !contentExpand && <Hint>展開全部</Hint>}
+  //</Wrapper >
 }

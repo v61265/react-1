@@ -116,7 +116,7 @@ export default function Questionnaire({ form, enableDebugViewer=false }) {
   return (
     <DefaultLayout>
       {debugViewerJsx}
-      {userAnswers[0].length === 0 && <Landing form={form} />}
+      <Landing form={form} />
       <QuestionCard isFristPage={userAnswers[0].length === 0}>
         <Question
           key={currentQuestion.id}

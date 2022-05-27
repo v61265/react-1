@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const pkg = require('./package.json')
+const webpack = require('webpack')
 
 const webpackAssets = {
   chunks: [],
@@ -86,7 +87,10 @@ const webpackConfig = {
       },
     },
   },
-  plugins: [new BundleListPlugin()],
+  plugins: [
+    new webpack.EnvironmentPlugin(['NODE_ENV']),
+    new BundleListPlugin(),
+  ],
 }
 
 module.exports = webpackConfig

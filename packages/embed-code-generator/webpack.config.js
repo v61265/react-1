@@ -2,6 +2,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const fs = require('fs')
 const path = require('path')
 const pkg = require('./package.json')
+const webpack = require('webpack')
 
 const webpackAssets = {
   chunks: [],
@@ -113,7 +114,11 @@ const webpackConfig = {
     },
   },
   */
-  plugins: [new BundleListPlugin()/*, new BundleAnalyzerPlugin()*/ ],
+  plugins: [
+    new webpack.EnvironmentPlugin(['NODE_ENV']),
+    new BundleListPlugin(),
+    /*, new BundleAnalyzerPlugin()*/
+  ],
 }
 
 module.exports = webpackConfig
