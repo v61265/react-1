@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const feedback_base_url = 'https://storytelling-dev-4g6paft7cq-de.a.run.app'
+const feedback_base_url = process.env.NODE_ENV === 'production' ? 'https://storytelling-prod-4g6paft7cq-de.a.run.app/' : 'https://storytelling-dev-4g6paft7cq-de.a.run.app/'
 
 const feedbackRequest = axios.create({
   baseURL: feedback_base_url
