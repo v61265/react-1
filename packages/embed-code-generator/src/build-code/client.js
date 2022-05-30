@@ -1,8 +1,8 @@
-import "regenerator-runtime/runtime";
+import 'regenerator-runtime/runtime'
 import FeedbackComponent from '@readr-media/react-feedback/lib/react-components'
 import QuestionnaireComponent from '@readr-media/react-questionnaire/lib/react-components'
 import QAListComponent from '@readr-media/react-qa-list/lib/react-components'
-import React from 'react'
+import React from 'react' // eslint-disable-line
 import { createRoot } from 'react-dom/client'
 
 const namespace = '@readr-media'
