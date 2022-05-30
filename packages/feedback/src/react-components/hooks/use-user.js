@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { v4 as uuidv4 } from 'uuid';
+import React /* eslint-disable-line */, { useState, useEffect } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 export default function useUser() {
   const [userId, setUserId] = useState(null)

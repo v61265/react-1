@@ -1,11 +1,9 @@
-import React from 'react'
+import React from 'react' // eslint-disable-line
 
 import useRecaptcha from './hooks/use-recaptcha'
 import Form from './form/form'
 
-
 import { formsData } from './mock-forms'
-
 
 export default function Feedback({ data = formsData }) {
   const forms = data.forms

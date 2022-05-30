@@ -1,8 +1,8 @@
-import React from 'react'
-import styled from 'styled-components';
+import React from 'react' // eslint-disable-line
+import styled from 'styled-components'
 
-import ThumbsField from './thumbs-form/thumbs-field';
-import CommentField from './comment-form/comment-field';
+import ThumbsField from './thumbs-form/thumbs-field'
+import CommentField from './comment-form/comment-field'
 
 const FormWrapper = styled.form`
   margin: 0 auto;
@@ -23,17 +23,23 @@ const FieldWrapper = styled.div`
 `
 
 export default function CustomForm({ form, verified }) {
-
   return (
     <FormWrapper>
       {form.fields.map((field) => {
         switch (field.type) {
           case 'text':
-            return <CommentField key={field.id} formId={form.id} field={field} verified={verified} />
+            return (
+              <CommentField
+                key={field.id}
+                formId={form.id}
+                field={field}
+                verified={verified}
+              />
+            )
           case 'single':
             return <ThumbsField key={field.id} formId={form.id} field={field} />
           default:
-            return (<FieldWrapper key={field.id}></FieldWrapper>)
+            return <FieldWrapper key={field.id}></FieldWrapper>
         }
       })}
     </FormWrapper>

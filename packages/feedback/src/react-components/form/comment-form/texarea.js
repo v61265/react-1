@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react' // eslint-disable-line
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
@@ -19,7 +19,14 @@ const Textarea = styled.textarea`
 `
 
 export default function CustomTextarea(props) {
-  return <Wrapper>
-    <Textarea placeholder={props.placeholder} name="feedback-post" onChange={props.onChange} value={props.textAreaValue} />
-  </Wrapper>
+  return (
+    <Wrapper>
+      <Textarea
+        placeholder={props.placeholder}
+        name="feedback-post"
+        onChange={props.onChange}
+        value={props.textAreaValue}
+      />
+    </Wrapper>
+  )
 }

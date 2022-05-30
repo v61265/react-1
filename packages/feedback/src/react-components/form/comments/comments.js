@@ -1,7 +1,7 @@
-import React from 'react'
-import styled from "styled-components";
+import React from 'react' // eslint-disable-line
+import styled from 'styled-components'
 
-import CommentItem from "./comment-item";
+import CommentItem from './comment-item'
 
 const Wrapper = styled.div`
   margin: 80px 0 60px 0;
@@ -38,7 +38,8 @@ const Button = styled.button`
   font-size: 18px;
   line-height: 27px;
 
-  &:hover, &:active {
+  &:hover,
+  &:active {
     background-color: #edeff2;
   }
 `
@@ -49,12 +50,17 @@ export default function Comments({ comments, onExpand, noMoreComment }) {
     onExpand()
   }
 
-  return <Wrapper>
-    <Title>網友回饋</Title>
-    {comments.map((comment) => (<CommentItem key={comment.id} comment={comment} />))}
-    {!noMoreComment && <ButtonWrapper>
-      <Button onClick={clickHandler}>展開更多</Button>
-    </ButtonWrapper>
-    }
-  </Wrapper>
+  return (
+    <Wrapper>
+      <Title>網友回饋</Title>
+      {comments.map((comment) => (
+        <CommentItem key={comment.id} comment={comment} />
+      ))}
+      {!noMoreComment && (
+        <ButtonWrapper>
+          <Button onClick={clickHandler}>展開更多</Button>
+        </ButtonWrapper>
+      )}
+    </Wrapper>
+  )
 }

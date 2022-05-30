@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useRef } from 'react'
-import styled from 'styled-components';
+import React /* eslint-disable-line */, { useEffect, useState, useRef } from 'react'
+import styled from 'styled-components'
 
-import ThumbField from './thumb-field';
-import useThumbsUp from '../../hooks/use-thumbsUp';
+import ThumbField from './thumb-field'
+import useThumbsUp from '../../hooks/use-thumbsUp'
 
 const Wrapper = styled.div`
   display: flex;
@@ -21,8 +21,6 @@ const ThumbWrapper = styled.div`
   margin-top: 20px;
   display: flex;
 `
-
-
 
 export default function ThumbsField({ formId, field }) {
   const [thumbUpChecked, setThumbUpChecked] = useState(false)
@@ -51,9 +49,8 @@ export default function ThumbsField({ formId, field }) {
         thumbValue = false
       }
       giveThumbUp(thumbValue)
-      timerRef.current = null;
+      timerRef.current = null
     }, 1000)
-
   }, [thumbUpChecked, thumbDownChecked])
 
   const thumbUpRadioClicked = () => {
