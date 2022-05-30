@@ -1,22 +1,22 @@
-import React from "react";
+import React from 'react' // eslint-disable-line
 
 const styles = {
   image: {
-    width: "100%",
+    width: '100%',
   },
-};
+}
 
 export function ImageBlock(entity) {
-  const { desc, imageFile, resized } = entity.getData();
+  const { desc, imageFile, resized } = entity.getData()
   return (
     <figure>
       <img
         style={styles.image}
         src={resized?.original}
         onError={(e) => (e.currentTarget.src = imageFile?.url)}
-        alt=''
+        alt=""
       />
       <figcaption>{desc}</figcaption>
     </figure>
-  );
+  )
 }

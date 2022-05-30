@@ -1,6 +1,6 @@
-import { CompositeDecorator } from "draft-js";
-import { colorTextDecorator } from "./color-text";
+import { CompositeDecorator } from 'draft-js'
+import { colorTextDecorator } from './color-text'
 
-const decorators = new CompositeDecorator([colorTextDecorator]);
+const decorators = new CompositeDecorator([colorTextDecorator])
 
-export default decorators;
+export default decorators
