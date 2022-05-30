@@ -1,4 +1,4 @@
-# [@readr-media/react-questionnaire](https://www.npmjs.com/package/@readr-media/react-embed-code-generator) &middot; ![npm version](https://img.shields.io/npm/v/@readr-media/react-questionnaire.svg?style=flat)
+# [@readr-media/react-questionnaire](https://www.npmjs.com/package/@readr-media/react-questionnaire) &middot; ![npm version](https://img.shields.io/npm/v/@readr-media/react-questionnaire.svg?style=flat)
 
 ## Installation
 `yarn install`
