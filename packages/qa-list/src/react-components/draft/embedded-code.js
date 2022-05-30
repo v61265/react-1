@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Parser } from 'htmlparser2'
 
 function parseEmbeddedCode(embeddedCode) {
-  const script = {}
+  let script = {}
   const scripts = []
   let scriptTagStart = false
   const parser = new Parser({
@@ -22,16 +22,16 @@ function parseEmbeddedCode(embeddedCode) {
       if (tagname === 'script' && scriptTagStart) {
         scriptTagStart = false
         scripts.push(script)
+        script = {}
       }
     },
   })
   parser.write(embeddedCode)
   parser.end()
   return {
-    embeddedCodeWithoutScript: embeddedCode.replace(
-      /<script(.+?)\/script>/g,
-      ''
-    ),
+    embeddedCodeWithoutScript: embeddedCode
+      .replace(/<script(.+?)\/script>/g, '')
+      .replace(/\x3Cscript(.+?)\/script>/g, ''),
     scripts,
   }
 }

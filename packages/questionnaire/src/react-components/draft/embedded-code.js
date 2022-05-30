@@ -21,7 +21,7 @@ export function parseEmbeddedCode(embeddedCode) {
     onclosetag: (tagname) => {
       if (tagname === 'script' && scriptTagStart) {
         scriptTagStart = false
-        scripts.push({}, script)
+        scripts.push(script)
         script = {}
       }
     },
