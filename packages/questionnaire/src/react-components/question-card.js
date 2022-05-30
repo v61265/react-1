@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react' // eslint-disable-line
+import styled from 'styled-components'
 
 const Card = styled.div`
   ${(props) =>
@@ -12,8 +12,8 @@ const Card = styled.div`
     @media screen and (min-width: 768px) {
       padding: 16px 24px;
     }`}}
-`;
+`
 
 export default function QuestionCard(props) {
-  return <Card isFristPage={props.isFristPage}>{props.children}</Card>;
+  return <Card isFristPage={props.isFristPage}>{props.children}</Card>
 }

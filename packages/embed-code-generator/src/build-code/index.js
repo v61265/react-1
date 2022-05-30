@@ -49,10 +49,10 @@ export function buildEmbeddedCode(pkgName, data, webpackAssets) {
       })()
     </script>
     <div id=${uuid}></div>
-    ${_.map(chunks, chunk => {
+    ${_.map(chunks, (chunk) => {
       return `<script type="text/javascript" defer crossorigin src="${chunk}"></script>`
     }).join('')}
-    ${_.map(bundles, bundle => {
+    ${_.map(bundles, (bundle) => {
       return `<script type="text/javascript" defer crossorigin src="${bundle}"></script>`
     }).join('')}
   `

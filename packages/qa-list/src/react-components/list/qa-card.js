@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { Editor, EditorState, convertFromRaw } from "draft-js";
-import decorators from "../draft/entity-decorator";
-import { atomicBlockRenderer } from "../draft/block-redender-fn";
+import React/* eslint-disable-line */, { useState } from 'react'
+import styled from 'styled-components'
+import { Editor, EditorState, convertFromRaw } from 'draft-js'
+import decorators from '../draft/entity-decorator'
+import { atomicBlockRenderer } from '../draft/block-redender-fn'
 
 const blockRendererFn = (block) => {
-  const atomicBlockObj = atomicBlockRenderer(block);
-  return atomicBlockObj;
-};
+  const atomicBlockObj = atomicBlockRenderer(block)
+  return atomicBlockObj
+}
 
 const CardWrapper = styled.div`
   background: #ffffff;
@@ -16,7 +16,7 @@ const CardWrapper = styled.div`
   max-width: 600px;
   padding: 12px 16px;
   margin: 0 8px;
-  font-family: "Noto Sans CJK TC", sans-serif;
+  font-family: 'Noto Sans CJK TC', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -28,7 +28,7 @@ const CardWrapper = styled.div`
   & + & {
     margin-top: 8px;
   }
-`;
+`
 
 const Question = styled.div`
   display: flex;
@@ -39,7 +39,7 @@ const Question = styled.div`
   &:hover {
     cursor: pointer;
   }
-`;
+`
 
 const MoreIcon = styled.div`
   margin-left: 16px;
@@ -48,7 +48,7 @@ const MoreIcon = styled.div`
   @media screen and (min-width: 768px) {
     font-size: 24px;
   }
-`;
+`
 
 const Answer = styled.div`
   padding-top: 12px;
@@ -68,7 +68,7 @@ const Answer = styled.div`
         display: flex;
         align-items: center;
         ::before {
-          content: "";
+          content: '';
           display: block;
           width: 3px;
           height: 3px;
@@ -79,18 +79,18 @@ const Answer = styled.div`
       }
     }
   }
-`;
+`
 
 export default function QuestionCard({ questionItem }) {
-  const [isOpen, serIsOpen] = useState(false);
-  const { title, content } = questionItem;
-  const contentState = convertFromRaw(content);
-  const editorState = EditorState.createWithContent(contentState, decorators);
+  const [isOpen, serIsOpen] = useState(false)
+  const { title, content } = questionItem
+  const contentState = convertFromRaw(content)
+  const editorState = EditorState.createWithContent(contentState, decorators)
   return (
     <CardWrapper>
       <Question onClick={() => serIsOpen(!isOpen)}>
         {title}
-        <MoreIcon>{isOpen ? "-" : "+"}</MoreIcon>
+        <MoreIcon>{isOpen ? '-' : '+'}</MoreIcon>
       </Question>
       {isOpen && (
         <Answer>
@@ -102,5 +102,5 @@ export default function QuestionCard({ questionItem }) {
         </Answer>
       )}
     </CardWrapper>
-  );
+  )
 }

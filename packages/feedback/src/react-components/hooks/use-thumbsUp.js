@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React/* eslint-disable-line */, { useState, useEffect, useRef } from 'react'
 
-import useUser from './use-user';
+import useUser from './use-user'
 import { getLikes, giveLikes } from '../api'
 
 export default function useThumbsUp(formId, fieldId) {
@@ -26,12 +26,12 @@ export default function useThumbsUp(formId, fieldId) {
     }
     // send request without error handle
     try {
-      const result = await giveLikes({
+      const result = await giveLikes({ // eslint-disable-line
         name: userId,
         form: formId,
-        responseTime: new Date,
+        responseTime: new Date(),
         field: fieldId,
-        userFeedback: thumbUp
+        userFeedback: thumbUp,
       })
     } catch (error) {
       // do nothing for now
@@ -60,6 +60,6 @@ export default function useThumbsUp(formId, fieldId) {
 
   return {
     thumbsUp,
-    giveThumbUp
+    giveThumbUp,
   }
 }

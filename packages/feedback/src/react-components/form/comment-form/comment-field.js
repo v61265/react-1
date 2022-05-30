@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React/* eslint-disable-line */, { useState } from 'react'
 import styled from 'styled-components'
 
 import Comments from '../comments/comments'
@@ -22,7 +22,7 @@ const ButtonWrapper = styled.div`
 const Button = styled.button`
   margin-top: 12px;
   width: 120px;
-  background-color: #04295E;
+  background-color: #04295e;
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -33,7 +33,8 @@ const Button = styled.button`
   font-size: 18px;
   line-height: 27px;
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     background-color: #000928;
   }
   &:disabled {
@@ -45,11 +46,15 @@ const Button = styled.button`
   }
 `
 
-
 export default function CommentField({ formId, field, verified }) {
   const [enableSumbit, setEnableSubmit] = useState(false)
   const [textareaValue, setTextareaValue] = useState('')
-  const { comments, noMoreComment, loadMoreComments, postComment } = useComments(formId, field.id)
+  const {
+    comments,
+    noMoreComment,
+    loadMoreComments,
+    postComment,
+  } = useComments(formId, field.id)
 
   const textareaChangedHandler = (e) => {
     const value = e.target.value
@@ -71,13 +76,25 @@ export default function CommentField({ formId, field, verified }) {
 
   return (
     <Wrapper>
-      {verified && (<>
-        <Textarea placeholder={field.name} textAreaValue={textareaValue} onChange={textareaChangedHandler} />
-        <ButtonWrapper>
-          <Button disabled={!enableSumbit} onClick={submitHandler}>送出</Button>
-        </ButtonWrapper>
-      </>)}
-      <Comments comments={comments} onExpand={loadMoreComments} noMoreComment={noMoreComment} />
+      {verified && (
+        <>
+          <Textarea
+            placeholder={field.name}
+            textAreaValue={textareaValue}
+            onChange={textareaChangedHandler}
+          />
+          <ButtonWrapper>
+            <Button disabled={!enableSumbit} onClick={submitHandler}>
+              送出
+            </Button>
+          </ButtonWrapper>
+        </>
+      )}
+      <Comments
+        comments={comments}
+        onExpand={loadMoreComments}
+        noMoreComment={noMoreComment}
+      />
     </Wrapper>
   )
 }

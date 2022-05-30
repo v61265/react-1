@@ -76,12 +76,12 @@ const webpackConfig = {
       cacheGroups: {
         reactVendor: {
           test: /[\\/]node_modules[\\/](react|react-dom|styled-components)[\\/]/,
-          name: "reactvendor",
+          name: 'reactvendor',
           filename: '[name].[chunkhash].chunk.js',
         },
         vendor: {
           test: /[\\/]node_modules[\\/]/,
-          name: "vendor",
+          name: 'vendor',
           filename: '[name].[chunkhash].chunk.js',
         },
       },

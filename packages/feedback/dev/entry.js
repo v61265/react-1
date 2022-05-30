@@ -1,6 +1,6 @@
-import "regenerator-runtime/runtime";
+import 'regenerator-runtime/runtime'
 
-import React from 'react'
+import React from 'react' // eslint-disable-line
 import FeedbackComponent from '../src/react-components'
 import { createRoot } from 'react-dom/client'
 

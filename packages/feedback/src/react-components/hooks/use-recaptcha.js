@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React /* eslint-disable-line */, { useState, useEffect, useCallback } from 'react'
 
 import { verifyRecaptcha } from '../api'
 
@@ -10,9 +10,12 @@ export default function useRecaptcha() {
   const getReCaptchaToken = useCallback(() => {
     const { grecaptcha } = window
     grecaptcha.enterprise.ready(async () => {
-      const token = await grecaptcha.enterprise.execute('6LfjDw4gAAAAAEoKF6fhiBvFEoPPFvO7KUb_-50J', { action })
+      const token = await grecaptcha.enterprise.execute(
+        '6LfjDw4gAAAAAEoKF6fhiBvFEoPPFvO7KUb_-50J',
+        { action }
+      )
       try {
-        const result = await verifyRecaptcha({ token, recaptchaAction: action })
+        const result = await verifyRecaptcha({ token, recaptchaAction: action }) // eslint-disable-line
       } catch (error) {
         if (error.response.status === 401) {
           setVerified(false)
@@ -26,7 +29,8 @@ export default function useRecaptcha() {
   useEffect(() => {
     const script = document.createElement('script')
     script.type = 'text/javascript'
-    script.src = 'https://www.google.com/recaptcha/enterprise.js?render=6LfjDw4gAAAAAEoKF6fhiBvFEoPPFvO7KUb_-50J'
+    script.src =
+      'https://www.google.com/recaptcha/enterprise.js?render=6LfjDw4gAAAAAEoKF6fhiBvFEoPPFvO7KUb_-50J'
     script.id = 'recaptcha-key'
     script.onload = async () => {
       getReCaptchaToken()

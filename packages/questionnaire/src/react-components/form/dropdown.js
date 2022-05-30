@@ -1,5 +1,5 @@
-import React, { useState, useRef } from "react";
-import styled from "styled-components";
+import React, { useState, useRef } from 'react'
+import styled from 'styled-components'
 
 const Title = styled.h3`
   padding: 16px 0;
@@ -8,10 +8,10 @@ const Title = styled.h3`
   font-weight: 400;
   line-height: 150%;
   box-sizing: border-box;
-  font-family: "Noto Sans CJK TC", sans-serif;
+  font-family: 'Noto Sans CJK TC', sans-serif;
   width: 320px;
   margin: 0;
-`;
+`
 const DropdownOptionList = styled.ul`
   position: relative;
   margin: 0;
@@ -20,7 +20,7 @@ const DropdownOptionList = styled.ul`
   overflow-y: auto;
   background: #ffffff;
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     right: 16px;
@@ -28,7 +28,7 @@ const DropdownOptionList = styled.ul`
     height: 1px;
     background-color: #e0e0e0;
   }
-`;
+`
 
 const DropdownOption = styled.li`
   color: #000928;
@@ -42,7 +42,7 @@ const DropdownOption = styled.li`
     background-color: #04295e;
     cursor: pointer;
   }
-`;
+`
 const DropdownWrapper = styled.section`
   * {
     font-style: normal;
@@ -50,7 +50,7 @@ const DropdownWrapper = styled.section`
     font-size: 18px;
     line-height: 150%;
     box-sizing: border-box;
-    font-family: "Noto Sans CJK TC", sans-serif;
+    font-family: 'Noto Sans CJK TC', sans-serif;
   }
   border-radius: 6px;
   border: 1px solid;
@@ -60,7 +60,7 @@ const DropdownWrapper = styled.section`
   display: flex;
   flex-direction: column;
   margin: 0 0 24px;
-`;
+`
 const DropdownInput = styled.div`
   box-sizing: border-box;
   width: 100%;
@@ -85,8 +85,8 @@ const DropdownInput = styled.div`
     border-color: #04295e transparent transparent transparent;
   }
   ${(props) => props.isListOpen && `.arrow {transform: rotate(180deg);}`}
-`;
-const defaultTitle = "這是選項>=4的單選題";
+`
+const defaultTitle = '這是選項>=4的單選題'
 
 /**
  *  @param {Object} props
@@ -98,21 +98,21 @@ const defaultTitle = "這是選項>=4的單選題";
  */
 
 export default function Dropdown({ title = defaultTitle, ...props }) {
-  const inputRef = useRef(null);
-  const [isListOpen, setIsListOpen] = useState(false);
+  const inputRef = useRef(null)
+  const [isListOpen, setIsListOpen] = useState(false)
   const focusInput = () => {
-    inputRef.current.focus();
-    inputRef.current.style.borderColor = "#04295e";
-  };
+    inputRef.current.focus()
+    inputRef.current.style.borderColor = '#04295e'
+  }
   const toggleList = () => {
-    setIsListOpen((isListOpen) => !isListOpen);
-    focusInput();
-  };
+    setIsListOpen((isListOpen) => !isListOpen)
+    focusInput()
+  }
   const chooseOption = (option) => {
-    toggleList();
-    props.onChange(option.value);
-    inputRef.current.children[0].value = option.name;
-  };
+    toggleList()
+    props.onChange(option.value)
+    inputRef.current.children[0].value = option.name
+  }
   const optionItem = props.options.map((option) => (
     <DropdownOption
       onClick={() => chooseOption(option)}
@@ -120,7 +120,7 @@ export default function Dropdown({ title = defaultTitle, ...props }) {
     >
       {option.name}
     </DropdownOption>
-  ));
+  ))
 
   return (
     <React.Fragment>
@@ -131,11 +131,11 @@ export default function Dropdown({ title = defaultTitle, ...props }) {
           onClick={toggleList}
           isListOpen={isListOpen}
         >
-          <input readOnly placeholder='請選擇' />
-          <span className='arrow'></span>
+          <input readOnly placeholder="請選擇" />
+          <span className="arrow"></span>
         </DropdownInput>
         {isListOpen && <DropdownOptionList>{optionItem}</DropdownOptionList>}
       </DropdownWrapper>
     </React.Fragment>
-  );
+  )
 }

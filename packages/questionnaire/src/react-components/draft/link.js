@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react' // eslint-disable-line
 
 function findLinkEntities(contentBlock, callback, contentState) {
   contentBlock.findEntityRanges((character) => {
@@ -13,7 +13,14 @@ function findLinkEntities(contentBlock, callback, contentState) {
 function Link(props) {
   const { url } = props.contentState.getEntity(props.entityKey).getData()
   return (
-    <a href={url} style={{borderBottom: '2px solid #ebf02c', textDecoration: 'none', color: 'rgba(0,9,40,0.66)'}}>
+    <a
+      href={url}
+      style={{
+        borderBottom: '2px solid #ebf02c',
+        textDecoration: 'none',
+        color: 'rgba(0,9,40,0.66)',
+      }}
+    >
       {props.children}
     </a>
   )

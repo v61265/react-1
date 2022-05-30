@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useState } from 'react' // eslint-disable-line
+import styled from 'styled-components'
 
 /**
  *  @param {Object} props
@@ -13,7 +13,7 @@ import styled from "styled-components";
 const Label = styled.label`
   display: flex;
   align-items: center;
-  font-family: "Noto Sans CJK TC", sans-serif;
+  font-family: 'Noto Sans CJK TC', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
@@ -26,11 +26,11 @@ const Label = styled.label`
       border-color: #000928;
     }
   }
-`;
+`
 
 const RadioInput = styled.input`
   display: none;
-`;
+`
 
 const Radiomark = styled.div`
   width: 18px;
@@ -56,28 +56,28 @@ const Radiomark = styled.div`
       background-color: #04295e;
     }
     `}
-`;
+`
 
 const RadioTitle = styled.h3`
-  font-family: "Noto Sans CJK TC", sans-serif;
+  font-family: 'Noto Sans CJK TC', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
   line-height: 200%;
   color: #000928;
   margin: 0;
-`;
+`
 
 const Wrapper = styled.div`
   margin-bottom: 24px;
-`;
+`
 
 export default function Radio(props) {
   const optionsJsx = props.options?.map((o, index) => (
     <React.Fragment key={index}>
       <Label htmlFor={`option-${o.id}`}>
         <RadioInput
-          type='radio'
+          type="radio"
           id={`option-${o.id}`}
           name={props.title}
           value={o.value}
@@ -85,17 +85,17 @@ export default function Radio(props) {
           onChange={(e) => props.onChange(e.target.value)}
         />
         <Radiomark
-          className='radiomark'
+          className="radiomark"
           isChecked={props.checkedValue === o.value}
         />
         {o.name}
       </Label>
     </React.Fragment>
-  ));
+  ))
   return (
     <Wrapper>
       <RadioTitle>{props.title}</RadioTitle>
       {optionsJsx}
     </Wrapper>
-  );
+  )
 }

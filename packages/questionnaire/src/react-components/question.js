@@ -1,10 +1,8 @@
 import Radio from './form/radio'
 import Checkbox from './form/checkbox'
 import Dropdown from './form/dropdown'
-import React, { useState } from 'react'
+import React /* eslint-disable-line */ , { useState } from 'react'
 import SubmitBt from './form/buttons'
-
-
 
 /**
  *  @typedef {Object} QuestionProps
@@ -23,17 +21,19 @@ export default function Question(props) {
     case 'checkbox': {
       // TODO: add Checkbox component
       optionsJsx = (
-        <Checkbox 
+        <Checkbox
           title={props.name}
           options={props.options}
           checkedValue={answer}
-          onChange={(value) => {setAnswer(value)}}
+          onChange={(value) => {
+            setAnswer(value)
+          }}
         />
       )
-        
+
       break
     }
-    
+
     case 'text': {
       // TODO: add TextArea Component
       break
@@ -42,22 +42,26 @@ export default function Question(props) {
     // TODO: discuss with HC
     // since we have to decide to render Radio component or Dropdown component here
     case 'single': {
-      if(props.options.length >=4){
+      if (props.options.length >= 4) {
         optionsJsx = (
           <Dropdown
             title={props.name}
             options={props.options}
             checkedValue={answer?.[0]}
-            onChange={(value) => {setAnswer([value])}}
+            onChange={(value) => {
+              setAnswer([value])
+            }}
           />
         )
-      }else {
+      } else {
         optionsJsx = (
           <Radio
             title={props.name}
             options={props.options}
             checkedValue={answer?.[0]}
-            onChange={(value) => {setAnswer([value])}}
+            onChange={(value) => {
+              setAnswer([value])
+            }}
           />
         )
       }
@@ -69,7 +73,9 @@ export default function Question(props) {
           title={props.name}
           options={props.options}
           checkedValue={answer?.[0]}
-          onChange={(value) => {setAnswer([value])}}
+          onChange={(value) => {
+            setAnswer([value])
+          }}
         />
       )
     }
@@ -78,15 +84,18 @@ export default function Question(props) {
     <>
       {optionsJsx}
       {/* TODO: change SubmitBt to 依軒's version */}
-      <SubmitBt title='下一步' disabled={answer.length===0} onClick={() => {
-        if (answer.length === 0) {
-          // User did not answer the question.
-          // Do nothing.
-          return
-        }
-        props.onAnswer(answer)
-      }}/>
+      <SubmitBt
+        title="下一步"
+        disabled={answer.length === 0}
+        onClick={() => {
+          if (answer.length === 0) {
+            // User did not answer the question.
+            // Do nothing.
+            return
+          }
+          props.onAnswer(answer)
+        }}
+      />
     </>
   )
 }
-

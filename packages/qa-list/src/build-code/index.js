@@ -1,14 +1,14 @@
 /* eslint no-console: 0 */
-import buildConst from "./constants";
-import get from "lodash/get";
-import map from "lodash/map";
-import serialize from "serialize-javascript";
-import { v4 as uuidv4 } from "uuid";
+import buildConst from './constants'
+import get from 'lodash/get'
+import map from 'lodash/map'
+import serialize from 'serialize-javascript'
+import { v4 as uuidv4 } from 'uuid'
 
 const _ = {
   get,
   map,
-};
+}
 
 /**
  *
@@ -21,13 +21,13 @@ const _ = {
  */
 export function buildEmbeddedCode(data, webpackAssets) {
   // use uuid to avoid duplication id
-  const uuid = uuidv4();
+  const uuid = uuidv4()
   const dataWithUuid = {
     ...data,
     uuid,
-  };
+  }
 
-  const { chunks, bundles } = webpackAssets;
+  const { chunks, bundles } = webpackAssets
 
   return `
     <script>
@@ -50,10 +50,10 @@ export function buildEmbeddedCode(data, webpackAssets) {
     </script>
     <div id=${uuid}></div>
     ${_.map(chunks, (chunk) => {
-      return `<script type="text/javascript" defer crossorigin src="${chunk}"></script>`;
-    }).join("")}
+      return `<script type="text/javascript" defer crossorigin src="${chunk}"></script>`
+    }).join('')}
     ${_.map(bundles, (bundle) => {
-      return `<script type="text/javascript" defer crossorigin src="${bundle}"></script>`;
-    }).join("")}
-  `;
+      return `<script type="text/javascript" defer crossorigin src="${bundle}"></script>`
+    }).join('')}
+  `
 }

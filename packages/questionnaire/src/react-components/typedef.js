@@ -1,4 +1,4 @@
-import { RawDraftContentState } from 'draft-js'
+import { RawDraftContentState } from 'draft-js' // eslint-disable-line
 
 /**
  *  @typedef {Object} Condition
