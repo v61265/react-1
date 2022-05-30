@@ -1,6 +1,6 @@
-import "regenerator-runtime/runtime";
+import 'regenerator-runtime/runtime'
 import buildConst from './constants'
-import React from 'react'
+import React from 'react' // eslint-disable-line
 import { createRoot } from 'react-dom/client'
 import Questionnaire from '../react-components'
 

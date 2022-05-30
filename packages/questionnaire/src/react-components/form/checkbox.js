@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react'
+import styled from 'styled-components'
 
 const Title = styled.h3`
   padding: 16px 0;
@@ -8,10 +8,10 @@ const Title = styled.h3`
   font-weight: 400;
   line-height: 150%;
   box-sizing: border-box;
-  font-family: "Noto Sans CJK TC", sans-serif;
+  font-family: 'Noto Sans CJK TC', sans-serif;
   width: 320px;
   margin: 0;
-`;
+`
 
 const CheckboxWrapper = styled.section`
   * {
@@ -22,14 +22,14 @@ const CheckboxWrapper = styled.section`
     list-style: none;
     box-sizing: border-box;
     margin: 0;
-    font-family: "Noto Sans CJK TC", sans-serif;
+    font-family: 'Noto Sans CJK TC', sans-serif;
     padding: 0;
   }
   width: 320px;
   display: flex;
   flex-direction: column;
   padding: 16px 24px 20px;
-`;
+`
 
 const CheckboxOptionList = styled.ul`
   position: relative;
@@ -37,7 +37,7 @@ const CheckboxOptionList = styled.ul`
   padding: 4px 0;
   max-height: 240px;
   overflow-y: auto;
-`;
+`
 
 const CheckboxOption = styled.li`
   color: #000928;
@@ -74,7 +74,7 @@ const CheckboxOption = styled.li`
       border: 2px solid rgba(0, 9, 40, 0.3);
       border-radius: 3px;
       &:after {
-        content: "";
+        content: '';
         position: absolute;
         display: none;
       }
@@ -97,9 +97,9 @@ const CheckboxOption = styled.li`
       transform: rotate(45deg);
     }
   }
-`;
+`
 
-const defaultTitle = "這是複選題";
+const defaultTitle = '這是複選題'
 
 /**
  *  @param {Object} props
@@ -117,30 +117,27 @@ export default function Checkbox({
 }) {
   const chooseOption = (option) => {
     if (checkedValue.indexOf(option) > -1) {
-      props.onChange(checkedValue.filter((item) => item !== option));
+      props.onChange(checkedValue.filter((item) => item !== option))
     } else {
-      props.onChange(checkedValue.concat(option));
+      props.onChange(checkedValue.concat(option))
     }
-  };
+  }
   const optionItem = props.options.map((option) => (
     <CheckboxOption key={`option-${option.id}`}>
-      <label
-        className='container'
-        htmlFor={`option-${option.id}`}
-      >
+      <label className="container" htmlFor={`option-${option.id}`}>
         {option.name}
         <input
-          type='checkbox'
+          type="checkbox"
           id={`option-${option.id}`}
           value={option.value}
           onChange={(e) => {
             chooseOption(e.target.value)
           }}
         />
-        <span className='checkmark'></span>
+        <span className="checkmark"></span>
       </label>
     </CheckboxOption>
-  ));
+  ))
 
   return (
     <React.Fragment>
@@ -149,5 +146,5 @@ export default function Checkbox({
         <CheckboxOptionList>{optionItem}</CheckboxOptionList>
       </CheckboxWrapper>
     </React.Fragment>
-  );
+  )
 }

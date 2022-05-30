@@ -87,10 +87,14 @@ query {
 }
 `
 
-axios.post(endpoint, { query })
+axios
+  .post(endpoint, { query })
   .then((res) => {
     console.log(res?.data?.data?.form)
-    fs.writeFileSync('./mock-data.json', JSON.stringify(res?.data?.data?.form, null , 2))
+    fs.writeFileSync(
+      './mock-data.json',
+      JSON.stringify(res?.data?.data?.form, null, 2)
+    )
   })
   .catch((err) => {
     console.error(err.response.data.errors)

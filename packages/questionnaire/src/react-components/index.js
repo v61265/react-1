@@ -1,20 +1,20 @@
-import Question from "./question";
-import QuestionCard from "./question-card";
-import Result from "./result";
-import React, { useState, useMemo } from "react";
-import cloneDeep from "lodash/cloneDeep";
-import difference from "lodash/difference";
-import intersection from "lodash/intersection";
+import Question from './question'
+import QuestionCard from './question-card'
+import Result from './result'
+import React/* eslint-disable-line */, { useState, useMemo } from 'react'
+import cloneDeep from 'lodash/cloneDeep'
+import difference from 'lodash/difference'
+import intersection from 'lodash/intersection'
 // import { RawDraftContentState } from 'draft-js'
-import Landing from "./landing";
-import DefaultLayout from "./layout/default-layout";
-import { EmbeddedCodeBlock } from './draft/embedded-code';
+import Landing from './landing'
+import DefaultLayout from './layout/default-layout'
+import { EmbeddedCodeBlock } from './draft/embedded-code'
 
 const _ = {
   cloneDeep,
   difference,
   intersection,
-};
+}
 
 /**
  *  @param {Object} opts
@@ -22,23 +22,38 @@ const _ = {
  *  @param {boolean} [opts.enableDebugViewer=false]
  *  @return {React.ReactElement}
  */
-export default function Questionnaire({ form, enableDebugViewer=false }) {
+export default function Questionnaire({ form, enableDebugViewer = false }) {
   if (!Array.isArray(form?.fields)) {
-    return <h3>There is no question to answer</h3>;
+    return <h3>There is no question to answer</h3>
   }
 
-  const copyForm = useMemo(() => createFormData(form), [form]);
-  const emptyUserAnswers = useMemo(() => createEmptyUserAnswers(copyForm.fields.length), [copyForm.fields.length]);
+  const copyForm = useMemo(() => createFormData(form), [form])
+  const emptyUserAnswers = useMemo(
+    () => createEmptyUserAnswers(copyForm.fields.length),
+    [copyForm.fields.length]
+  )
 
-  const [userAnswers, setUserAnswers] = useState(emptyUserAnswers);
-  const [currentQuestion, setCurrentQuestion] = useState(copyForm.fields[0]);
+  const [userAnswers, setUserAnswers] = useState(emptyUserAnswers)
+  const [currentQuestion, setCurrentQuestion] = useState(copyForm.fields[0])
   const [currentFormCondition, setCurrentFormCondition] = useState(null)
 
   let debugViewerJsx = null
   if (enableDebugViewer) {
     debugViewerJsx = (
-      <div style={{ position: 'fixed', right: '10px', top: '30%', height: '50vh', overflow: 'scroll'}}>
-        <pre id="json">{currentFormCondition ? JSON.stringify(currentFormCondition, null, 4) : 'No form condition matched'}</pre>
+      <div
+        style={{
+          position: 'fixed',
+          right: '10px',
+          top: '30%',
+          height: '50vh',
+          overflow: 'scroll',
+        }}
+      >
+        <pre id="json">
+          {currentFormCondition
+            ? JSON.stringify(currentFormCondition, null, 4)
+            : 'No form condition matched'}
+        </pre>
       </div>
     )
   }
@@ -48,14 +63,14 @@ export default function Questionnaire({ form, enableDebugViewer=false }) {
     const matchedFormCondition = matchConditions(
       userAnswers,
       copyForm.conditions
-    );
+    )
     if (matchedFormCondition) {
       if (enableDebugViewer) {
         if (matchedFormCondition.id !== currentFormCondition?.id) {
           setCurrentFormCondition(matchedFormCondition)
         }
       }
-      const { answer, next, goOut } = matchedFormCondition;
+      const { answer, next, goOut } = matchedFormCondition
       if (answer) {
         return (
           <>
@@ -63,21 +78,23 @@ export default function Questionnaire({ form, enableDebugViewer=false }) {
             <Result
               resultData={copyForm.answers?.find((a) => a.id === answer.id)}
             />
-            <div style={{ marginTop: '60px'}}>
-              <EmbeddedCodeBlock getData={() => {
-                return {
-                  caption: '',
-                  embeddedCode: form?.feedback || '',
-                }
-              }} />
+            <div style={{ marginTop: '60px' }}>
+              <EmbeddedCodeBlock
+                getData={() => {
+                  return {
+                    caption: '',
+                    embeddedCode: form?.feedback || '',
+                  }
+                }}
+              />
             </div>
           </>
-        );
+        )
       }
 
       if (goOut) {
         // TODO: render GoOut component
-        return <div>render goOut component</div>;
+        return <div>render goOut component</div>
       }
 
       if (!next) {
@@ -86,7 +103,9 @@ export default function Questionnaire({ form, enableDebugViewer=false }) {
         return (
           <>
             {debugViewerJsx}
-            <Result resultData={{name: `Next question is not specified`}}></Result>
+            <Result
+              resultData={{ name: `Next question is not specified` }}
+            ></Result>
           </>
         )
       }
@@ -96,18 +115,24 @@ export default function Questionnaire({ form, enableDebugViewer=false }) {
         return (
           <>
             {debugViewerJsx}
-            <Result resultData={{name: `Next question is not configured right. The next question name is ${nextQ.name}`}}></Result>
+            <Result
+              resultData={{
+                name: `Next question is not configured right. The next question name is ${nextQ.name}`,
+              }}
+            ></Result>
           </>
         )
       }
 
       // Go to next queustion
-      setCurrentQuestion(nextQ);
+      setCurrentQuestion(nextQ)
     } else {
       return (
         <>
           {debugViewerJsx}
-          <Result resultData={{name: 'There is no matched condition'}}></Result>
+          <Result
+            resultData={{ name: 'There is no matched condition' }}
+          ></Result>
         </>
       )
     }
@@ -126,15 +151,15 @@ export default function Questionnaire({ form, enableDebugViewer=false }) {
              *  @param {string[]} a
              */
             (a) => {
-              const newUserAnswers = [...userAnswers];
-              newUserAnswers[currentQuestion.number] = a;
-              setUserAnswers(newUserAnswers);
+              const newUserAnswers = [...userAnswers]
+              newUserAnswers[currentQuestion.number] = a
+              setUserAnswers(newUserAnswers)
             }
           }
         />
       </QuestionCard>
     </DefaultLayout>
-  );
+  )
 }
 
 /**
@@ -148,20 +173,20 @@ export default function Questionnaire({ form, enableDebugViewer=false }) {
 function matchCondition(answer, condition) {
   // no answer
   if (answer.length === 0) {
-    return false;
+    return false
   }
 
   switch (condition.compare) {
-    case "not": {
+    case 'not': {
       // Check if there is no any answer to match any option
       return (
         _.intersection(
           answer,
           condition?.option?.map((o) => o.value)
         ).length === 0
-      );
+      )
     }
-    case "include": {
+    case 'include': {
       // Check if answers include all options
       return (
         answer.length >= condition?.option?.length &&
@@ -169,13 +194,13 @@ function matchCondition(answer, condition) {
           answer,
           condition?.option?.map((o) => o.value)
         ).length === condition.option.length
-      );
+      )
     }
-    case "exclude": {
+    case 'exclude': {
       // TODO: add compare logics
-      return false;
+      return false
     }
-    case "is":
+    case 'is':
     default: {
       // Check if exactly match
       return (
@@ -184,7 +209,7 @@ function matchCondition(answer, condition) {
           answer,
           condition?.option?.map((o) => o.value)
         ).length === 0
-      );
+      )
     }
   }
 }
@@ -199,27 +224,27 @@ function matchCondition(answer, condition) {
  *  @return {import('./typedef').FormCondition}
  */
 function matchConditions(userAnswers, formConditions) {
-  let matchedFormCondition = null;
+  let matchedFormCondition = null
   for (const fc of formConditions) {
-    let matches = [];
+    let matches = []
     for (const c of fc.condition) {
-      const questionNo = c.formField.number;
-      matches.push(matchCondition(userAnswers[questionNo], c));
+      const questionNo = c.formField.number
+      matches.push(matchCondition(userAnswers[questionNo], c))
     }
-    let matched = false;
-    if (fc.type === "AND") {
-      matched = matches.indexOf(false) === -1;
+    let matched = false
+    if (fc.type === 'AND') {
+      matched = matches.indexOf(false) === -1
     } /* cs.type === 'OR'*/ else {
-      matched = matches.indexOf(true) > -1;
+      matched = matches.indexOf(true) > -1
     }
 
     if (matched) {
-      matchedFormCondition = fc;
-      break;
+      matchedFormCondition = fc
+      break
     }
   }
 
-  return matchedFormCondition;
+  return matchedFormCondition
 }
 
 /**
@@ -232,12 +257,12 @@ function matchConditions(userAnswers, formConditions) {
  *  @return {import('./typedef').Form} new deep copy of form
  */
 function createFormData(form) {
-  const copyForm = _.cloneDeep(form);
+  const copyForm = _.cloneDeep(form)
 
   // sort question by sortOrder
   copyForm.fields.sort((a, b) => {
-    return a.sortOrder - b.sortOrder;
-  });
+    return a.sortOrder - b.sortOrder
+  })
 
   // Raw question object has `id` and `sortOrder` properties.
   // `id` is auto incremented by database;
@@ -246,18 +271,18 @@ function createFormData(form) {
   //  1. `sortOrder`s are identical
   //  2. questions' order is not equal to `id`s' order
   //  Therefore, we append the `number` property in each question.
-  applyQuestionNumber(copyForm.fields);
+  applyQuestionNumber(copyForm.fields)
 
   if (Array.isArray(copyForm?.conditions)) {
     // sort conditions by order
     copyForm.conditions.sort((a, b) => {
-      return a.order - b.order;
-    });
+      return a.order - b.order
+    })
 
-    applyQuestionNumberInConditions(copyForm.conditions, copyForm.fields);
+    applyQuestionNumberInConditions(copyForm.conditions, copyForm.fields)
   }
 
-  return copyForm;
+  return copyForm
 }
 
 /**
@@ -268,11 +293,11 @@ function createFormData(form) {
  *  @return {string[][]}
  */
 function createEmptyUserAnswers(questionNumber) {
-  const rtn = [];
+  const rtn = []
   for (let i = 0; i < questionNumber; i++) {
-    rtn.push([]);
+    rtn.push([])
   }
-  return rtn;
+  return rtn
 }
 
 /**
@@ -284,8 +309,8 @@ function createEmptyUserAnswers(questionNumber) {
 function applyQuestionNumber(questions) {
   // append question number
   for (let i = 0; i < questions.length; i++) {
-    const q = questions[i];
-    q.number = i;
+    const q = questions[i]
+    q.number = i
   }
 }
 
@@ -301,7 +326,7 @@ function applyQuestionNumberInConditions(formConditions, questions) {
       if (c.formField) {
         c.formField.number = questions.find(
           (q) => q.id === c.formField.id
-        )?.number;
+        )?.number
       }
     }
   }

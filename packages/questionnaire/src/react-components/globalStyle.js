@@ -1,5 +1,4 @@
-import { createGlobalStyle } from "styled-components";
-
+import { createGlobalStyle } from 'styled-components'
 
 export const ResetStyle = createGlobalStyle`
 /* http://meyerweb.com/eric/tools/css/reset/ 
@@ -50,11 +49,10 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-`;
-
+`
 
 export const GlobalStyle = createGlobalStyle`
 html {
   box-sizing: border-box;
 }
-`;
+`
