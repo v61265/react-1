@@ -33,14 +33,17 @@ export const EmbeddedCodeBlock = (entity) => {
     // For executing '<script>' tags on the browser,
     // we need to extract '<script>' tags from `embeddedCode` string first.
     //
-    // The approach we have here is to create a temporary div element,
-    // because div element is a DOM element,
-    // we could use `querySelectorAll` method to query '<script>' elements,
+    // The approach we have here is to parse html string into elements,
+    // and we could use DOM element built-in functions,
+    // such as `querySelectorAll` method, to query '<script>' elements,
     // and other non '<script>' elements.
-    const div = document.createElement('div')
-    div.innerHTML = embeddedCode
-    const scripts = div.querySelectorAll('script')
-    const nonScripts = div.querySelectorAll('div > :not(script)')
+    const parser = new DOMParser()
+    const ele = parser.parseFromString(
+      `<div id="draft-embed">${embeddedCode}</div>`,
+      'text/html'
+    )
+    const scripts = ele.querySelectorAll('script')
+    const nonScripts = ele.querySelectorAll('div#draft-embed > :not(script)')
 
     nonScripts.forEach((ele) => {
       fragment.appendChild(ele)
