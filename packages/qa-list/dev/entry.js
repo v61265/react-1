@@ -154,7 +154,7 @@ const mockData = [
           data: {
             caption: '',
             embeddedCode:
-              "<iframe src='https://flo.uri.sh/visualisation/1354785/embed' title='Interactive or visual content' class='flourish-embed-iframe' frameborder='0' scrolling='no' style='width:100%;height:600px;' sandbox='allow-same-origin allow-forms allow-scripts allow-downloads allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation'></iframe>",
+              '<iframe src="https://flo.uri.sh/visualisation/1354785/embed" title="Interactive or visual content" class="flourish-embed-iframe" frameborder="0" scrolling="no" style="width:100%;height:600px;" sandbox="allow-same-origin allow-forms allow-scripts allow-downloads allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation"></iframe><blockquote class="twitter-tweet"><p lang="en" dir="ltr">Pictures non NBA fans wouldn&#39;t understand <a href="https://t.co/olm1gepLI9">pic.twitter.com/olm1gepLI9</a></p>&mdash; . (@ItsAPooleParty_) <a href="https://twitter.com/ItsAPooleParty_/status/1530762623993667584?ref_src=twsrc%5Etfw">May 29, 2022</a></blockquote><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>',
           },
           type: 'EMBEDDEDCODE',
           mutability: 'IMMUTABLE',
