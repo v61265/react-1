@@ -48,10 +48,10 @@ export const EmbeddedCodeBlock = (entity) => {
 
     scripts.forEach((s) => {
       const scriptEle = document.createElement('script')
-      const attrNames = s.getAttributeNames()
-      attrNames.forEach((a) => {
-        scriptEle.setAttribute(a, s.getAttribute(a))
-      })
+      const attrs = s.attributes
+      for (let i = 0; i < attrs.length; i++) {
+        scriptEle.setAttribute(attrs[i].name, attrs[i].value)
+      }
       scriptEle.text = s.text || ''
       fragment.appendChild(scriptEle)
     })
