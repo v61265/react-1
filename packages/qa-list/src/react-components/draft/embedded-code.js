@@ -1,40 +1,5 @@
 import React /* eslint-disable-line */, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
-import { Parser } from 'htmlparser2'
-
-function parseEmbeddedCode(embeddedCode) {
-  const script = {}
-  const scripts = []
-  let scriptTagStart = false
-  const parser = new Parser({
-    onopentag: (name, attribs) => {
-      if (name === 'script') {
-        scriptTagStart = true
-        script['attribs'] = attribs
-      }
-    },
-    ontext: (text) => {
-      if (scriptTagStart) {
-        script['text'] = text
-      }
-    },
-    onclosetag: (tagname) => {
-      if (tagname === 'script' && scriptTagStart) {
-        scriptTagStart = false
-        scripts.push(script)
-      }
-    },
-  })
-  parser.write(embeddedCode)
-  parser.end()
-  return {
-    embeddedCodeWithoutScript: embeddedCode.replace(
-      /<script(.+?)\/script>/g,
-      ''
-    ),
-    scripts,
-  }
-}
 
 export const Block = styled.div`
   position: relative;
@@ -57,42 +22,49 @@ export const Caption = styled.div`
 
 export const EmbeddedCodeBlock = (entity) => {
   const { caption, embeddedCode } = entity.getData()
-  const { scripts, embeddedCodeWithoutScript } = parseEmbeddedCode(embeddedCode)
   const embedded = useRef(null)
 
   useEffect(() => {
     const node = embedded.current
-    if (node && Array.isArray(scripts)) {
-      const scriptsFragment = new DocumentFragment() // eslint-disable-line no-undef
-      scripts.forEach((script) => {
-        const scriptEle = document.createElement('script')
-        const attribs = script.attribs || []
-        for (const prop in attribs) {
-          try {
-            scriptEle.setAttribute(prop, attribs[prop])
-          } catch (err) {
-            console.error(
-              'Failed to set an attribute to the embbeded script.\n',
-              `attribute name: ${prop}\n`,
-              `attribute value: ${attribs[prop]}\n`,
-              'error:\n',
-              err
-            )
-          }
-        }
-        scriptEle.text = script.text || ''
-        scriptsFragment.appendChild(scriptEle)
-      })
-      node.appendChild(scriptsFragment)
-    }
-  })
+    const fragment = document.createDocumentFragment()
+
+    // `embeddedCode` is a string, which may includes
+    // multiple '<script>' tags and other html tags.
+    // For executing '<script>' tags on the browser,
+    // we need to extract '<script>' tags from `embeddedCode` string first.
+    //
+    // The approach we have here is to parse html string into elements,
+    // and we could use DOM element built-in functions,
+    // such as `querySelectorAll` method, to query '<script>' elements,
+    // and other non '<script>' elements.
+    const parser = new DOMParser()
+    const ele = parser.parseFromString(
+      `<div id="draft-embed">${embeddedCode}</div>`,
+      'text/html'
+    )
+    const scripts = ele.querySelectorAll('script')
+    const nonScripts = ele.querySelectorAll('div#draft-embed > :not(script)')
+
+    nonScripts.forEach((ele) => {
+      fragment.appendChild(ele)
+    })
+
+    scripts.forEach((s) => {
+      const scriptEle = document.createElement('script')
+      const attrs = s.attributes
+      for (let i = 0; i < attrs.length; i++) {
+        scriptEle.setAttribute(attrs[i].name, attrs[i].value)
+      }
+      scriptEle.text = s.text || ''
+      fragment.appendChild(scriptEle)
+    })
+
+    node.appendChild(fragment)
+  }, [embeddedCode])
 
   return (
     <div>
-      <Block
-        ref={embedded}
-        dangerouslySetInnerHTML={{ __html: embeddedCodeWithoutScript }}
-      />
+      <Block ref={embedded} />
       {caption ? <Caption>{caption}</Caption> : null}
     </div>
   )

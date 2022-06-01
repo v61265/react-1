@@ -48,7 +48,7 @@ export function buildEmbeddedCode(pkgName, data, webpackAssets) {
         }
       })()
     </script>
-    <div id=${uuid}></div>
+    <div id="${uuid}"></div>
     ${_.map(chunks, (chunk) => {
       return `<script type="text/javascript" defer crossorigin src="${chunk}"></script>`
     }).join('')}

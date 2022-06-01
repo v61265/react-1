@@ -51,6 +51,13 @@ const MoreIcon = styled.div`
 `
 
 const Answer = styled.div`
+  display: ${/**
+   *  @param {Object} props
+   *  @param {boolean} props.isOpen
+   */
+  (props) => {
+    return props.isOpen ? 'block' : 'none'
+  }};
   padding-top: 12px;
   border-top: 1px solid #e0e0e0;
   margin-top: 12px;
@@ -92,15 +99,13 @@ export default function QuestionCard({ questionItem }) {
         {title}
         <MoreIcon>{isOpen ? '-' : '+'}</MoreIcon>
       </Question>
-      {isOpen && (
-        <Answer>
-          <Editor
-            editorState={editorState}
-            readOnly
-            blockRendererFn={blockRendererFn}
-          />
-        </Answer>
-      )}
+      <Answer isOpen={isOpen}>
+        <Editor
+          editorState={editorState}
+          readOnly
+          blockRendererFn={blockRendererFn}
+        />
+      </Answer>
     </CardWrapper>
   )
 }
