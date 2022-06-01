@@ -1,4 +1,7 @@
 /* eslint no-console: 0 */
+import React from 'react'
+import ReactDOMServer from 'react-dom/server'
+import Feedback from '../react-components'
 import buildConst from './constants'
 import get from 'lodash/get'
 import map from 'lodash/map'
@@ -29,6 +32,10 @@ export function buildEmbeddedCode(data, webpackAssets) {
 
   const { chunks, bundles } = webpackAssets
 
+  const jsx = ReactDOMServer.renderToStaticMarkup(
+    <Feedback {...data} />
+  )
+
   return `
     <script>
       (function() {
@@ -48,7 +55,9 @@ export function buildEmbeddedCode(data, webpackAssets) {
         }
       })()
     </script>
-    <div id="${uuid}"></div>
+    <div id="${uuid}">
+      ${jsx}
+    </div>
     ${_.map(chunks, (chunk) => {
       return `<script type="text/javascript" defer crossorigin src="${chunk}"></script>`
     }).join('')}

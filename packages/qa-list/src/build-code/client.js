@@ -1,6 +1,6 @@
 import buildConst from './constants'
 import React from 'react' // eslint-disable-line
-import { createRoot } from 'react-dom/client'
+import { hydrateRoot } from 'react-dom/client'
 import QAListComponent from '../react-components'
 
 const namespace = buildConst.namespace
@@ -13,6 +13,5 @@ if (Array.isArray(dataArr) && dataArr.length > 0) {
   const data = dataArr.shift()
   const { uuid, ...dataOfQAlist } = data
   const container = document.getElementById(uuid)
-  const root = createRoot(container)
-  root.render(<QAListComponent {...dataOfQAlist} />)
+  const root = hydrateRoot(container, (<QAListComponent {...dataOfQAlist} />))
 }
