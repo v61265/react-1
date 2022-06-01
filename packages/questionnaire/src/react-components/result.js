@@ -44,15 +44,15 @@ const InfoWrapper = styled.div`
       }
       li {
         display: flex;
-        align-items: center;
         ::before {
           content: '';
           display: block;
-          width: 3px;
+          min-width: 3px;
           height: 3px;
           border-radius: 50%;
           background: rgba(0, 9, 40, 0.66);
           margin: 0 0.75rem;
+          transform: translate(0, 1rem);
         }
       }
     }
