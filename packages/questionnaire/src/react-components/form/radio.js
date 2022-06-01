@@ -48,8 +48,9 @@ const Radiomark = styled.div`
       content: '';
       position: absolute;
       display: block;
-      top: 3px;
-      left: 3px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       width: 12px;
       height: 12px;
       border-radius: 50%;
