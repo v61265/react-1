@@ -70,6 +70,7 @@ const DropdownInput = styled.div`
   padding: 1px;
   background: #ffffff;
   input {
+    width: 100%;
     padding: 12px 48px 12px 16px;
     outline: none;
     border: none;
