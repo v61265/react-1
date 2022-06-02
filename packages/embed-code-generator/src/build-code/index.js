@@ -1,4 +1,9 @@
 /* eslint no-console: 0 */
+import React from 'react'
+import ReactDOMServer from 'react-dom/server'
+import Feedback from '@readr-media/react-feedback/lib/react-components'
+import Questionnaire from '@readr-media/react-questionnaire/lib/react-components'
+import QAList from '@readr-media/react-qa-list/lib/react-components'
 import get from 'lodash/get'
 import map from 'lodash/map'
 import serialize from 'serialize-javascript'
@@ -29,6 +34,27 @@ export function buildEmbeddedCode(pkgName, data, webpackAssets) {
 
   const { chunks, bundles } = webpackAssets
 
+  let jsx = ''
+  switch(pkgName) {
+    case 'react-feedback':
+      jsx = ReactDOMServer.renderToStaticMarkup(
+        <Feedback {...data} />
+      )
+      break
+    case 'react-questionnaire':
+      jsx = ReactDOMServer.renderToStaticMarkup(
+        <Questionnaire {...data} />
+      )
+      break
+    case 'react-qa-list':
+      jsx = ReactDOMServer.renderToStaticMarkup(
+        <QAList {...data} />
+      )
+      break
+    default:
+      throw new Error(`pkgName ${pkgName} is not supported`)
+  }
+
   return `
     <script>
       (function() {
@@ -48,7 +74,9 @@ export function buildEmbeddedCode(pkgName, data, webpackAssets) {
         }
       })()
     </script>
-    <div id="${uuid}"></div>
+    <div id="${uuid}">
+      ${jsx}
+    </div>
     ${_.map(chunks, (chunk) => {
       return `<script type="text/javascript" defer crossorigin src="${chunk}"></script>`
     }).join('')}

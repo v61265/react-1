@@ -20,4 +20,20 @@ module.exports = {
       },
     ],
   ],
+  plugins: [
+    [
+      'inline-react-svg',
+      {
+        svgo: {
+          plugins: [
+            {
+              name: 'removeAttrs',
+              params: { attrs: '(data-name)' },
+            },
+            'cleanupIDs',
+          ],
+        },
+      },
+    ],
+  ],
 }

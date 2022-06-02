@@ -86,15 +86,14 @@ const CheckboxOption = styled.li`
       }
     }
     .checkmark:after {
-      top: 0;
-      left: 5px;
-      width: 5px;
-      height: 10px;
+      top: 50%;
+      left: 45%;
+      width: 7px;
+      height: 14px;
       border: solid #f6f6f5;
-      border-width: 0 3px 3px 0;
-      -webkit-transform: rotate(45deg);
-      -ms-transform: rotate(45deg);
-      transform: rotate(45deg);
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg) translate(-50%, -50%);
+      transform-origin: center top 0px;
     }
   }
 `
