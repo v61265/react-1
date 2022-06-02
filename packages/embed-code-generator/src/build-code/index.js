@@ -1,5 +1,5 @@
 /* eslint no-console: 0 */
-import React from 'react'
+import React from 'react' // eslint-disable-line
 import ReactDOMServer from 'react-dom/server'
 import Feedback from '@readr-media/react-feedback/lib/react-components'
 import Questionnaire from '@readr-media/react-questionnaire/lib/react-components'
@@ -35,20 +35,26 @@ export function buildEmbeddedCode(pkgName, data, webpackAssets) {
   const { chunks, bundles } = webpackAssets
 
   let jsx = ''
-  switch(pkgName) {
+  switch (pkgName) {
     case 'react-feedback':
       jsx = ReactDOMServer.renderToStaticMarkup(
-        <Feedback {...data} />
+        <div id={uuid}>
+          <Feedback {...data} />
+        </div>
       )
       break
     case 'react-questionnaire':
       jsx = ReactDOMServer.renderToStaticMarkup(
-        <Questionnaire {...data} />
+        <div id={uuid}>
+          <Questionnaire {...data} />
+        </div>
       )
       break
     case 'react-qa-list':
       jsx = ReactDOMServer.renderToStaticMarkup(
-        <QAList {...data} />
+        <div id={uuid}>
+          <QAList {...data} />
+        </div>
       )
       break
     default:
@@ -74,9 +80,7 @@ export function buildEmbeddedCode(pkgName, data, webpackAssets) {
         }
       })()
     </script>
-    <div id="${uuid}">
-      ${jsx}
-    </div>
+    ${jsx}
     ${_.map(chunks, (chunk) => {
       return `<script type="text/javascript" defer crossorigin src="${chunk}"></script>`
     }).join('')}

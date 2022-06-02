@@ -1,7 +1,7 @@
 import 'regenerator-runtime/runtime'
 import buildConst from './constants'
 import React from 'react' // eslint-disable-line
-import { hydrateRoot } from 'react-dom/client'
+import { createRoot } from 'react-dom/client'
 import Questionnaire from '../react-components'
 
 const namespace = buildConst.namespace
@@ -14,5 +14,6 @@ if (Array.isArray(dataArr) && dataArr.length > 0) {
   const data = dataArr.shift()
   const { uuid, ...dataOfReactComponent } = data
   const container = document.getElementById(uuid)
-  const root = hydrateRoot(container,(<Questionnaire {...dataOfReactComponent} />))
+  const root = createRoot(container)
+  root.render(<Questionnaire {...dataOfReactComponent} />)
 }

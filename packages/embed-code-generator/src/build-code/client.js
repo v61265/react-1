@@ -3,7 +3,7 @@ import Feedback from '@readr-media/react-feedback/lib/react-components'
 import Questionnaire from '@readr-media/react-questionnaire/lib/react-components'
 import QAList from '@readr-media/react-qa-list/lib/react-components'
 import React from 'react' // eslint-disable-line
-import { hydrateRoot } from 'react-dom/client'
+import { createRoot } from 'react-dom/client'
 
 const namespace = '@readr-media'
 const pkgComponentArr = [
@@ -30,6 +30,7 @@ for (const pc of pkgComponentArr) {
     const data = dataArr.shift()
     const { uuid, ...dataOfComponent } = data
     const container = document.getElementById(uuid)
-    const root = hydrateRoot(container, (<pc.Component {...dataOfComponent} />))
+    const root = createRoot(container)
+    root.render(<pc.Component {...dataOfComponent} />)
   }
 }
