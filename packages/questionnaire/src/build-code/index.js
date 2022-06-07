@@ -46,7 +46,6 @@ export function buildEmbeddedCode(data, webpackAssets) {
       )
     )
     styleTags = sheet.getStyleTags()
-    console.log(styleTags)
   } catch (err) {
     throw err
   } finally {
