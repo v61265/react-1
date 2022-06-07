@@ -1,6 +1,6 @@
 {
   "name": "@readr-media/react-embed-code-generator",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -30,7 +30,7 @@
   "dependencies": {
     "@readr-media/react-feedback": "^1.0.6",
     "@readr-media/react-qa-list": "^1.0.4",
-    "@readr-media/react-questionnaire": "^1.0.7",
+    "@readr-media/react-questionnaire": "^1.0.8",
     "lodash": "^4.17.21",
     "regenerator-runtime": "^0.13.9",
     "serialize-javascript": "^6.0.0",
