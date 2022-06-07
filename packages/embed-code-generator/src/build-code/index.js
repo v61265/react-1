@@ -7,6 +7,7 @@ import QAList from '@readr-media/react-qa-list/lib/react-components'
 import get from 'lodash/get'
 import map from 'lodash/map'
 import serialize from 'serialize-javascript'
+import { ServerStyleSheet } from 'styled-components'
 import { v4 as uuidv4 } from 'uuid'
 
 const _ = {
@@ -34,34 +35,43 @@ export function buildEmbeddedCode(pkgName, data, webpackAssets) {
 
   const { chunks, bundles } = webpackAssets
 
-  let jsx = ''
+  let Component = null
   switch (pkgName) {
     case 'react-feedback':
-      jsx = ReactDOMServer.renderToStaticMarkup(
-        <div id={uuid}>
-          <Feedback {...data} />
-        </div>
-      )
+      Component = Feedback
       break
     case 'react-questionnaire':
-      jsx = ReactDOMServer.renderToStaticMarkup(
-        <div id={uuid}>
-          <Questionnaire {...data} />
-        </div>
-      )
+      Component = Questionnaire
       break
     case 'react-qa-list':
-      jsx = ReactDOMServer.renderToStaticMarkup(
-        <div id={uuid}>
-          <QAList {...data} />
-        </div>
-      )
+      Component = QAList
       break
     default:
       throw new Error(`pkgName ${pkgName} is not supported`)
   }
 
+  const sheet = new ServerStyleSheet()
+  let jsx = ''
+  let styleTags = ''
+  try {
+    jsx = ReactDOMServer.renderToStaticMarkup(
+      sheet.collectStyles(
+        <div id={uuid}>
+          <Component {...data} />
+        </div>
+      )
+    )
+    styleTags = sheet.getStyleTags()
+  } catch (err) {
+    throw err
+  } finally {
+    sheet.seal()
+  }
+
   return `
+    <style>
+      ${styleTags}
+    </style>
     <script>
       (function() {
         var namespace = '@readr-media';
