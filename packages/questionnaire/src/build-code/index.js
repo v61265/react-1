@@ -53,9 +53,7 @@ export function buildEmbeddedCode(data, webpackAssets) {
   }
 
   return `
-    <style>
-      ${styleTags}
-    </style>
+    ${styleTags}
     <script>
       (function() {
         var namespace = '${buildConst.namespace}';

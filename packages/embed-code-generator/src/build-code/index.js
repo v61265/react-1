@@ -69,9 +69,7 @@ export function buildEmbeddedCode(pkgName, data, webpackAssets) {
   }
 
   return `
-    <style>
-      ${styleTags}
-    </style>
+    ${styleTags}
     <script>
       (function() {
         var namespace = '@readr-media';
