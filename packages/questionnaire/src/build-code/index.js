@@ -6,6 +6,7 @@ import buildConst from './constants'
 import get from 'lodash/get'
 import map from 'lodash/map'
 import serialize from 'serialize-javascript'
+import { ServerStyleSheet } from 'styled-components'
 import { v4 as uuidv4 } from 'uuid'
 
 const _ = {
@@ -32,13 +33,27 @@ export function buildEmbeddedCode(data, webpackAssets) {
 
   const { chunks, bundles } = webpackAssets
 
-  const jsx = ReactDOMServer.renderToStaticMarkup(
-    <div id={uuid}>
-      <Questionnaire {...data} />
-    </div>
-  )
+  const sheet = new ServerStyleSheet()
+
+  let jsx = ''
+  let styleTags = ''
+  try {
+    jsx = ReactDOMServer.renderToStaticMarkup(
+      sheet.collectStyles(
+        <div id={uuid}>
+          <Questionnaire {...data} />
+        </div>
+      )
+    )
+    styleTags = sheet.getStyleTags()
+  } catch (err) {
+    throw err
+  } finally {
+    sheet.seal()
+  }
 
   return `
+    ${styleTags}
     <script>
       (function() {
         var namespace = '${buildConst.namespace}';
