@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 /**
  *  @param {Object} opts
+ *  @param {import('./typedef').Styles} [opts.styles]
  *  @param {string[]} opts.audioUrls,
  *  @param {string} [opts.className]
  *  @param {string} [opts.preload='auto'] - 'auto', 'none' or 'metadata'. `preload` attribute of `audio` tag.
@@ -13,6 +14,7 @@ export default function AudioQuoteShadow({
   audioUrls,
   className,
   preload,
+  styles,
   textArr,
 }) {
   // TODO implement AudioQuoteShadow
