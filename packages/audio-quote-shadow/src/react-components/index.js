@@ -42,7 +42,7 @@ function useMuted(initialValue = false) {
 export default function AudioQuoteShadow({
   audioUrls,
   className,
-  preload,
+  preload = 'auto',
   styles,
   textArr,
 }) {
@@ -57,6 +57,7 @@ export default function AudioQuoteShadow({
     paused: !inView,
     canPlay: false,
     duration: defaultDuration,
+    currentTime: 0,
     notice: '',
   })
 
@@ -102,6 +103,7 @@ export default function AudioQuoteShadow({
       }
       // in the viewport
       if (inView) {
+        audio.muted = muted
         const startPlayPromise = audio.play()
         startPlayPromise
           // play successfully
@@ -137,7 +139,7 @@ export default function AudioQuoteShadow({
       )
     },
     // `[inView]` is used to avoid from infinite re-rendering.
-    [inView]
+    [inView, muted]
   )
 
   return (
@@ -156,12 +158,21 @@ export default function AudioQuoteShadow({
         play={!audioOpts.paused}
         duration={audioOpts.duration}
         styles={styles}
+        onCurrentTimeUpdate={(currentTime) => {
+          setAudioOpts((opts) =>
+            Object.assign({}, opts, {
+              currentTime,
+            })
+          )
+        }}
       />
       <AudioBt
         onClick={() => {
           const audio = audioRef.current
           if (audio && audioOpts.canPlay) {
             if (muted || audioOpts.paused) {
+              audio.currentTime = audioOpts.currentTime
+              audio.muted = false
               audio.play()
               setMuted(false)
               setAudioOpts((opts) =>

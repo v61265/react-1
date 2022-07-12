@@ -21,12 +21,19 @@ const defaultStyles = {
 }
 
 /**
+ *  @callback onCurrentTimeUpdate
+ *  @param {number} currentTime - how long the shadow animation runs in seconds
+ *  @return void
+ */
+
+/**
  *  @param {Object} opts
  *  @param {import('./typedef').Styles} [opts.styles]
  *  @param {boolean} [opts.play] - whether to play the shadow animation or not
  *  @param {number} [opts.duration] - animation duration for entire quote text. Unit is second.
  *  @param {string} [opts.className]
  *  @param {string[]} opts.textArr - quote text
+ *  @param {onCurrentTimeUpdate} [opts.onCurrentTimeUpdate] -
  */
 export default function QuoteShadow({
   className,
@@ -34,6 +41,7 @@ export default function QuoteShadow({
   duration,
   play = false,
   styles = defaultStyles,
+  onCurrentTimeUpdate = () => {},
 }) {
   const [currentCharIndex, setCurrentCharIndex] = useState(0)
   const textLen = textArr.join('').length
@@ -48,6 +56,7 @@ export default function QuoteShadow({
       setTimeout(() => {
         const nextCharIndex = currentCharIndex + 1
         setCurrentCharIndex(nextCharIndex)
+        onCurrentTimeUpdate((currentCharIndex * durationPerChar) / 1000) // in seconds
       }, durationPerChar)
     }
   })
