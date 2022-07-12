@@ -2,6 +2,7 @@ import React/* eslint-disable-line */, { useEffect, useRef, useState } from 'rea
 import _QuoteShadow from './quote-shadow'
 import mockups from './mockups'
 import styled from 'styled-components'
+import { useInView } from 'react-intersection-observer'
 
 /**
  *  @param {Object} opts
@@ -20,9 +21,12 @@ export default function AudioQuoteShadow({
 }) {
   const defaultDuration = 10 // second
   const audioRef = useRef(null)
+  const [ containerRef, inView, entry ] = useInView({
+    threshold: [0.8, 0.2],
+  })
 
   const [audioOpts, setAudioOpts] = useState({
-    paused: false,
+    paused: !inView,
     canPlay: false,
     duration: defaultDuration,
     notice: '',
@@ -65,17 +69,19 @@ export default function AudioQuoteShadow({
     if (!audio) {
       return
     }
-    const startPlayPromise = audio.play()
-    startPlayPromise
-    // play successfully
-      .then(() => {
+    // in the viewport
+    if (inView) {
+      const startPlayPromise = audio.play()
+      startPlayPromise
+      // play successfully
+        .then(() => {
         setAudioOpts((opts) => Object.assign({}, opts, {
           // clear notice
           notice: ''
         }))
       })
-    // fail to play
-      .catch(error => {
+      // fail to play
+        .catch(error => {
         // browser prevent from playing audio before user interactions
         if (error.name === "NotAllowedError") {
           setAudioOpts((opts) => Object.assign({}, opts, {
@@ -84,17 +90,22 @@ export default function AudioQuoteShadow({
         } else {
           // TODO: Handle a load or playback error
         }
-
-        // stop the audio and quote shadow animation
-        setAudioOpts((opts) => Object.assign({}, opts, {
-          paused: true,
-        }))
       });
-  })
+    } else { // leave the viewport
+      audio.pause()
+    }
+    setAudioOpts(opts => Object.assign({}, opts, {
+      paused: !inView,
+    }))
+  },
+    // `[inView]` is used to avoid from infinite re-rendering.
+    [inView])
 
   return (
     <Container
+      key={`container_in_view_${inView}`}
       className={className}
+      ref={containerRef}
     >
       <audio
         ref={audioRef}
