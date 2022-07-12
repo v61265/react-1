@@ -5,6 +5,33 @@ import styled from 'styled-components'
 import { useInView } from 'react-intersection-observer'
 
 /**
+ * This hook is used to record the mute status in the whole web page.
+ * It's useful when there are multiple `AudioQuoteShadow`s in the same web page.
+ * If the user has clicked mute button in one `AudioQuoteShadow` component,
+ * we should mute all the rest audios as well.
+ *
+ * @param {boolean} initialValue
+ * @return {[boolean, Function]}
+ */
+function useMuted(initialValue = false) {
+  const [muted, _setMuted] = useState(initialValue)
+  useEffect(() => {
+    const _muted = window?.['__readr_react_audio_quote_shadow']?.muted
+    if (typeof _muted === 'boolean') {
+      _setMuted(_muted)
+    }
+  })
+  const setMuted = (_muted) => {
+    window['__readr_react_audio_quote_shadow'] = {
+      muted: _muted,
+    }
+    _setMuted(_muted)
+  }
+
+  return [muted, setMuted]
+}
+
+/**
  *  @param {Object} opts
  *  @param {import('./typedef').Styles} [opts.styles]
  *  @param {string[]} opts.audioUrls,
@@ -21,7 +48,8 @@ export default function AudioQuoteShadow({
 }) {
   const defaultDuration = 10 // second
   const audioRef = useRef(null)
-  const [ containerRef, inView, entry ] = useInView({
+  const [muted, setMuted] = useMuted(true)
+  const [containerRef, inView] = useInView({
     threshold: [0.8, 0.2],
   })
 
@@ -32,74 +60,85 @@ export default function AudioQuoteShadow({
     notice: '',
   })
 
-  useEffect(() => {
-    const audio = audioRef.current
-    const onLoadedMetadata = () => {
-      setAudioOpts((opts) => {
-        return Object.assign({}, opts, {
-          duration: audio.duration || defaultDuration
+  useEffect(
+    () => {
+      const audio = audioRef.current
+      const onLoadedMetadata = () => {
+        setAudioOpts((opts) => {
+          return Object.assign({}, opts, {
+            duration: audio.duration || defaultDuration,
+          })
         })
-      })
-    }
+      }
 
-    const onCanPlay = () => {
-      setAudioOpts((opts) => {
-        return Object.assign({}, opts, {
-          canPlay: true
+      const onCanPlay = () => {
+        setAudioOpts((opts) => {
+          return Object.assign({}, opts, {
+            canPlay: true,
+          })
         })
-      })
-    }
+      }
 
-    if (audio) {
-      audio.addEventListener('loadedmetadata', onLoadedMetadata)
-      audio.addEventListener('canplay', onCanPlay)
-    }
+      if (audio) {
+        audio.addEventListener('loadedmetadata', onLoadedMetadata)
+        audio.addEventListener('canplay', onCanPlay)
+      }
 
-    // clear event listeners
-    return () => {
-      audio.removeEventListener('loadedmetadata', onLoadedMetadata)
-      audio.removeEventListener('canplay', onCanPlay)
-    }
-  },
+      // clear event listeners
+      return () => {
+        audio.removeEventListener('loadedmetadata', onLoadedMetadata)
+        audio.removeEventListener('canplay', onCanPlay)
+      }
+    },
     // `[...audioUrls]` is used to avoid from re-running the above codes
-    [...audioUrls])
+    [...audioUrls]
+  )
 
-  useEffect(() => {
-    const audio = audioRef.current
-    if (!audio) {
-      return
-    }
-    // in the viewport
-    if (inView) {
-      const startPlayPromise = audio.play()
-      startPlayPromise
-      // play successfully
-        .then(() => {
-        setAudioOpts((opts) => Object.assign({}, opts, {
-          // clear notice
-          notice: ''
-        }))
-      })
-      // fail to play
-        .catch(error => {
-        // browser prevent from playing audio before user interactions
-        if (error.name === "NotAllowedError") {
-          setAudioOpts((opts) => Object.assign({}, opts, {
-            notice: '請點選聲音播放鍵'
-          }))
-        } else {
-          // TODO: Handle a load or playback error
-        }
-      });
-    } else { // leave the viewport
-      audio.pause()
-    }
-    setAudioOpts(opts => Object.assign({}, opts, {
-      paused: !inView,
-    }))
-  },
+  useEffect(
+    () => {
+      const audio = audioRef.current
+      if (!audio) {
+        return
+      }
+      // in the viewport
+      if (inView) {
+        const startPlayPromise = audio.play()
+        startPlayPromise
+          // play successfully
+          .then(() => {
+            setAudioOpts((opts) =>
+              Object.assign({}, opts, {
+                // clear notice
+                notice: '',
+              })
+            )
+          })
+          // fail to play
+          .catch((error) => {
+            // browser prevent from playing audio before user interactions
+            if (error.name === 'NotAllowedError') {
+              setAudioOpts((opts) =>
+                Object.assign({}, opts, {
+                  notice: '請點選聲音播放鍵',
+                })
+              )
+            } else {
+              // TODO: Handle a load or playback error
+            }
+          })
+      } else {
+        // leave the viewport
+        audio.pause()
+      }
+      setAudioOpts((opts) =>
+        Object.assign({}, opts, {
+          paused: !inView,
+        })
+      )
+    },
     // `[inView]` is used to avoid from infinite re-rendering.
-    [inView])
+    [inView]
+  )
 
   return (
     <Container
@@ -107,10 +146,7 @@ export default function AudioQuoteShadow({
       className={className}
       ref={containerRef}
     >
-      <audio
-        ref={audioRef}
-        preload={preload}
-      >
+      <audio ref={audioRef} preload={preload}>
         {audioUrls.map((url, index) => (
           <source key={`audio_source_${index}`} src={url}></source>
         ))}
@@ -121,6 +157,39 @@ export default function AudioQuoteShadow({
         duration={audioOpts.duration}
         styles={styles}
       />
+      <AudioBt
+        onClick={() => {
+          const audio = audioRef.current
+          if (audio && audioOpts.canPlay) {
+            if (muted || audioOpts.paused) {
+              audio.play()
+              setMuted(false)
+              setAudioOpts((opts) =>
+                Object.assign({}, opts, {
+                  paused: false,
+                  notice: '',
+                })
+              )
+            } else {
+              audio.pause()
+              setMuted(true)
+              setAudioOpts((opts) =>
+                Object.assign({}, opts, {
+                  paused: true,
+                  notice: '',
+                })
+              )
+            }
+          }
+        }}
+      >
+        {audioOpts.paused || muted ? (
+          <mockups.audio.PausedButton />
+        ) : (
+          <mockups.audio.PlayingButton />
+        )}
+        {audioOpts.notice && <span>{audioOpts.notice}</span>}
+      </AudioBt>
     </Container>
   )
 }
@@ -137,4 +206,13 @@ const Container = styled.div`
   position: relative;
   width: 100vw;
   height: 100vh;
+`
+
+const AudioBt = styled.div`
+  position: absolute;
+  cursor: pointer;
+
+  /* update later*/
+  left: 27px;
+  bottom: 22px;
 `
