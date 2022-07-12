@@ -1,5 +1,5 @@
 const namespace = '@readr-media'
-const pkgName = 'react-audio-quote-shadow'
+const pkgName = 'react-karaoke'
 
 const webpack = {
   entryName: 'main',

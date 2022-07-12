@@ -6,8 +6,8 @@ import { useInView } from 'react-intersection-observer'
 
 /**
  * This hook is used to record the mute status in the whole web page.
- * It's useful when there are multiple `AudioQuoteShadow`s in the same web page.
- * If the user has clicked mute button in one `AudioQuoteShadow` component,
+ * It's useful when there are multiple `Karaoke`s in the same web page.
+ * If the user has clicked mute button in one `Karaoke` component,
  * we should mute all the rest audios as well.
  *
  * @param {boolean} initialValue
@@ -16,13 +16,13 @@ import { useInView } from 'react-intersection-observer'
 function useMuted(initialValue = false) {
   const [muted, _setMuted] = useState(initialValue)
   useEffect(() => {
-    const _muted = window?.['__readr_react_audio_quote_shadow']?.muted
+    const _muted = window?.['__readr_react_karaoke']?.muted
     if (typeof _muted === 'boolean') {
       _setMuted(_muted)
     }
   })
   const setMuted = (_muted) => {
-    window['__readr_react_audio_quote_shadow'] = {
+    window['__readr_react_karaoke'] = {
       muted: _muted,
     }
     _setMuted(_muted)
@@ -39,7 +39,7 @@ function useMuted(initialValue = false) {
  *  @param {string} [opts.preload='auto'] - 'auto', 'none' or 'metadata'. `preload` attribute of `audio` tag.
  *  @param {string[]} opts.textArr - quote text
  */
-export default function AudioQuoteShadow({
+export default function Karaoke({
   audioUrls,
   className,
   preload = 'auto',

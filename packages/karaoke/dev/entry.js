@@ -1,4 +1,4 @@
-import AudioQuoteShadow from '../src/react-components'
+import Karaoke from '../src/react-components'
 import React, {useState} from 'react' // eslint-disable-line
 import { createRoot } from 'react-dom/client'
 
@@ -39,8 +39,8 @@ const mocks = [
 root.render(
   <div>
     <div style={{ height: '100vh', backgroundColor: 'pink' }} />
-    <AudioQuoteShadow audioUrls={mocks[0][0]} textArr={mocks[0][1]} />
-    <AudioQuoteShadow audioUrls={mocks[1][0]} textArr={mocks[1][1]} />
-    <AudioQuoteShadow audioUrls={mocks[2][0]} textArr={mocks[2][1]} />
+    <Karaoke audioUrls={mocks[0][0]} textArr={mocks[0][1]} />
+    <Karaoke audioUrls={mocks[1][0]} textArr={mocks[1][1]} />
+    <Karaoke audioUrls={mocks[2][0]} textArr={mocks[2][1]} />
   </div>
 )
