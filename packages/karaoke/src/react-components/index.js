@@ -55,7 +55,6 @@ export default function Karaoke({
 
   const [audioOpts, setAudioOpts] = useState({
     paused: !inView,
-    canPlay: false,
     duration: defaultDuration,
     currentTime: 0,
     notice: '',
@@ -72,23 +71,13 @@ export default function Karaoke({
         })
       }
 
-      const onCanPlay = () => {
-        setAudioOpts((opts) => {
-          return Object.assign({}, opts, {
-            canPlay: true,
-          })
-        })
-      }
-
       if (audio) {
         audio.addEventListener('loadedmetadata', onLoadedMetadata)
-        audio.addEventListener('canplay', onCanPlay)
       }
 
       // clear event listeners
       return () => {
         audio.removeEventListener('loadedmetadata', onLoadedMetadata)
-        audio.removeEventListener('canplay', onCanPlay)
       }
     },
     // `[...audioUrls]` is used to avoid from re-running the above codes
@@ -169,7 +158,7 @@ export default function Karaoke({
       <AudioBt
         onClick={() => {
           const audio = audioRef.current
-          if (audio && audioOpts.canPlay) {
+          if (audio) {
             if (muted || audioOpts.paused) {
               audio.currentTime = audioOpts.currentTime
               audio.muted = false
