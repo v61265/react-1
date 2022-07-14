@@ -1,7 +1,7 @@
 /* eslint no-console: 0 */
 import React from 'react' // eslint-disable-line
 import ReactDOMServer from 'react-dom/server'
-import Questionnaire from '../react-components'
+import Karaoke from '../react-components'
 import buildConst from './constants'
 import get from 'lodash/get'
 import map from 'lodash/map'
@@ -17,7 +17,7 @@ const _ = {
 /**
  *
  * @export
- * @param {Object} data - Data for @readr-media/react-questionnaire react component
+ * @param {Object} data - Data for @readr-media/react-karaoke react component
  * @param {Object} webpackAssets - webpack bundles and chunks
  * @param {string[]} webpackAssets.chunks - webpack common chunks
  * @param {string[]} webpackAssets.bundles - webpack bundles
@@ -41,7 +41,7 @@ export function buildEmbeddedCode(data, webpackAssets) {
     jsx = ReactDOMServer.renderToStaticMarkup(
       sheet.collectStyles(
         <div id={uuid}>
-          <Questionnaire {...data} />
+          <Karaoke {...data} />
         </div>
       )
     )

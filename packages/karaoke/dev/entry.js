@@ -1,5 +1,6 @@
 import Karaoke from '../src/react-components'
-import React, {useState} from 'react' // eslint-disable-line
+import React from 'react' // eslint-disable-line
+import styled from 'styled-components'
 import { createRoot } from 'react-dom/client'
 
 const reactRootId = 'root'
@@ -36,11 +37,16 @@ const mocks = [
   ],
 ]
 
+const MockContentBlock = styled.div`
+  height: 100vh;
+  background-color: pink;
+`
+
 root.render(
   <div>
-    <div style={{ height: '100vh', backgroundColor: 'pink' }} />
-    <Karaoke audioUrls={mocks[0][0]} textArr={mocks[0][1]} />
-    <Karaoke audioUrls={mocks[1][0]} textArr={mocks[1][1]} />
-    <Karaoke audioUrls={mocks[2][0]} textArr={mocks[2][1]} />
+    <MockContentBlock />
+    {mocks.map((mock) => {
+      return <Karaoke audioUrls={mock[0]} textArr={mock[1]} />
+    })}
   </div>
 )

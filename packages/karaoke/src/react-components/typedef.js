@@ -9,7 +9,7 @@ export default {}
  *  @property {string} [background.repeat]
  *  @property {string} [background.attachment]
  *  @property {string} [background.size]
- *  @property {string} [backgroud.position]
+ *  @property {string} [background.position]
  *  @property {Object} [font]
  *  @property {string} [font.color='rgba(0,0,0,40)']
  *  @property {string} [font.size='28px']

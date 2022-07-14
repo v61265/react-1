@@ -2,7 +2,7 @@ import 'regenerator-runtime/runtime'
 import buildConst from './constants'
 import React from 'react' // eslint-disable-line
 import { createRoot } from 'react-dom/client'
-import Questionnaire from '../react-components'
+import Karaoke from '../react-components'
 
 const namespace = buildConst.namespace
 const pkg = buildConst.pkgName
@@ -15,5 +15,5 @@ if (Array.isArray(dataArr) && dataArr.length > 0) {
   const { uuid, ...dataOfReactComponent } = data
   const container = document.getElementById(uuid)
   const root = createRoot(container)
-  root.render(<Questionnaire {...dataOfReactComponent} />)
+  root.render(<Karaoke {...dataOfReactComponent} />)
 }

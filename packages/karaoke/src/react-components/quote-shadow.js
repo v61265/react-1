@@ -54,12 +54,11 @@ export default function QuoteShadow({
   useEffect(() => {
     if (currentCharIndex < textLen && play) {
       setTimeout(() => {
-        const nextCharIndex = currentCharIndex + 1
-        setCurrentCharIndex(nextCharIndex)
+        setCurrentCharIndex((currentCharIndex) => currentCharIndex + 1)
         onCurrentTimeUpdate((currentCharIndex * durationPerChar) / 1000) // in seconds
       }, durationPerChar)
     }
-  })
+  }, [currentCharIndex, textLen, play])
 
   let charOffset = 0
   const charArrJsx = textArr.map((t) => {
