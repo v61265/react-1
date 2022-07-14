@@ -92,7 +92,9 @@ export default function Karaoke({
       }
       // in the viewport
       if (inView) {
+        // start with `audioOpts.currentTime` to catch up `QuoteShadow` animation
         audio.currentTime = audioOpts.currentTime
+        // set audio muted attribute according to browser muted state
         audio.muted = muted
         const startPlayPromise = audio.play()
         startPlayPromise
@@ -115,7 +117,11 @@ export default function Karaoke({
                 })
               )
             } else {
-              // TODO: Handle a load or playback error
+              setAudioOpts((opts) =>
+                Object.assign({}, opts, {
+                  notice: '無法播放音檔，請重新整理頁面',
+                })
+              )
             }
           })
       } else {
@@ -135,17 +141,19 @@ export default function Karaoke({
 
   return (
     <>
-      <audio ref={audioRef} preload={preload}>
-        {audioUrls.map((url, index) => (
-          <source key={`audio_source_${index}`} src={url}></source>
-        ))}
-      </audio>
-      <Container
-        key={`container_in_view_${inView}`}
-        className={className}
-        ref={containerRef}
-      >
+      <Container className={className} ref={containerRef}>
+        <audio
+          ref={audioRef}
+          preload={preload}
+          data-readr-karaoke
+          data-played={false}
+        >
+          {audioUrls.map((url, index) => (
+            <source key={`audio_source_${index}`} src={url}></source>
+          ))}
+        </audio>
         <QuoteShadow
+          key={`quote_in_view_${inView}` /** use key to force re-rendering */}
           textArr={textArr}
           play={!audioOpts.paused}
           duration={audioOpts.duration}
@@ -183,7 +191,47 @@ export default function Karaoke({
                   })
                 )
               }
+              audio.setAttribute('data-played', true)
             }
+
+            /**
+             *  The following codes are WORKAROUND for Safari.
+             *  Problem to workaround:
+             *  In Safari, we still encounter `audio.play()` Promise rejection
+             *  even users have had interactions. The interactionms, in our case, will be button clicking.
+             *
+             *  Therefore, the following logics find all Karaoke `audio` elements which has NOT been played before,
+             *  and try to `audio.play()` them.
+             *  Since this event is triggered by user clicking,
+             *  `audio.play()` will be successful without Promise rejection.
+             *  After this event finishes, Safari browser won't block `audio.play()` anymore.
+             */
+            const otherAudios = document.querySelectorAll(
+              'audio[data-readr-karaoke][data-played=false]'
+            )
+            otherAudios.forEach(
+              (
+                /**
+                 *  @type HTMLAudioElement
+                 */
+                audio
+              ) => {
+                audio.muted = true
+                const playAttempt = audio.play()
+                if (playAttempt) {
+                  playAttempt
+                    // play successfully
+                    .then(() => {
+                      // pause audio immediately
+                      audio.pause()
+                    })
+                    // fail to play
+                    .catch(() => {
+                      // do nothing
+                    })
+                }
+              }
+            )
           }}
         >
           {audioOpts.paused || muted ? (
