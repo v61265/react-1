@@ -92,6 +92,7 @@ export default function Karaoke({
       }
       // in the viewport
       if (inView) {
+        audio.currentTime = audioOpts.currentTime
         audio.muted = muted
         const startPlayPromise = audio.play()
         startPlayPromise
@@ -127,70 +128,73 @@ export default function Karaoke({
         })
       )
     },
-    // `[inView]` is used to avoid from infinite re-rendering.
+    // `inView` is used to avoid from infinite re-rendering.
+    // `muted` is avoid state not changed due to closure.
     [inView, muted]
   )
 
   return (
-    <Container
-      key={`container_in_view_${inView}`}
-      className={className}
-      ref={containerRef}
-    >
+    <>
       <audio ref={audioRef} preload={preload}>
         {audioUrls.map((url, index) => (
           <source key={`audio_source_${index}`} src={url}></source>
         ))}
       </audio>
-      <QuoteShadow
-        textArr={textArr}
-        play={!audioOpts.paused}
-        duration={audioOpts.duration}
-        styles={styles}
-        onCurrentTimeUpdate={(currentTime) => {
-          setAudioOpts((opts) =>
-            Object.assign({}, opts, {
-              currentTime,
-            })
-          )
-        }}
-      />
-      <AudioBt
-        onClick={() => {
-          const audio = audioRef.current
-          if (audio) {
-            if (muted || audioOpts.paused) {
-              audio.currentTime = audioOpts.currentTime
-              audio.muted = false
-              audio.play()
-              setMuted(false)
-              setAudioOpts((opts) =>
-                Object.assign({}, opts, {
-                  paused: false,
-                  notice: '',
-                })
-              )
-            } else {
-              audio.pause()
-              setMuted(true)
-              setAudioOpts((opts) =>
-                Object.assign({}, opts, {
-                  paused: true,
-                  notice: '',
-                })
-              )
-            }
-          }
-        }}
+      <Container
+        key={`container_in_view_${inView}`}
+        className={className}
+        ref={containerRef}
       >
-        {audioOpts.paused || muted ? (
-          <mockups.audio.PausedButton />
-        ) : (
-          <mockups.audio.PlayingButton />
-        )}
-        {audioOpts.notice && <span>{audioOpts.notice}</span>}
-      </AudioBt>
-    </Container>
+        <QuoteShadow
+          textArr={textArr}
+          play={!audioOpts.paused}
+          duration={audioOpts.duration}
+          styles={styles}
+          onCurrentTimeUpdate={(currentTime) => {
+            setAudioOpts((opts) =>
+              Object.assign({}, opts, {
+                currentTime,
+              })
+            )
+          }}
+        />
+        <AudioBt
+          onClick={() => {
+            const audio = audioRef.current
+            if (audio) {
+              if (muted || audioOpts.paused) {
+                audio.currentTime = audioOpts.currentTime
+                audio.muted = false
+                audio.play()
+                setMuted(false)
+                setAudioOpts((opts) =>
+                  Object.assign({}, opts, {
+                    paused: false,
+                    notice: '',
+                  })
+                )
+              } else {
+                audio.pause()
+                setMuted(true)
+                setAudioOpts((opts) =>
+                  Object.assign({}, opts, {
+                    paused: true,
+                    notice: '',
+                  })
+                )
+              }
+            }
+          }}
+        >
+          {audioOpts.paused || muted ? (
+            <mockups.audio.PausedButton />
+          ) : (
+            <mockups.audio.PlayingButton />
+          )}
+          {audioOpts.notice && <span>{audioOpts.notice}</span>}
+        </AudioBt>
+      </Container>
+    </>
   )
 }
 
