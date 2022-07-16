@@ -18,6 +18,7 @@ const mocks = [
       '不是台灣有什麼好與不好的問題，',
       '是我忘記不了香港。',
     ],
+    './img-1.png',
   ],
   [
     ['./audio-example-2.mp3'],
@@ -46,7 +47,8 @@ root.render(
   <div>
     <MockContentBlock />
     {mocks.map((mock) => {
-      return <Karaoke audioUrls={mock[0]} textArr={mock[1]} />
+      // @ts-ignore
+      return <Karaoke audioUrls={mock[0]} textArr={mock[1]} imgSrc={mock[2]} />
     })}
   </div>
 )

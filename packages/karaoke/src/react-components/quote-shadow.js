@@ -1,24 +1,7 @@
 import React/* eslint-disable-line */, { useEffect, useState } from 'react'
+import breakpoint from './breakpoint'
 import mockups from './mockups'
 import styled from 'styled-components'
-
-/**
- * @type {import('./typedef').Styles}
- */
-const defaultStyles = {
-  font: {
-    color: 'rgba(0,0,0,40%)',
-    size: '28px',
-    weight: '700',
-  },
-  lineHeight: '180%',
-  textAlign: 'center',
-  transitioned: {
-    font: {
-      color: '#000',
-    },
-  },
-}
 
 /**
  *  @callback onCurrentTimeUpdate
@@ -28,7 +11,7 @@ const defaultStyles = {
 
 /**
  *  @param {Object} opts
- *  @param {import('./typedef').Styles} [opts.styles]
+ *  @param {import('./typedef').KaraokeStyles} [opts.styles]
  *  @param {boolean} [opts.play] - whether to play the shadow animation or not
  *  @param {number} [opts.duration] - animation duration for entire quote text. Unit is second.
  *  @param {string} [opts.className]
@@ -40,7 +23,7 @@ export default function QuoteShadow({
   textArr,
   duration,
   play = false,
-  styles = defaultStyles,
+  styles,
   onCurrentTimeUpdate = () => {},
 }) {
   const [currentCharIndex, setCurrentCharIndex] = useState(0)
@@ -68,13 +51,8 @@ export default function QuoteShadow({
         return (
           <Char
             key={`char_${cIndex}`}
-            color={
-              cIndex + charOffset < currentCharIndex
-                ? styles.transitioned.font.color
-                : styles.font.color
-            }
-            fontSize={styles.font.size}
-            lineHeight={styles.lineHeight}
+            isTransitioned={cIndex + charOffset < currentCharIndex}
+            styles={styles}
           >
             {char}
           </Char>
@@ -88,7 +66,7 @@ export default function QuoteShadow({
   return (
     <Container className={className}>
       <mockups.quote.LeftUpperQuoteMark />
-      <Quote textAlign={styles.textAlign}>{charArrJsx}</Quote>
+      <Quote styles={styles}>{charArrJsx}</Quote>
       <mockups.quote.RightBottomQuoteMark />
     </Container>
   )
@@ -97,32 +75,60 @@ export default function QuoteShadow({
 const Container = styled.div`
   position: relative;
 
-  & > svg:first-child {
+  & > svg {
+    width: 20px;
     position: absolute;
-    left: 0;
-    top: 0;
+  }
+
+  & > svg:first-child {
+    left: 0px;
+    top: -50px;
   }
 
   & > svg:last-child {
-    position: absolute;
     right: 0;
-    bottom: 0;
+    bottom: -50px;
+  }
+
+  @media ${breakpoint.devices.tablet} {
+    & > svg {
+      width: 36px;
+    }
+
+    & > svg:first-child {
+      left: -50px;
+    }
   }
 `
 
 const Char = styled.span`
   ${/**
    *  @param {Object} props
-   *  @param {string} props.color
-   *  @param {string} props.fontSize
-   *  @param {string} props.lineHeight
+   *  @param {boolean} props.isTransitioned
+   *  @param {import('./typedef').KaraokeStyles} props.styles
    */
   (props) => {
     return `
-      color: ${props.color};
+      color: ${
+        props.isTransitioned
+          ? props.styles.mobile.transitioned.font.color
+          : props.styles.mobile.font.color
+      };
       transition: color 0.5s linear; /* TODO make transition duration cofigurable*/
-      font-size: ${props.fontSize};
-      line-height: ${props.lineHeight}
+      font-size: ${props.styles.mobile.font.size};
+      font-weight: ${props.styles.mobile.font.weight};
+      line-height: ${props.styles.mobile.lineHeight};
+
+      @media ${breakpoint.devices.tablet} {
+        color: ${
+          props.isTransitioned
+            ? props.styles.tablet.transitioned.font.color
+            : props.styles.tablet.font.color
+        };
+        font-size: ${props.styles.tablet.font.size};
+        font-weight: ${props.styles.tablet.font.weight};
+        line-height: ${props.styles.tablet.lineHeight};
+      }
     `
   }}
 `
@@ -130,12 +136,17 @@ const Char = styled.span`
 const Quote = styled.blockquote`
   ${/**
    *  @param {Object} props
-   *  @param {string} props.textAlign
+   *  @param {import('./typedef').KaraokeStyles} props.styles
    */
   (props) => {
     return `
-      text-align: ${props.textAlign};
-      margin: 50px;
+      /* clear default margin */
+      margin: 0;
+      text-align: ${props.styles.mobile.textAlign};
+
+      @media ${breakpoint.devices.tablet} {
+        text-align: ${props.styles.tablet.textAlign};
+      }
     `
   }}
 `

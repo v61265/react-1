@@ -24,4 +24,14 @@ export default {}
  *  @property {string} [transitioned.font.size='28px']
  *  @property {string} [transitioned.font.color='#000']
  *  @property {string} [transitioned.font.weight='700']
+ *  @property {Object} [image]
+ *  @property {string} [image.width='auto']
+ *  @property {string} [image.height='auto']
+ *  @property {string} [image.position] - 'top', 'right', 'bottom' or 'left'
+ */
+
+/**
+ *  @typedef {Object} KaraokeStyles
+ *  @property {Styles} mobile
+ *  @property {Styles} tablet
  */

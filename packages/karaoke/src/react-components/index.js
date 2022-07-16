@@ -1,8 +1,59 @@
 import React/* eslint-disable-line */, { useEffect, useRef, useState } from 'react'
 import _QuoteShadow from './quote-shadow'
+import breakpoint from './breakpoint'
 import mockups from './mockups'
 import styled from 'styled-components'
 import { useInView } from 'react-intersection-observer'
+
+/**
+ * @type {import('./typedef').KaraokeStyles}
+ */
+const defaultStyles = {
+  mobile: {
+    background: {
+      color: '#fff',
+    },
+    font: {
+      color: 'rgba(0,0,0,40%)',
+      size: '16px',
+      weight: '700',
+    },
+    lineHeight: '180%',
+    textAlign: 'center',
+    transitioned: {
+      font: {
+        color: '#000',
+      },
+    },
+    image: {
+      width: 'auto',
+      height: 'auto',
+      position: 'left',
+    },
+  },
+  tablet: {
+    background: {
+      color: '#fff',
+    },
+    font: {
+      color: 'rgba(0,0,0,40%)',
+      size: '28px',
+      weight: '700',
+    },
+    lineHeight: '180%',
+    textAlign: 'center',
+    transitioned: {
+      font: {
+        color: '#000',
+      },
+    },
+    image: {
+      width: 'auto',
+      height: 'auto',
+      position: 'left',
+    },
+  },
+}
 
 /**
  * This hook is used to record the mute status in the whole web page.
@@ -33,18 +84,20 @@ function useMuted(initialValue = false) {
 
 /**
  *  @param {Object} opts
- *  @param {import('./typedef').Styles} [opts.styles]
+ *  @param {import('./typedef').KaraokeStyles} [opts.styles]
  *  @param {string[]} opts.audioUrls,
  *  @param {string} [opts.className]
  *  @param {string} [opts.preload='auto'] - 'auto', 'none' or 'metadata'. `preload` attribute of `audio` tag.
  *  @param {string[]} opts.textArr - quote text
+ *  @param {string} [opts.imgSrc]
  */
 export default function Karaoke({
   audioUrls,
   className,
   preload = 'auto',
-  styles,
+  styles = defaultStyles,
   textArr,
+  imgSrc = '',
 }) {
   const defaultDuration = 10 // second
   const audioRef = useRef(null)
@@ -136,7 +189,7 @@ export default function Karaoke({
   )
 
   return (
-    <Container className={className} ref={containerRef}>
+    <Container className={className} ref={containerRef} styles={styles}>
       <audio
         ref={audioRef}
         preload={preload}
@@ -147,6 +200,7 @@ export default function Karaoke({
           <source key={`audio_source_${index}`} src={url}></source>
         ))}
       </audio>
+      {imgSrc && <Img src={imgSrc} styles={styles} />}
       <QuoteShadow
         key={`quote_in_view_${inView}` /** use key to force re-rendering */}
         textArr={textArr}
@@ -240,25 +294,58 @@ export default function Karaoke({
   )
 }
 
+const Img = styled.img`
+  ${/**
+   *  @param {Object} props
+   *  @param {import('./typedef').KaraokeStyles} props.styles
+   */
+  (props) => `
+      width: ${props.styles.mobile.image.width};
+      heigth: ${props.styles.mobile.image.height};
+      max-width: 100vw;
+
+      @media ${breakpoint.devices.tablet} {
+        max-width: 50vw;
+      }
+    `}
+`
+
 const QuoteShadow = styled(_QuoteShadow)`
-  max-width: 886px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  width: calc(261 / 320 * 100%);
+
+  @media ${breakpoint.devices.tablet} {
+    width: calc(800 / 1440 * 100%);
+  }
 `
 
 const Container = styled.div`
   position: relative;
   width: 100vw;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background-color: ${/**
+   *  @param {Object} props
+   *  @param {import('./typedef').KaraokeStyles} props.styles
+   */
+  (props) => props.styles.mobile.background.color};
+
+  @media ${breakpoint.devices.tablet} {
+    flex-direction: row;
+  }
 `
 
 const AudioBt = styled.div`
+  left: 12px;
+  bottom: 12px;
   position: absolute;
   cursor: pointer;
 
-  /* update later*/
-  left: 27px;
-  bottom: 22px;
+  @media ${breakpoint.devices.tablet} {
+    left: 27px;
+    bottom: 22px;
+  }
 `
