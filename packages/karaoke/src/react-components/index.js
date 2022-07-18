@@ -133,6 +133,15 @@ export default function Karaoke({
     }
   }, [])
 
+  useEffect(() => {
+    const audio = audioRef.current
+    if (!audio) {
+      return
+    }
+    // set audio muted attribute according to browser muted state
+    audio.muted = muted
+  }, [muted])
+
   useEffect(
     () => {
       const audio = audioRef.current
@@ -143,8 +152,6 @@ export default function Karaoke({
       if (inView) {
         // start with `audioOpts.currentTime` to catch up `QuoteShadow` animation
         audio.currentTime = audioOpts.currentTime
-        // set audio muted attribute according to browser muted state
-        audio.muted = muted
         const startPlayPromise = audio.play()
         startPlayPromise
           // play successfully
@@ -185,7 +192,7 @@ export default function Karaoke({
     },
     // `inView` is used to avoid from infinite re-rendering.
     // `muted` is avoid state not changed due to closure.
-    [inView, muted]
+    [inView]
   )
 
   return (
