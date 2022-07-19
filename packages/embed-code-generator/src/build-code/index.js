@@ -49,6 +49,7 @@ export function buildEmbeddedCode(pkgName, data, webpackAssets) {
       break
     case 'react-karaoke':
       Component = Karaoke
+      break
     default:
       throw new Error(`pkgName ${pkgName} is not supported`)
   }
