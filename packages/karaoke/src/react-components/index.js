@@ -90,6 +90,7 @@ function useMuted(initialValue = false) {
  *  @param {string} [opts.preload='auto'] - 'auto', 'none' or 'metadata'. `preload` attribute of `audio` tag.
  *  @param {string[]} opts.textArr - quote text
  *  @param {string} [opts.imgSrc]
+ *  @param {boolean} [opts.muteHint=false] - if true, there is another full page to hint how to mute/unmute audio.
  */
 export default function Karaoke({
   audioUrls,
@@ -98,6 +99,7 @@ export default function Karaoke({
   styles = defaultStyles,
   textArr,
   imgSrc = '',
+  muteHint = false,
 }) {
   const defaultDuration = 10 // second
   const audioRef = useRef(null)
@@ -195,111 +197,177 @@ export default function Karaoke({
     [inView]
   )
 
-  return (
-    <Container className={className} ref={containerRef} styles={styles}>
-      <audio
-        ref={audioRef}
-        preload={preload}
-        data-readr-karaoke
-        data-played={false}
-      >
-        {audioUrls.map((url, index) => (
-          <source key={`audio_source_${index}`} src={url}></source>
-        ))}
-      </audio>
-      {imgSrc && <Img src={imgSrc} styles={styles} />}
-      <QuoteShadow
-        key={`quote_in_view_${inView}` /** use key to force re-rendering */}
-        textArr={textArr}
-        play={!audioOpts.paused}
-        duration={audioOpts.duration}
-        styles={styles}
-        onCurrentTimeUpdate={(currentTime) => {
-          setAudioOpts((opts) =>
-            Object.assign({}, opts, {
-              currentTime,
-            })
-          )
-        }}
-      />
-      <AudioBt
-        onClick={() => {
-          const audio = audioRef.current
-          if (audio) {
-            if (muted || audioOpts.paused) {
-              audio.currentTime = audioOpts.currentTime
-              audio.muted = false
-              audio.play()
-              setMuted(false)
-              setAudioOpts((opts) =>
-                Object.assign({}, opts, {
-                  paused: false,
-                  notice: '',
-                })
-              )
-            } else {
+  /**
+   *  The following codes are WORKAROUND for Safari.
+   *  Problem to workaround:
+   *  In Safari, we still encounter `audio.play()` Promise rejection
+   *  even users have had interactions. The interactions, in our case, will be button clicking.
+   *
+   *  Therefore, the following logics find all Karaoke `audio` elements which has NOT been played before,
+   *  and try to `audio.play()` them.
+   *  Since this event is triggered by user clicking,
+   *  `audio.play()` will be successful without Promise rejection.
+   *  After this event finishes, Safari browser won't block `audio.play()` anymore.
+   */
+  const safariWorkaround = () => {
+    const otherAudios = document.querySelectorAll(
+      'audio[data-readr-karaoke][data-played=false]'
+    )
+    otherAudios.forEach(
+      (
+        /**
+         *  @type HTMLAudioElement
+         */
+        audio
+      ) => {
+        audio.muted = true
+        const playAttempt = audio.play()
+        if (playAttempt) {
+          playAttempt
+            // play successfully
+            .then(() => {
+              // pause audio immediately
               audio.pause()
-              setMuted(true)
-              setAudioOpts((opts) =>
-                Object.assign({}, opts, {
-                  paused: true,
-                  notice: '',
-                })
-              )
-            }
-            audio.setAttribute('data-played', true)
-          }
+            })
+            // fail to play
+            .catch(() => {
+              // do nothing
+            })
+        }
+      }
+    )
+  }
 
-          /**
-           *  The following codes are WORKAROUND for Safari.
-           *  Problem to workaround:
-           *  In Safari, we still encounter `audio.play()` Promise rejection
-           *  even users have had interactions. The interactionms, in our case, will be button clicking.
-           *
-           *  Therefore, the following logics find all Karaoke `audio` elements which has NOT been played before,
-           *  and try to `audio.play()` them.
-           *  Since this event is triggered by user clicking,
-           *  `audio.play()` will be successful without Promise rejection.
-           *  After this event finishes, Safari browser won't block `audio.play()` anymore.
-           */
-          const otherAudios = document.querySelectorAll(
-            'audio[data-readr-karaoke][data-played=false]'
-          )
-          otherAudios.forEach(
-            (
-              /**
-               *  @type HTMLAudioElement
-               */
-              audio
-            ) => {
-              audio.muted = true
-              const playAttempt = audio.play()
-              if (playAttempt) {
-                playAttempt
-                  // play successfully
-                  .then(() => {
-                    // pause audio immediately
-                    audio.pause()
-                  })
-                  // fail to play
-                  .catch(() => {
-                    // do nothing
-                  })
-              }
-            }
-          )
-        }}
-      >
-        {audioOpts.paused || muted ? (
-          <mockups.audio.PausedButton />
-        ) : (
-          <mockups.audio.PlayingButton />
-        )}
-        {audioOpts.notice && <span>{audioOpts.notice}</span>}
-      </AudioBt>
-    </Container>
+  const hintAudioBtJsx = (
+    <AudioBt
+      onClick={() => {
+        const audio = audioRef.current
+        if (audio) {
+          setMuted(!muted)
+        }
+        safariWorkaround()
+      }}
+    >
+      {muted ? <mockups.audio.PausedButton /> : <mockups.audio.PlayingButton />}
+    </AudioBt>
+  )
+
+  const audioBtJsx = (
+    <AudioBt
+      onClick={() => {
+        const audio = audioRef.current
+        if (audio) {
+          if (muted || audioOpts.paused) {
+            audio.currentTime = audioOpts.currentTime
+            audio.muted = false
+            audio.play()
+            setMuted(false)
+            setAudioOpts((opts) =>
+              Object.assign({}, opts, {
+                paused: false,
+                notice: '',
+              })
+            )
+          } else {
+            audio.pause()
+            setMuted(true)
+            setAudioOpts((opts) =>
+              Object.assign({}, opts, {
+                paused: true,
+                notice: '',
+              })
+            )
+          }
+          audio.setAttribute('data-played', true)
+        }
+
+        safariWorkaround()
+      }}
+    >
+      {audioOpts.paused || muted ? (
+        <mockups.audio.PausedButton />
+      ) : (
+        <mockups.audio.PlayingButton />
+      )}
+      {audioOpts.notice && <span>{audioOpts.notice}</span>}
+    </AudioBt>
+  )
+
+  return (
+    <>
+      {muteHint && (
+        <HintContainer>
+          {hintAudioBtJsx}
+          <Text>
+            此新聞專題網頁包含聲音，點擊<b>開啟</b>
+          </Text>
+        </HintContainer>
+      )}
+      <QuoteContainer className={className} ref={containerRef} styles={styles}>
+        <audio
+          ref={audioRef}
+          preload={preload}
+          data-readr-karaoke
+          data-played={false}
+        >
+          {audioUrls.map((url, index) => (
+            <source key={`audio_source_${index}`} src={url}></source>
+          ))}
+        </audio>
+        {imgSrc && <Img src={imgSrc} styles={styles} />}
+        <QuoteShadow
+          key={`quote_in_view_${inView}` /** use key to force re-rendering */}
+          textArr={textArr}
+          play={!audioOpts.paused}
+          duration={audioOpts.duration}
+          styles={styles}
+          onCurrentTimeUpdate={(currentTime) => {
+            setAudioOpts((opts) =>
+              Object.assign({}, opts, {
+                currentTime,
+              })
+            )
+          }}
+        />
+        {audioBtJsx}
+      </QuoteContainer>
+    </>
   )
 }
+
+const AudioBt = styled.div`
+  cursor: pointer;
+`
+
+const Text = styled.span`
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 180%;
+  text-align: center;
+  color: #000;
+
+  @media ${breakpoint.devices.tablet} {
+    font-size: 20px;
+  }
+`
+
+const HintContainer = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background-color: #fff;
+
+  ${AudioBt} {
+    margin-bottom: 10px;
+    & path {
+      fill: #000;
+    }
+  }
+`
 
 const Img = styled.img`
   ${/**
@@ -325,7 +393,7 @@ const QuoteShadow = styled(_QuoteShadow)`
   }
 `
 
-const Container = styled.div`
+const QuoteContainer = styled.div`
   position: relative;
   width: 100vw;
   height: 100vh;
@@ -343,16 +411,16 @@ const Container = styled.div`
   @media ${breakpoint.devices.tablet} {
     flex-direction: row;
   }
-`
 
-const AudioBt = styled.div`
-  left: 12px;
-  bottom: 12px;
-  position: absolute;
-  cursor: pointer;
+  ${AudioBt} {
+    left: 12px;
+    bottom: 12px;
+    position: absolute;
+    cursor: pointer;
 
-  @media ${breakpoint.devices.tablet} {
-    left: 27px;
-    bottom: 22px;
+    @media ${breakpoint.devices.tablet} {
+      left: 27px;
+      bottom: 22px;
+    }
   }
 `
