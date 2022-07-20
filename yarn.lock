@@ -1377,18 +1377,6 @@
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.21.tgz#5de5a2385a35309427f6011992b544514d559aa1"
   integrity sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==
 
-"@readr-media/react-karaoke@1.0.0-beta.2":
-  version "1.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@readr-media/react-karaoke/-/react-karaoke-1.0.0-beta.2.tgz#a6ca68f6aa53777eab9d506b51ccd6aa836d0923"
-  integrity sha512-TOEc03T8/9pswYZjA71crs5WHrhgQx2aEtMhOM79H+rI2giq5zfhJE1BYV1TGl+7KYp45DU1HpDg+P4eOdPf3A==
-  dependencies:
-    react "18.1.0"
-    react-dom "^18.1.0"
-    react-intersection-observer "^9.3.5"
-    serialize-javascript "^6.0.0"
-    styled-components "5.3.5"
-    uuid "^8.3.2"
-
 "@svgr/babel-plugin-add-jsx-attribute@^6.0.0":
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/@svgr/babel-plugin-add-jsx-attribute/-/babel-plugin-add-jsx-attribute-6.0.0.tgz#bd6d1ff32a31b82b601e73672a789cc41e84fe18"
