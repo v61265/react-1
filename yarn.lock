@@ -1377,10 +1377,10 @@
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.21.tgz#5de5a2385a35309427f6011992b544514d559aa1"
   integrity sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==
 
-"@readr-media/react-karaoke@1.0.0-beta.2":
-  version "1.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@readr-media/react-karaoke/-/react-karaoke-1.0.0-beta.2.tgz#a6ca68f6aa53777eab9d506b51ccd6aa836d0923"
-  integrity sha512-TOEc03T8/9pswYZjA71crs5WHrhgQx2aEtMhOM79H+rI2giq5zfhJE1BYV1TGl+7KYp45DU1HpDg+P4eOdPf3A==
+"@readr-media/react-karaoke@1.0.0-beta.3":
+  version "1.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-karaoke/-/react-karaoke-1.0.0-beta.3.tgz#5e6ed5234b0e222c325cc032244b15619ff3a9a7"
+  integrity sha512-9TzVButV6Z2bs3sJsta3aaI6Cl8Vfj0T/7O6ZtYn2z8ax3XeSQwLfsno8M7pMX3cqwHseLpvxyU6E5tIKE6yhg==
   dependencies:
     react "18.1.0"
     react-dom "^18.1.0"
