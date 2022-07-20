@@ -103,7 +103,7 @@ export default function Karaoke({
   const audioRef = useRef(null)
   const [muted, setMuted] = useMuted(true)
   const [containerRef, inView] = useInView({
-    threshold: [0.8, 0.2],
+    threshold: [0.6],
   })
 
   const [audioOpts, setAudioOpts] = useState({
