@@ -25,7 +25,6 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@readr-media/react-karaoke": "1.0.0-beta.3",
     "react": "18.1.0",
     "react-dom": "^18.1.0",
     "react-intersection-observer": "^9.3.5",
