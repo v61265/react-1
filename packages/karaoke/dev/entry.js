@@ -46,9 +46,17 @@ const MockContentBlock = styled.div`
 root.render(
   <div>
     <MockContentBlock />
-    {mocks.map((mock) => {
+    {mocks.map((mock, index) => {
       // @ts-ignore
-      return <Karaoke audioUrls={mock[0]} textArr={mock[1]} imgSrc={mock[2]} />
+      return (
+        <Karaoke
+          key={index}
+          muteHint={index === 0}
+          audioUrls={mock[0]}
+          textArr={mock[1]}
+          imgSrc={mock[2]}
+        />
+      )
     })}
   </div>
 )
