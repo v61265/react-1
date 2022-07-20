@@ -1,6 +1,6 @@
 {
   "name": "@readr-media/react-embed-code-generator",
-  "version": "1.1.0-beta.2",
+  "version": "1.1.0-beta.3",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
