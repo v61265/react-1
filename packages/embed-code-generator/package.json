@@ -29,7 +29,7 @@
   "license": "MIT",
   "dependencies": {
     "@readr-media/react-feedback": "^1.0.6",
-    "@readr-media/react-karaoke": "1.0.0-beta.4",
+    "@readr-media/react-karaoke": "^1.0.0",
     "@readr-media/react-qa-list": "^1.0.4",
     "@readr-media/react-questionnaire": "^1.0.9",
     "lodash": "^4.17.21",
