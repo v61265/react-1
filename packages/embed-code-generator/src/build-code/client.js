@@ -2,6 +2,7 @@ import 'regenerator-runtime/runtime'
 import Feedback from '@readr-media/react-feedback/lib/react-components'
 import Questionnaire from '@readr-media/react-questionnaire/lib/react-components'
 import QAList from '@readr-media/react-qa-list/lib/react-components'
+import Karaoke from '@readr-media/react-karaoke/lib/react-components'
 import React from 'react' // eslint-disable-line
 import { createRoot } from 'react-dom/client'
 
@@ -18,6 +19,10 @@ const pkgComponentArr = [
   {
     name: 'react-qa-list',
     Component: QAList,
+  },
+  {
+    name: 'react-karaoke',
+    Component: Karaoke,
   },
 ]
 
