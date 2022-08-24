@@ -69,14 +69,14 @@ const MobileHeroImage = styled.img`
  *  @return React.ReactElement
  */
 export default function Landing({ form }) {
-  function formatTime(time) {
-    const d = new Date(time)
-    return `${d.getFullYear()}.${('0' + (d.getMonth() + 1)).slice(-2)}.${(
-      '0' + d.getDate()
-    ).slice(-2)} ${('0' + d.getHours()).slice(-2)}:${(
-      '0' + d.getMinutes()
-    ).slice(-2)}`
-  }
+  // function formatTime(time) {
+  //   const d = new Date(time)
+  //   return `${d.getFullYear()}.${('0' + (d.getMonth() + 1)).slice(-2)}.${(
+  //     '0' + d.getDate()
+  //   ).slice(-2)} ${('0' + d.getHours()).slice(-2)}:${(
+  //     '0' + d.getMinutes()
+  //   ).slice(-2)}`
+  // }
   return (
     <Wrapper>
       <HeroImage src={form.heroImage?.resized?.original} alt={form.name} />
