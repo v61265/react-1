@@ -85,7 +85,7 @@ export default function Landing({ form }) {
         alt={form.name}
       />
       <LandingTitle>{form.name}</LandingTitle>
-      <LandingUpdateTime>{formatTime(form.updateTime)}</LandingUpdateTime>
+      <LandingUpdateTime>每日 2 點隨記者會內容更新</LandingUpdateTime>
       <LandingDesc>{form.content?.blocks?.[0]?.text}</LandingDesc>
     </Wrapper>
   )
