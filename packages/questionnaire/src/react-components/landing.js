@@ -69,14 +69,14 @@ const MobileHeroImage = styled.img`
  *  @return React.ReactElement
  */
 export default function Landing({ form }) {
-  // function formatTime(time) {
-  //   const d = new Date(time)
-  //   return `${d.getFullYear()}.${('0' + (d.getMonth() + 1)).slice(-2)}.${(
-  //     '0' + d.getDate()
-  //   ).slice(-2)} ${('0' + d.getHours()).slice(-2)}:${(
-  //     '0' + d.getMinutes()
-  //   ).slice(-2)}`
-  // }
+  function formatTime(time) {
+    const d = new Date(time)
+    return `${d.getFullYear()}.${('0' + (d.getMonth() + 1)).slice(-2)}.${(
+      '0' + d.getDate()
+    ).slice(-2)} ${('0' + d.getHours()).slice(-2)}:${(
+      '0' + d.getMinutes()
+    ).slice(-2)}`
+  }
   return (
     <Wrapper>
       <HeroImage src={form.heroImage?.resized?.original} alt={form.name} />
@@ -85,7 +85,9 @@ export default function Landing({ form }) {
         alt={form.name}
       />
       <LandingTitle>{form.name}</LandingTitle>
-      <LandingUpdateTime>每日 2 點隨記者會內容更新</LandingUpdateTime>
+      <LandingUpdateTime>
+        {form.updateTimeDesc || formatTime(form.updateTime)}
+      </LandingUpdateTime>
       <LandingDesc>{form.content?.blocks?.[0]?.text}</LandingDesc>
     </Wrapper>
   )
