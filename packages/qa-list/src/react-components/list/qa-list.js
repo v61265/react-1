@@ -23,10 +23,10 @@ const ListTitle = styled.h2`
   }
 `
 
-export default function QuestionsList({ questions }) {
+export default function QuestionsList({ title, questions }) {
   return (
     <List>
-      <ListTitle>你可能還想知道</ListTitle>
+      <ListTitle>{title}</ListTitle>
       {questions.map((ques) => {
         return <QACard questionItem={ques} key={ques.id} />
       })}
