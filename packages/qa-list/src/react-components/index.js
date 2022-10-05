@@ -6,7 +6,7 @@ import QAList from './list/qa-list'
 export default function QaList(props) {
   return (
     <Section>
-      <QAList questions={props.questions} />
+      <QAList title={props.title} questions={props.questions} />
     </Section>
   )
 }

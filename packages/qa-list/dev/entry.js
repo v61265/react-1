@@ -223,4 +223,4 @@ const mockData = [
   },
 ]
 
-root.render(<QAListComponent questions={mockData} />)
+root.render(<QAListComponent title="你可能還想知道？" questions={mockData} />)
