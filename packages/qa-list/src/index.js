@@ -1,11 +1,3 @@
-import Feedback from './react-components'
-import path from 'path'
-import { buildEmbeddedCode } from './build-code'
+import QAList from './react-components'
 
-export default {
-  ReactComponent: Feedback,
-  buildEmbeddedCode,
-  loadWebpackAssets: () => {
-    return require(path.resolve(__dirname, '../dist/webpack-assets.json'))
-  },
-}
+export default QAList

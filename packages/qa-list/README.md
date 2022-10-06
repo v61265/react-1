@@ -38,29 +38,6 @@ npm publish
 
 Note: before publish npm package, we need to bump the package version first.
 
-### Troubleshooting
-#### Q: How do I import/require `QAList` React component only?
-In `src/index.js`, it does not only export `QAList` React component, but also export `buildEmbeddedCode` and `loadWebpackAssets` functions.
-In some scenarios, like we write another React component `AnotherComponent` in `another.jsx`, and we want `AnotherComponent` to render `QAList`.
-We might have `import QAList from '@readr-media/react-qa-list'` in `another.jsx`.
-But, there will be a webpack error if we try to webpack `another.jsx`. The reason is because `@readr-media/react-qa-list/lib/index.js` imports `path` module, and `path` module cannot be webpacked.
-
-To solve this webpack error, we have to import the `QAList` React component directly. See the following demo codes.
-```
-// another.jsx
-
-// import `QAList` React component directly
-import QAList from '@readr-media/react-qa-list/lib/react-components'
-
-const questions = [...]
-
-function AnotherComponent() {
-  return (
-    <QAList questions={questions} title="你可能還想知道？">
-  )
-}
-```
-
 
 ## TODOs
 - [ ] 建立 CI pipeline，透過 CI 產生 npm package，並且上傳至 npm registry
