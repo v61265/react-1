@@ -3,11 +3,7 @@ import styled from 'styled-components'
 import QACard from './qa-card'
 
 const List = styled.div`
-  margin-top: 20px;
-  max-width: 680px;
-  @media (min-width: 768px) {
-    margin-top: 40px;
-  }
+  max-width: 100%;
 `
 
 const ListTitle = styled.h2`
