@@ -1,5 +1,11 @@
 # @readr-media/react-qa-list Changelog
 
+## 2022-10-07, Version 2.0.1
+### Commits
+* \[[`91e2bf5da3`](https://github.com/readr-media/react-qa-list/commit/91e2bf5da3)] - chore(qa-list): bump version to 2.0.1 (nickhsine)
+* \[[`f0746570f2`](https://github.com/readr-media/react-qa-list/commit/f0746570f2)] - Merge pull request #73 from bibibobobi/main (Bibo Chan)
+* \[[`dab7c7e12c`](https://github.com/readr-media/react-qa-list/commit/dab7c7e12c)] - style(qa-list): remove margin-top and set width to 100% (bibibobobi)
+
 ## 2022-10-06, Version 2.0.0
 ### Notable Changes
 - refactor: only export `QAList` component. Remove `buildEmbeddedCode` and `loadWebpackAssets` functions.
