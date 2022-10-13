@@ -106,6 +106,7 @@ const Header = styled.header`
   border-top: 4px solid black;
   border-bottom: 4px solid black;
   background-color: #f58439;
+  margin-bottom: 48px;
 
   h3 {
     line-height: 120%;
@@ -150,8 +151,12 @@ const Header = styled.header`
  *  @param {ElectionDistricts} [props.districts=[]]
  */
 export default function({ districts = [], year, title }) {
+  const showTabs = districts.find(
+    (d) => d.type === tabs.mountainIndigenous || d.type === tabs.plainIndigenous
+  )
   const [tabSelected, setTabSelected] = useState(tabs.district)
   let selectedDistricts = []
+  let tabsJsx = null
 
   switch (tabSelected) {
     case tabs.plainIndigenous: {
@@ -172,13 +177,18 @@ export default function({ districts = [], year, title }) {
       break
     }
   }
+
+  tabsJsx = showTabs ? (
+    <Tabs selected={tabSelected} onTab={setTabSelected} />
+  ) : null
+
   return (
     <Container>
       <Header>
         <h3>{year}</h3>
         <h3>{title}</h3>
       </Header>
-      <Tabs selected={tabSelected} onTab={setTabSelected} />
+      {tabsJsx}
       <StyledList districts={selectedDistricts} />
     </Container>
   )
