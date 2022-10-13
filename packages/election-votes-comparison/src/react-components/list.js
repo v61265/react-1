@@ -2,7 +2,7 @@
  *  @typedef {import('./typedef').ElectionDistricts} ElectionDistricts
  */
 
-import React from 'react' // eslint-disable-line
+import React, { useEffect, useRef, useState } from 'react' // eslint-disable-line
 import breakpoint from './breakpoint'
 import styled from 'styled-components'
 import { AnonymousIcon, ElectedIcon } from './icons'
@@ -40,6 +40,17 @@ const TBody = styled.div`
   }
 
   @media ${breakpoint.devices.laptopBelow} {
+    /**
+     * The reason we make \`TBody\` positioned is because we need it to
+     * be an [\`offsetParent\`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetParent).
+     * When user clicks go-to-specific-district button,
+     * which will call \`setSelectedDistrictNumber\`,
+     * and the program needs to automatically scroll to the specific district.
+     * We need \`TBody\` to be positioned so that the district.\`offsetLeft\` will refer to
+     * \`TBody\` rather than the viewport.
+     **/
+    position: relative;
+
     background-color: white;
     width: 100%;
     display: flex;
@@ -123,7 +134,7 @@ const THead = styled.div`
   }
 `
 
-const NameCell = styled.div`
+const NameImgCell = styled.div`
   display: flex;
   align-items: center;
 
@@ -153,8 +164,31 @@ const NameCell = styled.div`
  *  @param {Object} props
  *  @param {string} [props.className]
  *  @param {ElectionDistricts} [props.districts=[]]
+ *  @param {number} [props.scrollTo] - district number. Only for tablet and mobile version.
+ *  If provided, the program will automatically scroll to the district.
  */
-export default function List({ className, districts = [] }) {
+export default function List({ className, districts = [], scrollTo }) {
+  const defaultsDistrictNumber = scrollTo ?? districts?.[0]?.number ?? 1
+  const [selectedDistrictNumber, setSelectedDistrictNumber] = useState(
+    defaultsDistrictNumber
+  )
+  const tBodyRef = useRef(null)
+
+  useEffect(() => {
+    const tBodyNode = tBodyRef.current
+
+    // query the selected element according to district number
+    const districtNode = tBodyNode?.querySelector(
+      `[data-district-number="${selectedDistrictNumber}"]`
+    )
+
+    // get the number of pixels that the selected element's content is scrolled from its left edge
+    const offsetLeft = districtNode?.offsetLeft ?? 0
+
+    // scroll to the selected element
+    tBodyNode.scrollLeft += offsetLeft
+  }, [setSelectedDistrictNumber])
+
   const districtsJsx = districts.map((d, dIdx) => {
     const candidates = d.candidates
     return candidates.map((c, cIdx) => {
@@ -179,7 +213,10 @@ export default function List({ className, districts = [] }) {
       )
       const electedCellJsx = c.elected ? <ElectedIcon /> : ''
       return (
-        <TRow backgroundColor={dIdx % 2 ? '#FFF1E8' : '#FFF8F3'}>
+        <TRow
+          backgroundColor={dIdx % 2 ? '#FFF1E8' : '#FFF8F3'}
+          data-district-number={d.number}
+        >
           <TCell>
             {cIdx === 0
               ? `第${d.number < 10 ? `0${d.number}` : d.number}選舉區`
@@ -187,10 +224,10 @@ export default function List({ className, districts = [] }) {
           </TCell>
           <TCell>{c.number}</TCell>
           <TCell>
-            <NameCell>
+            <NameImgCell>
               {imgJsx}
               {nameCellJsx}
-            </NameCell>
+            </NameImgCell>
           </TCell>
           <TCell>{partyCellJsx}</TCell>
           <TCell>{c.votes && c.votes.toLocaleString()}</TCell>
@@ -213,7 +250,7 @@ export default function List({ className, districts = [] }) {
           <TCell>當選</TCell>
         </TRow>
       </THead>
-      <TBody>{districtsJsx}</TBody>
+      <TBody ref={tBodyRef}>{districtsJsx}</TBody>
     </Table>
   )
 }
