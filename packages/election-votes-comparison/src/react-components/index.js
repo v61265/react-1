@@ -4,6 +4,7 @@
 
 import React, { useState } from 'react' // eslint-disable-line
 import List from './list'
+import breakpoint from './breakpoint'
 import styled from 'styled-components'
 
 const tabs = {
@@ -13,23 +14,31 @@ const tabs = {
 }
 
 const StyledTab = styled.div`
-  display: inline-block;
   min-width: 120px;
-  padding: 0 40px;
+  display: inline-block;
   cursor: pointer;
   font-weight: 700;
-  font-size: 24px;
-  line-height: 130%;
   color: ${/**
    *  @param {Object} props
    *  @param {boolean} props.isSelected
    */
   (props) => (props.isSelected ? '#D6610C' : 'rgba(14, 45, 53, 0.3)')};
+
+  @media ${breakpoint.devices.tablet} {
+    padding: 0 40px;
+    font-size: 24px;
+    line-height: 130%;
+  }
+
+  @media ${breakpoint.devices.tabletBelow} {
+    padding: 0 12px;
+    font-size: 16px;
+    min-width: 80px;
+  }
 `
 
 const StyledTabs = styled.div`
   text-align: center;
-  margin-top: 48px;
   margin-bottom: 48px;
 
   ${StyledTab}:first-child {
@@ -38,6 +47,18 @@ const StyledTabs = styled.div`
 
   ${StyledTab}:last-child {
     border-left: 2px solid black;
+  }
+
+  @media ${breakpoint.devices.mobileS} {
+    margin-top: 28px;
+  }
+
+  @media ${breakpoint.devices.tablet} {
+    margin-top: 38px;
+  }
+
+  @media ${breakpoint.devices.laptop} {
+    margin-top: 48px;
   }
 `
 
@@ -87,8 +108,6 @@ const Header = styled.header`
   background-color: #f58439;
 
   h3 {
-    display: inline-block;
-    font-size: 32px;
     line-height: 120%;
     font-weight: 900;
     margin: 0;
@@ -102,6 +121,25 @@ const Header = styled.header`
 
   h3:last-child {
     color: white;
+  }
+
+  @media ${breakpoint.devices.tablet} {
+    h3 {
+      display: inline-block;
+      font-size: 32px;
+    }
+  }
+
+  @media ${breakpoint.devices.tabletBelow} {
+    h3 {
+      font-size: 24px;
+      display: block;
+      text-align: center;
+    }
+
+    h3:last-child {
+      border-top: 4px solid black;
+    }
   }
 `
 

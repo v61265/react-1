@@ -3,57 +3,123 @@
  */
 
 import React from 'react' // eslint-disable-line
+import breakpoint from './breakpoint'
 import styled from 'styled-components'
 import { AnonymousIcon, ElectedIcon } from './icons'
 
 const Table = styled.div`
-  display: table;
-
-  font-size: 16px;
   font-weight: 500;
   color: #0f2d35;
+  font-size: 16px;
 
-  /* hd */
-  width: 1120px;
+  @media ${breakpoint.devices.laptop} {
+    display: table;
+    width: 1120px;
+  }
+
+  @media ${breakpoint.devices.laptopBelow} {
+    width: 100%;
+    height: 392px;
+    display: flex;
+    flex-wrap: nowrap;
+
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    overflow: hidden;
+  }
+
+  @media ${breakpoint.devices.tabletBelow} {
+    height: 371px;
+    font-size: 14px;
+  }
 `
 
 const TBody = styled.div`
-  display: table-row-group;
+  @media ${breakpoint.devices.laptop} {
+    display: table-row-group;
+  }
+
+  @media ${breakpoint.devices.laptopBelow} {
+    background-color: white;
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    overflow-y: hidden;
+  }
+
+  @media ${breakpoint.devices.tabletBelow} {
+    height: 367px;
+  }
 `
 
 const TRow = styled.div`
-  display: table-row;
+  @media ${breakpoint.devices.laptop} {
+    display: table-row;
+    background-color: ${/**
+     *  @param {Object} props
+     *  @param {string} [props.backgroundColor]
+     */
+    (props) => props.backgroundColor};
+  }
 
-  background-color: ${/**
-   *  @param {Object} props
-   *  @param {string} [props.backgroundColor]
-   */
-  (props) => props.backgroundColor};
+  @media ${breakpoint.devices.laptopBelow} {
+    flex-shrink: 0;
+  }
 `
 
 const TCell = styled.div`
-  display: table-cell;
-  vertical-align: middle;
-  padding: 16px 30px;
-
-  &:first-child {
-    border-bottom: none;
-  }
-
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-
   a {
     color: #d6610c;
     text-decoration: none;
   }
+
+  @media ${breakpoint.devices.laptop} {
+    padding: 16px 30px;
+    &:first-child {
+      border-bottom: none;
+      padding-left: 4px;
+    }
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  @media ${breakpoint.devices.laptopBelow} {
+    padding: 16px 20px;
+    text-align: left;
+    line-height: 150%;
+    height: 56px;
+  }
+
+  @media ${breakpoint.devices.tabletBelow} {
+    padding: 16px;
+    height: 53px;
+  }
 `
 
 const THead = styled.div`
-  display: table-header-group;
-  border-bottom: 2px solid black;
-
-  ${TCell} {
+  @media ${breakpoint.devices.laptop} {
+    display: table-header-group;
     border-bottom: 2px solid black;
+
+    ${TCell} {
+      border-bottom: 2px solid black;
+    }
+  }
+
+  @media ${breakpoint.devices.laptopBelow} {
+    border-right: 1px solid black;
+    width: 96px;
+    flex-shrink: 0;
+
+    ${TRow} {
+      flex-shrink: unset;
+    }
+
+    ${TCell} {
+      text-align: right;
+    }
   }
 `
 
@@ -64,6 +130,22 @@ const NameCell = styled.div`
   img,
   svg {
     margin-right: 8px;
+  }
+
+  @media ${breakpoint.devices.laptop} {
+    img,
+    svg {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  @media ${breakpoint.devices.laptopBelow} {
+    img,
+    svg {
+      width: 32px;
+      height: 32px;
+    }
   }
 `
 
