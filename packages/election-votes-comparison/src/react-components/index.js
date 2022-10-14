@@ -4,6 +4,7 @@
 
 import React, { useState } from 'react' // eslint-disable-line
 import List from './list'
+import Selector from './district-selector'
 import breakpoint from './breakpoint'
 import styled from 'styled-components'
 
@@ -87,6 +88,22 @@ function Tabs({ selected, onTab }) {
   )
 }
 
+const StyledSelector = styled(Selector)`
+  margin: 40px auto 20px auto;
+
+  @media ${breakpoint.devices.laptop} {
+    display: none;
+  }
+
+  @media ${breakpoint.devices.laptopBelow} and ${breakpoint.devices.tablet} {
+    width: 288px;
+  }
+
+  @media ${breakpoint.devices.tabletBelow} {
+    width: 256px;
+  }
+`
+
 const StyledList = styled(List)``
 
 const Container = styled.div`
@@ -155,20 +172,25 @@ export default function({ districts = [], year, title }) {
     (d) => d.type === tabs.mountainIndigenous || d.type === tabs.plainIndigenous
   )
   const [tabSelected, setTabSelected] = useState(tabs.district)
-  let selectedDistricts = []
+  let groupedDistricts = {
+    [tabs.district]: districts,
+    [tabs.plainIndigenous]: districts.filter(
+      (d) => d.type === tabs.plainIndigenous
+    ),
+    [tabs.mountainIndigenous]: districts.filter(
+      (d) => d.type === tabs.mountainIndigenous
+    ),
+  }
   let tabsJsx = null
+  let selectedDistricts = []
 
   switch (tabSelected) {
     case tabs.plainIndigenous: {
-      selectedDistricts = districts.filter(
-        (d) => d.type === tabs.plainIndigenous
-      )
+      selectedDistricts = groupedDistricts.plainIndigenous
       break
     }
     case tabs.mountainIndigenous: {
-      selectedDistricts = districts.filter(
-        (d) => d.type === tabs.mountainIndigenous
-      )
+      selectedDistricts = groupedDistricts.mountainIndigenous
       break
     }
     case tabs.district:
@@ -179,8 +201,20 @@ export default function({ districts = [], year, title }) {
   }
 
   tabsJsx = showTabs ? (
-    <Tabs selected={tabSelected} onTab={setTabSelected} />
+    <Tabs
+      selected={tabSelected}
+      onTab={(t) => {
+        setTabSelected(t)
+        setDistrictNumberSelected(groupedDistricts?.[t]?.[0]?.number)
+      }}
+    />
   ) : null
+
+  const options = selectedDistricts.map((d) => d.number)
+
+  const [districtNumberSelected, setDistrictNumberSelected] = useState(
+    options?.[0]
+  )
 
   return (
     <Container>
@@ -189,7 +223,15 @@ export default function({ districts = [], year, title }) {
         <h3>{title}</h3>
       </Header>
       {tabsJsx}
-      <StyledList districts={selectedDistricts} />
+      <StyledSelector
+        options={options}
+        defaultValue={districtNumberSelected}
+        onSelect={(n) => setDistrictNumberSelected(n)}
+      />
+      <StyledList
+        districts={selectedDistricts}
+        scrollTo={districtNumberSelected}
+      />
     </Container>
   )
 }

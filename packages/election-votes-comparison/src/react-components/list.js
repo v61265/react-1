@@ -168,10 +168,7 @@ const NameImgCell = styled.div`
  *  If provided, the program will automatically scroll to the district.
  */
 export default function List({ className, districts = [], scrollTo }) {
-  const defaultsDistrictNumber = scrollTo ?? districts?.[0]?.number ?? 1
-  const [selectedDistrictNumber, setSelectedDistrictNumber] = useState(
-    defaultsDistrictNumber
-  )
+  const dn = scrollTo ?? districts?.[0]?.number ?? 1
   const tBodyRef = useRef(null)
 
   useEffect(() => {
@@ -179,15 +176,15 @@ export default function List({ className, districts = [], scrollTo }) {
 
     // query the selected element according to district number
     const districtNode = tBodyNode?.querySelector(
-      `[data-district-number="${selectedDistrictNumber}"]`
+      `[data-district-number="${dn}"]`
     )
 
     // get the number of pixels that the selected element's content is scrolled from its left edge
     const offsetLeft = districtNode?.offsetLeft ?? 0
 
     // scroll to the selected element
-    tBodyNode.scrollLeft += offsetLeft
-  }, [setSelectedDistrictNumber])
+    tBodyNode.scrollLeft = offsetLeft
+  })
 
   const districtsJsx = districts.map((d, dIdx) => {
     const candidates = d.candidates
