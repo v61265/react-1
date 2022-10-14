@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react' // eslint-disable-line
+import breakpoints from './breakpoint'
 import styled from 'styled-components'
 import { CloseIcon } from './icons'
 
 const Container = styled.div`
   > div {
-    padding: 8px 12px;
+    padding: 12px 8px;
     border: 2px solid black;
   }
 
@@ -22,6 +23,12 @@ const Container = styled.div`
     display: inline-flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  @media ${breakpoints.devices.tabletBelow} {
+    > div:last-child {
+      width: 184px;
+    }
   }
 `
 
@@ -126,6 +133,11 @@ const StyledOption = styled.div`
   padding: 2px;
 `
 
+/**
+ *  @param {Object} props
+ *  @param {number[]} props.options
+ *  @param {OnSelect} props.onSelect
+ */
 function Picker({ options, onSelect }) {
   useEffect(() => {
     // TODO lock scroll
@@ -144,7 +156,7 @@ function Picker({ options, onSelect }) {
       <LightBoxBody>
         <div>
           <span>請選擇選區</span>
-          <div onClick={() => onSelect()}>
+          <div onClick={() => onSelect(undefined)}>
             <CloseIcon />
           </div>
         </div>

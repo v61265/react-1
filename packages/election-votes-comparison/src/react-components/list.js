@@ -98,14 +98,14 @@ const TCell = styled.div`
   }
 
   @media ${breakpoint.devices.laptopBelow} {
-    padding: 16px 20px;
+    padding: 15px;
     text-align: left;
     line-height: 150%;
     height: 56px;
   }
 
   @media ${breakpoint.devices.tabletBelow} {
-    padding: 16px;
+    padding: 15px;
     height: 53px;
   }
 `
@@ -167,8 +167,10 @@ const NameImgCell = styled.div`
  *  @param {ElectionDistricts} [props.districts=[]]
  *  @param {number} [props.scrollTo] - district number. Only for tablet and mobile version.
  *  If provided, the program will automatically scroll to the district.
+ *  @returns {React.ReactElement}
  */
 export default function List({ className, districts = [], scrollTo }) {
+  // dn means district number
   const dn = scrollTo ?? districts?.[0]?.number ?? 1
   const tBodyRef = useRef(null)
 
@@ -188,7 +190,7 @@ export default function List({ className, districts = [], scrollTo }) {
   })
 
   const districtsJsx = districts.map((d, dIdx) => {
-    const candidates = d.candidates
+    const candidates = d.candidates || []
     return candidates.map((c, cIdx) => {
       const imgJsx = c.name.imgSrc ? (
         <img src={c.name.imgSrc} />
@@ -202,7 +204,7 @@ export default function List({ className, districts = [], scrollTo }) {
       ) : (
         <span>{c.name.label}</span>
       )
-      const partyCellJsx = c.party?.href ? (
+      const partyCellJsx = c.party.href ? (
         <a href={c.party.href}>
           <span>{c.party.label}</span>
         </a>

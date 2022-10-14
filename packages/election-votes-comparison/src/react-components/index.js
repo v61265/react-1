@@ -4,12 +4,12 @@
 
 import React, { useState } from 'react' // eslint-disable-line
 import List from './list'
-import Selector from './district-selector'
+import Selector from './selector'
 import breakpoint from './breakpoint'
 import styled from 'styled-components'
 
-const tabs = {
-  district: 'district',
+const tabEnum = {
+  all: 'all',
   plainIndigenous: 'plainIndigenous',
   mountainIndigenous: 'mountainIndigenous',
 }
@@ -21,9 +21,9 @@ const StyledTab = styled.div`
   font-weight: 700;
   color: ${/**
    *  @param {Object} props
-   *  @param {boolean} props.isSelected
+   *  @param {boolean} props.active
    */
-  (props) => (props.isSelected ? '#D6610C' : 'rgba(14, 45, 53, 0.3)')};
+  (props) => (props.active ? '#D6610C' : 'rgba(14, 45, 53, 0.3)')};
 
   @media ${breakpoint.devices.tablet} {
     padding: 0 40px;
@@ -63,24 +63,36 @@ const StyledTabs = styled.div`
   }
 `
 
-function Tabs({ selected, onTab }) {
+/**
+ *  @callback OnTab
+ *  @param {string} tab - value could be 'all', 'plainIndigenous' or 'mountainIndigenous'
+ *  @returns {void}
+ */
+
+/**
+ *  @param {Object} props
+ *  @param {string} props.activeTab - value could be 'all', 'plainIndigenous' or 'mountainIndigenous'
+ *  @param {OnTab} props.onTab
+ *  @returns {React.ReactElement}
+ */
+function Tabs({ activeTab, onTab }) {
   return (
     <StyledTabs>
       <StyledTab
-        isSelected={selected === tabs.district}
-        onClick={() => onTab(tabs.district)}
+        active={activeTab === tabEnum.all}
+        onClick={() => onTab(tabEnum.all)}
       >
         區域
       </StyledTab>
       <StyledTab
-        isSelected={selected === tabs.plainIndigenous}
-        onClick={() => onTab(tabs.plainIndigenous)}
+        active={activeTab === tabEnum.plainIndigenous}
+        onClick={() => onTab(tabEnum.plainIndigenous)}
       >
         平地原住民
       </StyledTab>
       <StyledTab
-        isSelected={selected === tabs.mountainIndigenous}
-        onClick={() => onTab(tabs.mountainIndigenous)}
+        active={activeTab === tabEnum.mountainIndigenous}
+        onClick={() => onTab(tabEnum.mountainIndigenous)}
       >
         山地原住民
       </StyledTab>
@@ -163,61 +175,81 @@ const Header = styled.header`
 
 /**
  *  @param {Object} props
+ *  @param {string} [props.className]
  *  @param {number} props.year
  *  @param {string} props.title
  *  @param {ElectionDistricts} [props.districts=[]]
+ *  @returns {React.ReactElement}
  */
-export default function({ districts = [], year, title }) {
-  const showTabs = districts.find(
-    (d) => d.type === tabs.mountainIndigenous || d.type === tabs.plainIndigenous
+export default function Root({
+  className,
+  districts: allDistricts = [],
+  year,
+  title,
+}) {
+  const [tab, setTab] = useState(tabEnum.all)
+  const showTabs = allDistricts.find(
+    (d) =>
+      d.type === tabEnum.mountainIndigenous ||
+      d.type === tabEnum.plainIndigenous
   )
-  const [tabSelected, setTabSelected] = useState(tabs.district)
-  let groupedDistricts = {
-    [tabs.district]: districts,
-    [tabs.plainIndigenous]: districts.filter(
-      (d) => d.type === tabs.plainIndigenous
-    ),
-    [tabs.mountainIndigenous]: districts.filter(
-      (d) => d.type === tabs.mountainIndigenous
-    ),
-  }
-  let tabsJsx = null
-  let selectedDistricts = []
 
-  switch (tabSelected) {
-    case tabs.plainIndigenous: {
-      selectedDistricts = groupedDistricts.plainIndigenous
+  // pid means plainIndigenousDistricts
+  const pid = allDistricts.filter((d) => d.type === tabEnum.plainIndigenous)
+
+  // `mid` means mountainIndigenousDistricts
+  const mid = allDistricts.filter((d) => d.type === tabEnum.mountainIndigenous)
+
+  let tabsJsx = null
+  let districts = []
+
+  switch (tab) {
+    case tabEnum.plainIndigenous: {
+      districts = pid
       break
     }
-    case tabs.mountainIndigenous: {
-      selectedDistricts = groupedDistricts.mountainIndigenous
+    case tabEnum.mountainIndigenous: {
+      districts = mid
       break
     }
-    case tabs.district:
+    case tabEnum.all:
     default: {
-      selectedDistricts = districts
+      districts = allDistricts
       break
     }
   }
 
   tabsJsx = showTabs ? (
     <Tabs
-      selected={tabSelected}
+      activeTab={tab}
       onTab={(t) => {
-        setTabSelected(t)
-        setDistrictNumberSelected(groupedDistricts?.[t]?.[0]?.number)
+        setTab(t)
+        switch (t) {
+          case tabEnum.plainIndigenous: {
+            setDistrictNumber(pid?.[0]?.number)
+            break
+          }
+          case tabEnum.mountainIndigenous: {
+            setDistrictNumber(mid?.[0]?.number)
+            break
+          }
+          case tabEnum.all:
+          default: {
+            setDistrictNumber(allDistricts?.[0]?.number)
+            break
+          }
+        }
       }}
     />
   ) : null
 
-  const options = selectedDistricts.map((d) => d.number)
+  /** @type {number[]} */
+  const options = districts.map((d) => d.number)
 
-  const [districtNumberSelected, setDistrictNumberSelected] = useState(
-    options?.[0]
-  )
+  const [districtNumber, setDistrictNumber] = useState(options?.[0])
 
   return (
-    <Container>
+    <Container className={className}>
       <Header>
         <h3>{year}</h3>
         <h3>{title}</h3>
@@ -225,13 +257,10 @@ export default function({ districts = [], year, title }) {
       {tabsJsx}
       <StyledSelector
         options={options}
-        defaultValue={districtNumberSelected}
-        onSelect={(n) => setDistrictNumberSelected(n)}
+        defaultValue={districtNumber}
+        onSelect={(n) => setDistrictNumber(n)}
       />
-      <StyledList
-        districts={selectedDistricts}
-        scrollTo={districtNumberSelected}
-      />
+      <StyledList districts={districts} scrollTo={districtNumber} />
     </Container>
   )
 }
