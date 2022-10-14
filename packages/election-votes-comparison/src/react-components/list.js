@@ -57,6 +57,7 @@ const TBody = styled.div`
     flex-wrap: nowrap;
     overflow-x: scroll;
     overflow-y: hidden;
+    scroll-behavior: smooth;
   }
 
   @media ${breakpoint.devices.tabletBelow} {
