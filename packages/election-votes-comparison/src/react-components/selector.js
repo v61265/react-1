@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react' // eslint-disable-line
+import React, { useEffect, useRef, useState } from 'react' // eslint-disable-line
 import breakpoints from './breakpoint'
 import styled from 'styled-components'
 import { CloseIcon } from './icons'
@@ -145,8 +145,24 @@ const StyledOption = styled.div`
  */
 function Picker({ options, onSelect }) {
   useEffect(() => {
-    // TODO lock scroll
+    const lightbox = containerRef.current
+    const preventDefault = (e) => {
+      e.preventDefault()
+    }
+    if (lightbox) {
+      // lock scroll
+      lightbox.addEventListener('wheel', preventDefault, { passive: false })
+      lightbox.addEventListener('touchmove', preventDefault, { passive: false })
+    }
+
+    // clear event listeners
+    return () => {
+      lightbox.removeEventListener('wheel', preventDefault)
+      lightbox.removeEventListener('touchmove', preventDefault)
+    }
   }, [])
+
+  const containerRef = useRef(null)
 
   const optionsJsx = options.map((o) => {
     return (
@@ -157,7 +173,7 @@ function Picker({ options, onSelect }) {
   })
 
   return (
-    <LightBoxContainer>
+    <LightBoxContainer ref={containerRef}>
       <LightBoxBody>
         <div>
           <span>請選擇選區</span>
