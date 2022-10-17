@@ -98,8 +98,9 @@ const LightBoxBody = styled.div`
   margin: auto;
 
   width: 288px;
-  padding: 16px;
   background-color: white;
+  border-radius: 4px;
+  padding: 25px 40px 40px 40px;
 
   > div:first-child {
     display: flex;
@@ -116,6 +117,10 @@ const LightBoxBody = styled.div`
     flex-wrap: wrap;
     justify-content: space-between;
     margin-top: 25px;
+  }
+
+  @media ${breakpoints.devices.tabletBelow} {
+    padding: 16px 16px 20px 16px;
   }
 `
 

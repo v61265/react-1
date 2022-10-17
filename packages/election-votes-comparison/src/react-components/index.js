@@ -124,6 +124,7 @@ const Container = styled.div`
   }
 
   background-color: #fff8f3;
+  padding-bottom: 60px;
 
   ${StyledList} {
     margin-left: auto;
@@ -139,7 +140,7 @@ const Header = styled.header`
 
   h3 {
     line-height: 120%;
-    font-weight: 900;
+    font-weight: 700;
     margin: 0;
     padding: 25px 105px;
   }

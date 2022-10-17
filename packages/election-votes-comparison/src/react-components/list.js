@@ -102,6 +102,12 @@ const TCell = styled.div`
     text-align: left;
     line-height: 150%;
     height: 56px;
+
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+
+    &:first-child {
+      border-right: none;
+    }
   }
 
   @media ${breakpoint.devices.tabletBelow} {
