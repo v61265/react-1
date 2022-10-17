@@ -154,6 +154,12 @@ const Header = styled.header`
     color: white;
   }
 
+  @media ${breakpoint.devices.laptop} {
+    h3:last-child {
+      border-left: 4px solid black;
+    }
+  }
+
   @media ${breakpoint.devices.tablet} {
     h3 {
       display: inline-block;
