@@ -12,8 +12,8 @@ import events from 'events'
  *  let dataLoader = new Loader({
  *    apiOrigin: 'https://whoareyou-gcs.readr.tw',
  *    year: '2018', // 年份
- *    type: 'CouncilMember', // 選舉類型
- *    area: 'taipei', // 縣市
+ *    type: 'councilMember', // 選舉類型
+ *    area: 'taipeiCity', // 縣市
  *  })
  *
  *  // For server side rendering,
