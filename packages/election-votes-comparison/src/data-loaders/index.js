@@ -126,12 +126,13 @@ export default class Loader {
         this.loadDataPeriodically()
       }, maxAge * 1000)
     } catch (err) {
-      const annotatedErr = errors.helpers.annotateAxiosError(err)
-      this.eventEmitter.emit(
-        'error',
-        `Error occurs while loading data from ${url}`,
-        annotatedErr
+      let annotatedErr = errors.helpers.annotateAxiosError(err)
+      annotatedErr = errors.helpers.wrap(
+        annotatedErr,
+        'DataLoaderError',
+        `Error to load data from ${url}`
       )
+      this.eventEmitter.emit('error', annotatedErr)
     }
   }
 
