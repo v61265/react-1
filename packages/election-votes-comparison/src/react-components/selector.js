@@ -25,11 +25,27 @@ const Container = styled.div`
     align-items: center;
   }
 
-  @media ${breakpoints.devices.tabletBelow} {
-    > div:last-child {
-      width: 184px;
+  ${(props) => {
+    switch (props.theme?.device) {
+      case 'mobile': {
+        return `
+          > div:last-child {
+            width: 184px;
+          }
+        `
+      }
+      case 'rwd':
+      default: {
+        return `
+          @media ${breakpoints.devices.tabletBelow} {
+            > div:last-child {
+              width: 184px;
+            }
+          }
+        `
+      }
     }
-  }
+  }}
 `
 
 const Triangle = styled.div`
@@ -40,21 +56,29 @@ const Triangle = styled.div`
 
 /**
  *  @callback OnSelect
- *  @param {number|undefined} districtNumber
+ *  @param {string|undefined} districtName
+ */
+
+/**
+ *  @callback RenderFullOption
+ *  @param {string} option
+ *  @returns {string}
  */
 
 /**
  *  @param {Object} props
  *  @param {string} [props.className]
- *  @param {number[]} [props.options=[]]
- *  @param {number} props.defaultValue
+ *  @param {string[]} [props.options=[]]
+ *  @param {string} props.defaultValue
  *  @param {OnSelect} [props.onSelect]
+ *  @param {RenderFullOption} [props.renderFullOption]
  */
 export default function Selector({
   className,
   options = [],
   defaultValue,
   onSelect,
+  renderFullOption,
 }) {
   const [toOpenLightBox, setToOpenLightBox] = useState(false)
   return (
@@ -63,7 +87,7 @@ export default function Selector({
         <div>移動至</div>
         <div onClick={() => setToOpenLightBox(true)}>
           <span>
-            第{defaultValue < 10 ? `0${defaultValue}` : defaultValue}選舉區
+            {renderFullOption ? renderFullOption(defaultValue) : defaultValue}
           </span>
           <Triangle />
         </div>
@@ -72,7 +96,7 @@ export default function Selector({
         <Picker
           options={options}
           onSelect={(selected) => {
-            if (typeof selected === 'number') {
+            if (typeof selected === 'string') {
               onSelect(selected)
             }
             setToOpenLightBox(false)
@@ -97,10 +121,8 @@ const LightBoxContainer = styled.div`
 const LightBoxBody = styled.div`
   margin: auto;
 
-  width: 288px;
   background-color: white;
   border-radius: 4px;
-  padding: 25px 40px 40px 40px;
 
   > div:first-child {
     display: flex;
@@ -115,32 +137,77 @@ const LightBoxBody = styled.div`
   > div:last-child {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
     margin-top: 25px;
   }
 
-  @media ${breakpoints.devices.tabletBelow} {
-    padding: 16px 16px 20px 16px;
-  }
+  ${(props) => {
+    switch (props.theme?.device) {
+      case 'mobile': {
+        return `
+          padding: 16px 16px 20px 16px;
+          gap: 12px 15px;
+        `
+      }
+      case 'rwd':
+      default: {
+        return `
+          @media ${breakpoints.devices.laptopBelow} and ${breakpoints.devices.tablet} {
+            padding: 25px 40px 40px 40px;
+            width: 688px;
+            > div:last-child {
+              gap: 12px 18px;
+            }
+          }
+          @media ${breakpoints.devices.tabletBelow} {
+            padding: 16px 16px 20px 16px;
+            width: 288px;
+            > div:last-child {
+              gap: 12px 15px;
+            }
+          }
+        `
+      }
+    }
+  }}
 `
 
 const StyledOption = styled.div`
   cursor: pointer;
   border: 1px solid #d6610c;
-  border-radius: 32px;
-  width: 51px;
-  height: 32px;
   text-align: center;
   font-size: 16px;
   font-weight: 500;
   line-height: 150%;
   color: #d6610c;
-  padding: 2px;
+  border-radius: 32px;
+
+  ${(props) => {
+    switch (props.theme?.device) {
+      case 'mobile': {
+        return `
+          padding: 4px 12px;
+        `
+      }
+      case 'rwd':
+      default: {
+        return `
+          @media ${breakpoints.devices.laptopBelow} and ${breakpoints.devices.tablet} {
+            padding: 4px 16px;
+            min-width: 59px;
+          }
+          @media ${breakpoints.devices.tabletBelow} {
+            padding: 4px 12px;
+            min-width: 51px;
+          }
+        `
+      }
+    }
+  }}
 `
 
 /**
  *  @param {Object} props
- *  @param {number[]} props.options
+ *  @param {string[]} props.options
  *  @param {OnSelect} props.onSelect
  */
 function Picker({ options, onSelect }) {
@@ -165,11 +232,7 @@ function Picker({ options, onSelect }) {
   const containerRef = useRef(null)
 
   const optionsJsx = options.map((o) => {
-    return (
-      <StyledOption onClick={() => onSelect(o)}>
-        {o < 10 ? `0${o}` : o}
-      </StyledOption>
-    )
+    return <StyledOption onClick={() => onSelect(o)}>{o}</StyledOption>
   })
 
   return (

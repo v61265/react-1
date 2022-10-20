@@ -56,7 +56,7 @@ import events from 'events'
 export default class Loader {
   /** @type events.EventEmitter */
   eventEmitter = null
-  apiOrigin = ''
+  apiOrigin = 'https://whoareyou-gcs.readr.tw/elections'
   year = ''
   area = ''
   type = ''

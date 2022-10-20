@@ -10,7 +10,7 @@ const mockData = {
   districts: [
     {
       type: 'normal',
-      number: 1,
+      districtName: '01',
       candidates: [
         {
           number: 1,
@@ -46,7 +46,7 @@ const mockData = {
     },
     {
       type: 'plainIndigenous',
-      number: 2,
+      districtName: '02',
       candidates: [
         {
           number: 1,
@@ -81,7 +81,7 @@ const mockData = {
     },
     {
       type: 'mountainIndigenous',
-      number: 3,
+      districtName: '03',
       candidates: [
         {
           number: 1,

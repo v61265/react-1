@@ -18,12 +18,53 @@ export default {}
  */
 
 /**
- *  @typedef {Object} ElectionDistrict
+ *  @typedef {Object} District
  *  @property {Candidate[]} candidates
- *  @property {number} number
- *  @property {string} type - value could be 'normal', 'plainIndigenous' or 'mountainIndigenous'
+ *  @property {string} districtName
+ *  @property {string} [fullDistrictName]
+ *  @property {string} [type] - value could be 'normal', 'plainIndigenous', 'mountainIndigenous' or 'indigenous'
  */
 
 /**
- *  @typedef {ElectionDistrict[]} ElectionDistricts
+ *  @typedef {Object} Election
+ *  @property {string} title
+ *  @property {string} year
+ *  @property {'councilMember'|'mayor'|'legislator'|'president'} [type]
+ *  @property {District[]} districts
+ */
+
+/**
+ *  @typedef {Election} CouncilMemberElection
+ */
+
+/**
+ *  @typedef {Election} CountyMayorElection
+ */
+
+/**
+ *  @typedef {Election} LegislatorElection
+ */
+
+/**
+ *  @typedef {Object} PresidentCandidate
+ *  @property {string} candNo
+ *  @property {Entity[]} names
+ *  @property {Entity[]} parties
+ *  @property {number} tks
+ *  @property {number} tksRate
+ *  @property {boolean} candVictor
+ */
+
+/**
+ *  @typedef {Election} PresidentElection
+ *  @property {PresidentCandidate[]} candidates
+ */
+
+// TODO: add PartyLegislatorElection and Referendum
+/**
+ *  @typedef {Election} PartyLegislatorElection
+ */
+
+/**
+ *  @typedef {Election} Referendum
  */

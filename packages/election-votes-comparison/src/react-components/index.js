@@ -1,22 +1,26 @@
 /**
- *  @typedef {import('./typedef').ElectionDistricts} ElectionDistricts
+ *  @typedef {import('./typedef').District} District
+ *  @typedef {import('./typedef').Election} Election
+ *  @typedef {import('./manager').DataManager} DataManager
  */
 
-import React, { useState } from 'react' // eslint-disable-line
-import List from './list'
+import React, { useState, useMemo } from 'react' // eslint-disable-line
 import Selector from './selector'
 import breakpoint from './breakpoint'
-import styled from 'styled-components'
+import styled, { ThemeProvider } from 'styled-components'
+import List from './list'
+import { dataManagerFactory } from './manager'
 
-const tabEnum = {
-  all: 'all',
+const dirstrictTypeEnum = {
+  normal: 'normal',
+  indigenous: 'indigenous',
   plainIndigenous: 'plainIndigenous',
   mountainIndigenous: 'mountainIndigenous',
 }
 
+const tabEnum = dirstrictTypeEnum
+
 const StyledTab = styled.div`
-  min-width: 120px;
-  display: inline-block;
   cursor: pointer;
   font-weight: 700;
   color: ${/**
@@ -25,16 +29,45 @@ const StyledTab = styled.div`
    */
   (props) => (props.active ? '#D6610C' : 'rgba(14, 45, 53, 0.3)')};
 
-  @media ${breakpoint.devices.tablet} {
-    padding: 0 40px;
-    font-size: 24px;
-    line-height: 130%;
-  }
+  ${(props) => {
+    switch (props.theme?.device) {
+      case 'mobile':
+        return `
+          min-width: 128px;
+          font-size: 16px;
+          margin-right: 16px;
+          margin-left: 16px;
+        `
+      case 'rwd':
+      default: {
+        return `
+          @media ${breakpoint.devices.tablet} {
+            min-width: 120px;
+            font-size: 24px;
+            line-height: 130%;
+            margin-right: 40px;
+            margin-left: 40px;
+          }
 
-  @media ${breakpoint.devices.tabletBelow} {
-    padding: 0 12px;
-    font-size: 16px;
-    min-width: 80px;
+          @media ${breakpoint.devices.tabletBelow} {
+            min-width: 128px;
+            font-size: 16px;
+            margin-right: 16px;
+            margin-left: 16px;
+          }
+        `
+      }
+    }
+  }}
+`
+
+const StyledTabBorder = styled.div`
+  width: 0px;
+  height: 16px;
+  border-right: 2px solid black;
+
+  @media ${breakpoint.devices.tablet} {
+    height: 20px;
   }
 `
 
@@ -42,83 +75,72 @@ const StyledTabs = styled.div`
   text-align: center;
   margin-bottom: 48px;
 
-  ${StyledTab}:first-child {
-    border-right: 2px solid black;
+  > div {
+    display: inline-block;
   }
 
-  ${StyledTab}:last-child {
-    border-left: 2px solid black;
-  }
+  ${(props) => {
+    switch (props.theme?.device) {
+      case 'mobile': {
+        return `
+          margin-top: 28px;
+        `
+      }
+      case 'rwd':
+      default: {
+        return `
+          @media ${breakpoint.devices.mobileS} {
+            margin-top: 28px;
+          }
 
-  @media ${breakpoint.devices.mobileS} {
-    margin-top: 28px;
-  }
+          @media ${breakpoint.devices.tablet} {
+            margin-top: 38px;
+          }
 
-  @media ${breakpoint.devices.tablet} {
-    margin-top: 38px;
-  }
-
-  @media ${breakpoint.devices.laptop} {
-    margin-top: 48px;
-  }
+          @media ${breakpoint.devices.laptop} {
+            margin-top: 48px;
+          }
+        `
+      }
+    }
+  }}
 `
-
-/**
- *  @callback OnTab
- *  @param {string} tab - value could be 'all', 'plainIndigenous' or 'mountainIndigenous'
- *  @returns {void}
- */
-
-/**
- *  @param {Object} props
- *  @param {string} props.activeTab - value could be 'all', 'plainIndigenous' or 'mountainIndigenous'
- *  @param {OnTab} props.onTab
- *  @returns {React.ReactElement}
- */
-function Tabs({ activeTab, onTab }) {
-  return (
-    <StyledTabs>
-      <StyledTab
-        active={activeTab === tabEnum.all}
-        onClick={() => onTab(tabEnum.all)}
-      >
-        區域
-      </StyledTab>
-      <StyledTab
-        active={activeTab === tabEnum.plainIndigenous}
-        onClick={() => onTab(tabEnum.plainIndigenous)}
-      >
-        平地原住民
-      </StyledTab>
-      <StyledTab
-        active={activeTab === tabEnum.mountainIndigenous}
-        onClick={() => onTab(tabEnum.mountainIndigenous)}
-      >
-        山地原住民
-      </StyledTab>
-    </StyledTabs>
-  )
-}
 
 const StyledSelector = styled(Selector)`
   margin: 40px auto 20px auto;
 
-  @media ${breakpoint.devices.laptop} {
-    display: none;
-  }
+  ${(props) => {
+    switch (props.theme?.device) {
+      case 'mobile': {
+        return `
+          width: 256px;
+        `
+      }
+      case 'rwd':
+      default: {
+        return `
+          @media ${breakpoint.devices.laptop} {
+            display: none;
+          }
 
-  @media ${breakpoint.devices.laptopBelow} and ${breakpoint.devices.tablet} {
-    width: 288px;
-  }
+          @media ${breakpoint.devices.laptopBelow} and ${breakpoint.devices.tablet} {
+            width: 288px;
+          }
 
-  @media ${breakpoint.devices.tabletBelow} {
-    width: 256px;
-  }
+          @media ${breakpoint.devices.tabletBelow} {
+            width: 256px;
+          }
+        `
+      }
+    }
+  }}
 `
 
 const StyledList = styled(List)``
 
 const Container = styled.div`
+  width: 100%;
+
   * {
     box-sizing: border-box;
   }
@@ -130,6 +152,22 @@ const Container = styled.div`
     margin-left: auto;
     margin-right: auto;
   }
+
+  ${(props) => {
+    switch (props.theme?.device) {
+      case 'mobile': {
+        return ''
+      }
+      case 'rwd':
+      default: {
+        return `
+          @media ${breakpoint.devices.laptop} {
+            min-height: 100vh;
+          }
+        `
+      }
+    }
+  }}
 `
 
 const Header = styled.header`
@@ -142,7 +180,6 @@ const Header = styled.header`
     line-height: 120%;
     font-weight: 700;
     margin: 0;
-    padding: 25px 105px;
   }
 
   h3:first-child {
@@ -154,120 +191,254 @@ const Header = styled.header`
     color: white;
   }
 
-  @media ${breakpoint.devices.laptop} {
-    h3:last-child {
-      border-left: 4px solid black;
-    }
-  }
+  ${(props) => {
+    switch (props.theme?.device) {
+      case 'mobile': {
+        return `
+          h3 {
+            font-size: 24px;
+            display: block;
+            text-align: center;
+            padding: 12px 0;
+          }
 
-  @media ${breakpoint.devices.tablet} {
-    h3 {
-      display: inline-block;
-      font-size: 32px;
-    }
-  }
+          h3:last-child {
+            border-top: 4px solid black;
+          }
+        `
+      }
+      case 'rwd':
+      default: {
+        return `
+          @media ${breakpoint.devices.tablet} {
+            h3 {
+              padding: 25px 40px;
+              display: inline-block;
+              font-size: 32px;
+            }
+            h3:last-child {
+              border-left: 4px solid black;
+            }
+          }
 
-  @media ${breakpoint.devices.tabletBelow} {
-    h3 {
-      font-size: 24px;
-      display: block;
-      text-align: center;
-    }
+          @media ${breakpoint.devices.tablet} and ${breakpoint.devices.laptopBelow} {
+            h3:first-child {
+              padding-left: 38px;
+              padding-right: 38px;
+            }
+          }
 
-    h3:last-child {
-      border-top: 4px solid black;
+          @media ${breakpoint.devices.laptop} and ${breakpoint.devices.laptopLBelow} {
+            h3:first-child {
+              padding-left: 82px;
+              padding-right: 82px;
+            }
+          }
+
+          @media ${breakpoint.devices.laptopL} {
+            h3:first-child {
+              padding-left: 106px;
+              padding-right: 106px;
+            }
+          }
+
+          @media ${breakpoint.devices.tabletBelow} {
+            h3 {
+              font-size: 24px;
+              display: block;
+              text-align: center;
+              padding: 12px 0;
+            }
+
+            h3:last-child {
+              border-top: 4px solid black;
+            }
+          }
+        `
+      }
     }
-  }
+  }}
 `
 
 /**
  *  @param {Object} props
  *  @param {string} [props.className]
- *  @param {number} props.year
+ *  @param {string} props.year
  *  @param {string} props.title
- *  @param {ElectionDistricts} [props.districts=[]]
+ *  @param {District[]} [props.districts=[]]
+ *  @param {'rwd'|'mobile'} props.device
  *  @returns {React.ReactElement}
  */
-export default function Root({
+export function CouncilMember({
   className,
   districts: allDistricts = [],
   year,
   title,
+  device = 'rwd',
 }) {
-  const [tab, setTab] = useState(tabEnum.all)
-  const showTabs = allDistricts.find(
-    (d) =>
-      d.type === tabEnum.mountainIndigenous ||
-      d.type === tabEnum.plainIndigenous
-  )
+  const [tab, setTab] = useState(tabEnum.normal)
 
-  // pid means plainIndigenousDistricts
-  const pid = allDistricts.filter((d) => d.type === tabEnum.plainIndigenous)
+  const separatedDistricts = useMemo(() => {
+    return {
+      indigenous: allDistricts.filter(
+        (d) => d.type === dirstrictTypeEnum.indigenous
+      ),
+      plainIndigenous: allDistricts.filter(
+        (d) => d.type === dirstrictTypeEnum.plainIndigenous
+      ),
+      mountainIndigenous: allDistricts.filter(
+        (d) => d.type === dirstrictTypeEnum.mountainIndigenous
+      ),
+      normal: allDistricts.filter((d) => d.type === dirstrictTypeEnum.normal),
+    }
+  }, [allDistricts])
 
-  // `mid` means mountainIndigenousDistricts
-  const mid = allDistricts.filter((d) => d.type === tabEnum.mountainIndigenous)
-
+  const showTabs = separatedDistricts.normal?.length !== allDistricts.length
   let tabsJsx = null
-  let districts = []
+  let districts = separatedDistricts?.[tab]
 
-  switch (tab) {
-    case tabEnum.plainIndigenous: {
-      districts = pid
-      break
-    }
-    case tabEnum.mountainIndigenous: {
-      districts = mid
-      break
-    }
-    case tabEnum.all:
-    default: {
-      districts = allDistricts
-      break
-    }
+  /**
+   *  @callback OnTab
+   *  @param {string} tab - value could be 'normal', 'indigenous', 'plainIndigenous' or 'mountainIndigenous'
+   *  @returns {void}
+   */
+  /**
+   *  @type {OnTab}
+   */
+  const onTab = (t) => {
+    setTab(t)
+    setDistrictName(separatedDistricts?.[t]?.[0]?.districtName)
   }
 
   tabsJsx = showTabs ? (
-    <Tabs
-      activeTab={tab}
-      onTab={(t) => {
-        setTab(t)
-        switch (t) {
-          case tabEnum.plainIndigenous: {
-            setDistrictNumber(pid?.[0]?.number)
-            break
-          }
-          case tabEnum.mountainIndigenous: {
-            setDistrictNumber(mid?.[0]?.number)
-            break
-          }
-          case tabEnum.all:
-          default: {
-            setDistrictNumber(allDistricts?.[0]?.number)
-            break
-          }
-        }
-      }}
-    />
+    <StyledTabs>
+      <StyledTab
+        active={tab === tabEnum.normal}
+        onClick={() => onTab(tabEnum.normal)}
+      >
+        區域
+      </StyledTab>
+      {separatedDistricts.indigenous.length > 0 ? (
+        <>
+          <StyledTabBorder />
+          <StyledTab
+            active={tab === tabEnum.indigenous}
+            onClick={() => onTab(tabEnum.indigenous)}
+          >
+            原住民
+          </StyledTab>
+        </>
+      ) : null}
+      {separatedDistricts.plainIndigenous.length > 0 ? (
+        <>
+          <StyledTabBorder />
+          <StyledTab
+            active={tab === tabEnum.mountainIndigenous}
+            onClick={() => onTab(tabEnum.mountainIndigenous)}
+          >
+            山地原住民
+          </StyledTab>
+        </>
+      ) : null}
+      {separatedDistricts.mountainIndigenous.length > 0 ? (
+        <>
+          <StyledTabBorder />
+          <StyledTab
+            active={tab === tabEnum.plainIndigenous}
+            onClick={() => onTab(tabEnum.plainIndigenous)}
+          >
+            平地原住民
+          </StyledTab>
+        </>
+      ) : null}
+    </StyledTabs>
   ) : null
 
-  /** @type {number[]} */
-  const options = districts.map((d) => d.number)
+  /** @type {string[]} */
+  const options = districts.map((d) => d.districtName)
 
-  const [districtNumber, setDistrictNumber] = useState(options?.[0])
+  const [districtName, setDistrictName] = useState(options?.[0])
+
+  const dataManager = dataManagerFactory().newDataManager({
+    districts,
+    type: 'councilMember',
+    year,
+    title,
+  })
 
   return (
-    <Container className={className}>
-      <Header>
-        <h3>{year}</h3>
-        <h3>{title}</h3>
-      </Header>
-      {tabsJsx}
-      <StyledSelector
-        options={options}
-        defaultValue={districtNumber}
-        onSelect={(n) => setDistrictNumber(n)}
-      />
-      <StyledList districts={districts} scrollTo={districtNumber} />
-    </Container>
+    <ThemeProvider theme={{ device }}>
+      <Container className={className}>
+        <Header>
+          <h3>{year}</h3>
+          <h3>{title}</h3>
+        </Header>
+        {tabsJsx}
+        <StyledSelector
+          options={options}
+          defaultValue={districtName}
+          onSelect={(n) => setDistrictName(n)}
+          renderFullOption={(option) => `第${option}選舉區`}
+        />
+        <StyledList dataManager={dataManager} scrollTo={districtName} />
+      </Container>
+    </ThemeProvider>
+  )
+}
+
+/**
+ *  @param {Object} props
+ *  @param {string} [props.className]
+ *  @param {Election} props.election
+ *  @param {'mobile'|'rwd'} props.device
+ */
+export default function EVC({ className, election, device = 'rwd' }) {
+  switch (election?.type) {
+    case 'councilMember':
+      return (
+        <CouncilMember
+          className={className}
+          districts={election?.districts}
+          year={election?.year}
+          title={election?.title}
+          device={device}
+        />
+      )
+    default: {
+      const dataManager = dataManagerFactory().newDataManager(election)
+      return (
+        <_EVC className={className} dataManager={dataManager} device={device} />
+      )
+    }
+  }
+}
+
+/**
+ *  @param {Object} props
+ *  @param {string} [props.className]
+ *  @param {DataManager} props.dataManager
+ *  @param {'rwd'|'mobile'} props.device
+ *  @returns {React.ReactElement}
+ */
+function _EVC({ className, dataManager, device = 'rwd' }) {
+  /** @type {Election} */
+  const data = dataManager.getData()
+  const options = data?.districts.map((c) => c.districtName)
+  const [districtName, setDistrictName] = useState(options?.[0])
+  return (
+    <ThemeProvider theme={{ device }}>
+      <Container className={className}>
+        <Header>
+          <h3>{data?.year}</h3>
+          <h3>{data?.title}</h3>
+        </Header>
+        <StyledSelector
+          options={options}
+          defaultValue={districtName}
+          onSelect={(n) => setDistrictName(n)}
+        />
+        <StyledList dataManager={dataManager} scrollTo={districtName} />
+      </Container>
+    </ThemeProvider>
   )
 }
