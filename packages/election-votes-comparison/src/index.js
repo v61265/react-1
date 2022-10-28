@@ -1,3 +1,7 @@
-import Root from './react-components'
+import ReactComponent from './react-components'
+import DataLoader from './data-loaders'
 
-export default Root
+export default {
+  ReactComponent,
+  DataLoader,
+}
