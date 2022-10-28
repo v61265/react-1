@@ -192,25 +192,34 @@ const TCell = styled.div`
 
 const THead = styled.div`
   ${(props) => {
+    const baseCss = `
+      background-color: ${props.theme.table.head.backgroundColor};
+      color: ${props.theme.table.head.color};
+    `
+    const mobileCss = `
+      border-right: 1px solid black;
+      width: 96px;
+      flex-shrink: 0;
+
+      ${TRow} {
+        flex-shrink: unset;
+      }
+
+      ${TCell} {
+        text-align: right;
+      }
+    `
     switch (props.theme?.device) {
       case 'mobile': {
         return `
-          border-right: 1px solid black;
-          width: 96px;
-          flex-shrink: 0;
-
-          ${TRow} {
-            flex-shrink: unset;
-          }
-
-          ${TCell} {
-            text-align: right;
-          }
+          ${baseCss}
+          ${mobileCss}
         `
       }
       case 'rwd':
       default: {
         return `
+          ${baseCss}
           @media ${breakpoint.devices.laptop} {
             display: table-header-group;
             border-bottom: 2px solid black;
@@ -221,17 +230,7 @@ const THead = styled.div`
           }
 
           @media ${breakpoint.devices.laptopBelow} {
-            border-right: 1px solid black;
-            width: 96px;
-            flex-shrink: 0;
-
-            ${TRow} {
-              flex-shrink: unset;
-            }
-
-            ${TCell} {
-              text-align: right;
-            }
+            ${mobileCss}
           }
         `
       }

@@ -9,6 +9,7 @@ import Selector from './selector'
 import breakpoint from './breakpoint'
 import styled, { ThemeProvider } from 'styled-components'
 import List from './list'
+import themeObj from './theme'
 import { dataManagerFactory } from './manager'
 
 const dirstrictTypeEnum = {
@@ -171,45 +172,49 @@ const Container = styled.div`
 `
 
 const Header = styled.header`
-  border-top: 4px solid black;
-  border-bottom: 4px solid black;
-  background-color: #f58439;
-  margin-bottom: 48px;
-
-  h3 {
-    line-height: 120%;
-    font-weight: 700;
-    margin: 0;
-  }
-
-  h3:first-child {
-    background-color: #f7ba31;
-    color: #0f2d35;
-  }
-
-  h3:last-child {
-    color: white;
-  }
-
   ${(props) => {
+    const baseCss = `
+      border-top: 4px solid black;
+      border-bottom: 4px solid black;
+      margin-bottom: 48px;
+
+      h3 {
+        line-height: 120%;
+        font-weight: 700;
+        margin: 0;
+      }
+      background-color: ${props.theme.title.bottomBlock.backgroundColor};
+      h3:first-child {
+        background-color: ${props.theme.title.topBlock.backgroundColor};
+        color: ${props.theme.title.topBlock.color};
+      }
+      h3:last-child {
+        color: ${props.theme.title.bottomBlock.color};
+      }
+    `
+    const mobileCss = `
+      h3 {
+        font-size: 24px;
+        display: block;
+        text-align: center;
+        padding: 12px 0;
+      }
+
+      h3:last-child {
+        border-top: 4px solid black;
+      }
+    `
     switch (props.theme?.device) {
       case 'mobile': {
         return `
-          h3 {
-            font-size: 24px;
-            display: block;
-            text-align: center;
-            padding: 12px 0;
-          }
-
-          h3:last-child {
-            border-top: 4px solid black;
-          }
+          ${baseCss}
+          ${mobileCss}
         `
       }
       case 'rwd':
       default: {
         return `
+          ${baseCss}
           @media ${breakpoint.devices.tablet} {
             h3 {
               padding: 25px 40px;
@@ -243,16 +248,7 @@ const Header = styled.header`
           }
 
           @media ${breakpoint.devices.tabletBelow} {
-            h3 {
-              font-size: 24px;
-              display: block;
-              text-align: center;
-              padding: 12px 0;
-            }
-
-            h3:last-child {
-              border-top: 4px solid black;
-            }
+            ${mobileCss}
           }
         `
       }
@@ -267,6 +263,7 @@ const Header = styled.header`
  *  @param {string} props.title
  *  @param {District[]} [props.districts=[]]
  *  @param {'rwd'|'mobile'} props.device
+ *  @param {'openRelations'|'electionModule'} props.theme
  *  @returns {React.ReactElement}
  */
 export function CouncilMember({
@@ -275,6 +272,7 @@ export function CouncilMember({
   year,
   title,
   device = 'rwd',
+  theme = 'openRelations',
 }) {
   const [tab, setTab] = useState(tabEnum.normal)
 
@@ -367,7 +365,7 @@ export function CouncilMember({
   })
 
   return (
-    <ThemeProvider theme={{ device }}>
+    <ThemeProvider theme={Object.assign({ device }, themeObj[theme])}>
       <Container className={className}>
         <Header>
           <h3>{year}</h3>
@@ -391,8 +389,14 @@ export function CouncilMember({
  *  @param {string} [props.className]
  *  @param {Election} props.election
  *  @param {'mobile'|'rwd'} props.device
+ *  @param {'openRelations'|'electionModule'} [props.theme='openRelations']
  */
-export default function EVC({ className, election, device = 'rwd' }) {
+export default function EVC({
+  className,
+  election,
+  device = 'rwd',
+  theme = 'openRelations',
+}) {
   switch (election?.type) {
     case 'councilMember':
       return (
@@ -402,6 +406,7 @@ export default function EVC({ className, election, device = 'rwd' }) {
           year={election?.year}
           title={election?.title}
           device={device}
+          theme={theme}
         />
       )
     case 'legislator':
@@ -410,7 +415,12 @@ export default function EVC({ className, election, device = 'rwd' }) {
     case 'president': {
       const dataManager = dataManagerFactory().newDataManager(election)
       return (
-        <_EVC className={className} dataManager={dataManager} device={device} />
+        <_EVC
+          className={className}
+          dataManager={dataManager}
+          device={device}
+          theme={theme}
+        />
       )
     }
     default: {
@@ -424,15 +434,16 @@ export default function EVC({ className, election, device = 'rwd' }) {
  *  @param {string} [props.className]
  *  @param {DataManager} props.dataManager
  *  @param {'rwd'|'mobile'} props.device
+ *  @param {'openRelations'|'electionModule'} props.theme
  *  @returns {React.ReactElement}
  */
-function _EVC({ className, dataManager, device = 'rwd' }) {
+function _EVC({ className, dataManager, device = 'rwd', theme }) {
   /** @type {Election} */
   const data = dataManager.getData()
   const options = data?.districts.map((c) => c.districtName)
   const [districtName, setDistrictName] = useState(options?.[0])
   return (
-    <ThemeProvider theme={{ device }}>
+    <ThemeProvider theme={Object.assign({ device }, themeObj[theme])}>
       <Container className={className}>
         <Header>
           <h3>{data?.year}</h3>

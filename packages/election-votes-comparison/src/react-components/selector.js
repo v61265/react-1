@@ -4,43 +4,46 @@ import styled from 'styled-components'
 import { CloseIcon } from './icons'
 
 const Container = styled.div`
-  > div {
-    padding: 12px 8px;
-    border: 2px solid black;
-  }
-
-  > div:first-child {
-    display: inline-block;
-    background-color: #f58439;
-    color: white;
-  }
-
-  > div:last-child {
-    cursor: pointer;
-    border-left: none;
-    width: 210px;
-    background-color: white;
-    display: inline-flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
   ${(props) => {
+    const baseCss = `
+      > div:first-child {
+        display: inline-block;
+        background-color: ${props.theme.selector.leftBlock.backgroundColor};
+        color: ${props.theme.selector.leftBlock.color};
+      }
+      > div {
+        padding: 12px 8px;
+        border: 2px solid black;
+      }
+
+      > div:last-child {
+        cursor: pointer;
+        border-left: none;
+        width: 210px;
+        background-color: white;
+        display: inline-flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+    `
+    const mobileCss = `
+      > div:last-child {
+        width: 184px;
+      }
+    `
     switch (props.theme?.device) {
       case 'mobile': {
         return `
-          > div:last-child {
-            width: 184px;
-          }
+          ${baseCss}
+          ${mobileCss}
         `
       }
       case 'rwd':
       default: {
         return `
+          ${baseCss}
           @media ${breakpoints.devices.tabletBelow} {
-            > div:last-child {
-              width: 184px;
-            }
+            ${mobileCss}
           }
         `
       }
@@ -172,25 +175,28 @@ const LightBoxBody = styled.div`
 `
 
 const StyledOption = styled.div`
-  cursor: pointer;
-  border: 1px solid #d6610c;
-  text-align: center;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 150%;
-  color: #d6610c;
-  border-radius: 32px;
-
   ${(props) => {
+    const baseCss = `
+      cursor: pointer;
+      border: 1px solid ${props.theme.selector.picker.option.borderColor};
+      text-align: center;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 150%;
+      color: ${props.theme.selector.picker.option.color};
+      border-radius: 32px;
+    `
     switch (props.theme?.device) {
       case 'mobile': {
         return `
+          ${baseCss}
           padding: 4px 12px;
         `
       }
       case 'rwd':
       default: {
         return `
+          ${baseCss}
           @media ${breakpoints.devices.laptopBelow} and ${breakpoints.devices.tablet} {
             padding: 4px 16px;
             min-width: 59px;
