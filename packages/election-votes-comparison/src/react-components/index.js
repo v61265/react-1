@@ -404,11 +404,17 @@ export default function EVC({ className, election, device = 'rwd' }) {
           device={device}
         />
       )
-    default: {
+    case 'legislator':
+    case 'referendum':
+    case 'mayor':
+    case 'president': {
       const dataManager = dataManagerFactory().newDataManager(election)
       return (
         <_EVC className={className} dataManager={dataManager} device={device} />
       )
+    }
+    default: {
+      return null
     }
   }
 }
