@@ -29,7 +29,7 @@ export default {}
  *  @typedef {Object} Election
  *  @property {string} title
  *  @property {string} year
- *  @property {'councilMember'|'mayor'|'legislator'|'president'} [type]
+ *  @property {'councilMember'|'mayor'|'legislator'|'president'|'referendum'} [type]
  *  @property {District[]} districts
  */
 
