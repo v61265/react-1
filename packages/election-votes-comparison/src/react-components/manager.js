@@ -239,8 +239,7 @@ export class CouncilMemberDataManager extends DataManager {
           cells: [],
         }
 
-        // `__districtName` is used to decide which row should be scrolled to
-        // when `props.scrollTo` is provied.
+        // `__districtName` is used to help `findRowByDistrictName` to find the wanted row
         row['__districtName'] = d.districtName
         row.id = `${d.districtName}-${cIdx}`
         let districtName = ''
