@@ -1,4 +1,4 @@
-import React from 'react' // eslint-disable-line
+import React, {useState} from 'react' // eslint-disable-line
 import breakpoint from './breakpoint'
 import styled from 'styled-components'
 import { AnonymousIcon, ElectedIcon } from './icons'
@@ -109,6 +109,19 @@ export class DataManager {
   }
 }
 
+function CandidateImg({ imgSrc }) {
+  const [errored, setErrored] = useState(false)
+  return (
+    <ImgBlock>
+      {imgSrc && !errored ? (
+        <img src={imgSrc} onError={() => setErrored(true)} />
+      ) : (
+        <AnonymousIcon />
+      )}
+    </ImgBlock>
+  )
+}
+
 export class CouncilMemberDataManager extends DataManager {
   /**
    *  @override
@@ -145,15 +158,7 @@ export class CouncilMemberDataManager extends DataManager {
       return {
         label: entity?.label,
         href: entity?.href,
-        imgJsx: entity?.imgSrc ? (
-          <ImgBlock>
-            <img src={entity.imgSrc} />
-          </ImgBlock>
-        ) : (
-          <ImgBlock>
-            <AnonymousIcon />
-          </ImgBlock>
-        ),
+        imgJsx: <CandidateImg imgSrc={entity?.imgSrc} />,
       }
     })
   }
