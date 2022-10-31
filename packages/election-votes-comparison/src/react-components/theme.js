@@ -36,7 +36,7 @@ export default {
         backgroundColor: '#FFF',
       },
       bottomBlock: {
-        color: '#FFF',
+        color: '#000',
         backgroundColor: '#AFAFAF',
       },
     },
