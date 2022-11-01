@@ -190,7 +190,7 @@ export class CouncilMemberDataManager extends DataManager {
       // 號次
       [
         {
-          label: `${c?.number}`,
+          label: `${c?.candNo ?? c?.number}`,
         },
       ],
       // 姓名
@@ -200,19 +200,19 @@ export class CouncilMemberDataManager extends DataManager {
       // 得票數
       [
         {
-          label: c?.votes?.toLocaleString(),
+          label: c?.tks?.toLocaleString() ?? c?.votes?.toLocaleString(),
         },
       ],
       // 得票率
       [
         {
-          label: `${c?.voteRate}%`,
+          label: `${c?.tksRate ?? c?.voteRate}%`,
         },
       ],
       // 當選
       [
         {
-          imgJsx: c.elected ? <ElectedIcon /> : null,
+          imgJsx: c?.candVictor || c?.elected ? <ElectedIcon /> : null,
         },
       ],
     ]

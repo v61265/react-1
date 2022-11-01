@@ -237,8 +237,12 @@ function Picker({ options, onSelect }) {
 
   const containerRef = useRef(null)
 
-  const optionsJsx = options.map((o) => {
-    return <StyledOption onClick={() => onSelect(o)}>{o}</StyledOption>
+  const optionsJsx = options.map((o, idx) => {
+    return (
+      <StyledOption key={idx} onClick={() => onSelect(o)}>
+        {o}
+      </StyledOption>
+    )
   })
 
   return (

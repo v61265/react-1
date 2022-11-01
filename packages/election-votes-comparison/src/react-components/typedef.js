@@ -9,12 +9,16 @@ export default {}
 
 /**
  *  @typedef {Object} Candidate
- *  @property {number} number
  *  @property {Entity} name
  *  @property {Entity} party
- *  @property {number} votes
- *  @property {number} voteRate
- *  @property {boolean} elected
+ *  @property {number} [number]
+ *  @property {string} [candNo]
+ *  @property {number} [votes]
+ *  @property {number} [voteRate]
+ *  @property {boolean} [elected]
+ *  @property {number} [tks]
+ *  @property {number} [tksRate]
+ *  @property {number} [candVictor]
  */
 
 /**

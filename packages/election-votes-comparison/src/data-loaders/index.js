@@ -57,6 +57,7 @@ export default class Loader {
   /** @type events.EventEmitter */
   eventEmitter = null
   apiOrigin = 'https://whoareyou-gcs.readr.tw/elections'
+  version = 'v2'
   year = ''
   district = ''
   type = ''
@@ -69,18 +70,21 @@ export default class Loader {
    *  @param {string} props.year
    *  @param {string} props.district
    *  @param {string} props.type
+   *  @param {string} [props.version=v2]
    */
   constructor({
     apiOrigin = 'https://whoareyou-gcs.readr.tw/elections',
     year,
     district,
     type,
+    version = 'v2',
   }) {
     this.eventEmitter = new events.EventEmitter()
     this.apiOrigin = apiOrigin
     this.year = year
     this.district = district
     this.type = type
+    this.version = version === 'v1' ? '' : version
   }
 
   /**
@@ -90,7 +94,7 @@ export default class Loader {
   async loadData() {
     try {
       const axiosRes = await axios.get(
-        `${this.apiOrigin}/${this.year}/${this.type}/${this.district}.json`
+        `${this.apiOrigin}/${this.version}/${this.year}/${this.type}/${this.district}.json`
       )
       return axiosRes?.data
     } catch (err) {
@@ -110,7 +114,7 @@ export default class Loader {
    *  @returns {Promise<void>}
    */
   async loadDataPeriodically() {
-    const url = `${this.apiOrigin}/${this.year}/${this.type}/${this.district}.json`
+    const url = `${this.apiOrigin}/${this.version}/${this.year}/${this.type}/${this.district}.json`
     try {
       const axiosRes = await axios.get(url)
 
