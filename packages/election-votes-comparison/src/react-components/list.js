@@ -274,6 +274,7 @@ export default function List({ className, dataManager, scrollTo }) {
     tBodyNode.scrollLeft = offsetLeft
   })
 
+  let previousBgColor = 'dark'
   const rowsJsx = rows.map((row, rowIdx) => {
     const cellsJsx = row.cells.map((cell, cellIdx) => {
       const entitiesJsx = cell.map((entity, entityIdx) => {
@@ -297,18 +298,26 @@ export default function List({ className, dataManager, scrollTo }) {
         <TCell
           key={cellIdx}
           style={{
-            borderLeft: row.cells?.[cellIdx]?.[0].label === '' && 'none',
+            borderLeft: row.cells?.[cellIdx]?.[0]?.label === '' && 'none',
           }}
         >
           {entitiesJsx}
         </TCell>
       )
     })
+
+    let currentBgColor = previousBgColor
+    const previousRow = rows?.[rowIdx - 1]
+    if (previousRow?.group !== row?.group) {
+      currentBgColor = previousBgColor === 'dark' ? 'light' : 'dark'
+      previousBgColor = currentBgColor
+    }
+
     return (
       <TRow
         key={row.id}
-        backgroundColor={rowIdx % 2 ? '#FFF1E8' : '#FFF8F3'}
         data-row-id={row.id}
+        backgroundColor={currentBgColor === 'dark' ? '#FFF1E8' : '#FFF8F3'}
       >
         {cellsJsx}
       </TRow>

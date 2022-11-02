@@ -23,6 +23,7 @@ import { AnonymousIcon, ElectedIcon } from './icons'
  *  @typedef {Object} Row
  *  @property {string} id
  *  @property {Cell[]} cells
+ *  @property {string} group
  */
 
 const ImgBlock = styled.div`
@@ -93,6 +94,7 @@ export class DataManager {
     return {
       id: '',
       cells: [],
+      group: '',
     }
   }
 
@@ -105,6 +107,7 @@ export class DataManager {
     return {
       id: '',
       cells: [],
+      group: '',
     }
   }
 }
@@ -242,10 +245,10 @@ export class CouncilMemberDataManager extends DataManager {
         const row = {
           id: '',
           cells: [],
+          group: '',
         }
 
-        // `__districtName` is used to help `findRowByDistrictName` to find the wanted row
-        row['__districtName'] = d.districtName
+        row.group = d.districtName
         row.id = `${d.districtName}-${cIdx}`
         let districtName = ''
         if (cIdx === 0) {
@@ -267,7 +270,7 @@ export class CouncilMemberDataManager extends DataManager {
    */
   findRowByDistrictName(districtName = '01') {
     return this.rows.find((r) => {
-      return r['__districtName'] === districtName
+      return r.group === districtName
     })
   }
 }
