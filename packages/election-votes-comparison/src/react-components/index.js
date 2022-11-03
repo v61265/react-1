@@ -329,7 +329,7 @@ export function CouncilMember({
           </StyledTab>
         </>
       ) : null}
-      {separatedDistricts.plainIndigenous.length > 0 ? (
+      {separatedDistricts.mountainIndigenous.length > 0 ? (
         <>
           <StyledTabBorder />
           <StyledTab
@@ -340,7 +340,7 @@ export function CouncilMember({
           </StyledTab>
         </>
       ) : null}
-      {separatedDistricts.mountainIndigenous.length > 0 ? (
+      {separatedDistricts.plainIndigenous.length > 0 ? (
         <>
           <StyledTabBorder />
           <StyledTab
