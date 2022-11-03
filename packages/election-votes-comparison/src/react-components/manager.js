@@ -27,12 +27,14 @@ import { AnonymousIcon, ElectedIcon } from './icons'
  */
 
 const ImgBlock = styled.div`
+  margin-right: 8px;
   img,
   svg {
     width: 32px;
     height: 32px;
-    margin-right: 8px;
     object-fit: cover;
+    border-radius: 50%;
+    overflow: hidden;
   }
 
   ${(props) => {
