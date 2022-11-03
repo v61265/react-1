@@ -185,6 +185,9 @@ const StyledOption = styled.div`
       line-height: 150%;
       color: ${props.theme.selector.picker.option.color};
       border-radius: 32px;
+      &:hover {
+        background-color: ${props.theme.selector.picker.option.backgroundColor};
+      }
     `
     switch (props.theme?.device) {
       case 'mobile': {

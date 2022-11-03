@@ -19,6 +19,7 @@ export default {
         option: {
           color: '#D6610C',
           borderColor: '#D6610C',
+          backgroundColor: '#FFF8F3',
         },
       },
     },
@@ -49,6 +50,7 @@ export default {
         option: {
           color: '#000',
           borderColor: '#000',
+          backgroundColor: '',
         },
       },
     },
