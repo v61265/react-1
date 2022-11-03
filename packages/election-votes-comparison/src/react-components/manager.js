@@ -191,11 +191,12 @@ export class CouncilMemberDataManager extends DataManager {
    *  @returns {Cell[]}
    */
   buildRowFromCandidate(c) {
+    const tksRate = c?.tksRate ?? c?.voteRate
     return [
       // 號次
       [
         {
-          label: `${c?.candNo ?? c?.number}`,
+          label: `${c?.candNo ?? c?.number ?? '-'}`,
         },
       ],
       // 姓名
@@ -205,13 +206,13 @@ export class CouncilMemberDataManager extends DataManager {
       // 得票數
       [
         {
-          label: c?.tks?.toLocaleString() ?? c?.votes?.toLocaleString(),
+          label: c?.tks?.toLocaleString() ?? c?.votes?.toLocaleString() ?? '-',
         },
       ],
       // 得票率
       [
         {
-          label: `${c?.tksRate ?? c?.voteRate}%`,
+          label: typeof tksRate === 'number' ? `${tksRate}%` : '-',
         },
       ],
       // 當選
