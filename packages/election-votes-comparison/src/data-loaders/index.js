@@ -56,7 +56,7 @@ import events from 'events'
 export default class Loader {
   /** @type events.EventEmitter */
   eventEmitter = null
-  apiOrigin = 'https://whoareyou-gcs.readr.tw/elections'
+  apiOrigin = 'https://whoareyou-gcs.readr.tw'
   version = 'v2'
   year = ''
   district = ''
@@ -66,14 +66,14 @@ export default class Loader {
   /**
    *  @constructor
    *  @param {Object} props
-   *  @param {string} [props.apiOrigin='https://whoareyou-gcs.readr.tw/elections']
+   *  @param {string} [props.apiOrigin='https://whoareyou-gcs.readr.tw']
    *  @param {string} props.year
    *  @param {string} props.district
    *  @param {string} props.type
    *  @param {string} [props.version=v2]
    */
   constructor({
-    apiOrigin = 'https://whoareyou-gcs.readr.tw/elections',
+    apiOrigin = 'https://whoareyou-gcs.readr.tw',
     year,
     district,
     type,
@@ -94,7 +94,7 @@ export default class Loader {
   async loadData() {
     try {
       const axiosRes = await axios.get(
-        `${this.apiOrigin}/${this.version}/${this.year}/${this.type}/${this.district}.json`
+        `${this.apiOrigin}/elections/${this.version}/${this.year}/${this.type}/${this.district}.json`
       )
       return axiosRes?.data
     } catch (err) {
