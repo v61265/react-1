@@ -329,17 +329,6 @@ export function CouncilMember({
           </StyledTab>
         </>
       ) : null}
-      {separatedDistricts.mountainIndigenous.length > 0 ? (
-        <>
-          <StyledTabBorder />
-          <StyledTab
-            active={tab === tabEnum.mountainIndigenous}
-            onClick={() => onTab(tabEnum.mountainIndigenous)}
-          >
-            山地原住民
-          </StyledTab>
-        </>
-      ) : null}
       {separatedDistricts.plainIndigenous.length > 0 ? (
         <>
           <StyledTabBorder />
@@ -348,6 +337,17 @@ export function CouncilMember({
             onClick={() => onTab(tabEnum.plainIndigenous)}
           >
             平地原住民
+          </StyledTab>
+        </>
+      ) : null}
+      {separatedDistricts.mountainIndigenous.length > 0 ? (
+        <>
+          <StyledTabBorder />
+          <StyledTab
+            active={tab === tabEnum.mountainIndigenous}
+            onClick={() => onTab(tabEnum.mountainIndigenous)}
+          >
+            山地原住民
           </StyledTab>
         </>
       ) : null}
