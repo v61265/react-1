@@ -266,8 +266,6 @@ const Header = styled.header`
  *  @param {string} props.year
  *  @param {string} props.title
  *  @param {District[]} [props.districts=[]]
- *  @param {'rwd'|'mobile'} props.device
- *  @param {'openRelations'|'electionModule'|'mnewsElection2022'} props.theme
  *  @param {string} [props.scrollTo] - the first row with the district name to scroll to
  *  @returns {React.ReactElement}
  */
@@ -276,8 +274,6 @@ export function CouncilMember({
   districts: allDistricts = [],
   year,
   title,
-  device = 'rwd',
-  theme = 'openRelations',
   scrollTo,
 }) {
   const [tab, setTab] = useState(tabEnum.normal)
@@ -371,22 +367,20 @@ export function CouncilMember({
   })
 
   return (
-    <ThemeProvider theme={Object.assign({ device }, themeObj[theme])}>
-      <Container className={className}>
-        <Header>
-          <h3>{year}</h3>
-          <h3>{title}</h3>
-        </Header>
-        {tabsJsx}
-        <StyledSelector
-          options={options}
-          defaultValue={districtName}
-          onSelect={(n) => setDistrictName(n)}
-          renderFullOption={(option) => `第${option}選舉區`}
-        />
-        <StyledList dataManager={dataManager} scrollTo={districtName} />
-      </Container>
-    </ThemeProvider>
+    <Container className={className}>
+      <Header>
+        <h3>{year}</h3>
+        <h3>{title}</h3>
+      </Header>
+      {tabsJsx}
+      <StyledSelector
+        options={options}
+        defaultValue={districtName}
+        onSelect={(n) => setDistrictName(n)}
+        renderFullOption={(option) => `第${option}選舉區`}
+      />
+      <StyledList dataManager={dataManager} scrollTo={districtName} />
+    </Container>
   )
 }
 
@@ -396,6 +390,7 @@ export function CouncilMember({
  *  @param {Election} props.election
  *  @param {'mobile'|'rwd'} props.device
  *  @param {'openRelations'|'electionModule'|'mnewsElection2022'} [props.theme='openRelations']
+ *  @param {string} [props.stickyTopOffset]
  *  @param {string} [props.scrollTo] - the first row with the district name to scroll to
  */
 export default function EVC({
@@ -403,20 +398,23 @@ export default function EVC({
   election,
   device = 'rwd',
   theme = 'openRelations',
+  stickyTopOffset,
   scrollTo,
 }) {
   switch (election?.type) {
     case 'councilMember':
       return (
-        <CouncilMember
-          className={className}
-          districts={election?.districts}
-          year={election?.year}
-          title={election?.title}
-          device={device}
-          theme={theme}
-          scrollTo={scrollTo}
-        />
+        <ThemeProvider
+          theme={Object.assign({ device, stickyTopOffset }, themeObj[theme])}
+        >
+          <CouncilMember
+            className={className}
+            districts={election?.districts}
+            year={election?.year}
+            title={election?.title}
+            scrollTo={scrollTo}
+          />
+        </ThemeProvider>
       )
     case 'legislator':
     case 'referendum':
@@ -424,13 +422,15 @@ export default function EVC({
     case 'president': {
       const dataManager = dataManagerFactory().newDataManager(election)
       return (
-        <_EVC
-          className={className}
-          dataManager={dataManager}
-          device={device}
-          theme={theme}
-          scrollTo={scrollTo}
-        />
+        <ThemeProvider
+          theme={Object.assign({ device, stickyTopOffset }, themeObj[theme])}
+        >
+          <_EVC
+            className={className}
+            dataManager={dataManager}
+            scrollTo={scrollTo}
+          />
+        </ThemeProvider>
       )
     }
     default: {
@@ -443,30 +443,26 @@ export default function EVC({
  *  @param {Object} props
  *  @param {string} [props.className]
  *  @param {DataManager} props.dataManager
- *  @param {'rwd'|'mobile'} props.device
- *  @param {'openRelations'|'electionModule'|'mnewsElection2022'} props.theme
  *  @param {string} [props.scrollTo] - the first row with the district name to scroll to
  *  @returns {React.ReactElement}
  */
-function _EVC({ className, dataManager, device = 'rwd', theme, scrollTo }) {
+function _EVC({ className, dataManager, scrollTo }) {
   /** @type {Election} */
   const data = dataManager.getData()
   const options = data?.districts.map((c) => c.districtName)
   const [districtName, setDistrictName] = useState(scrollTo || options?.[0])
   return (
-    <ThemeProvider theme={Object.assign({ device }, themeObj[theme])}>
-      <Container className={className}>
-        <Header>
-          <h3>{data?.year}</h3>
-          <h3>{data?.title}</h3>
-        </Header>
-        <StyledSelector
-          options={options}
-          defaultValue={districtName}
-          onSelect={(n) => setDistrictName(n)}
-        />
-        <StyledList dataManager={dataManager} scrollTo={districtName} />
-      </Container>
-    </ThemeProvider>
+    <Container className={className}>
+      <Header>
+        <h3>{data?.year}</h3>
+        <h3>{data?.title}</h3>
+      </Header>
+      <StyledSelector
+        options={options}
+        defaultValue={districtName}
+        onSelect={(n) => setDistrictName(n)}
+      />
+      <StyledList dataManager={dataManager} scrollTo={districtName} />
+    </Container>
   )
 }

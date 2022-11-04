@@ -228,6 +228,10 @@ const THead = styled.div`
       }
       case 'rwd':
       default: {
+        const stickyCss = props.theme.stickyTopOffset
+          ? `position: sticky; top: ${props.theme.stickyTopOffset}`
+          : ''
+
         return `
           ${baseCss}
           @media ${breakpoint.devices.laptop} {
@@ -237,6 +241,8 @@ const THead = styled.div`
             ${TCell} {
               border-bottom: 2px solid black;
             }
+
+            ${stickyCss}
           }
 
           @media ${breakpoint.devices.laptopBelow} {
