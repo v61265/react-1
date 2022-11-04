@@ -22,6 +22,14 @@ const FieldWrapper = styled.div`
   margin: 20px 0;
 `
 
+/**
+ * @typedef {import('../../typedef').Form} Form
+ *
+ * @param {Object}  props
+ * @param {Form}    props.form
+ * @param {boolean} props.verified
+ * @return {JSX.Element}
+ */
 export default function CustomForm({ form, verified }) {
   return (
     <FormWrapper>

@@ -46,6 +46,15 @@ const Button = styled.button`
   }
 `
 
+/**
+ * @typedef {import('../../../typedef').TextField} TextField
+ *
+ * @param {Object}    props
+ * @param {string}    props.id
+ * @param {TextField} props.field
+ * @param {boolean}   props.verified
+ * @return {JSX.Element}
+ */
 export default function CommentField({ formId, field, verified }) {
   const [enableSumbit, setEnableSubmit] = useState(false)
   const [textareaValue, setTextareaValue] = useState('')

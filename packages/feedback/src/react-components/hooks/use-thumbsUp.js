@@ -3,6 +3,11 @@ import React/* eslint-disable-line */, { useState, useEffect, useRef } from 'rea
 import useUser from './use-user'
 import { getLikes, giveLikes } from '../api'
 
+/**
+ * @param {string}  formId
+ * @param {string}  fieldId
+ * @return {import('../../typedef').ThumbAmountManager}
+ */
 export default function useThumbsUp(formId, fieldId) {
   const [thumbsUp, setThumbsUp] = useState(null)
   const originalThumbUpRef = useRef(null)

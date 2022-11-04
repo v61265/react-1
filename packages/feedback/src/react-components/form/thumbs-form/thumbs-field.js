@@ -22,6 +22,15 @@ const ThumbWrapper = styled.div`
   display: flex;
 `
 
+/**
+ * @typedef {import('../../../typedef').SingleField} SingleField
+ * @typedef {import('../../../typedef').ThumbsFieldProps} ThumbsFieldProps
+ *
+ * @param {Object}      props
+ * @param {string}      props.formId
+ * @param {SingleField} props.field
+ * @return {JSX.Element}
+ */
 export default function ThumbsField({ formId, field }) {
   const [thumbUpChecked, setThumbUpChecked] = useState(false)
   const [thumbDownChecked, setThumbDownChecked] = useState(false)
@@ -77,23 +86,25 @@ export default function ThumbsField({ formId, field }) {
     })
   }
 
+  /** @type {ThumbsFieldProps} */
   const thumbUpProps = {
     thumbsUp: true,
     onMouseDown: () => setThumbUpPressing(true),
     onMouseUp: thumbUpRadioClicked,
     checked: thumbUpChecked,
     pressing: thumbUpPressing,
-    label: '符合',
+    label: field.thumbUpLabel ?? '符合',
     statistic: thumbsUp ? thumbsUp.thumbUp : null,
   }
 
+  /** @type {ThumbsFieldProps} */
   const thumbDownProps = {
     thumbsUp: false,
     onMouseDown: () => setThumbDownPressing(true),
     onMouseUp: thumbDownRadioClicked,
     checked: thumbDownChecked,
     pressing: thumbDownPressing,
-    label: '不符合',
+    label: field.thumbDownLabel ?? '不符合',
     statistic: thumbsUp ? thumbsUp.thumbDown : null,
   }
 

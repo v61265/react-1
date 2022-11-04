@@ -61,6 +61,10 @@ const ThumbStatistic = styled.span`
   color: rgba(0, 9, 40, 30%);
 `
 
+/**
+ * @param {import('../../../typedef').ThumbsFieldProps} props
+ * @return {JSX.Element}
+ */
 export default function ThumbField({
   thumbsUp,
   onMouseDown,

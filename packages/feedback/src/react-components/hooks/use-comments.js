@@ -7,6 +7,14 @@ import useUser from './use-user'
 const initialCommentCount = 3
 const moreCommentCount = 10
 
+/**
+ * @typedef {import('../../typedef').Comment} Comment
+ * @typedef {import('../../typedef').CommentManager} CommentManager
+ *
+ * @param {string} formId
+ * @param {string} fieldId
+ * @return {CommentManager}
+ */
 export default function useComments(formId, fieldId) {
   const [showingComments, setShowingComments] = useState([])
   const [noMoreComment, setNoMoreComment] = useState(false)
