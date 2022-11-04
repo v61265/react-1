@@ -1,9 +1,8 @@
-import { useState, useEffect, useRef } from 'react'
-import axios from 'axios'
-
-import { JumbotronContainer } from './jumbotron'
+import DataLoader from '../data-loader'
 import LiveBlogContainr from './live-blog-container'
+import { JumbotronContainer } from './jumbotron'
 import { createGlobalStyle } from 'styled-components'
+import { useState, useEffect } from 'react'
 
 const GlobalStyles = createGlobalStyle`
   body {
@@ -13,40 +12,37 @@ const GlobalStyles = createGlobalStyle`
 
 export default function LiveBlog({
   initialLiveblog,
-  fetchLiveblogUrl,
-  fetchImageBaseUrl,
+  fetchLiveblogUrl = '',
+  fetchImageBaseUrl = 'https://editools-gcs-dev.readr.tw',
 }) {
   const [liveblog, setLiveblog] = useState(initialLiveblog)
-  const intervalIdRef = useRef()
+
+  let dataLoader = new DataLoader()
 
   useEffect(() => {
-    const fetchLiveblog = async (url) => {
-      try {
-        const response = await axios.get(url)
-
-        if (response?.data) {
-          setLiveblog(response.data)
-        }
-      } catch (error) {
-        console.error('Fetching liveblog with error', error)
-      }
-    }
-
     if (fetchLiveblogUrl) {
-      if (!initialLiveblog) {
-        fetchLiveblog(fetchLiveblogUrl)
+      const handleError = (errMsg, errObj) => {
+        console.log(errMsg, errObj)
       }
-      intervalIdRef.current = setInterval(() => {
-        fetchLiveblog(fetchLiveblogUrl)
-      }, 60000)
-    }
 
-    return () => {
-      clearInterval(intervalIdRef.current)
+      const handleData = (data) => {
+        setLiveblog(data)
+      }
+
+      dataLoader.addEventListener('error', handleError)
+      dataLoader.addEventListener('data', handleData)
+
+      // after register event listener
+      // start to load data periodically
+      dataLoader.loadDataPeriodically(fetchLiveblogUrl)
+
+      return () => {
+        dataLoader.removeEventListener('error', handleError)
+        dataLoader.removeEventListener('data', handleData)
+        dataLoader = null
+      }
     }
   }, [fetchLiveblogUrl, initialLiveblog])
-
-  if (!fetchLiveblogUrl) return <p>Please asign liveblog slug name</p>
 
   return (
     <>
