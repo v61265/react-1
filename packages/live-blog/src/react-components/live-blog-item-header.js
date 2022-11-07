@@ -73,10 +73,6 @@ const PublishDate = styled.div`
   }
 `
 
-moment.locale('zh-tw', {
-  weekdays: '星期日_星期一_星期二_星期三_星期四_星期五_星期六'.split('_'),
-})
-
 export default function LiveBlogItemHeader({ article }) {
   return (
     <div>
