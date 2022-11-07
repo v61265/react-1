@@ -10,12 +10,14 @@ import { liveblogItemId } from '../utils/anchor-scroll-helper'
 
 const initialShowingCount = 5
 
-export default function LiveBlogContainr({ liveblog, fetchImageBaseUrl }) {
+export default function LiveBlogContainr({ liveblog, fetchImageBaseUrl, lazyLoading}) { // eslint-disable-line
   const liveblogItemsRef = useRef([])
   const [boostedLiveblogItems, setBoostedLiveblogItems] = useState([])
   // showing means rendering non boosted liveblogItems
   const [showingCount, setShowingCount] = useState(initialShowingCount)
-  const [showingLiveblogItems, setShowingLiveblogItems] = useState([])
+  const [showingLiveblogItems, setShowingLiveblogItems] = useState(
+    [].concat(liveblog?.liveblog_items?.slice(0, initialShowingCount))
+  )
   const [newToOld, setNewToOld] = useState(true)
   const loadingMoreRef = useRef(false)
   const [activeTags, setActiveTags] = useState([])
