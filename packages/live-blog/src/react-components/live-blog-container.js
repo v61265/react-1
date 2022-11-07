@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react'
-import moment from 'moment'
 
 import Intro from './intro'
 import LiveBlogControl from './live-blog-control'
@@ -41,8 +40,8 @@ export default function LiveBlogContainr({ liveblog, fetchImageBaseUrl, lazyLoad
             : liveblogItem.boost
         )
         .sort((a, b) => {
-          const tsA = moment(a.publishTime).valueOf()
-          const tsB = moment(b.publishTime).valueOf()
+          const tsA = new Date(a.publishTime).getTime()
+          const tsB = new Date(b.publishTime).getTime()
           return newToOld ? tsB - tsA : tsA - tsB
         })
 
@@ -54,8 +53,8 @@ export default function LiveBlogContainr({ liveblog, fetchImageBaseUrl, lazyLoad
             : !liveblogItem.boost
         )
         .sort((a, b) => {
-          const tsA = moment(a.publishTime).valueOf()
-          const tsB = moment(b.publishTime).valueOf()
+          const tsA = new Date(a.publishTime).getTime()
+          const tsB = new Date(b.publishTime).getTime()
           return newToOld ? tsB - tsA : tsA - tsB
         })
       if (document.location.hash && firstMounted) {

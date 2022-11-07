@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import moment from 'moment'
+import { toLocaleString } from '../utils/date'
 
 const CategoryWrapper = styled.div`
   padding: 0 116px;
@@ -92,21 +92,13 @@ export default function LiveBlogItemHeader({ article }) {
                 {article.author ? `記者：${article.author}` : ''}
               </PublisherName>
             </PublisherWrapper>
-            <PublishDate>
-              {moment(article.publishTime)
-                .locale('zh_tw')
-                .format('YYYY年MM月DD日 dddd HH:mm')}
-            </PublishDate>
+            <PublishDate>{toLocaleString(article.publishTime)}</PublishDate>
           </PublishInfoWrapper>
         </>
       ) : (
         <PublishInfoWrapper>
           <div>{article.tags && <Category>{article.tags.name}</Category>}</div>
-          <PublishDate>
-            {moment(article.publishTime)
-              .locale('zh_tw')
-              .format('YYYY年MM月DD日 dddd HH:mm')}
-          </PublishDate>
+          <PublishDate>{toLocaleString(article.publishTime)}</PublishDate>
         </PublishInfoWrapper>
       )}
     </div>
