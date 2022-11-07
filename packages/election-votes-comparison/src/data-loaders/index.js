@@ -13,7 +13,7 @@ import events from 'events'
  *    apiOrigin: 'https://whoareyou-gcs.readr.tw',
  *    year: '2018', // 年份
  *    type: 'councilMember', // 選舉類型
- *    area: 'taipeiCity', // 縣市
+ *    district: 'taipeiCity', // 縣市
  *  })
  *
  *  // For server side rendering,
@@ -56,31 +56,35 @@ import events from 'events'
 export default class Loader {
   /** @type events.EventEmitter */
   eventEmitter = null
-  apiOrigin = ''
+  apiOrigin = 'https://whoareyou-gcs.readr.tw'
+  version = 'v2'
   year = ''
-  area = ''
+  district = ''
   type = ''
   dataTimer = null
 
   /**
    *  @constructor
    *  @param {Object} props
-   *  @param {string} [props.apiOrigin='https://whoareyou-gcs.readr.tw/elections']
+   *  @param {string} [props.apiOrigin='https://whoareyou-gcs.readr.tw']
    *  @param {string} props.year
-   *  @param {string} props.area
+   *  @param {string} props.district
    *  @param {string} props.type
+   *  @param {string} [props.version=v2]
    */
   constructor({
-    apiOrigin = 'https://whoareyou-gcs.readr.tw/elections',
+    apiOrigin = 'https://whoareyou-gcs.readr.tw',
     year,
-    area,
+    district,
     type,
+    version = 'v2',
   }) {
     this.eventEmitter = new events.EventEmitter()
     this.apiOrigin = apiOrigin
     this.year = year
-    this.area = area
+    this.district = district
     this.type = type
+    this.version = version === 'v1' ? '' : version
   }
 
   /**
@@ -90,7 +94,7 @@ export default class Loader {
   async loadData() {
     try {
       const axiosRes = await axios.get(
-        `${this.apiOrigin}/${this.year}/${this.type}/${this.area}.json`
+        `${this.apiOrigin}/elections/${this.version}/${this.year}/${this.type}/${this.district}.json`
       )
       return axiosRes?.data
     } catch (err) {
@@ -110,7 +114,7 @@ export default class Loader {
    *  @returns {Promise<void>}
    */
   async loadDataPeriodically() {
-    const url = `${this.apiOrigin}/${this.year}/${this.type}/${this.area}.json`
+    const url = `${this.apiOrigin}/${this.version}/${this.year}/${this.type}/${this.district}.json`
     try {
       const axiosRes = await axios.get(url)
 
@@ -180,7 +184,14 @@ Loader.electionTypes = [
   'councilMember', // 縣市議員
 ]
 Loader.electionYears = [
-  '2008',
+  '1994',
+  '1997',
+  '1998',
+  '2001',
+  '2002',
+  '2005',
+  '2006',
+  '2009',
   '2010',
   '2012',
   '2014',
@@ -189,7 +200,7 @@ Loader.electionYears = [
   '2020',
   '2022',
 ]
-Loader.electionAreas = [
+Loader.electionDistricts = [
   'taipeiCity',
   'newTaipeiCity',
   'taoyuanCity',

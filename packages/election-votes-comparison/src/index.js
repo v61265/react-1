@@ -1,7 +1,10 @@
-import ReactComponent from './react-components'
+import EVC, { CouncilMember } from './react-components'
 import DataLoader from './data-loaders'
 
 export default {
-  ReactComponent,
+  ReactComponent: {
+    EVC,
+    CouncilMember,
+  },
   DataLoader,
 }
