@@ -12,9 +12,15 @@ const Wrapper = styled.div`
 `
 
 const Title = styled.p`
-  font-size: 18px;
-  line-height: 27px;
   margin: 0;
+  color: ${({ theme }) => theme.thumbField.title.color};
+  font-weight: ${({ theme }) => theme.thumbField.title.fontWeight};
+  line-height: ${({ theme }) => theme.thumbField.title.lineHeight};
+
+  font-size: ${({ theme }) => theme.thumbField.title.mobile.fontSize};
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    font-size: ${({ theme }) => theme.thumbField.title.tablet.fontSize};
+  }
 `
 
 const ThumbWrapper = styled.div`
@@ -22,6 +28,15 @@ const ThumbWrapper = styled.div`
   display: flex;
 `
 
+/**
+ * @typedef {import('../../../typedef').SingleField} SingleField
+ * @typedef {import('../../../typedef').ThumbsFieldProps} ThumbsFieldProps
+ *
+ * @param {Object}      props
+ * @param {string}      props.formId
+ * @param {SingleField} props.field
+ * @return {JSX.Element}
+ */
 export default function ThumbsField({ formId, field }) {
   const [thumbUpChecked, setThumbUpChecked] = useState(false)
   const [thumbDownChecked, setThumbDownChecked] = useState(false)
@@ -29,7 +44,11 @@ export default function ThumbsField({ formId, field }) {
   const [thumbDownPressing, setThumbDownPressing] = useState(false)
   const timerRef = useRef(null)
   const initialMounted = useRef(true)
-  const { thumbsUp, giveThumbUp } = useThumbsUp(formId, field.id)
+  const { thumbsUp, giveThumbUp } = useThumbsUp(
+    formId,
+    field.id,
+    field.identifier
+  )
 
   useEffect(() => {
     if (initialMounted.current) {
@@ -77,23 +96,25 @@ export default function ThumbsField({ formId, field }) {
     })
   }
 
+  /** @type {ThumbsFieldProps} */
   const thumbUpProps = {
     thumbsUp: true,
     onMouseDown: () => setThumbUpPressing(true),
     onMouseUp: thumbUpRadioClicked,
     checked: thumbUpChecked,
     pressing: thumbUpPressing,
-    label: '符合',
+    label: field.thumbUpLabel ?? '符合',
     statistic: thumbsUp ? thumbsUp.thumbUp : null,
   }
 
+  /** @type {ThumbsFieldProps} */
   const thumbDownProps = {
     thumbsUp: false,
     onMouseDown: () => setThumbDownPressing(true),
     onMouseUp: thumbDownRadioClicked,
     checked: thumbDownChecked,
     pressing: thumbDownPressing,
-    label: '不符合',
+    label: field.thumbDownLabel ?? '不符合',
     statistic: thumbsUp ? thumbsUp.thumbDown : null,
   }
 

@@ -3,7 +3,13 @@ import React/* eslint-disable-line */, { useState, useEffect, useRef } from 'rea
 import useUser from './use-user'
 import { getLikes, giveLikes } from '../api'
 
-export default function useThumbsUp(formId, fieldId) {
+/**
+ * @param {string}  formId
+ * @param {string}  fieldId
+ * @param {string}  [identifier]
+ * @return {import('../../typedef').ThumbAmountManager}
+ */
+export default function useThumbsUp(formId, fieldId, identifier) {
   const [thumbsUp, setThumbsUp] = useState(null)
   const originalThumbUpRef = useRef(null)
   const { userId } = useUser()
@@ -29,6 +35,7 @@ export default function useThumbsUp(formId, fieldId) {
       const result = await giveLikes({ // eslint-disable-line
         name: userId,
         form: formId,
+        identifier: identifier,
         responseTime: new Date(),
         field: fieldId,
         userFeedback: thumbUp,
@@ -44,6 +51,7 @@ export default function useThumbsUp(formId, fieldId) {
         const result = await getLikes({
           form: formId,
           field: fieldId,
+          identifier: identifier,
         })
         if (result?.data) {
           const { like, dislike } = result.data

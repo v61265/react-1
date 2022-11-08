@@ -44,6 +44,17 @@ const Button = styled.button`
   }
 `
 
+/**
+ * @typedef {import('../../../typedef').Comment} Comment
+ * @typedef {import('../../../typedef').CommentManager} CommentManager
+ * @typedef {CommentManager['loadMoreComments']} ExpandFunc
+ *
+ * @param {Object}      props
+ * @param {Comment[]}   props.comments
+ * @param {ExpandFunc}  props.onExpand
+ * @param {boolean}     props.noMoreComment
+ * @return {JSX.Element}
+ */
 export default function Comments({ comments, onExpand, noMoreComment }) {
   const clickHandler = (e) => {
     e.preventDefault()

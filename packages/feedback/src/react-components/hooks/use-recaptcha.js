@@ -4,6 +4,12 @@ import { verifyRecaptcha } from '../api'
 
 const action = 'submit'
 
+/**
+ * @typedef {Object}    Recaptcha
+ * @property {boolean}  verified
+ *
+ * @return {Recaptcha}
+ */
 export default function useRecaptcha() {
   const [verified, setVerified] = useState(false)
 

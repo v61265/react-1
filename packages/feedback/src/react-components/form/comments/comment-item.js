@@ -91,6 +91,13 @@ const Hint = styled.div`
   line-height: 36px;
 `
 
+/**
+ * @typedef {import('../../../typedef').Comment} Comment
+ *
+ * @param {Object}  props
+ * @param {Comment} props.comment
+ * @return {JSX.Element}
+ */
 export default function CommentItem({ comment }) {
   const [contentExpand, setContentExpand] = useState(false)
   // const [isHovering, setIsHovering] = useState(false)

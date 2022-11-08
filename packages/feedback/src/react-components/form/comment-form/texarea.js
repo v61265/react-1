@@ -18,6 +18,13 @@ const Textarea = styled.textarea`
   overflow: auto;
 `
 
+/**
+ * @param {Object} props
+ * @param {string} props.placeholder
+ * @param {string} props.textAreaValue
+ * @param {React.ChangeEventHandler<HTMLTextAreaElement>} props.onChange
+ * @return {JSX.Element}
+ */
 export default function CustomTextarea(props) {
   return (
     <Wrapper>
