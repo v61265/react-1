@@ -4,9 +4,9 @@ export default {}
  * @typedef {Object}    Field
  * @property {string}   id
  * @property {string}   name
- * @property {'single' | 'text'} type
  * @property {string}   status
- * @property {unknown}  sortOrder
+ * @property {'single' | 'text'}  type
+ * @property {number | null}      sortOrder
  */
 
 /**
@@ -14,6 +14,7 @@ export default {}
  * @property {'single'} type
  * @property {string}   [thumbUpLabel]
  * @property {string}   [thumbDownLabel]
+ * @property {string}   [identifier]
  */
 
 /**

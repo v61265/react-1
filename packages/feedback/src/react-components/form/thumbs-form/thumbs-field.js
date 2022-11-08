@@ -38,7 +38,11 @@ export default function ThumbsField({ formId, field }) {
   const [thumbDownPressing, setThumbDownPressing] = useState(false)
   const timerRef = useRef(null)
   const initialMounted = useRef(true)
-  const { thumbsUp, giveThumbUp } = useThumbsUp(formId, field.id)
+  const { thumbsUp, giveThumbUp } = useThumbsUp(
+    formId,
+    field.id,
+    field.identifier
+  )
 
   useEffect(() => {
     if (initialMounted.current) {
