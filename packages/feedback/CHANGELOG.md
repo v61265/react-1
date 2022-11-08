@@ -10,6 +10,9 @@
 - feat: add theme for politics-tracker
 
 ### Commits
+* \[[`e02368600b`](https://github.com/readr-media/react-feedback/commit/e02368600b)] - chore(feedback): bump version to 3.0.2 (Tsuki Akiba)
+* \[[`c7b67cb206`](https://github.com/readr-media/react-feedback/commit/c7b67cb206)] - chore(feedback): add CHANGELOG.md to files (Tsuki Akiba)
+* \[[`669ca5620a`](https://github.com/readr-media/react-feedback/commit/669ca5620a)] - docs(feedback): update CHANGELOG (Tsuki Akiba)
 * \[[`a662f5f32a`](https://github.com/readr-media/react-feedback/commit/a662f5f32a)] - chore(feedback): bump version to 3.0.1 (Tsuki Akiba)
 * \[[`2c6bc772d0`](https://github.com/readr-media/react-feedback/commit/2c6bc772d0)] - docs(feedback): update CHANGELOG (Tsuki Akiba)
 * \[[`554a4ac635`](https://github.com/readr-media/react-feedback/commit/554a4ac635)] - chore(feedback): bump version to 3.0.0 (Tsuki Akiba)
