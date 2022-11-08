@@ -8,10 +8,11 @@ import Form from './form/form'
  *
  * @param {Object}  props
  * @param {Form[]}  props.forms
+ * @param {boolean} [props.shouldUseRecaptcha=true]
  * @return {JSX.Element}
  */
-export default function Feedback({ forms = [] }) {
-  const { verified } = useRecaptcha()
+export default function Feedback({ forms = [], shouldUseRecaptcha = true }) {
+  const { verified } = shouldUseRecaptcha ? useRecaptcha() : { verified: true }
 
   return (
     <>
