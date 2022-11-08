@@ -1,6 +1,6 @@
 # @readr-media/react-feedback Changelog
 
-## 2022-11-08, Version 3.0.0
+## 2022-11-08, Version 3.0.1
 ### Notable Changes
 - refactor: add query params to getLikes request
 - docs: add JSDoc comments
@@ -10,6 +10,8 @@
 - feat: add theme for politics-tracker
 
 ### Commits
+* \[[`a662f5f32a`](https://github.com/readr-media/react-feedback/commit/a662f5f32a)] - chore(feedback): bump version to 3.0.1 (Tsuki Akiba)
+* \[[`2c6bc772d0`](https://github.com/readr-media/react-feedback/commit/2c6bc772d0)] - docs(feedback): update CHANGELOG (Tsuki Akiba)
 * \[[`554a4ac635`](https://github.com/readr-media/react-feedback/commit/554a4ac635)] - chore(feedback): bump version to 3.0.0 (Tsuki Akiba)
 * \[[`b5c02457d8`](https://github.com/readr-media/react-feedback/commit/b5c02457d8)] - Merge branch 'main' of <https://github.com/readr-media/react> (Tsuki Akiba)
 * \[[`22ba564d94`](https://github.com/readr-media/react-feedback/commit/22ba564d94)] - feat(feedback): add theme for politics-tracker (Tsuki Akiba)
