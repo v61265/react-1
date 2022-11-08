@@ -12,9 +12,15 @@ const Wrapper = styled.div`
 `
 
 const Title = styled.p`
-  font-size: 18px;
-  line-height: 27px;
   margin: 0;
+  color: ${({ theme }) => theme.thumbField.title.color};
+  font-weight: ${({ theme }) => theme.thumbField.title.fontWeight};
+  line-height: ${({ theme }) => theme.thumbField.title.lineHeight};
+
+  font-size: ${({ theme }) => theme.thumbField.title.mobile.fontSize};
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    font-size: ${({ theme }) => theme.thumbField.title.tablet.fontSize};
+  }
 `
 
 const ThumbWrapper = styled.div`

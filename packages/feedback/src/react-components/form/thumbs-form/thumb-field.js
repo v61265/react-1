@@ -2,9 +2,7 @@ import React from 'react' // eslint-disable-line
 import styled from 'styled-components'
 
 import ThumbUpSvg from '../../../static/icon-thumb-up.svg'
-import ThumbUpActiveSvg from '../../../static/icon-thumb-up-active.svg'
 import ThumbDownSvg from '../../../static/icon-thumb-down.svg'
-import ThumbDownActiveSvg from '../../../static/icon-thumb-down-active.svg'
 
 const Wrapper = styled.div`
   display: inline-flex;
@@ -20,8 +18,14 @@ const Wrapper = styled.div`
 const ThumbMockLabel = styled.div`
   position: relative;
   padding-top: 60px;
-  font-size: 18px;
-  line-height: 27px;
+  color: ${({ theme }) => theme.thumbField.label.color};
+  font-weight: ${({ theme }) => theme.thumbField.label.fontWeight};
+  line-height: ${({ theme }) => theme.thumbField.label.lineHeight};
+
+  font-size: ${({ theme }) => theme.thumbField.label.mobile.fontSize};
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    font-size: ${({ theme }) => theme.thumbField.label.tablet.fontSize};
+  }
 `
 
 const ThumbIconWrapper = styled.div`
@@ -34,16 +38,27 @@ const ThumbIconWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid #e0e0e0;
+  border-width: 1px;
+  border-style: solid;
+  border-color: ${({ theme }) => theme.thumbField.thumb.default.borderColor};
   border-radius: 50%;
+  color: ${({ theme }) => theme.thumbField.thumb.default.color};
+  background-color: ${({ theme }) =>
+    theme.thumbField.thumb.default.backgroundColor};
   cursor: pointer;
 
-  &:hover,
-  &:active {
-    border-color: #000928;
+  &:hover {
+    color: ${({ theme }) => theme.thumbField.thumb.hover.color};
+    background-color: ${({ theme }) =>
+      theme.thumbField.thumb.hover.backgroundColor};
+    border-color: ${({ theme }) => theme.thumbField.thumb.hover.borderColor};
   }
-  &:active {
-    background-color: #edeff2;
+  &:active,
+  &.active {
+    color: ${({ theme }) => theme.thumbField.thumb.active.color};
+    background-color: ${({ theme }) =>
+      theme.thumbField.thumb.active.backgroundColor};
+    border-color: ${({ theme }) => theme.thumbField.thumb.active.borderColor};
   }
 `
 
@@ -51,14 +66,25 @@ const Input = styled.input`
   display: none;
 
   &:checked ~ ${ThumbIconWrapper} {
-    border-color: #04295e;
+    color: ${({ theme }) => theme.thumbField.thumb.active.color};
+    background-color: ${({ theme }) =>
+      theme.thumbField.thumb.active.backgroundColor};
+    border-color: ${({ theme }) => theme.thumbField.thumb.active.borderColor};
   }
 `
 
 const ThumbStatistic = styled.span`
   font-size: 16px;
   line-height: 24px;
-  color: rgba(0, 9, 40, 30%);
+  color: ${({ theme }) => theme.thumbField.statistic.color};
+  font-weight: ${({ theme }) => theme.thumbField.statistic.fontWeight};
+
+  font-size: ${({ theme }) => theme.thumbField.statistic.mobile.fontSize};
+  line-height: ${({ theme }) => theme.thumbField.statistic.mobile.lineHeight};
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    font-size: ${({ theme }) => theme.thumbField.statistic.tablet.fontSize};
+    line-height: ${({ theme }) => theme.thumbField.statistic.tablet.lineHeight};
+  }
 `
 
 /**
@@ -75,11 +101,6 @@ export default function ThumbField({
   statistic,
 }) {
   const ThumbSVG = thumbsUp ? <ThumbUpSvg /> : <ThumbDownSvg />
-  const ThumbActiveSVG = thumbsUp ? (
-    <ThumbUpActiveSvg />
-  ) : (
-    <ThumbDownActiveSvg />
-  )
   return (
     <Wrapper>
       <ThumbMockLabel onMouseDown={onMouseDown} onMouseUp={onMouseUp}>
@@ -90,8 +111,8 @@ export default function ThumbField({
           onChange={() => {}}
           checked={checked}
         />
-        <ThumbIconWrapper>
-          {pressing || checked ? ThumbActiveSVG : ThumbSVG}
+        <ThumbIconWrapper className={pressing || checked ? 'active' : ''}>
+          {ThumbSVG}
         </ThumbIconWrapper>
       </ThumbMockLabel>
       {statistic !== null && <ThumbStatistic>{statistic}</ThumbStatistic>}

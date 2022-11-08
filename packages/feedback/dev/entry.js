@@ -9,5 +9,4 @@ const reactRootId = 'root'
 const container = document.getElementById(reactRootId)
 const root = createRoot(container)
 
-
 root.render(<FeedbackComponent {...formsData} />)
