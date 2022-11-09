@@ -1,6 +1,6 @@
 # @readr-media/react-feedback Changelog
 
-## 2022-11-08, Version 3.0.1
+## 2022-11-08, Version 3.0.2
 ### Notable Changes
 - refactor: add query params to getLikes request
 - docs: add JSDoc comments
