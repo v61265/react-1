@@ -52,7 +52,7 @@ const StyledTab = styled.div`
           }
 
           @media ${breakpoint.devices.tabletBelow} {
-            min-width: 128px;
+            min-width: 80px;
             font-size: 16px;
             margin-right: 16px;
             margin-left: 16px;

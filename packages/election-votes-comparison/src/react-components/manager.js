@@ -20,6 +20,7 @@ import { AnonymousIcon, ElectedIcon } from './icons'
  *  @property {string} [label]
  *  @property {string} [href]
  *  @property {React.ReactElement} [imgJsx]
+ *  @property {boolean} [multiLines=false]
  *
  *  @typedef {CellEntity[]} Cell - Table cell. A cell contains multiple entities
  *
@@ -351,6 +352,7 @@ export class ReferendumDataManager extends DataManager {
       [
         {
           label: `${p?.content ?? '-'}`,
+          multiLines: true,
         },
       ],
       // 領銜人
