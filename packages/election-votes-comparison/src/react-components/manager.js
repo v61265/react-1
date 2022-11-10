@@ -6,8 +6,11 @@ import { AnonymousIcon, ElectedIcon } from './icons'
 /**
  *  @typedef {import('./typedef').Election} Election
  *  @typedef {import('./typedef').CouncilMemberElection} CouncilMemberElection
+ *  @typedef {import('./typedef').ReferendumElection} ReferendumElection
+ *  @typedef {import('./typedef').Proposition} Proposition
  *  @typedef {import('./typedef').Candidate} Candidate
  *  @typedef {import('./typedef').Entity} Entity
+ *  @typedef {import('./typedef').District} District
  */
 
 /**
@@ -23,7 +26,7 @@ import { AnonymousIcon, ElectedIcon } from './icons'
  *  @typedef {Object} Row
  *  @property {string} id
  *  @property {Cell[]} cells
- *  @property {string} group
+ *  @property {string} [group]
  */
 
 const ImgBlock = styled.div`
@@ -135,10 +138,6 @@ export class CouncilMemberDataManager extends DataManager {
   constructor(data) {
     super(data)
     this.districts = data?.districts || []
-  }
-
-  getData() {
-    return this.data
   }
 
   /**
@@ -289,10 +288,151 @@ export class CountyMayorDataManager extends CouncilMemberDataManager {
 
 export class LegislatorDataManager extends CouncilMemberDataManager {}
 
+export class ReferendumDataManager extends DataManager {
+  /**
+   *  @override
+   *  @param {ReferendumElection} data
+   */
+  constructor(data) {
+    super(data)
+    this.districts = [{ districtName: '全國' }]
+    this.propositions = data?.propositions || []
+  }
+
+  /**
+   *  @return {ReferendumElection & { districts: District[] }} data
+   */
+  getData() {
+    return {
+      ...this.data,
+      districts: [
+        {
+          districtName: '全國',
+        },
+      ],
+    }
+  }
+
+  /**
+   *  @override
+   *  @returns {Head[]}
+   */
+  buildListHead() {
+    // built already, therefore return the built one
+    if (this.head.length > 0) {
+      return this.head
+    }
+    this.head = [
+      '案號',
+      '案名',
+      '領銜人',
+      '同意數',
+      '同意率',
+      '不同意數',
+      '不同意率',
+      '通過註記',
+    ]
+    return this.head
+  }
+
+  /**
+   *  @param {Proposition} p
+   *  @returns {Cell[]}
+   */
+  buildRowFromPropostion(p) {
+    return [
+      // 案號
+      [
+        {
+          label: `${p?.no ?? '-'}`,
+        },
+      ],
+      // 案名
+      [
+        {
+          label: `${p?.content ?? '-'}`,
+        },
+      ],
+      // 領銜人
+      [
+        {
+          label: `${p?.planner ?? '-'}`,
+        },
+      ],
+      // 同意數
+      [
+        {
+          label: p?.agreeTks?.toLocaleString() ?? '-',
+        },
+      ],
+      // 同意率
+      [
+        {
+          label: p?.agreeRate?.toLocaleString() ?? '-',
+        },
+      ],
+      // 不同意數
+      [
+        {
+          label: p?.disagreeTks?.toLocaleString() ?? '-',
+        },
+      ],
+      // 不同意率
+      [
+        {
+          label: p?.disagreeRate?.toLocaleString() ?? '-',
+        },
+      ],
+      // 當選
+      [
+        {
+          label: p?.pass ? '是' : '否',
+        },
+      ],
+    ]
+  }
+
+  /**
+   *  @override
+   *  @returns {Row[]}
+   */
+  buildListRows() {
+    // built already, therefore return the built one
+    if (this.rows.length > 0) {
+      return this.rows
+    }
+
+    this.rows = this.propositions?.map((p) => {
+      /** @type {Row} */
+      const row = {
+        id: '',
+        cells: [],
+      }
+
+      row.id = p.no
+      row.group = '全國'
+      row.cells = this.buildRowFromPropostion(p)
+      return row
+    })
+    return this.rows
+  }
+
+  /**
+   *  @override
+   *  @param {string} districtName
+   *  @returns {Row}
+   */
+  findRowByDistrictName(districtName = '全國') {
+    return this.rows.find((r) => {
+      return r.group === districtName
+    })
+  }
+}
+
 export function dataManagerFactory() {
   return {
     /**
-     *  @param {Election} data
+     *  @param {Election | ReferendumElection} data
      *  @returns {DataManager}
      */
     newDataManager: (data) => {
@@ -303,6 +443,8 @@ export function dataManagerFactory() {
           return new CouncilMemberDataManager(data)
         case 'legislator':
           return new LegislatorDataManager(data)
+        case 'referendum':
+          return new ReferendumDataManager(data)
         case 'president':
         default: {
           return new DataManager(data)

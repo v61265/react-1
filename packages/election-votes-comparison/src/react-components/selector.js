@@ -126,6 +126,7 @@ const LightBoxBody = styled.div`
 
   background-color: white;
   border-radius: 4px;
+  min-width: 200px;
 
   > div:first-child {
     display: flex;

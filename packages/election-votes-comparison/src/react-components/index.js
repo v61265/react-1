@@ -1,6 +1,7 @@
 /**
  *  @typedef {import('./typedef').District} District
  *  @typedef {import('./typedef').Election} Election
+ *  @typedef {import('./typedef').ReferendumElection} ReferendumElection
  *  @typedef {import('./manager').DataManager} DataManager
  */
 
@@ -387,8 +388,8 @@ export function CouncilMember({
 /**
  *  @param {Object} props
  *  @param {string} [props.className]
- *  @param {Election} props.election
- *  @param {'mobile'|'rwd'} props.device
+ *  @param {Election | ReferendumElection } props.election
+ *  @param {'mobile'|'rwd'} [props.device='rwd']
  *  @param {'openRelations'|'electionModule'|'mnewsElection2022'} [props.theme='openRelations']
  *  @param {string} [props.stickyTopOffset]
  *  @param {string} [props.scrollTo] - the first row with the district name to scroll to
@@ -417,8 +418,8 @@ export default function EVC({
         </ThemeProvider>
       )
     case 'legislator':
-    case 'referendum':
     case 'mayor':
+    case 'referendum':
     case 'president': {
       const dataManager = dataManagerFactory().newDataManager(election)
       return (
