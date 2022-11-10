@@ -10,7 +10,7 @@ import events from 'events'
  *  Example: 抓 2018 年台北市市議員的選舉結果
  *
  *  let dataLoader = new Loader({
- *    apiOrigin: 'https://whoareyou-gcs.readr.tw',
+ *    apiUrl: 'https://whoareyou-gcs.readr.tw/elections',
  *    year: '2018', // 年份
  *    type: 'councilMember', // 選舉類型
  *    district: 'taipeiCity', // 縣市
@@ -56,7 +56,7 @@ import events from 'events'
 export default class Loader {
   /** @type events.EventEmitter */
   eventEmitter = null
-  apiOrigin = 'https://whoareyou-gcs.readr.tw'
+  apiUrl = 'https://whoareyou-gcs.readr.tw/elections'
   version = 'v2'
   year = ''
   district = ''
@@ -66,21 +66,21 @@ export default class Loader {
   /**
    *  @constructor
    *  @param {Object} props
-   *  @param {string} [props.apiOrigin='https://whoareyou-gcs.readr.tw']
+   *  @param {string} [props.apiUrl='https://whoareyou-gcs.readr.tw']
    *  @param {string} props.year
    *  @param {string} props.district
    *  @param {string} props.type
    *  @param {string} [props.version=v2]
    */
   constructor({
-    apiOrigin = 'https://whoareyou-gcs.readr.tw',
+    apiUrl = 'https://whoareyou-gcs.readr.tw/elections',
     year,
     district,
     type,
     version = 'v2',
   }) {
     this.eventEmitter = new events.EventEmitter()
-    this.apiOrigin = apiOrigin
+    this.apiUrl = apiUrl
     this.year = year
     this.district = district
     this.type = type
@@ -94,7 +94,7 @@ export default class Loader {
   async loadData() {
     try {
       const axiosRes = await axios.get(
-        `${this.apiOrigin}/elections/${this.version}/${this.year}/${this.type}/${this.district}.json`
+        `${this.apiUrl}/${this.version}/${this.year}/${this.type}/${this.district}.json`
       )
       return axiosRes?.data
     } catch (err) {
@@ -114,7 +114,7 @@ export default class Loader {
    *  @returns {Promise<void>}
    */
   async loadDataPeriodically() {
-    const url = `${this.apiOrigin}/${this.version}/${this.year}/${this.type}/${this.district}.json`
+    const url = `${this.apiUrl}/${this.version}/${this.year}/${this.type}/${this.district}.json`
     try {
       const axiosRes = await axios.get(url)
 
