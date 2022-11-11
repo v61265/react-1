@@ -1,5 +1,14 @@
 # @readr-media/react-feedback Changelog
 
+## 2022-11-11, Version 3.2.0
+
+### Notable Changes
+- update react package version to `^18.1.0`
+### Commits
+* \[[`e4ef821806`](https://github.com/readr-media/react-feedback/commit/e4ef821806)] - chore(feedback): bump version to 3.2.0 (Tsuki Akiba)
+* \[[`6c1e2054a7`](https://github.com/readr-media/react-feedback/commit/6c1e2054a7)] - chore(feedback): update react package version (Tsuki Akiba)
+* \[[`a33cbfec81`](https://github.com/readr-media/react-feedback/commit/a33cbfec81)] - docs(feedback): update CHANGELOG (Tsuki Akiba)
+
 ## 2022-11-11, Version 3.1.0
 
 ### Notable Changes
