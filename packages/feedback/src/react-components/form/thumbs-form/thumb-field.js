@@ -101,9 +101,19 @@ export default function ThumbField({
   statistic,
 }) {
   const ThumbSVG = thumbsUp ? <ThumbUpSvg /> : <ThumbDownSvg />
+
+  function mouseDownHandler() {
+    if (statistic === null) return
+    onMouseDown()
+  }
+
+  function mouseUpHandler() {
+    if (statistic === null) return
+    onMouseUp()
+  }
   return (
     <Wrapper>
-      <ThumbMockLabel onMouseDown={onMouseDown} onMouseUp={onMouseUp}>
+      <ThumbMockLabel onMouseDown={mouseDownHandler} onMouseUp={mouseUpHandler}>
         {label}
         <Input
           type="radio"
