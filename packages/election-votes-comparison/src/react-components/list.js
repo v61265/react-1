@@ -113,7 +113,7 @@ const TRow = styled.div`
   ${/**
    *  @param {Object} props
    *  @param {Object} [props.theme]
-   *  @param {string} [props.backgroundColor]
+   *  @param {string} [props.bgColorTheme]
    */
   (props) => {
     switch (props.theme?.device) {
@@ -127,7 +127,11 @@ const TRow = styled.div`
         return `
           @media ${breakpoint.devices.laptop} {
             display: table-row;
-            background-color: ${props.backgroundColor};
+            background: ${
+              props.theme?.table?.row?.backgroundColor[props?.bgColorTheme]
+                ? props.theme?.table?.row?.backgroundColor[props?.bgColorTheme]
+                : '#fff'
+            }
           }
 
           @media ${breakpoint.devices.laptopBelow} {
@@ -143,6 +147,12 @@ const TCell = styled.div`
   a {
     color: #d6610c;
     text-decoration: none;
+    color: ${({ theme }) =>
+      theme?.table?.candidate?.name?.color
+        ? theme?.table?.candidate?.name?.color
+        : '#000'};
+    pointer-events: ${({ theme }) =>
+      theme?.table?.candidate?.name?.isLink ? 'auto' : 'none'};
   }
   ${(props) => {
     switch (props.theme?.device) {
@@ -314,11 +324,7 @@ export default function List({ className, dataManager, scrollTo }) {
     }
 
     return (
-      <TRow
-        key={row.id}
-        data-row-id={row.id}
-        backgroundColor={currentBgColor === 'dark' ? '#FFF1E8' : '#FFF8F3'}
-      >
+      <TRow key={row.id} data-row-id={row.id} bgColorTheme={currentBgColor}>
         {cellsJsx}
       </TRow>
     )
@@ -327,7 +333,7 @@ export default function List({ className, dataManager, scrollTo }) {
   return (
     <Table className={className}>
       <THead>
-        <TRow backgroundColor="#FFF8F3">
+        <TRow bgColorTheme="light">
           {heads.map((head, idx) => {
             return <TCell key={`head_${idx}`}>{head}</TCell>
           })}
