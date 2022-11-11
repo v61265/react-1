@@ -47,18 +47,24 @@ const ThumbIconWrapper = styled.div`
     theme.thumbField.thumb.default.backgroundColor};
   cursor: pointer;
 
-  &:hover {
-    color: ${({ theme }) => theme.thumbField.thumb.hover.color};
-    background-color: ${({ theme }) =>
-      theme.thumbField.thumb.hover.backgroundColor};
-    border-color: ${({ theme }) => theme.thumbField.thumb.hover.borderColor};
+  &.disabled {
+    cursor: not-allowed;
   }
-  &:active,
-  &.active {
-    color: ${({ theme }) => theme.thumbField.thumb.active.color};
-    background-color: ${({ theme }) =>
-      theme.thumbField.thumb.active.backgroundColor};
-    border-color: ${({ theme }) => theme.thumbField.thumb.active.borderColor};
+
+  &:not(.disabled) {
+    &:hover {
+      color: ${({ theme }) => theme.thumbField.thumb.hover.color};
+      background-color: ${({ theme }) =>
+        theme.thumbField.thumb.hover.backgroundColor};
+      border-color: ${({ theme }) => theme.thumbField.thumb.hover.borderColor};
+    }
+    &:active,
+    &.active {
+      color: ${({ theme }) => theme.thumbField.thumb.active.color};
+      background-color: ${({ theme }) =>
+        theme.thumbField.thumb.active.backgroundColor};
+      border-color: ${({ theme }) => theme.thumbField.thumb.active.borderColor};
+    }
   }
 `
 
@@ -101,9 +107,25 @@ export default function ThumbField({
   statistic,
 }) {
   const ThumbSVG = thumbsUp ? <ThumbUpSvg /> : <ThumbDownSvg />
+
+  function mouseDownHandler() {
+    if (statistic === null) return
+    onMouseDown()
+  }
+
+  function mouseUpHandler() {
+    if (statistic === null) return
+    onMouseUp()
+  }
+
+  const iconClasses = [
+    pressing || checked ? 'active' : '',
+    statistic === null ? 'disabled' : '',
+  ].join(' ')
+
   return (
     <Wrapper>
-      <ThumbMockLabel onMouseDown={onMouseDown} onMouseUp={onMouseUp}>
+      <ThumbMockLabel onMouseDown={mouseDownHandler} onMouseUp={mouseUpHandler}>
         {label}
         <Input
           type="radio"
@@ -111,9 +133,7 @@ export default function ThumbField({
           onChange={() => {}}
           checked={checked}
         />
-        <ThumbIconWrapper className={pressing || checked ? 'active' : ''}>
-          {ThumbSVG}
-        </ThumbIconWrapper>
+        <ThumbIconWrapper className={iconClasses}>{ThumbSVG}</ThumbIconWrapper>
       </ThumbMockLabel>
       {statistic !== null && <ThumbStatistic>{statistic}</ThumbStatistic>}
     </Wrapper>

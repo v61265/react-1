@@ -30,6 +30,8 @@ export default function useThumbsUp(formId, fieldId, identifier) {
     } else {
       setThumbsUp(originalThumbUpRef.current)
     }
+
+    if (!userId) return
     // send request without error handle
     try {
       const result = await giveLikes({ // eslint-disable-line
