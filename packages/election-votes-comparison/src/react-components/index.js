@@ -435,6 +435,7 @@ export default function EVC({
         </ThemeProvider>
       )
     case 'legislator':
+    case 'legislator-party':
     case 'mayor':
     case 'referendum':
     case 'president': {

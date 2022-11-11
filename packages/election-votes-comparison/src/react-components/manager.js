@@ -7,10 +7,12 @@ import { AnonymousIcon, ElectedIcon } from './icons'
  *  @typedef {import('./typedef').Election} Election
  *  @typedef {import('./typedef').CouncilMemberElection} CouncilMemberElection
  *  @typedef {import('./typedef').ReferendumElection} ReferendumElection
+ *  @typedef {import('./typedef').LegislatorPartyElection} LegislatorPartyElection
  *  @typedef {import('./typedef').Proposition} Proposition
  *  @typedef {import('./typedef').Candidate} Candidate
  *  @typedef {import('./typedef').Entity} Entity
  *  @typedef {import('./typedef').District} District
+ *  @typedef {import('./typedef').LegislatorParty} LegislatorParty
  */
 
 /**
@@ -289,6 +291,140 @@ export class CountyMayorDataManager extends CouncilMemberDataManager {
 
 export class LegislatorDataManager extends CouncilMemberDataManager {}
 
+export class LegislatorPartyDataManager extends DataManager {
+  /**
+   *  @override
+   *  @param {LegislatorPartyElection} data
+   */
+  constructor(data) {
+    super(data)
+    this.districts = [{ districtName: '全國' }]
+    this.parties = data?.parties || []
+  }
+
+  /**
+   *  @return {LegislatorPartyElection & { districts: District[] }} data
+   */
+  getData() {
+    return {
+      ...this.data,
+      districts: [
+        {
+          districtName: '全國',
+        },
+      ],
+    }
+  }
+
+  /**
+   *  @override
+   *  @returns {Head[]}
+   */
+  buildListHead() {
+    // built already, therefore return the built one
+    if (this.head.length > 0) {
+      return this.head
+    }
+    this.head = ['地區', '號次', '政黨', '得票數', '得票率', '當選席次']
+    return this.head
+  }
+
+  /**
+   *  @param {Entity} entity
+   *  @returns {CellEntity[]}
+   */
+  buildPartyCell(entity) {
+    return [
+      {
+        label: entity?.label || '無',
+        href: entity?.href,
+        imgJsx: entity?.imgSrc ? (
+          <ImgBlock>
+            <img src={entity.imgSrc} />
+          </ImgBlock>
+        ) : null,
+      },
+    ]
+  }
+
+  /**
+   *  @param {LegislatorParty} p
+   *  @returns {Cell[]}
+   */
+  buildRowFromParty(p) {
+    return [
+      // 號次
+      [
+        {
+          label: `${p?.candNo ?? '-'}`,
+        },
+      ],
+      // 政黨
+      this.buildPartyCell(p.party),
+      // 得票數
+      [
+        {
+          label: p?.tks?.toLocaleString() ?? '-',
+        },
+      ],
+      // 得票率
+      [
+        {
+          label: p?.tksRate?.toLocaleString() ?? '-',
+        },
+      ],
+      // 當選席次
+      [
+        {
+          label: p?.seats?.toLocaleString() ?? '-',
+        },
+      ],
+    ]
+  }
+
+  /**
+   *  @override
+   *  @returns {Row[]}
+   */
+  buildListRows() {
+    // built already, therefore return the built one
+    if (this.rows.length > 0) {
+      return this.rows
+    }
+
+    this.rows = this.parties?.map((p, idx) => {
+      /** @type {Row} */
+      const row = {
+        id: '',
+        cells: [],
+      }
+
+      let districtName = '全國'
+      row.id = p.candNo
+      row.group = districtName
+      row.cells = this.buildRowFromParty(p)
+
+      if (idx !== 0) {
+        districtName = ''
+      }
+      row.cells.unshift([{ label: districtName }])
+      return row
+    })
+    return this.rows
+  }
+
+  /**
+   *  @override
+   *  @param {string} districtName
+   *  @returns {Row}
+   */
+  findRowByDistrictName(districtName = '全國') {
+    return this.rows.find((r) => {
+      return r.group === districtName
+    })
+  }
+}
+
 export class ReferendumDataManager extends DataManager {
   /**
    *  @override
@@ -434,7 +570,7 @@ export class ReferendumDataManager extends DataManager {
 export function dataManagerFactory() {
   return {
     /**
-     *  @param {Election | ReferendumElection} data
+     *  @param {Election | ReferendumElection | LegislatorPartyElection} data
      *  @returns {DataManager}
      */
     newDataManager: (data) => {
@@ -445,6 +581,8 @@ export function dataManagerFactory() {
           return new CouncilMemberDataManager(data)
         case 'legislator':
           return new LegislatorDataManager(data)
+        case 'legislator-party':
+          return new LegislatorPartyDataManager(data)
         case 'referendum':
           return new ReferendumDataManager(data)
         case 'president':

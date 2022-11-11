@@ -62,9 +62,21 @@ export default {}
  *  @typedef {Election & {candidates: PresidentElection[]}} PresidentElection
  */
 
-// TODO: add PartyLegislatorElection and Referendum
 /**
- *  @typedef {Election} PartyLegislatorElection
+ *  @typedef {Object} LegislatorParty
+ *  @property {string} candNo
+ *  @property {Entity} party
+ *  @property {number} tks
+ *  @property {number} tksRate
+ *  @property {number} seats
+ */
+
+/**
+ *  @typedef {Object} LegislatorPartyElection
+ *  @property {string} title
+ *  @property {string} year
+ *  @property {'legislator-party'} type
+ *  @property {LegislatorParty[]} parties
  */
 
 /**
