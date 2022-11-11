@@ -1,5 +1,21 @@
 # @readr-media/react-feedback Changelog
 
+## 2022-11-11, Version 3.1.0
+
+### Notable Changes
+- fix: `giveLikes` is callable after userId is ready
+- feat: add `storageKey` option to set sessionStorage key
+- feat: prevent manipulate likes before data loaded
+- feat: add disabled style of thumb buttons
+
+### Commits
+* \[[`ed95fa551c`](https://github.com/readr-media/react-feedback/commit/ed95fa551c)] - chore(feedback): bump version to 3.1.0 (Tsuki Akiba)
+* \[[`81d9e9d83e`](https://github.com/readr-media/react-feedback/commit/81d9e9d83e)] - feat(feedback): add disabled style (Tsuki Akiba)
+* \[[`ed12912bd1`](https://github.com/readr-media/react-feedback/commit/ed12912bd1)] - feat(feedback): prevent manipulate likes before data loaded (Tsuki Akiba)
+* \[[`f4200c6d4f`](https://github.com/readr-media/react-feedback/commit/f4200c6d4f)] - feat(feedback): add storageKey option (Tsuki Akiba)
+* \[[`f8a1f18563`](https://github.com/readr-media/react-feedback/commit/f8a1f18563)] - fix(feedback): giveLikes before userId is ready (Tsuki Akiba)
+* \[[`ba1dfbf4c1`](https://github.com/readr-media/react-feedback/commit/ba1dfbf4c1)] - docs(feedback): update CHANGELOG.md (Tsuki Akiba)
+* \[[`943eff4b6e`](https://github.com/readr-media/react-feedback/commit/943eff4b6e)] - docs(feedback): update CHANGELOG.md (Tsuki Akiba)
 ## 2022-11-08, Version 3.0.2
 ### Notable Changes
 - refactor: add query params to getLikes request
