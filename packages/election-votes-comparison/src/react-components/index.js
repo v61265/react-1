@@ -427,6 +427,7 @@ export default function EVC({
           theme={Object.assign({ device, stickyTopOffset }, themeObj[theme])}
         >
           <_EVC
+            key={election.title + election.type + election.year}
             className={className}
             dataManager={dataManager}
             scrollTo={scrollTo}
