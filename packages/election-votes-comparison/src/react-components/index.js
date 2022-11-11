@@ -268,6 +268,7 @@ const Header = styled.header`
  *  @param {string} props.title
  *  @param {District[]} [props.districts=[]]
  *  @param {string} [props.scrollTo] - the first row with the district name to scroll to
+ *  @param {OnChange} [props.onChange=()=>{}]
  *  @returns {React.ReactElement}
  */
 export function CouncilMember({
@@ -276,6 +277,7 @@ export function CouncilMember({
   year,
   title,
   scrollTo,
+  onChange = () => {},
 }) {
   const [tab, setTab] = useState(tabEnum.normal)
 
@@ -309,6 +311,7 @@ export function CouncilMember({
   const onTab = (t) => {
     setTab(t)
     setDistrictName(separatedDistricts?.[t]?.[0]?.districtName)
+    onChange('tab', t)
   }
 
   tabsJsx = showTabs ? (
@@ -377,7 +380,12 @@ export function CouncilMember({
       <StyledSelector
         options={options}
         defaultValue={districtName}
-        onSelect={(n) => setDistrictName(n)}
+        onSelect={(n) => {
+          setDistrictName(n)
+          if (typeof n === 'string') {
+            onChange('selector', n)
+          }
+        }}
         renderFullOption={(option) => `第${option}選舉區`}
       />
       <StyledList dataManager={dataManager} scrollTo={districtName} />
@@ -386,12 +394,19 @@ export function CouncilMember({
 }
 
 /**
+ *  @callback OnChange
+ *  @param {'selector'|'tab'} type
+ *  @param {string} value - selector option or tab name
+ */
+
+/**
  *  @param {Object} props
  *  @param {string} [props.className]
  *  @param {Election | ReferendumElection } props.election
  *  @param {'mobile'|'rwd'} [props.device='rwd']
  *  @param {'openRelations'|'electionModule'|'mnewsElection2022'} [props.theme='openRelations']
  *  @param {string} [props.stickyTopOffset]
+ *  @param {OnChange} [props.onChange]
  *  @param {string} [props.scrollTo] - the first row with the district name to scroll to
  */
 export default function EVC({
@@ -401,6 +416,7 @@ export default function EVC({
   theme = 'openRelations',
   stickyTopOffset,
   scrollTo,
+  onChange,
 }) {
   switch (election?.type) {
     case 'councilMember':
@@ -414,6 +430,7 @@ export default function EVC({
             year={election?.year}
             title={election?.title}
             scrollTo={scrollTo}
+            onChange={onChange}
           />
         </ThemeProvider>
       )
@@ -431,6 +448,7 @@ export default function EVC({
             className={className}
             dataManager={dataManager}
             scrollTo={scrollTo}
+            onChange={onChange}
           />
         </ThemeProvider>
       )
@@ -446,9 +464,10 @@ export default function EVC({
  *  @param {string} [props.className]
  *  @param {DataManager} props.dataManager
  *  @param {string} [props.scrollTo] - the first row with the district name to scroll to
+ *  @param {OnChange} [props.onChange=() => {}]
  *  @returns {React.ReactElement}
  */
-function _EVC({ className, dataManager, scrollTo }) {
+function _EVC({ className, dataManager, scrollTo, onChange = () => {} }) {
   /** @type {Election} */
   const data = dataManager.getData()
   const options = data?.districts.map((c) => c.districtName)
@@ -462,7 +481,12 @@ function _EVC({ className, dataManager, scrollTo }) {
       <StyledSelector
         options={options}
         defaultValue={districtName}
-        onSelect={(n) => setDistrictName(n)}
+        onSelect={(n) => {
+          setDistrictName(n)
+          if (typeof n === 'string') {
+            onChange('selector', n)
+          }
+        }}
       />
       <StyledList dataManager={dataManager} scrollTo={districtName} />
     </Container>
