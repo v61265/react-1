@@ -146,7 +146,10 @@ const Container = styled.div`
     box-sizing: border-box;
   }
 
-  background-color: #fff8f3;
+  background-color: ${({ theme }) =>
+    theme?.container?.backgroundColor
+      ? theme?.container?.backgroundColor
+      : '#fff8f3'};
   padding-bottom: 60px;
 
   ${StyledList} {
@@ -172,6 +175,7 @@ const Container = styled.div`
 `
 
 const Header = styled.header`
+  display: ${({ theme }) => theme.header.display};
   ${(props) => {
     const baseCss = `
       border-top: 4px solid black;
@@ -253,7 +257,7 @@ const Header = styled.header`
         `
       }
     }
-  }}
+  }};
 `
 
 /**
@@ -263,7 +267,7 @@ const Header = styled.header`
  *  @param {string} props.title
  *  @param {District[]} [props.districts=[]]
  *  @param {'rwd'|'mobile'} props.device
- *  @param {'openRelations'|'electionModule'} props.theme
+ *  @param {'openRelations'|'electionModule'|'mnewsElection2022'} props.theme
  *  @param {string} [props.scrollTo] - the first row with the district name to scroll to
  *  @returns {React.ReactElement}
  */
@@ -391,7 +395,7 @@ export function CouncilMember({
  *  @param {string} [props.className]
  *  @param {Election} props.election
  *  @param {'mobile'|'rwd'} props.device
- *  @param {'openRelations'|'electionModule'} [props.theme='openRelations']
+ *  @param {'openRelations'|'electionModule'|'mnewsElection2022'} [props.theme='openRelations']
  *  @param {string} [props.scrollTo] - the first row with the district name to scroll to
  */
 export default function EVC({
@@ -440,7 +444,7 @@ export default function EVC({
  *  @param {string} [props.className]
  *  @param {DataManager} props.dataManager
  *  @param {'rwd'|'mobile'} props.device
- *  @param {'openRelations'|'electionModule'} props.theme
+ *  @param {'openRelations'|'electionModule'|'mnewsElection2022'} props.theme
  *  @param {string} [props.scrollTo] - the first row with the district name to scroll to
  *  @returns {React.ReactElement}
  */
