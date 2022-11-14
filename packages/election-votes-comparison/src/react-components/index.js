@@ -2,6 +2,8 @@
  *  @typedef {import('./typedef').District} District
  *  @typedef {import('./typedef').Election} Election
  *  @typedef {import('./typedef').ReferendumElection} ReferendumElection
+ *  @typedef {import('./typedef').PresidentElection} PresidentElection
+ *  @typedef {import('./typedef').LegislatorPartyElection} LegislatorPartyElection
  *  @typedef {import('./manager').DataManager} DataManager
  */
 
@@ -402,7 +404,7 @@ export function CouncilMember({
 /**
  *  @param {Object} props
  *  @param {string} [props.className]
- *  @param {Election | ReferendumElection } props.election
+ *  @param {Election | ReferendumElection | PresidentElection | LegislatorPartyElection } props.election
  *  @param {'mobile'|'rwd'} [props.device='rwd']
  *  @param {'openRelations'|'electionModule'|'mnewsElection2022'} [props.theme='openRelations']
  *  @param {string} [props.stickyTopOffset]

@@ -256,12 +256,24 @@ const THead = styled.div`
 `
 
 const EntityCell = styled.div`
-  display: flex;
+  ${/**
+   *  @param {Object} props
+   *  @param {boolean} props.multiLines
+   */
+  (props) => {
+    return `
+        display: ${props.multiLines ? 'flex' : 'inline-flex'};
+      `
+  }}
   align-items: center;
 
   > a {
     display: inline-flex;
     align-items: center;
+  }
+
+  span {
+    margin-right: 8px;
   }
 `
 
@@ -294,6 +306,20 @@ export default function List({ className, dataManager, scrollTo }) {
   }, [scrollTo])
 
   useEffect(() => {
+    // This effect hook is to set list row the same height.
+    // For laptop version, the list is a `table`,
+    // therefore, browser will automatically calculate the height and width for each row and column.
+    // But, in mobile/tablet version, the list is built from `flex`, rather than `table`;
+    // we need to adjust the list cell height and width if we want present multiple lines.
+    // And the following codes does that.
+    //
+    // By the way, the reasons we don't render `table` for table/mobile version are:
+    // 1. mobile/tablet mockups have vertical headers, but laptop has horizontal headers
+    // 2. the mockups modified multiple times. At first, the cell does not support multiple lines.
+    //    Therefore, `flex` is a easy way for implementation.
+    // 3. if we want to change `flex` to `table`, we have to have two different code blocks to render
+    //    mobile/tablet and laptop version.
+
     const node = tableRef.current
 
     // query table cell with multiple lines
@@ -341,7 +367,11 @@ export default function List({ className, dataManager, scrollTo }) {
           </>
         )
         multiLines = entity.multiLines ?? false
-        return <EntityCell key={entityIdx}>{entityJsx}</EntityCell>
+        return (
+          <EntityCell multiLines={multiLines} key={entityIdx}>
+            {entityJsx}
+          </EntityCell>
+        )
       })
 
       return (
