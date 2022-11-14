@@ -120,28 +120,20 @@ const root = createRoot(container)
 //}
 
 async function main() {
-  const referendumLdr = new DataLoader({
-    type: 'referendum',
-    year: '2022',
-    district: 'all',
+  const ldr = new DataLoader({
+    version: 'v2',
   })
 
-  const councilMemberLdr = new DataLoader({
-    type: 'councilMember',
+  const referendumData = await ldr.loadReferendumData({
     year: '2022',
-    district: 'taipeiCity',
-    version: 'v1',
   })
-
-  const mayorLdr = new DataLoader({
-    type: 'mayor',
+  const councilData = await ldr.loadCouncilMemberData({
     year: '2018',
-    district: 'all',
+    district: 'yilanCounty',
   })
-
-  const referendumData = await referendumLdr.loadData()
-  const councilData = await councilMemberLdr.loadData()
-  const mayorData = await mayorLdr.loadData()
+  const mayorData = await ldr.loadMayorData({
+    year: '2022',
+  })
   root.render(
     <>
       <EVC
@@ -150,18 +142,9 @@ async function main() {
         theme="electionModule"
         device="mobile"
       />
+      <EVC election={councilData} stickyTopOffset="0" />
       <EVC
-        election={Object.assign(
-          { type: 'councilMember', year: '2022', title: '基隆市議員選舉' },
-          councilData
-        )}
-        stickyTopOffset="0"
-      />
-      <EVC
-        election={Object.assign(
-          { type: 'mayor', year: '2018', title: '縣市首長選舉' },
-          mayorData
-        )}
+        election={mayorData}
         theme="electionModule"
         scrollTo="臺北市"
         stickyTopOffset="10px"
