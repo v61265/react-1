@@ -14,35 +14,40 @@ export default function LiveBlog({
   initialLiveblog,
   fetchLiveblogUrl = '',
   fetchImageBaseUrl = 'https://editools-gcs-dev.readr.tw',
+  toLoadPeriodically = true,
 }) {
   const [liveblog, setLiveblog] = useState(initialLiveblog)
 
-  let dataLoader = new DataLoader()
-
   useEffect(() => {
+    let dataLoader = new DataLoader()
+
     if (fetchLiveblogUrl) {
-      const handleError = (errMsg, errObj) => {
-        console.log(errMsg, errObj)
+      if (toLoadPeriodically) {
+        const handleError = (errMsg, errObj) => {
+          console.log(errMsg, errObj)
+        }
+
+        const handleData = (data) => {
+          setLiveblog(data)
+        }
+
+        dataLoader.addEventListener('error', handleError)
+        dataLoader.addEventListener('data', handleData)
+
+        // after register event listener
+        // start to load data periodically
+        dataLoader.loadDataPeriodically(fetchLiveblogUrl)
+
+        return () => {
+          dataLoader.removeEventListener('error', handleError)
+          dataLoader.removeEventListener('data', handleData)
+          dataLoader = null
+        }
       }
 
-      const handleData = (data) => {
-        setLiveblog(data)
-      }
-
-      dataLoader.addEventListener('error', handleError)
-      dataLoader.addEventListener('data', handleData)
-
-      // after register event listener
-      // start to load data periodically
-      dataLoader.loadDataPeriodically(fetchLiveblogUrl)
-
-      return () => {
-        dataLoader.removeEventListener('error', handleError)
-        dataLoader.removeEventListener('data', handleData)
-        dataLoader = null
-      }
+      dataLoader.loadData(fetchLiveblogUrl).then((data) => setLiveblog(data))
     }
-  }, [fetchLiveblogUrl, initialLiveblog])
+  }, [fetchLiveblogUrl, initialLiveblog, toLoadPeriodically])
 
   return (
     <>

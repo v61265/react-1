@@ -9,7 +9,7 @@ import { liveblogItemId } from '../utils/anchor-scroll-helper'
 
 const initialShowingCount = 5
 
-export default function LiveBlogContainr({ liveblog, fetchImageBaseUrl, lazyLoading}) { // eslint-disable-line
+export default function LiveBlogContainr({ liveblog, fetchImageBaseUrl }) { // eslint-disable-line
   const liveblogItemsRef = useRef([])
   const [boostedLiveblogItems, setBoostedLiveblogItems] = useState([])
   // showing means rendering non boosted liveblogItems
