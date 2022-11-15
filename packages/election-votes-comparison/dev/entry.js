@@ -127,9 +127,10 @@ async function main() {
   const referendumData = await ldr.loadReferendumData({
     year: '2022',
   })
-  const councilData = await ldr.loadCouncilMemberData({
+  const councilData = await ldr.loadCouncilMemberDataForElectionMapProject({
     year: '2018',
     district: 'yilanCounty',
+    includes: ['plainIndigenous', 'mountainIndigenous'],
   })
   const mayorData = await ldr.loadMayorData({
     year: '2022',
@@ -142,7 +143,7 @@ async function main() {
         theme="electionModule"
         device="mobile"
       />
-      <EVC election={councilData} stickyTopOffset="0" />
+      <EVC election={councilData} stickyTopOffset="0" theme="electionModule" />
       <EVC
         election={mayorData}
         theme="electionModule"
