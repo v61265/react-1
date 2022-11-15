@@ -139,25 +139,28 @@ const TRow = styled.div`
 `
 
 const TCell = styled.div`
-  a {
-    color: #d6610c;
-    text-decoration: none;
-    color: ${({ theme }) =>
-      theme?.table?.candidate?.name?.color
-        ? theme?.table?.candidate?.name?.color
-        : '#000'};
-    pointer-events: ${({ theme }) =>
-      theme?.table?.candidate?.name?.isLink ? 'auto' : 'none'};
-  }
   ${/**
    *  @param {Object} props
    *  @param {Object} props.theme
    *  @param {boolean} [props.multiLines]
    */
   (props) => {
+    const baseCss = `
+      a {
+        color: #d6610c;
+        text-decoration: none;
+        color: ${({ theme }) =>
+          theme?.table?.candidate?.name?.color
+            ? theme?.table?.candidate?.name?.color
+            : '#000'};
+        pointer-events: ${({ theme }) =>
+          theme?.table?.candidate?.name?.isLink ? 'auto' : 'none'};
+      }
+    `
     switch (props.theme?.device) {
       case 'mobile': {
         return `
+          ${baseCss}
           max-width: ${props.multiLines ? '187px' : 'none'};
           padding: 15px;
           text-align: left;
@@ -172,6 +175,7 @@ const TCell = styled.div`
       case 'rwd':
       default: {
         return `
+          ${baseCss}
           @media ${breakpoint.devices.laptop} {
             padding: 8px 30px;
             &:first-child {

@@ -410,8 +410,6 @@ export function CouncilMember({
  *  @param {string} [props.stickyTopOffset]
  *  @param {OnChange} [props.onChange]
  *  @param {string} [props.scrollTo] - the first row with the district name to scroll to
- *  @param {Object} [props.ui]
- *  @param {boolean} [props.ui.disableTabs=false]
  */
 export default function EVC({
   className,
@@ -421,9 +419,6 @@ export default function EVC({
   stickyTopOffset,
   scrollTo,
   onChange,
-  ui = {
-    disableTabs: false,
-  },
 }) {
   const dataManager = dataManagerFactory().newDataManager(election)
   switch (election?.type) {
@@ -432,7 +427,7 @@ export default function EVC({
         <ThemeProvider
           theme={Object.assign({ device, stickyTopOffset }, themeObj[theme])}
         >
-          {ui.disableTabs ? (
+          {theme === 'electionModule' ? (
             <_EVC
               key={election.title + election.type + election.year}
               className={className}

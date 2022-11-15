@@ -50,6 +50,7 @@ export default class Loader {
     }
   }
 
+
   /**
    *  @typedef {'all'|'normal'|'indigenous'|'mountainIndigenous'|'plainIndigenous'} CouncilMemberType
    */
@@ -60,10 +61,11 @@ export default class Loader {
    *  @param {string} props.year
    *  @param {string} props.district - county/city name, see `Loader.electionDistricts` for more info
    *  @param {CouncilMemberType[]} [props.includes=['all']]
+   *  @param {number} [props.periodicalLoading=-1]
    *  @throws Error
    *  @returns {Promise<CouncilMemberElection>}
    */
-  async loadCouncilMemberData({ year, district, includes = ['all'] }) {
+  async loadCouncilMemberDataForElectionMapProject({ year, district, includes:_includes = ['all'] }) {
     let data
     data = await this.loadData({
       type: 'councilMember',
@@ -71,8 +73,10 @@ export default class Loader {
       district,
     })
 
+    let includes = _includes
+
     if (includes?.indexOf('all') > -1) {
-      return data
+      includes = ['normal', 'indigenous', 'mountainIndigenous', 'plainIndigenous']
     }
 
     const districts = []
@@ -81,20 +85,23 @@ export default class Loader {
       if (includes.indexOf(d?.type) > -1) {
         switch (d?.type) {
           case 'plainIndigenous': {
-            d.fullDistrictName = `第${d.districtName}選區（平地）`
+            d.districtName = `第${d.districtName}選區（平地）`
+            d.fullDistrictName = d.districtName
             districts.push(d)
             break
           }
 
           case 'mountainIndigenous': {
-            d.fullDistrictName = `第${d.districtName}選區（山地）`
+            d.districtName = `第${d.districtName}選區（山地）`
+            d.fullDistrictName = d.districtName
             districts.push(d)
             break
           }
 
-          case 'normal':
-          case 'indigenous': {
-            d.fullDistrictName = `第${d.districtName}選區`
+          case 'indigenous':
+          case 'normal': {
+            d.districtName = `第${d.districtName}選區`
+            d.fullDistrictName = d.districtName
             districts.push(d)
             break
           }
@@ -107,6 +114,23 @@ export default class Loader {
     data.districts = districts
 
     return data
+  }
+
+  /**
+   *  Load data from web service.
+   *  @param {Object} props
+   *  @param {string} props.year
+   *  @param {string} props.district - county/city name, see `Loader.electionDistricts` for more info
+   *  @param {number} [props.periodicalLoading=-1]
+   *  @throws Error
+   *  @returns {Promise<CouncilMemberElection>}
+   */
+  async loadCouncilMemberData({ year, district, periodicalLoading = -1 }) {
+    return await this.loadData({
+      type: 'councilMember',
+      year,
+      district,
+    })
   }
 
   /**
