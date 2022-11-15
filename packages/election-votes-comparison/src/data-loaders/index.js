@@ -51,11 +51,19 @@ export default class Loader {
   }
 
   /**
+   *  @typedef {'all'|'normal'|'indigenous'|'mountainIndigenous'|'plainIndigenous'} CouncilMemberType
+   */
+
+  /**
    *  Load data from web service.
+   *  @param {Object} props
+   *  @param {string} props.year
+   *  @param {string} props.district - county/city name, see `Loader.electionDistricts` for more info
+   *  @param {CouncilMemberType[]} [props.includes=['all']]
    *  @throws Error
    *  @returns {Promise<CouncilMemberElection>}
    */
-  async loadCouncilMemberData({ year, district, indigenousOnly = false }) {
+  async loadCouncilMemberData({ year, district, includes = ['all'] }) {
     let data
     data = await this.loadData({
       type: 'councilMember',
@@ -63,10 +71,14 @@ export default class Loader {
       district,
     })
 
-    if (indigenousOnly) {
-      const districts = []
+    if (includes?.indexOf('all') > -1) {
+      return data
+    }
 
-      data?.districts?.forEach((d) => {
+    const districts = []
+
+    data?.districts?.forEach((d) => {
+      if (includes.indexOf(d?.type) > -1) {
         switch (d?.type) {
           case 'plainIndigenous': {
             d.fullDistrictName = `第${d.districtName}選區（平地）`
@@ -79,13 +91,21 @@ export default class Loader {
             districts.push(d)
             break
           }
+
+          case 'normal':
+          case 'indigenous': {
+            d.fullDistrictName = `第${d.districtName}選區`
+            districts.push(d)
+            break
+          }
           default: {
             // do nothing
           }
         }
-      })
-      data.districts = districts
-    }
+      }
+    })
+    data.districts = districts
+
     return data
   }
 
