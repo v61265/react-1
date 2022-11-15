@@ -33,8 +33,8 @@ export default {}
  *  @typedef {Object} Election
  *  @property {string} title
  *  @property {string} year
- *  @property {'councilMember'|'mayor'|'legislator'|'president'|'referendum'} [type]
- *  @property {District[]} districts
+ *  @property {'councilMember'|'mayor'|'legislator'} [type]
+ *  @property {District[]} [districts]
  */
 
 /**
@@ -47,7 +47,6 @@ export default {}
 
 /**
  *  @typedef {Election} LegislatorElection
- */
 
 /**
  *  @typedef {Object} PresidentCandidate
@@ -60,15 +59,46 @@ export default {}
  */
 
 /**
- *  @typedef {Election} PresidentElection
+ *  @typedef {Object} PresidentElection
+ *  @property {string} title
+ *  @property {string} year
+ *  @property {'president'} type
  *  @property {PresidentCandidate[]} candidates
  */
 
-// TODO: add PartyLegislatorElection and Referendum
 /**
- *  @typedef {Election} PartyLegislatorElection
+ *  @typedef {Object} LegislatorParty
+ *  @property {string} candNo
+ *  @property {Entity} party
+ *  @property {number} tks
+ *  @property {number} tksRate
+ *  @property {number} seats
  */
 
 /**
- *  @typedef {Election} Referendum
+ *  @typedef {Object} LegislatorPartyElection
+ *  @property {string} title
+ *  @property {string} year
+ *  @property {'legislator-party'} type
+ *  @property {LegislatorParty[]} parties
+ */
+
+/**
+ *  @typedef {Object} Proposition
+ *  @property {string} no - 案號
+ *  @property {string} content - 案名
+ *  @property {string} planner - 領銜人
+ *  @property {number} agreeTks - 同意數
+ *  @property {number} agreeRate - 同意率
+ *  @property {number} disagreeTks - 不同意數
+ *  @property {number} disagreeRate - 不同意率
+ *  @property {boolean} pass - 是否通過
+ */
+
+/**
+ *  @typedef {Object} ReferendumElection
+ *  @property {string} title
+ *  @property {string} year
+ *  @property {'referendum'} type
+ *  @property {Proposition[]} propositions
  */

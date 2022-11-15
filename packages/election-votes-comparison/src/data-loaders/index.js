@@ -4,97 +4,44 @@ import events from 'events'
 
 /**
  *  @typedef {'data'|'error'} SupportEventType
- */
-
-/**
- *  Example: 抓 2018 年台北市市議員的選舉結果
- *
- *  let dataLoader = new Loader({
- *    apiOrigin: 'https://whoareyou-gcs.readr.tw',
- *    year: '2018', // 年份
- *    type: 'councilMember', // 選舉類型
- *    district: 'taipeiCity', // 縣市
- *  })
- *
- *  // For server side rendering,
- *  // load data once.
- *  try {
- *    // fetch data once
- *    const data =  await dataLoader.loadData()
- *  } catch(err) {
- *    // handle error
- *  }
- *
- *  // For client side rendering,
- *  // load data periodically and make React component re-render
- *  useEffect(() => {
- *    const handleError = (errMsg, errObj) => {
- *      // do something for loading error
- *    }
- *
- *    const handleData = (data) => {
- *      // call React component `setState`
- *      setState(data)
- *    }
- *
- *    dataLoader.addEventListener('error', handleError)
- *    dataLoader.addEventListener('data', setState)
- *
- *    // after register event listener
- *    // start to load data periodically
- *    dataLoader.loadDataPeriodically()
- *
- *    return () => {
- *      dataLoader.removeEventListener('error', handleError)
- *      dataLoader.removeEventListener('data', setState)
- *      dataLoader = null
- *    }
- *  }, [])
- *
+ *  @typedef {import('../react-components/typedef').CouncilMemberElection} CouncilMemberElection
+ *  @typedef {import('../react-components/typedef').CountyMayorElection} CountyMayorElection
+ *  @typedef {import('../react-components/typedef').LegislatorElection} LegislatorElection
+ *  @typedef {import('../react-components/typedef').LegislatorPartyElection} LegislatorPartyElection
+ *  @typedef {import('../react-components/typedef').PresidentElection} PresidentElection
+ *  @typedef {import('../react-components/typedef').ReferendumElection} ReferendumElection
  */
 
 export default class Loader {
   /** @type events.EventEmitter */
   eventEmitter = null
-  apiOrigin = 'https://whoareyou-gcs.readr.tw'
+  apiUrl = 'https://whoareyou-gcs.readr.tw/elections'
   version = 'v2'
-  year = ''
-  district = ''
-  type = ''
-  dataTimer = null
 
   /**
    *  @constructor
    *  @param {Object} props
-   *  @param {string} [props.apiOrigin='https://whoareyou-gcs.readr.tw']
-   *  @param {string} props.year
-   *  @param {string} props.district
-   *  @param {string} props.type
+   *  @param {string} [props.apiUrl='https://whoareyou-gcs.readr.tw']
    *  @param {string} [props.version=v2]
    */
   constructor({
-    apiOrigin = 'https://whoareyou-gcs.readr.tw',
-    year,
-    district,
-    type,
+    apiUrl = 'https://whoareyou-gcs.readr.tw/elections',
     version = 'v2',
   }) {
     this.eventEmitter = new events.EventEmitter()
-    this.apiOrigin = apiOrigin
-    this.year = year
-    this.district = district
-    this.type = type
+    this.apiUrl = apiUrl
     this.version = version === 'v1' ? '' : version
   }
 
   /**
    *  Load data from web service.
+   *  @throws Error
    *  @returns {Promise<Object>}
    */
-  async loadData() {
+  async loadData({ year, type, district }) {
     try {
       const axiosRes = await axios.get(
-        `${this.apiOrigin}/elections/${this.version}/${this.year}/${this.type}/${this.district}.json`
+        `${this.apiUrl}/${this.version}/${year}/${type}/${district}.json`
       )
       return axiosRes?.data
     } catch (err) {
@@ -104,74 +51,123 @@ export default class Loader {
   }
 
   /**
-   *  Load data from web service,
-   *  and take advantage of event emitter to pass data to the event subscribers.
-   *  This functioe will take response header `Cache-Control`'s `max-age` into account.
-   *  Value of `max-age` will be used to `setTimeout` a timer.
-   *  When time is up, the timer will load data,
-   *  and emit it again.
-   *  if `max-age` is not defined, the default timeout will be 3600.
-   *  @returns {Promise<void>}
+   *  Load data from web service.
+   *  @throws Error
+   *  @returns {Promise<CouncilMemberElection>}
    */
-  async loadDataPeriodically() {
-    const url = `${this.apiOrigin}/${this.version}/${this.year}/${this.type}/${this.district}.json`
-    try {
-      const axiosRes = await axios.get(url)
+  async loadCouncilMemberData({ year, district, indigenousOnly = false }) {
+    let data
+    data = await this.loadData({
+      type: 'councilMember',
+      year,
+      district,
+    })
 
-      this.eventEmitter.emit('data', axiosRes?.data)
+    if (indigenousOnly) {
+      const districts = []
 
-      const cacheControl = axiosRes?.headers?.['cache-control']
-      let maxAge = parseInt(cacheControl.match(/max-age=([\d]+)/)?.[1])
-      if (isNaN(maxAge)) {
-        maxAge = 3600
-      }
+      data?.districts?.forEach((d) => {
+        switch (d?.type) {
+          case 'plainIndigenous': {
+            d.fullDistrictName = `第${d.districtName}選區（平地）`
+            districts.push(d)
+            break
+          }
 
-      this.dataTimer = setTimeout(() => {
-        this.loadDataPeriodically()
-      }, maxAge * 1000)
-    } catch (err) {
-      let annotatedErr = errors.helpers.annotateAxiosError(err)
-      annotatedErr = errors.helpers.wrap(
-        annotatedErr,
-        'DataLoaderError',
-        `Error to load data from ${url}`
-      )
-      this.eventEmitter.emit('error', annotatedErr)
+          case 'mountainIndigenous': {
+            d.fullDistrictName = `第${d.districtName}選區（山地）`
+            districts.push(d)
+            break
+          }
+          default: {
+            // do nothing
+          }
+        }
+      })
+      data.districts = districts
     }
-  }
-
-  clearDataTimer() {
-    clearTimeout(this.dataTimer)
-    this.dataTimer = null
+    return data
   }
 
   /**
-   *  @param {SupportEventType} eventType
-   *  @param {(...args: any[]) => void} cb
-   *  @returns void
+   *  @param {Object} props
+   *  @param {string} props.year
+   *  @param {'indigenous'|'party'|'district'} props.type
+   *  @param {string} [props.district] - avaliable only when `type` is `district`
+   *  @throws Error
+   *  @returns {Promise<LegislatorElection> | Promise<LegislatorPartyElection>}
    */
-  addEventListener(eventType, cb) {
-    if (Loader.supportTypes.indexOf(eventType) > -1) {
-      this.eventEmitter.addListener(eventType, cb)
+  loadLegislaterData({ year, type, district }) {
+    switch (type) {
+      case 'indigenous': {
+        return this.loadData({
+          type: 'legislater',
+          district: 'indigenous',
+          year,
+        })
+      }
+      case 'party': {
+        return this.loadData({
+          type: 'legislater',
+          district: 'party',
+          year,
+        })
+      }
+      case 'district': {
+        return this.loadData({
+          type: 'legislater',
+          district,
+          year,
+        })
+      }
+      default: {
+        throw new Error(
+          'type should be either "indigenous", "party" or "district"'
+        )
+      }
     }
   }
 
   /**
-   *  @param {SupportEventType} eventType
-   *  @param {(...args: any[]) => void} cb
-   *  @returns void
+   *  @param {Object} props
+   *  @param {string} props.year
+   *  @throws Error
+   *  @returns {Promise<PresidentElection>}
    */
-  removeEventListener(eventType, cb) {
-    if (Loader.supportTypes.indexOf(eventType) > -1) {
-      this.eventEmitter.removeListener(eventType, cb)
+  loadPresidentData({ year }) {
+    return this.loadData({
+      type: 'president',
+      year,
+      district: 'all',
+    })
+  }
 
-      if (
-        eventType === 'data' &&
-        this.eventEmitter.listenerCount(eventType) === 0
-      ) {
-        this.clearDataTimer()
-      }
-    }
+  /**
+   *  @param {Object} props
+   *  @param {string} props.year
+   *  @throws Error
+   *  @returns {Promise<CountyMayorElection>}
+   */
+  loadMayorData({ year }) {
+    return this.loadData({
+      type: 'mayor',
+      year,
+      district: 'all',
+    })
+  }
+
+  /**
+   *  @param {Object} props
+   *  @param {string} props.year
+   *  @throws Error
+   *  @returns {Promise<ReferendumElection>}
+   */
+  loadReferendumData({ year }) {
+    return this.loadData({
+      type: 'referendum',
+      year,
+      district: 'all',
+    })
   }
 }
 

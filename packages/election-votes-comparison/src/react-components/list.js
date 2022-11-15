@@ -20,7 +20,6 @@ const Table = styled.div`
       case 'mobile': {
         return `
           width: 100%;
-          height: 371px;
           display: flex;
           flex-wrap: nowrap;
           font-size: 14px;
@@ -38,7 +37,6 @@ const Table = styled.div`
 
           @media ${breakpoint.devices.laptopBelow} {
             width: 100%;
-            height: 392px;
             display: flex;
             flex-wrap: nowrap;
             border-top: 1px solid black;
@@ -47,7 +45,6 @@ const Table = styled.div`
           }
 
           @media ${breakpoint.devices.tabletBelow} {
-            height: 371px;
             font-size: 14px;
           }
         `
@@ -64,7 +61,6 @@ const TBody = styled.div`
           position: relative;
           background-color: white;
           width: 100%;
-          height: 367px;
           display: flex;
           flex-wrap: nowrap;
           overflow-x: scroll;
@@ -101,7 +97,6 @@ const TBody = styled.div`
           }
 
           @media ${breakpoint.devices.tabletBelow} {
-            height: 367px;
           }
         `
       }
@@ -154,14 +149,20 @@ const TCell = styled.div`
     pointer-events: ${({ theme }) =>
       theme?.table?.candidate?.name?.isLink ? 'auto' : 'none'};
   }
-  ${(props) => {
+  ${/**
+   *  @param {Object} props
+   *  @param {Object} props.theme
+   *  @param {boolean} [props.multiLines]
+   */
+  (props) => {
     switch (props.theme?.device) {
       case 'mobile': {
         return `
+          max-width: ${props.multiLines ? '187px' : 'none'};
           padding: 15px;
           text-align: left;
           line-height: 150%;
-          height: 53px;
+          height: ${props.multiLines ? 'none' : '53px'};
           border-left: 1px solid rgba(0, 0, 0, 0.1);
           &:first-child {
             border-left: none;
@@ -186,13 +187,13 @@ const TCell = styled.div`
             padding: 15px;
             text-align: left;
             line-height: 150%;
-            height: 56px;
+            height: ${props.multiLines ? 'none' : '56px'};
 
             border-left: 1px solid rgba(0, 0, 0, 0.1);
           }
 
           @media ${breakpoint.devices.tabletBelow} {
-            height: 53px;
+            height: ${props.multiLines ? 'none' : '53px'};
           }
         `
       }
@@ -228,6 +229,10 @@ const THead = styled.div`
       }
       case 'rwd':
       default: {
+        const stickyCss = props.theme.stickyTopOffset
+          ? `position: sticky; top: ${props.theme.stickyTopOffset}`
+          : ''
+
         return `
           ${baseCss}
           @media ${breakpoint.devices.laptop} {
@@ -237,6 +242,8 @@ const THead = styled.div`
             ${TCell} {
               border-bottom: 2px solid black;
             }
+
+            ${stickyCss}
           }
 
           @media ${breakpoint.devices.laptopBelow} {
@@ -249,12 +256,24 @@ const THead = styled.div`
 `
 
 const EntityCell = styled.div`
-  display: flex;
+  ${/**
+   *  @param {Object} props
+   *  @param {boolean} props.multiLines
+   */
+  (props) => {
+    return `
+        display: ${props.multiLines ? 'flex' : 'inline-flex'};
+      `
+  }}
   align-items: center;
 
   > a {
     display: inline-flex;
     align-items: center;
+  }
+
+  span {
+    margin-right: 8px;
   }
 `
 
@@ -271,22 +290,68 @@ export default function List({ className, dataManager, scrollTo }) {
   const rowId =
     dataManager.findRowByDistrictName(scrollTo)?.id ?? rows?.[0]?.id ?? 'row-1'
   const tBodyRef = useRef(null)
+  const tableRef = useRef(null)
+
   useEffect(() => {
-    const tBodyNode = tBodyRef.current
+    const node = tBodyRef.current
 
     // query the selected element according to district number
-    const rowNode = tBodyNode?.querySelector(`[data-row-id="${rowId}"]`)
+    const rowNode = node?.querySelector(`[data-row-id="${rowId}"]`)
 
     // get the number of pixels that the selected element's content is scrolled from its left edge
     const offsetLeft = rowNode?.offsetLeft ?? 0
 
     // scroll to the selected element
-    tBodyNode.scrollLeft = offsetLeft
-  })
+    node.scrollLeft = offsetLeft
+  }, [scrollTo])
+
+  useEffect(() => {
+    // This effect hook is to set list row the same height.
+    // For laptop version, the list is a `table`,
+    // therefore, browser will automatically calculate the height and width for each row and column.
+    // But, in mobile/tablet version, the list is built from `flex`, rather than `table`;
+    // we need to adjust the list cell height and width if we want present multiple lines.
+    // And the following codes does that.
+    //
+    // By the way, the reasons we don't render `table` for table/mobile version are:
+    // 1. mobile/tablet mockups have vertical headers, but laptop has horizontal headers
+    // 2. the mockups modified multiple times. At first, the cell does not support multiple lines.
+    //    Therefore, `flex` is a easy way for implementation.
+    // 3. if we want to change `flex` to `table`, we have to have two different code blocks to render
+    //    mobile/tablet and laptop version.
+
+    const node = tableRef.current
+
+    // query table cell with multiple lines
+    const multiLineCells = node?.querySelectorAll(`[data-multi-lines="true"]`)
+
+    //mapping table: key is column id and value is maxHeight.
+    //It is used to record which table cell having max height.
+    let maxHeightMap = {}
+
+    // calculate max height of table cells with the certain `data-column-id` attribute
+    multiLineCells?.forEach((cell) => {
+      const colId = cell?.getAttribute('data-column-id')
+      if (!maxHeightMap.hasOwnProperty(colId)) {
+        maxHeightMap[colId] = cell.offsetHeight
+      } else if (maxHeightMap[colId] < cell?.offsetHeight) {
+        maxHeightMap[colId] = cell.offsetHeight
+      }
+    })
+
+    // set the cells, with the same `data-column-id`, the same height
+    for (const colId in maxHeightMap) {
+      const cells = node?.querySelectorAll(`[data-column-id="${colId}"]`)
+      cells?.forEach((cell) => {
+        cell.style.height = `${maxHeightMap[colId]}px`
+      })
+    }
+  }, [dataManager])
 
   let previousBgColor = 'dark'
   const rowsJsx = rows.map((row, rowIdx) => {
     const cellsJsx = row.cells.map((cell, cellIdx) => {
+      let multiLines = false
       const entitiesJsx = cell.map((entity, entityIdx) => {
         const imgJsx = entity?.imgJsx ?? null
         const labelJsx = entity?.label ? <span>{entity.label}</span> : null
@@ -301,12 +366,20 @@ export default function List({ className, dataManager, scrollTo }) {
             {labelJsx}
           </>
         )
-        return <EntityCell key={entityIdx}>{entityJsx}</EntityCell>
+        multiLines = entity.multiLines ?? false
+        return (
+          <EntityCell multiLines={multiLines} key={entityIdx}>
+            {entityJsx}
+          </EntityCell>
+        )
       })
 
       return (
         <TCell
           key={cellIdx}
+          multiLines={multiLines}
+          data-multi-lines={multiLines}
+          data-column-id={cellIdx}
           style={{
             borderLeft: row.cells?.[cellIdx]?.[0]?.label === '' && 'none',
           }}
@@ -331,11 +404,15 @@ export default function List({ className, dataManager, scrollTo }) {
   })
 
   return (
-    <Table className={className}>
+    <Table className={className} ref={tableRef}>
       <THead>
         <TRow bgColorTheme="light">
           {heads.map((head, idx) => {
-            return <TCell key={`head_${idx}`}>{head}</TCell>
+            return (
+              <TCell data-column-id={idx} key={`head_${idx}`}>
+                {head}
+              </TCell>
+            )
           })}
         </TRow>
       </THead>

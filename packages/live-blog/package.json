@@ -1,6 +1,6 @@
 {
-  "name": "@readr-media/react-election-votes-comparison",
-  "version": "2.0.0-beta.11",
+  "name": "@readr-media/react-live-blog",
+  "version": "1.0.0-beta.1",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -13,22 +13,19 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/readr-media/react.git",
-    "directory": "packages/election-votes-comparison"
+    "directory": "packages/live-blog"
   },
   "keywords": [
     "react",
     "readr",
-    "election",
-    "votes comparison"
+    "live blog",
+    "latest news"
   ],
   "license": "MIT",
   "dependencies": {
-    "@twreporter/errors": "^1.1.1",
-    "axios": "0.27.2",
-    "lodash": "^4.17.21",
-    "regenerator-runtime": "^0.13.9",
-    "serialize-javascript": "^6.0.0",
-    "uuid": "^8.3.2"
+    "axios": "^0.27.2",
+    "draft-js": "^0.11.7",
+    "moment": "^2.29.3"
   },
   "peerDependencies": {
     "react": "18.1.0",
