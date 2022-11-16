@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react'
-import moment from 'moment'
 
 import Intro from './intro'
 import LiveBlogControl from './live-blog-control'
@@ -10,12 +9,14 @@ import { liveblogItemId } from '../utils/anchor-scroll-helper'
 
 const initialShowingCount = 5
 
-export default function LiveBlogContainr({ liveblog, fetchImageBaseUrl }) {
+export default function LiveBlogContainr({ liveblog, fetchImageBaseUrl }) { // eslint-disable-line
   const liveblogItemsRef = useRef([])
   const [boostedLiveblogItems, setBoostedLiveblogItems] = useState([])
   // showing means rendering non boosted liveblogItems
   const [showingCount, setShowingCount] = useState(initialShowingCount)
-  const [showingLiveblogItems, setShowingLiveblogItems] = useState([])
+  const [showingLiveblogItems, setShowingLiveblogItems] = useState(
+    [].concat(liveblog?.liveblog_items?.slice(0, initialShowingCount))
+  )
   const [newToOld, setNewToOld] = useState(true)
   const loadingMoreRef = useRef(false)
   const [activeTags, setActiveTags] = useState([])
@@ -39,8 +40,8 @@ export default function LiveBlogContainr({ liveblog, fetchImageBaseUrl }) {
             : liveblogItem.boost
         )
         .sort((a, b) => {
-          const tsA = moment(a.publishTime).valueOf()
-          const tsB = moment(b.publishTime).valueOf()
+          const tsA = new Date(a.publishTime).getTime()
+          const tsB = new Date(b.publishTime).getTime()
           return newToOld ? tsB - tsA : tsA - tsB
         })
 
@@ -52,8 +53,8 @@ export default function LiveBlogContainr({ liveblog, fetchImageBaseUrl }) {
             : !liveblogItem.boost
         )
         .sort((a, b) => {
-          const tsA = moment(a.publishTime).valueOf()
-          const tsB = moment(b.publishTime).valueOf()
+          const tsA = new Date(a.publishTime).getTime()
+          const tsB = new Date(b.publishTime).getTime()
           return newToOld ? tsB - tsA : tsA - tsB
         })
       if (document.location.hash && firstMounted) {

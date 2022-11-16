@@ -12,7 +12,10 @@ async function main() {
   root.render(
     <>
       <LiveBlog
+        initialLiveblog={mockData}
         fetchLiveblogUrl="https://editools-gcs-dev.readr.tw/files/liveblogs/ukraine-war.json"
+        fetchImageBaseUrl="https://editools-gcs-dev.readr.tw"
+        toLoadPeriodically={false}
       />
     </>
   )

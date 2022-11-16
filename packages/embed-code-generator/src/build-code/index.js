@@ -6,6 +6,7 @@ import Karaoke from '@readr-media/react-karaoke/lib/react-components'
 import QAList from '@readr-media/react-qa-list/lib/react-components'
 import Questionnaire from '@readr-media/react-questionnaire/lib/react-components'
 import get from 'lodash/get'
+import rlb from '@readr-media/react-live-blog'
 import map from 'lodash/map'
 import serialize from 'serialize-javascript'
 import { ServerStyleSheet } from 'styled-components'
@@ -19,7 +20,7 @@ const _ = {
 /**
  *
  * @export
- * @param {('react-questionnaire'|'react-qa-list'|'react-feedback'|'react-karaoke')} pkgName
+ * @param {('react-questionnaire'|'react-qa-list'|'react-feedback'|'react-karaoke'|'react-live-blog')} pkgName
  * @param {Object} data - Data for @readr-media/react-(qa|qa-list|feedback) react component
  * @param {Object} webpackAssets - webpack bundles and chunks
  * @param {string[]} webpackAssets.chunks - webpack common chunks
@@ -49,6 +50,9 @@ export function buildEmbeddedCode(pkgName, data, webpackAssets) {
       break
     case 'react-karaoke':
       Component = Karaoke
+      break
+    case 'react-live-blog':
+      Component = rlb.ReactComponent.LiveBlog
       break
     default:
       throw new Error(`pkgName ${pkgName} is not supported`)

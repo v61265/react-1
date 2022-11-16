@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import moment from 'moment'
+import { toLocaleString } from '../utils/date'
 
 const Wrapper = styled.div`
   padding-bottom: 40px;
@@ -50,7 +50,7 @@ export default function Intro({ intro }) {
       <Description>{description}</Description>
       <UpdateTime>
         最後更新時間：
-        {moment(time).locale('zh_tw').format('YYYY年MM月DD日 dddd HH:mm')}
+        {toLocaleString(time)}
       </UpdateTime>
     </Wrapper>
   )

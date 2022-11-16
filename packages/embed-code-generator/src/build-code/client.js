@@ -3,8 +3,9 @@ import Feedback from '@readr-media/react-feedback/lib/react-components'
 import Questionnaire from '@readr-media/react-questionnaire/lib/react-components'
 import QAList from '@readr-media/react-qa-list/lib/react-components'
 import Karaoke from '@readr-media/react-karaoke/lib/react-components'
+import LiveBlog from '@readr-media/react-live-blog/lib/react-components'
 import React from 'react' // eslint-disable-line
-import { createRoot } from 'react-dom/client'
+import { hydrateRoot } from 'react-dom/client'
 
 const namespace = '@readr-media'
 const pkgComponentArr = [
@@ -24,6 +25,10 @@ const pkgComponentArr = [
     name: 'react-karaoke',
     Component: Karaoke,
   },
+  {
+    name: 'react-live-blog',
+    Component: LiveBlog,
+  },
 ]
 
 for (const pc of pkgComponentArr) {
@@ -35,7 +40,6 @@ for (const pc of pkgComponentArr) {
     const data = dataArr.shift()
     const { uuid, ...dataOfComponent } = data
     const container = document.getElementById(uuid)
-    const root = createRoot(container)
-    root.render(<pc.Component {...dataOfComponent} />)
+    hydrateRoot(container, <pc.Component {...dataOfComponent} />)
   }
 }
