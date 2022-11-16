@@ -1,10 +1,10 @@
 /* eslint no-console: 0 */
 import React from 'react' // eslint-disable-line
 import ReactDOMServer from 'react-dom/server'
-import Feedback from '@readr-media/react-feedback/lib/react-components'
-import Karaoke from '@readr-media/react-karaoke/lib/react-components'
-import QAList from '@readr-media/react-qa-list/lib/react-components'
-import Questionnaire from '@readr-media/react-questionnaire/lib/react-components'
+import Feedback from '@readr-media/react-feedback'
+import Karaoke from '@readr-media/react-karaoke'
+import QAList from '@readr-media/react-qa-list'
+import Questionnaire from '@readr-media/react-questionnaire'
 import get from 'lodash/get'
 import rlb from '@readr-media/react-live-blog'
 import map from 'lodash/map'

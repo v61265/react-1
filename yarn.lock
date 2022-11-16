@@ -1377,59 +1377,6 @@
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.21.tgz#5de5a2385a35309427f6011992b544514d559aa1"
   integrity sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==
 
-"@readr-media/react-feedback@^1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@readr-media/react-feedback/-/react-feedback-1.0.6.tgz#13f4e4c69073147168f62135ff4bc56539040b00"
-  integrity sha512-BUNLKpDKAUhSnqRgpcQ9Gi8xxiyQOz6vBItpY58HK63fKuXQfWyaJYhzOO0gbMyUxzo8DfYhgSV2tQsy6RquWQ==
-  dependencies:
-    axios "^0.27.2"
-    lodash "^4.17.21"
-    react "18.1.0"
-    react-dom "^18.1.0"
-    regenerator-runtime "^0.13.9"
-    serialize-javascript "^6.0.0"
-    styled-components "5.3.5"
-    uuid "^8.3.2"
-
-"@readr-media/react-karaoke@^1.0.0":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@readr-media/react-karaoke/-/react-karaoke-1.0.1.tgz#9456afb97413a98e7c77e54766b5e6f0be1c9782"
-  integrity sha512-JnzhVLQtYI0QAyykbAfqN7au8XU4x7S3eQTBv5rJBhFb8ZQ3zbqQ17QmCLL6nu6pEBwxryaQSRclZfLjdDCaJg==
-  dependencies:
-    react "18.1.0"
-    react-dom "^18.1.0"
-    react-intersection-observer "^9.3.5"
-    serialize-javascript "^6.0.0"
-    styled-components "5.3.5"
-    uuid "^8.3.2"
-
-"@readr-media/react-qa-list@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@readr-media/react-qa-list/-/react-qa-list-1.0.5.tgz#d76c65feb96ba6f183be2689e0ba69fc701cec3e"
-  integrity sha512-oclZ0dZrxGkoqC4+txx0dsvuKEVfbQabrog8IvnmhNSqeyRA7WxgJOXA28StmHcihXwd1cSn4TJlgnfKWrGA5w==
-  dependencies:
-    draft-js "^0.11.7"
-    lodash "^4.17.21"
-    react "18.1.0"
-    react-dom "^18.1.0"
-    serialize-javascript "^6.0.0"
-    styled-components "5.3.5"
-    uuid "^8.3.2"
-
-"@readr-media/react-questionnaire@^1.0.11":
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/@readr-media/react-questionnaire/-/react-questionnaire-1.0.11.tgz#882b0580996240aa8813ae400dfeff55a8dee4d5"
-  integrity sha512-l7E418I0IH7S2pjV02fqGQY/yMrNtgeNB3hFpHVtNJaI37SdAyKmtRdTKBBbndIkjiKj9SFSyMazIFgIrANKUw==
-  dependencies:
-    draft-js "^0.11.7"
-    lodash "^4.17.21"
-    react "18.1.0"
-    react-dom "^18.1.0"
-    regenerator-runtime "^0.13.9"
-    serialize-javascript "^6.0.0"
-    styled-components "5.3.5"
-    uuid "^8.3.2"
-
 "@svgr/babel-plugin-add-jsx-attribute@^6.0.0":
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/@svgr/babel-plugin-add-jsx-attribute/-/babel-plugin-add-jsx-attribute-6.0.0.tgz#bd6d1ff32a31b82b601e73672a789cc41e84fe18"
