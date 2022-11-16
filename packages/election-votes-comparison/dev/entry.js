@@ -127,28 +127,33 @@ async function main() {
   const referendumData = await ldr.loadReferendumData({
     year: '2022',
   })
-  const councilData = await ldr.loadCouncilMemberData({
+  const councilData = await ldr.loadCouncilMemberDataForElectionMapProject({
     year: '2018',
     district: 'yilanCounty',
+    includes: ['plainIndigenous', 'mountainIndigenous'],
   })
   const mayorData = await ldr.loadMayorData({
     year: '2022',
   })
   root.render(
     <>
-      <EVC
-        election={referendumData}
-        stickyTopOffset="0"
-        theme="electionModule"
-        device="mobile"
-      />
-      <EVC election={councilData} stickyTopOffset="0" />
-      <EVC
-        election={mayorData}
-        theme="electionModule"
-        scrollTo="臺北市"
-        stickyTopOffset="10px"
-      />
+      {referendumData ? (
+        <EVC
+          election={referendumData}
+          stickyTopOffset="0"
+          theme="electionMap"
+          device="mobile"
+        />
+      ) : null}
+      <EVC election={councilData} stickyTopOffset="0" theme="electionMap" />
+      {mayorData ? (
+        <EVC
+          election={mayorData}
+          theme="electionMap"
+          scrollTo="臺北市"
+          stickyTopOffset="10px"
+        />
+      ) : null}
     </>
   )
 }

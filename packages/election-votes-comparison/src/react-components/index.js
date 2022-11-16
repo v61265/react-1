@@ -406,7 +406,7 @@ export function CouncilMember({
  *  @param {string} [props.className]
  *  @param {Election | ReferendumElection | PresidentElection | LegislatorPartyElection } props.election
  *  @param {'mobile'|'rwd'} [props.device='rwd']
- *  @param {'openRelations'|'electionModule'|'mnewsElection2022'} [props.theme='openRelations']
+ *  @param {'openRelations'|'electionMap'|'mnewsElection2022'} [props.theme='openRelations']
  *  @param {string} [props.stickyTopOffset]
  *  @param {OnChange} [props.onChange]
  *  @param {string} [props.scrollTo] - the first row with the district name to scroll to
@@ -420,20 +420,31 @@ export default function EVC({
   scrollTo,
   onChange,
 }) {
+  const dataManager = dataManagerFactory().newDataManager(election)
   switch (election?.type) {
     case 'councilMember':
       return (
         <ThemeProvider
           theme={Object.assign({ device, stickyTopOffset }, themeObj[theme])}
         >
-          <CouncilMember
-            className={className}
-            districts={election?.districts}
-            year={election?.year}
-            title={election?.title}
-            scrollTo={scrollTo}
-            onChange={onChange}
-          />
+          {theme === 'electionMap' ? (
+            <_EVC
+              key={election.title + election.type + election.year}
+              className={className}
+              dataManager={dataManager}
+              scrollTo={scrollTo}
+              onChange={onChange}
+            />
+          ) : (
+            <CouncilMember
+              className={className}
+              districts={election?.districts}
+              year={election?.year}
+              title={election?.title}
+              scrollTo={scrollTo}
+              onChange={onChange}
+            />
+          )}
         </ThemeProvider>
       )
     case 'legislator':
@@ -441,7 +452,6 @@ export default function EVC({
     case 'mayor':
     case 'referendum':
     case 'president': {
-      const dataManager = dataManagerFactory().newDataManager(election)
       return (
         <ThemeProvider
           theme={Object.assign({ device, stickyTopOffset }, themeObj[theme])}
@@ -463,6 +473,12 @@ export default function EVC({
 }
 
 /**
+ *  @callback RenderFullOption
+ *  @param {string} option
+ *  @returns {string}
+ */
+
+/**
  *  @param {Object} props
  *  @param {string} [props.className]
  *  @param {DataManager} props.dataManager
@@ -473,7 +489,9 @@ export default function EVC({
 function _EVC({ className, dataManager, scrollTo, onChange = () => {} }) {
   /** @type {Election} */
   const data = dataManager.getData()
-  const options = data?.districts.map((c) => c.districtName)
+  const options = data?.districts.map(
+    (c) => c.fullDistrictName || c.districtName
+  )
   const [districtName, setDistrictName] = useState(scrollTo || options?.[0])
   return (
     <Container className={className}>
