@@ -137,19 +137,23 @@ async function main() {
   })
   root.render(
     <>
-      <EVC
-        election={referendumData}
-        stickyTopOffset="0"
-        theme="electionModule"
-        device="mobile"
-      />
-      <EVC election={councilData} stickyTopOffset="0" theme="electionModule" />
-      <EVC
-        election={mayorData}
-        theme="electionModule"
-        scrollTo="臺北市"
-        stickyTopOffset="10px"
-      />
+      {referendumData ? (
+        <EVC
+          election={referendumData}
+          stickyTopOffset="0"
+          theme="electionMap"
+          device="mobile"
+        />
+      ) : null}
+      <EVC election={councilData} stickyTopOffset="0" theme="electionMap" />
+      {mayorData ? (
+        <EVC
+          election={mayorData}
+          theme="electionMap"
+          scrollTo="臺北市"
+          stickyTopOffset="10px"
+        />
+      ) : null}
     </>
   )
 }

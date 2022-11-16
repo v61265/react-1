@@ -369,7 +369,7 @@ export default class Loader {
       )
     }
 
-    const minimumInterval = 30 // seconds
+    const minimumInterval = 0 // seconds
     const defaultMaxAge = 3600 // seconds
     let maxAge = defaultMaxAge
     if (annotatedErr) {

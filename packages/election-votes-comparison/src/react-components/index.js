@@ -406,7 +406,7 @@ export function CouncilMember({
  *  @param {string} [props.className]
  *  @param {Election | ReferendumElection | PresidentElection | LegislatorPartyElection } props.election
  *  @param {'mobile'|'rwd'} [props.device='rwd']
- *  @param {'openRelations'|'electionModule'|'mnewsElection2022'} [props.theme='openRelations']
+ *  @param {'openRelations'|'electionMap'|'mnewsElection2022'} [props.theme='openRelations']
  *  @param {string} [props.stickyTopOffset]
  *  @param {OnChange} [props.onChange]
  *  @param {string} [props.scrollTo] - the first row with the district name to scroll to
@@ -427,7 +427,7 @@ export default function EVC({
         <ThemeProvider
           theme={Object.assign({ device, stickyTopOffset }, themeObj[theme])}
         >
-          {theme === 'electionModule' ? (
+          {theme === 'electionMap' ? (
             <_EVC
               key={election.title + election.type + election.year}
               className={className}
