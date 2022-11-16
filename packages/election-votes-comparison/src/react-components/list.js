@@ -149,12 +149,14 @@ const TCell = styled.div`
       a {
         color: #d6610c;
         text-decoration: none;
-        color: ${({ theme }) =>
-          theme?.table?.candidate?.name?.color
-            ? theme?.table?.candidate?.name?.color
-            : '#000'};
-        pointer-events: ${({ theme }) =>
-          theme?.table?.candidate?.name?.isLink ? 'auto' : 'none'};
+        color: ${
+          props.theme?.table?.candidate?.name?.color
+            ? props.theme?.table?.candidate?.name?.color
+            : '#000'
+        };
+        pointer-events: ${
+          props.theme?.table?.candidate?.name?.isLink ? 'auto' : 'none'
+        };
       }
     `
     switch (props.theme?.device) {
