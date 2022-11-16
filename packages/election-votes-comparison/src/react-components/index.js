@@ -31,7 +31,8 @@ const StyledTab = styled.div`
    *  @param {Object} props
    *  @param {boolean} props.active
    */
-  (props) => (props.active ? '#D6610C' : 'rgba(14, 45, 53, 0.3)')};
+  (props) =>
+    props.active ? props.theme.tab.color.active : props.theme.tab.color.normal};
 
   ${(props) => {
     switch (props.theme?.device) {

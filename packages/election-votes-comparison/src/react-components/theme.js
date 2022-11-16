@@ -13,6 +13,9 @@ export default {
         backgroundColor: '#F58439',
       },
     },
+    tab: {
+      color: { active: '#D6610C', normal: 'rgba(14, 45, 53, 0.3)' },
+    },
     selector: {
       leftBlock: {
         backgroundColor: '#F58439',
@@ -58,6 +61,9 @@ export default {
         color: '#000',
         backgroundColor: '#AFAFAF',
       },
+    },
+    tab: {
+      color: { active: '#D6610C', normal: 'rgba(14, 45, 53, 0.3)' },
     },
     selector: {
       leftBlock: {
@@ -107,6 +113,9 @@ export default {
         color: '#FFF',
         backgroundColor: '#AFAFAF',
       },
+    },
+    tab: {
+      color: { active: '#004DBC', normal: 'rgba(15, 45, 53, 0.3)' },
     },
     selector: {
       leftBlock: {
