@@ -7,7 +7,7 @@
  *  @typedef {import('./manager').DataManager} DataManager
  */
 
-import React, { useState, useMemo } from 'react' // eslint-disable-line
+import React, { useEffect, useState, useMemo } from 'react' // eslint-disable-line
 import Selector from './selector'
 import breakpoint from './breakpoint'
 import styled, { ThemeProvider } from 'styled-components'
@@ -373,6 +373,14 @@ export function CouncilMember({
     title,
   })
 
+  useEffect(() => {
+    setDistrictName(scrollTo || options?.[0])
+  }, [scrollTo, districts])
+
+  useEffect(() => {
+    setTab(tabEnum.normal)
+  }, [allDistricts])
+
   return (
     <Container className={className}>
       <Header>
@@ -493,7 +501,13 @@ function _EVC({ className, dataManager, scrollTo, onChange = () => {} }) {
   const options = data?.districts.map(
     (c) => c.fullDistrictName || c.districtName
   )
+
   const [districtName, setDistrictName] = useState(scrollTo || options?.[0])
+
+  useEffect(() => {
+    setDistrictName(scrollTo || options?.[0])
+  }, [scrollTo, data])
+
   return (
     <Container className={className}>
       <Header>
