@@ -379,7 +379,7 @@ export function CouncilMember({
 
   useEffect(() => {
     setTab(tabEnum.normal)
-  }, [districts])
+  }, [allDistricts])
 
   return (
     <Container className={className}>
