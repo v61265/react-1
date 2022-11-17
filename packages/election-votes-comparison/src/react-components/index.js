@@ -377,6 +377,10 @@ export function CouncilMember({
     setDistrictName(scrollTo || options?.[0])
   }, [scrollTo, districts])
 
+  useEffect(() => {
+    setTab(tabEnum.normal)
+  }, [districts])
+
   return (
     <Container className={className}>
       <Header>
