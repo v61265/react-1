@@ -35,7 +35,6 @@
     "@readr-media/react-qa-list": "2.0.1",
     "@readr-media/react-questionnaire": "2.0.0",
     "lodash": "^4.17.21",
-    "regenerator-runtime": "^0.13.9",
     "serialize-javascript": "^6.0.0",
     "uuid": "^8.3.2"
   },
