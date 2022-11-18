@@ -1,4 +1,5 @@
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin
 const fs = require('fs')
 const path = require('path')
 const pkg = require('./package.json')
@@ -6,34 +7,31 @@ const webpack = require('webpack')
 
 const webpackAssets = {
   chunks: [],
-  bundles: [],
+  entrypoints: [],
 }
 
 const isProduction = process.env.NODE_ENV === 'production'
+const publicPath = isProduction
+  ? `https://unpkg.com/${pkg.name}@${pkg.version}/dist/`
+  : './dist/'
 
-function BundleListPlugin() {}
+function WebpackAssetPlugin() {}
 
-BundleListPlugin.prototype.apply = function(compiler) {
-  const cdnLinkPrefix = `https://unpkg.com/${pkg.name}@${pkg.version}/dist`
+WebpackAssetPlugin.prototype.apply = function(compiler) {
   const distDir = './dist'
 
-  compiler.hooks.emit.tap('BundleListPlugin', function(compilation) {
-    for (const filename in compilation.assets) {
-      if (!filename.endsWith('.js')) {
-        continue
-      }
+  compiler.hooks.emit.tap('WebpackAssetPlugin', function(compilation) {
+    const chunks = compilation.chunks.forEach((chunk) => {
+      return `${publicPath}${chunk.name}.js`
+    })
+    const entryChunks = compilation.entrypoints
+      .get('main')
+      .chunks.map((chunk) => {
+        return `${publicPath}${chunk.name}.js`
+      })
 
-      const isBundle = filename.endsWith('bundle.js')
-      const scriptSrc = isProduction
-        ? `${cdnLinkPrefix}/${filename}`
-        : `/dist/${filename}`
-
-      if (isBundle) {
-        webpackAssets.bundles.push(scriptSrc)
-      } else {
-        webpackAssets.chunks.push(scriptSrc)
-      }
-    }
+    webpackAssets.chunks = chunks
+    webpackAssets.entrypoints = entryChunks
 
     if (!fs.existsSync(distDir)) {
       fs.mkdirSync(distDir)
@@ -52,10 +50,11 @@ const webpackConfig = {
     main: path.resolve(__dirname, './src/build-code/client.js'),
   },
   output: {
-    filename: '[name].[contenthash].bundle.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, './dist/'),
     library: '@readr-media/react-embed-code',
     libraryTarget: 'umd',
+    publicPath,
   },
   module: {
     rules: [
@@ -64,7 +63,19 @@ const webpackConfig = {
         loader: 'babel-loader',
         exclude: /node_modules/,
         options: {
-          presets: ['@babel/preset-env', '@babel/preset-react'],
+          presets: [
+            '@babel/preset-env',
+            [
+              '@babel/preset-react',
+              { development: !isProduction, runtime: 'automatic' },
+            ],
+          ],
+          plugins: [
+            [
+              'styled-components',
+              { ssr: true, displayName: true, preprocess: false },
+            ],
+          ],
         },
       },
       {
@@ -73,51 +84,61 @@ const webpackConfig = {
       },
     ],
   },
-  /*
   optimization: {
     splitChunks: {
       chunks: 'all',
       maxInitialRequests: Infinity,
       minSize: 0,
+      minChunks: 1,
       cacheGroups: {
-        reactVendor: {
-          test: /[\\/]node_modules[\\/](react|react-dom|styled-components)[\\/]/,
-          name: "react",
-          filename: '[name].[chunkhash].chunk.js',
+        'react-vendor': {
+          test: /[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/,
+          name: 'react-vendor',
+          filename: '[name].js',
         },
-        draftjsVendor: {
+        'regenerator-runtime': {
+          test: /[\\/]node_modules[\\/](regenerator-runtime)[\\/]/,
+          name: 'regenerator-runtime',
+          filename: '[name].js',
+        },
+        'styled-components': {
+          test: /[\\/]node_modules[\\/](styled-components)[\\/]/,
+          name: 'styled-components',
+          filename: '[name].js',
+        },
+        'draft-js': {
           test: /[\\/]node_modules[\\/](draft-js)[\\/]/,
-          name: "draftjs",
-          filename: '[name].[chunkhash].chunk.js',
+          name: 'draftjs',
+          filename: '[name].js',
         },
-        immutableVendor: {
+        immutable: {
           test: /[\\/]node_modules[\\/](immutable)[\\/]/,
-          name: "immutable",
-          filename: '[name].[chunkhash].chunk.js',
+          name: 'immutable',
+          filename: '[name].js',
         },
-        lodashVendor: {
+        lodash: {
           test: /[\\/]node_modules[\\/](lodash)[\\/]/,
-          name: "lodash",
-          filename: '[name].[chunkhash].chunk.js',
+          name: 'lodash',
+          filename: '[name].js',
         },
-        staticFileVendor: {
+        staticFile: {
           test: /.svg$/,
-          name: "static-file",
-          filename: '[name].[chunkhash].chunk.js',
+          name: 'static-file',
+          filename: '[name].js',
         },
         vendor: {
           test: /[\\/]node_modules[\\/]/,
-          name: "vendor",
-          filename: '[name].[chunkhash].chunk.js',
+          name: 'vendor',
+          filename: '[name].js',
+          priority: -10,
         },
       },
     },
   },
-  */
   plugins: [
     new webpack.EnvironmentPlugin(['NODE_ENV']),
-    new BundleListPlugin(),
-    /*, new BundleAnalyzerPlugin()*/
+    new WebpackAssetPlugin(),
+    new BundleAnalyzerPlugin(),
   ],
 }
 
