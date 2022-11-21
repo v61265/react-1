@@ -1,10 +1,10 @@
 /* eslint no-console: 0 */
 import React from 'react' // eslint-disable-line
 import ReactDOMServer from 'react-dom/server'
-import Feedback from '@readr-media/react-feedback/lib/react-components'
-import Karaoke from '@readr-media/react-karaoke/lib/react-components'
-import QAList from '@readr-media/react-qa-list/lib/react-components'
-import Questionnaire from '@readr-media/react-questionnaire/lib/react-components'
+import Feedback from '@readr-media/react-feedback'
+import Karaoke from '@readr-media/react-karaoke'
+import QAList from '@readr-media/react-qa-list'
+import Questionnaire from '@readr-media/react-questionnaire'
 import get from 'lodash/get'
 import rlb from '@readr-media/react-live-blog'
 import map from 'lodash/map'
@@ -23,8 +23,7 @@ const _ = {
  * @param {('react-questionnaire'|'react-qa-list'|'react-feedback'|'react-karaoke'|'react-live-blog')} pkgName
  * @param {Object} data - Data for @readr-media/react-(qa|qa-list|feedback) react component
  * @param {Object} webpackAssets - webpack bundles and chunks
- * @param {string[]} webpackAssets.chunks - webpack common chunks
- * @param {string[]} webpackAssets.bundles - webpack bundles
+ * @param {string[]} webpackAssets.entrypoints - webpack bundles
  * @returns {string} embedded code
  */
 export function buildEmbeddedCode(pkgName, data, webpackAssets) {
@@ -35,7 +34,7 @@ export function buildEmbeddedCode(pkgName, data, webpackAssets) {
     uuid,
   }
 
-  const { chunks, bundles } = webpackAssets
+  const { entrypoints: bundles } = webpackAssets
 
   let Component = null
   switch (pkgName) {
@@ -97,9 +96,6 @@ export function buildEmbeddedCode(pkgName, data, webpackAssets) {
       })()
     </script>
     ${jsx}
-    ${_.map(chunks, (chunk) => {
-      return `<script type="text/javascript" defer crossorigin src="${chunk}"></script>`
-    }).join('')}
     ${_.map(bundles, (bundle) => {
       return `<script type="text/javascript" defer crossorigin src="${bundle}"></script>`
     }).join('')}
