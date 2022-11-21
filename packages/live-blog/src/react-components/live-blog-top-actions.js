@@ -85,7 +85,7 @@ export default function LiveBlogTopActions({
               <icons.CopyLink />
             </LightboxButton>
             <LightboxButton onClick={showLightbox}>
-              {showLightbox ? <icons.Close /> : <icons.Expand />}
+              {showAsLightbox ? <icons.Close /> : <icons.Expand />}
             </LightboxButton>
           </>
         ) : (
