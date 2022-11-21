@@ -1,5 +1,4 @@
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-  .BundleAnalyzerPlugin
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const fs = require('fs')
 const path = require('path')
 const pkg = require('./package.json')
@@ -138,7 +137,7 @@ const webpackConfig = {
   plugins: [
     new webpack.EnvironmentPlugin(['NODE_ENV']),
     new WebpackAssetPlugin(),
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
   ],
 }
 
