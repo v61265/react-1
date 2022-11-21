@@ -31,7 +31,7 @@
     "@readr-media/react-election-votes-comparison": "2.0.0-beta.18",
     "@readr-media/react-feedback": "^3.0.2",
     "@readr-media/react-karaoke": "2.0.0",
-    "@readr-media/react-live-blog": "^1.0.0-beta.4",
+    "@readr-media/react-live-blog": "1.0.0-beta.6",
     "@readr-media/react-qa-list": "2.0.1",
     "@readr-media/react-questionnaire": "2.0.0",
     "lodash": "^4.17.21",
