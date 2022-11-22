@@ -23,8 +23,9 @@ const _ = {
  * @export
  * @param {('react-questionnaire'|'react-qa-list'|
  * 'react-feedback'|'react-karaoke'|'react-live-blog'|
- * 'react-election-widgets-seat-chart')} pkgName
- * @param {Object} data - Data for @readr-media/react-(qa|qa-list|feedback) react component
+ * 'react-election-widgets-seat-chart'|
+ * 'react-election-widgets-votes-comparison')} pkgName
+ * @param {Object} data - Data for react component
  * @param {Object} webpackAssets - webpack bundles and chunks
  * @param {string[]} webpackAssets.entrypoints - webpack bundles
  * @returns {string} embedded code
@@ -58,6 +59,9 @@ export function buildEmbeddedCode(pkgName, data, webpackAssets) {
       break
     case 'react-election-widgets-seat-chart':
       Component = ew.SeatChart.ReactComponent
+      break
+    case 'react-election-widgets-votes-comparison':
+      Component = ew.VotesComparison.ReactComponent
       break
     default:
       throw new Error(`pkgName ${pkgName} is not supported`)
