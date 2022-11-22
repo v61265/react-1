@@ -1,0 +1,7 @@
+node_modules
+dist
+lib
+build-embed-code.js
+CHANGELOG.md
+index.html
+README.md
