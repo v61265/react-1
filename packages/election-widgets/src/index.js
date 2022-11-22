@@ -1,11 +1,7 @@
-import SeatChart from './react-components/seats-chart'
-import SeatChartDL from './data-loaders/seats-chart'
+import ReactComponent from './react-components'
+import DataLoader from './data-loaders'
 
 export default {
-  ReactComponent: {
-    SeatChart,
-  },
-  DataLoader: {
-    SeatChart: SeatChartDL,
-  },
+  ReactComponent,
+  DataLoader,
 }

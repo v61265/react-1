@@ -1,15 +1,15 @@
 import 'regenerator-runtime/runtime'
 import React from 'react' // eslint-disable-line
-import SeatChart from '../src/react-components/seats-chart'
-import DataLoader from '../src/data-loaders/seats-chart'
+import widgets from '../src'
 import { createRoot } from 'react-dom/client'
 
-const reactRootId = 'root'
-const container = document.getElementById(reactRootId)
-const root = createRoot(container)
+const seatChartRoot = createRoot(document.getElementById('seat-chart'))
+const votesComparisonRoot = createRoot(
+  document.getElementById('votes-comparison')
+)
 
-async function main() {
-  const ldr = new DataLoader({
+async function renderSeatChart() {
+  const ldr = new widgets.DataLoader.SeatsChart({
     apiUrl: 'https://whoareyou-gcs.readr.tw/elections-dev',
     version: 'v1',
   })
@@ -19,9 +19,9 @@ async function main() {
     countyCode: '63000',
   })
 
-  root.render(
+  seatChartRoot.render(
     <>
-      <SeatChart
+      <widgets.ReactComponent.SeatChart
         data={data}
         meta={{
           year: '2018',
@@ -32,4 +32,26 @@ async function main() {
     </>
   )
 }
-main()
+
+async function renderVotesComparison() {
+  const ldr = new widgets.DataLoader.VotesComparison({
+    apiUrl: 'https://whoareyou-gcs.readr.tw/elections-dev',
+    version: 'v2',
+  })
+
+  const data = await ldr.loadCouncilMemberData({
+    year: '2018',
+    district: 'taipeiCity',
+  })
+
+  votesComparisonRoot.render(
+    <>
+      <widgets.ReactComponent.VotesComparison
+        election={typeof data === 'object' && data}
+      />
+    </>
+  )
+}
+
+renderSeatChart()
+renderVotesComparison()
