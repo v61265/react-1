@@ -50,3 +50,15 @@ if (window?.[namespace]['react-live-blog']) {
     hydrate(namespace, 'react-live-blog', lb.ReactComponent.LiveBlog)
   })
 }
+
+if (window?.[namespace]['react-election-widgets-seat-chart']) {
+  import(
+    /* webpackChunkName: "react-election-widgets" */ '@readr-media/react-election-widgets'
+  ).then(({ default: ew }) => {
+    hydrate(
+      namespace,
+      'react-election-widgets-seat-chart',
+      ew.ReactComponent.SeatChart
+    )
+  })
+}

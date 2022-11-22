@@ -5,6 +5,7 @@ import Feedback from '@readr-media/react-feedback'
 import Karaoke from '@readr-media/react-karaoke'
 import QAList from '@readr-media/react-qa-list'
 import Questionnaire from '@readr-media/react-questionnaire'
+import ew from '@readr-media/react-election-widgets'
 import get from 'lodash/get'
 import rlb from '@readr-media/react-live-blog'
 import map from 'lodash/map'
@@ -20,7 +21,9 @@ const _ = {
 /**
  *
  * @export
- * @param {('react-questionnaire'|'react-qa-list'|'react-feedback'|'react-karaoke'|'react-live-blog')} pkgName
+ * @param {('react-questionnaire'|'react-qa-list'|
+ * 'react-feedback'|'react-karaoke'|'react-live-blog'|
+ * 'react-election-widgets-seat-chart')} pkgName
  * @param {Object} data - Data for @readr-media/react-(qa|qa-list|feedback) react component
  * @param {Object} webpackAssets - webpack bundles and chunks
  * @param {string[]} webpackAssets.entrypoints - webpack bundles
@@ -52,6 +55,9 @@ export function buildEmbeddedCode(pkgName, data, webpackAssets) {
       break
     case 'react-live-blog':
       Component = rlb.ReactComponent.LiveBlog
+      break
+    case 'react-election-widgets-seat-chart':
+      Component = ew.ReactComponent.SeatChart
       break
     default:
       throw new Error(`pkgName ${pkgName} is not supported`)
