@@ -386,9 +386,11 @@ export default function List({ className, dataManager, scrollTo }) {
           multiLines={multiLines}
           data-multi-lines={multiLines}
           data-column-id={cellIdx}
-          style={{
-            borderLeft: row.cells?.[cellIdx]?.[0]?.label === '' && 'none',
-          }}
+          style={
+            row.cells?.[cellIdx]?.[0]?.label === ''
+              ? { borderLeft: 'none' }
+              : undefined
+          }
         >
           {entitiesJsx}
         </TCell>
