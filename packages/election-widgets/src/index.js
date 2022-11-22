@@ -1,7 +1,7 @@
-import ReactComponent from './react-components'
-import DataLoader from './data-loaders'
+import SeatChart from './seat-chart'
+import VotesComparison from './votes-comparison'
 
 export default {
-  ReactComponent,
-  DataLoader,
+  SeatChart,
+  VotesComparison,
 }

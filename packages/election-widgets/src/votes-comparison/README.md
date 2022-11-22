@@ -1,4 +1,4 @@
-# [@readr-media/react-election-votes-comparison](https://www.npmjs.com/package/@readr-media/react-election-votes-comparison) &middot; ![npm version](https://img.shields.io/npm/v/@readr-media/react-election-votes-comparison.svg?style=flat)
+# [@readr-media/react-election-widgets](https://www.npmjs.com/package/@readr-media/react-election-widgets) &middot; ![npm version](https://img.shields.io/npm/v/@readr-media/react-election-widgets.svg?style=flat)
 
 ## How to Use This Pkg?
 ### Data Loaders

@@ -9,7 +9,7 @@ const votesComparisonRoot = createRoot(
 )
 
 async function renderSeatChart() {
-  const ldr = new widgets.DataLoader.SeatsChart({
+  const ldr = new widgets.SeatChart.DataLoader({
     apiUrl: 'https://whoareyou-gcs.readr.tw/elections-dev',
     version: 'v1',
   })
@@ -21,7 +21,7 @@ async function renderSeatChart() {
 
   seatChartRoot.render(
     <>
-      <widgets.ReactComponent.SeatChart
+      <widgets.SeatChart.ReactComponent
         data={data}
         meta={{
           year: '2018',
@@ -34,7 +34,7 @@ async function renderSeatChart() {
 }
 
 async function renderVotesComparison() {
-  const ldr = new widgets.DataLoader.VotesComparison({
+  const ldr = new widgets.VotesComparison.DataLoader({
     apiUrl: 'https://whoareyou-gcs.readr.tw/elections-dev',
     version: 'v2',
   })
@@ -46,7 +46,7 @@ async function renderVotesComparison() {
 
   votesComparisonRoot.render(
     <>
-      <widgets.ReactComponent.VotesComparison
+      <widgets.VotesComparison.ReactComponent
         election={typeof data === 'object' && data}
       />
     </>
