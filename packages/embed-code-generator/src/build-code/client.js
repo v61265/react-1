@@ -58,7 +58,19 @@ if (window?.[namespace]['react-election-widgets-seat-chart']) {
     hydrate(
       namespace,
       'react-election-widgets-seat-chart',
-      ew.ReactComponent.SeatChart
+      ew.SeatChart.ReactComponent
+    )
+  })
+}
+
+if (window?.[namespace]['react-election-widgets-votes-comparison']) {
+  import(
+    /* webpackChunkName: "react-election-widgets" */ '@readr-media/react-election-widgets'
+  ).then(({ default: ew }) => {
+    hydrate(
+      namespace,
+      'react-election-widgets-votes-comparison',
+      ew.VotesComparison.ReactComponent
     )
   })
 }
