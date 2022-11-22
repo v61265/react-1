@@ -1,6 +1,6 @@
 {
   "name": "@readr-media/react-election-widgets",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -30,5 +30,9 @@
   },
   "files": [
     "lib"
-  ]
+  ],
+  "dependencies": {
+    "@twreporter/errors": "^1.1.1",
+    "axios": "^0.27.2"
+  }
 }
