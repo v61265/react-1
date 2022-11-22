@@ -58,7 +58,7 @@ if (window?.[namespace]['react-election-widgets-seat-chart']) {
     hydrate(
       namespace,
       'react-election-widgets-seat-chart',
-      ew.ReactComponent.SeatChart
+      ew.SeatChart.ReactComponent
     )
   })
 }

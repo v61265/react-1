@@ -57,7 +57,7 @@ export function buildEmbeddedCode(pkgName, data, webpackAssets) {
       Component = rlb.ReactComponent.LiveBlog
       break
     case 'react-election-widgets-seat-chart':
-      Component = ew.ReactComponent.SeatChart
+      Component = ew.SeatChart.ReactComponent
       break
     default:
       throw new Error(`pkgName ${pkgName} is not supported`)
