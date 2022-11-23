@@ -5,7 +5,7 @@
  *  @typedef {import('./manager').Head} Head
  */
 
-import React, { useEffect, useRef, useState } from 'react' // eslint-disable-line
+import React, { useEffect, useRef } from 'react' // eslint-disable-line
 import breakpoint from './breakpoint'
 import styled from 'styled-components'
 
@@ -307,8 +307,11 @@ export default function List({ className, dataManager, scrollTo }) {
     // get the number of pixels that the selected element's content is scrolled from its left edge
     const offsetLeft = rowNode?.offsetLeft ?? 0
 
-    // scroll to the selected element
-    node.scrollLeft = offsetLeft
+    // `setTimeout` is to avoid not scrolling on iOS device.
+    setTimeout(() => {
+      // scroll to the selected element
+      node.scrollLeft = offsetLeft
+    }, 0)
   }, [scrollTo])
 
   useEffect(() => {
