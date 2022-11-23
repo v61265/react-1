@@ -63,6 +63,11 @@ const partiesColor = [
     color: '#B43F93',
   },
   {
+    index: 998,
+    name: '開票中',
+    color: '#fff',
+  },
+  {
     index: 999,
     name: '無黨籍',
     color: '#333333',
@@ -71,11 +76,6 @@ const partiesColor = [
     index: 1000,
     name: '其他政黨',
     color: '#958090',
-  },
-  {
-    index: 1001,
-    name: '開票中',
-    color: '#fff',
   },
 ]
 
