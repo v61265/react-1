@@ -150,6 +150,10 @@ const LightBoxBody = styled.div`
         return `
           padding: 16px 16px 20px 16px;
           gap: 12px 15px;
+          width: 288px;
+          > div:last-child {
+            gap: 12px 15px;
+          }
         `
       }
       case 'rwd':
