@@ -1,8 +1,17 @@
 # @readr-media/react-election-widgets Changelog
+## 2022-11,23, Version 1.0.4
+
+### Commits
+* \[[`5760a153b1`](https://github.com/readr-media/react-election-widgets/commit/5760a153b1)] - chore(ew): update version to 1.0.4 (nickhsine)
+
+## 2022-11-23, Version 1.0.3
+
+### Commits
+* \[[`6773f2219b`](https://github.com/readr-media/react-election-widgets/commit/6773f2219b)] - chore(ew): update version to 1.0.3 (nickhsine)
 
 ## 2022-11-23, Version 1.0.2 
 
-## Commits
+### Commits
 * \[[`af038a8294`](https://github.com/readr-media/react/commit/af038a8294)] - chore(ew): update version to 1.0.2 (nickhsine)
 * \[[`bc1b972a22`](https://github.com/readr-media/react/commit/bc1b972a22)] - fix(ew/vc): fail to scroll to left on iOS device (nickhsine)
 * \[[`caac474e57`](https://github.com/readr-media/react/commit/caac474e57)] - chore(election-widgets): update version to 1.0.1 (nickhsine)

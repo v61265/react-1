@@ -36,7 +36,9 @@ export default class Loader {
   async loadData({ year, type, filename }) {
     try {
       const axiosRes = await axios.get(
-        `${this.apiUrl}/${this.version}/${year}/${type}/${filename}`
+        this.version
+          ? `${this.apiUrl}/${this.version}/${year}/${type}/${filename}`
+          : `${this.apiUrl}/${year}/${type}/${filename}`
       )
       return axiosRes?.data
     } catch (err) {
