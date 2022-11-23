@@ -1,4 +1,8 @@
 # @readr-media/react-election-widgets Changelog
+## 2022-11,23, Version 1.0.4
+
+### Commits
+* \[[`5760a153b1`](https://github.com/readr-media/react-election-widgets/commit/5760a153b1)] - chore(ew): update version to 1.0.4 (nickhsine)
 
 ## 2022-11-23, Version 1.0.3
 
