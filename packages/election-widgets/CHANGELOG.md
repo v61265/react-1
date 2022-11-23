@@ -1,13 +1,22 @@
 # @readr-media/react-election-widgets Changelog
-## 2022-11,23, Version 1.0.4
+
+## 2022-11-23, Version 1.0.5
+* \[[`e0e921a3cd`](https://github.com/readr-media/react-election-widgets/commit/e0e921a3cd)] - chore(ew): update version to 1.0.5 (nickhsine)
+* \[[`fd07f2cbf4`](https://github.com/readr-media/react-election-widgets/commit/fd07f2cbf4)] - fix(seat-chart): get wrong default party color (caesarWHLee)
+
+## 2022-11-23, Version 1.0.4
 
 ### Commits
 * \[[`5760a153b1`](https://github.com/readr-media/react-election-widgets/commit/5760a153b1)] - chore(ew): update version to 1.0.4 (nickhsine)
+* \[[`5fe4959267`](https://github.com/readr-media/react-election-widgets/commit/5fe4959267)] - doc(ew): update CHANGELOG.md (nickhsine)
+* \[[`2fa5d71459`](https://github.com/readr-media/react-election-widgets/commit/2fa5d71459)] - fix(ew/seat-chart): wrong api URL (nickhsine)
 
 ## 2022-11-23, Version 1.0.3
 
 ### Commits
 * \[[`6773f2219b`](https://github.com/readr-media/react-election-widgets/commit/6773f2219b)] - chore(ew): update version to 1.0.3 (nickhsine)
+* \[[`f9fc20a63e`](https://github.com/readr-media/react-election-widgets/commit/f9fc20a63e)] - doc(ew): update CHANGELOG.md (nickhsine)
+* \[[`9ceeb24476`](https://github.com/readr-media/react-election-widgets/commit/9ceeb24476)] - style(ew/vc): set lightbox width for mobile device (nickhsine)
 
 ## 2022-11-23, Version 1.0.2 
 
