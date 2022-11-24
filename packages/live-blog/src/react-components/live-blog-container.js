@@ -23,9 +23,16 @@ export default function LiveBlogContainr({ liveblog, fetchImageBaseUrl }) { // e
   const [firstMounted, setFirstMounted] = useState(true)
 
   //Get Tags
-  const tagsArr = liveblog?.liveblog_items
-    .map((liveblogItem) => liveblogItem.tags?.name)
-    .filter((item) => item)
+  const tagsArr = liveblog?.liveblog_items.reduce((tags, liveblogItem) => {
+    const _tags = Array.isArray(liveblogItem.tags)
+      ? liveblogItem.tags.map((tag) => tag?.name)
+      : liveblogItem.tags?.name
+    if (_tags) {
+      return tags.concat(_tags)
+    }
+    return tags
+  }, [])
+
   const uniqTags = [...new Set(tagsArr)].map((string) => string.slice(0, 4))
 
   useEffect(() => {
