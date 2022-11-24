@@ -44,6 +44,7 @@ export default function LiveBlogItemExternal({
   pined,
   article,
   fetchImageBaseUrl,
+  onChange,
 }) {
   const [expanded, setExpanded] = useState(false)
   const [hideExpandButton, setHideExpandButton] = useState(false)
@@ -63,10 +64,32 @@ export default function LiveBlogItemExternal({
   const expandClickedHandler = (e) => {
     e.stopPropagation()
     setExpanded((expanded) => !expanded)
+    onChange({
+      category: 'liveBlogItem',
+      eventName: 'click',
+      eventTarget: '繼續閱讀按鈕',
+      eventValue: expanded ? '顯示較少' : '繼續閱讀',
+      metadata: {
+        article: {
+          title: article.title,
+        },
+      },
+    })
   }
 
   const openExternalLinkHandler = () => {
     window.open(article.external, '_blank')
+    onChange({
+      category: 'liveBlogItem',
+      eventName: 'click',
+      eventTarget: '外連按鈕',
+      metadata: {
+        article: {
+          title: article.title,
+          url: article.external,
+        },
+      },
+    })
   }
 
   return (

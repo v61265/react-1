@@ -70,7 +70,12 @@ const LiveBlog = styled.div`
 
 let pageWasScrolled = false
 
-export default function LiveBlogItem({ pined, article, fetchImageBaseUrl }) {
+export default function LiveBlogItem({
+  pined,
+  article,
+  fetchImageBaseUrl,
+  onChange,
+}) {
   const [expanded, setExpanded] = useState(false)
   const [showAsLightbox, setShowAsLightbox] = useState(false)
   const [hideExpandButton, setHideExpandButton] = useState(false)
@@ -97,6 +102,17 @@ export default function LiveBlogItem({ pined, article, fetchImageBaseUrl }) {
   const expandClickedHandler = (e) => {
     e.stopPropagation()
     setExpanded((expanded) => !expanded)
+    onChange({
+      category: 'liveBlogItem',
+      eventName: 'click',
+      eventTarget: '展開／縮合按鈕',
+      eventValue: expanded ? '顯示較少' : '繼續閱讀',
+      metadata: {
+        article: {
+          title: article.title,
+        },
+      },
+    })
   }
 
   const showLightboxClickedHandler = () => {

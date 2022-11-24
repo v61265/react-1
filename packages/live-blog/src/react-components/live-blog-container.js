@@ -9,7 +9,7 @@ import { liveblogItemId } from '../utils/anchor-scroll-helper'
 
 const initialShowingCount = 5
 
-export default function LiveBlogContainr({ liveblog, fetchImageBaseUrl }) { // eslint-disable-line
+export default function LiveBlogContainr({ liveblog, fetchImageBaseUrl, onChange }) { // eslint-disable-line
   const liveblogItemsRef = useRef([])
   const [boostedLiveblogItems, setBoostedLiveblogItems] = useState([])
   // showing means rendering non boosted liveblogItems
@@ -129,11 +129,13 @@ export default function LiveBlogContainr({ liveblog, fetchImageBaseUrl }) { // e
           setShowingCount(initialShowingCount)
           setActiveTags(activeTags)
         }}
+        onChange={onChange}
       />
       <LiveBlogItems
         articles={showingLiveblogItems}
         pinedArticles={boostedLiveblogItems}
         fetchImageBaseUrl={fetchImageBaseUrl}
+        onChange={onChange}
       />
     </LiveBlogWrapper>
   )
