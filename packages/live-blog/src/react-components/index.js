@@ -26,14 +26,14 @@ const GlobalStyles = createGlobalStyle`
  *  @param {string} [props.fetchLiveblogUrl='']
  *  @param {string} [props.fetchImageBaseUrl='https://editools-gcs-dev.readr.tw']
  *  @param {boolean} [props.toLoadPeriodically=true]
- *  @param {OnChange} [props.onChange]
+ *  @param {OnChange} [props.onChange=()=>{}]
  */
 export default function LiveBlog({
   initialLiveblog,
   fetchLiveblogUrl = '',
   fetchImageBaseUrl = 'https://editools-gcs-dev.readr.tw',
   toLoadPeriodically = true,
-  onChange,
+  onChange = () => {},
 }) {
   const [liveblog, setLiveblog] = useState(initialLiveblog)
 
