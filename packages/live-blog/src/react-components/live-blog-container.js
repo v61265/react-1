@@ -24,9 +24,9 @@ export default function LiveBlogContainr({ liveblog, fetchImageBaseUrl, onChange
 
   //Get Tags
   const tagsArr = liveblog?.liveblog_items.reduce((tags, liveblogItem) => {
-    const _tags = Array.isArray(liveblogItem.tags)
-      ? liveblogItem.tags.map((tag) => tag?.name)
-      : liveblogItem.tags?.name
+    const _tags =
+      Array.isArray(liveblogItem.tags) &&
+      liveblogItem.tags.map((tag) => tag?.name)
     if (_tags) {
       return tags.concat(_tags)
     }
@@ -40,12 +40,13 @@ export default function LiveBlogContainr({ liveblog, fetchImageBaseUrl, onChange
       liveblogItemsRef.current = liveblog.liveblog_items
 
       const boostedLiveblogItems = liveblogItemsRef.current
-        .filter((liveblogItem) =>
-          activeTags.length
-            ? activeTags.includes(liveblogItem.tags?.name.slice(0, 4)) &&
-              liveblogItem.boost
+        .filter((liveblogItem) => {
+          const tags = liveblogItem.tags ?? []
+          return activeTags.length
+            ? tags.find((tag) => activeTags.includes(tag?.name.slice(0, 4))) &&
+                liveblogItem.boost
             : liveblogItem.boost
-        )
+        })
         .sort((a, b) => {
           const tsA = new Date(a.publishTime).getTime()
           const tsB = new Date(b.publishTime).getTime()
@@ -53,12 +54,13 @@ export default function LiveBlogContainr({ liveblog, fetchImageBaseUrl, onChange
         })
 
       const liveblogItemsToShow = liveblogItemsRef.current
-        .filter((liveblogItem) =>
-          activeTags.length
-            ? activeTags.includes(liveblogItem.tags?.name.slice(0, 4)) &&
-              !liveblogItem.boost
+        .filter((liveblogItem) => {
+          const tags = liveblogItem.tags ?? []
+          return activeTags.length
+            ? tags.find((tag) => activeTags.includes(tag?.name.slice(0, 4))) &&
+                !liveblogItem.boost
             : !liveblogItem.boost
-        )
+        })
         .sort((a, b) => {
           const tsA = new Date(a.publishTime).getTime()
           const tsB = new Date(b.publishTime).getTime()

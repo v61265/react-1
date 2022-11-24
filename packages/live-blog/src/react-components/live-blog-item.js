@@ -105,7 +105,7 @@ export default function LiveBlogItem({
     onChange({
       category: 'liveBlogItem',
       eventName: 'click',
-      eventTarget: '展開／縮合按鈕',
+      eventTarget: '繼續閱讀按鈕',
       eventValue: expanded ? '顯示較少' : '繼續閱讀',
       metadata: {
         article: {
