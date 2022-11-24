@@ -38,7 +38,12 @@ const TagsWrapper = styled.div`
   }
 `
 
-export default function LiveBlogTags({ tags, activeTags, updateActiveTags }) {
+export default function LiveBlogTags({
+  tags,
+  activeTags,
+  updateActiveTags,
+  onChange,
+}) {
   const handleClicked = (e) => {
     const clickedTagName = e.target.textContent
     if (activeTags.includes(clickedTagName)) {
@@ -46,6 +51,12 @@ export default function LiveBlogTags({ tags, activeTags, updateActiveTags }) {
     } else {
       updateActiveTags([...activeTags, clickedTagName])
     }
+    onChange({
+      category: 'tag',
+      eventName: 'click',
+      eventTarget: 'tag 按鈕',
+      eventValue: clickedTagName,
+    })
   }
 
   return (

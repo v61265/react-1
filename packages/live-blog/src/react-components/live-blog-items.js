@@ -18,6 +18,7 @@ export default function LiveBlogItems({
   pinedArticles,
   articles,
   fetchImageBaseUrl,
+  onChange,
 }) {
   return (
     <Wrapper>
@@ -28,6 +29,7 @@ export default function LiveBlogItems({
             pined
             article={article}
             fetchImageBaseUrl={fetchImageBaseUrl}
+            onChange={onChange}
           />
         ) : (
           <LiveBlogItemExternal
@@ -35,6 +37,7 @@ export default function LiveBlogItems({
             pined
             article={article}
             fetchImageBaseUrl={fetchImageBaseUrl}
+            onChange={onChange}
           />
         )
       )}
@@ -44,12 +47,14 @@ export default function LiveBlogItems({
             key={article.id}
             article={article}
             fetchImageBaseUrl={fetchImageBaseUrl}
+            onChange={onChange}
           />
         ) : (
           <LiveBlogItemExternal
             key={article.id}
             article={article}
             fetchImageBaseUrl={fetchImageBaseUrl}
+            onChange={onChange}
           />
         )
       )}

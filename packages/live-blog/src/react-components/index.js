@@ -10,11 +10,30 @@ const GlobalStyles = createGlobalStyle`
   }
 `
 
+/**
+ *  @callback OnChange
+ *  @param {Object} props
+ *  @param {'tag'|'liveBlogItem'} props.category
+ *  @param {'click'|'scroll'} [props.eventName]
+ *  @param {string} [props.eventTarget]
+ *  @param {*} [props.eventValue]
+ *  @param {*} [props.metadata]
+ */
+
+/**
+ *  @param {Object} props
+ *  @param {Object} props.initialLiveblog
+ *  @param {string} [props.fetchLiveblogUrl='']
+ *  @param {string} [props.fetchImageBaseUrl='https://editools-gcs-dev.readr.tw']
+ *  @param {boolean} [props.toLoadPeriodically=true]
+ *  @param {OnChange} [props.onChange]
+ */
 export default function LiveBlog({
   initialLiveblog,
   fetchLiveblogUrl = '',
   fetchImageBaseUrl = 'https://editools-gcs-dev.readr.tw',
   toLoadPeriodically = true,
+  onChange,
 }) {
   const [liveblog, setLiveblog] = useState(initialLiveblog)
 
@@ -64,6 +83,7 @@ export default function LiveBlog({
       <LiveBlogContainr
         liveblog={liveblog}
         fetchImageBaseUrl={fetchImageBaseUrl}
+        onChange={onChange}
       />
     </>
   )

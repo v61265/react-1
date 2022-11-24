@@ -9,7 +9,7 @@ import { liveblogItemId } from '../utils/anchor-scroll-helper'
 
 const initialShowingCount = 5
 
-export default function LiveBlogContainr({ liveblog, fetchImageBaseUrl }) { // eslint-disable-line
+export default function LiveBlogContainr({ liveblog, fetchImageBaseUrl, onChange }) { // eslint-disable-line
   const liveblogItemsRef = useRef([])
   const [boostedLiveblogItems, setBoostedLiveblogItems] = useState([])
   // showing means rendering non boosted liveblogItems
@@ -23,9 +23,16 @@ export default function LiveBlogContainr({ liveblog, fetchImageBaseUrl }) { // e
   const [firstMounted, setFirstMounted] = useState(true)
 
   //Get Tags
-  const tagsArr = liveblog?.liveblog_items
-    .map((liveblogItem) => liveblogItem.tags?.name)
-    .filter((item) => item)
+  const tagsArr = liveblog?.liveblog_items.reduce((tags, liveblogItem) => {
+    const _tags = Array.isArray(liveblogItem.tags)
+      ? liveblogItem.tags.map((tag) => tag?.name)
+      : liveblogItem.tags?.name
+    if (_tags) {
+      return tags.concat(_tags)
+    }
+    return tags
+  }, [])
+
   const uniqTags = [...new Set(tagsArr)].map((string) => string.slice(0, 4))
 
   useEffect(() => {
@@ -122,11 +129,13 @@ export default function LiveBlogContainr({ liveblog, fetchImageBaseUrl }) { // e
           setShowingCount(initialShowingCount)
           setActiveTags(activeTags)
         }}
+        onChange={onChange}
       />
       <LiveBlogItems
         articles={showingLiveblogItems}
         pinedArticles={boostedLiveblogItems}
         fetchImageBaseUrl={fetchImageBaseUrl}
+        onChange={onChange}
       />
     </LiveBlogWrapper>
   )
