@@ -1,9 +1,14 @@
 # @readr-media/react-live-blog Changelog
 
+## 2022-11-25, Version 1.1.2
+### Commits
+* \[[`7404a2141d`](https://github.com/readr-media/react/commit/7404a2141d)] - chore(live-blog): update version to @1.1.1 (nickhsine)
+* \[[`6fc6594294`](https://github.com/readr-media/react/commit/6fc6594294)] - fix(live-blog): missing tags in live blog items (nickhsine)
+
 ## 2022-11-25, Version 1.1.1
 ### Commits
-* \[[`0838c047be`](https://github.com/readr-media/react-live-blog/commit/0838c047be)] - chore(live-blog): update version to @1.1.1 (nickhsine)
-* \[[`77a1d241f8`](https://github.com/readr-media/react-live-blog/commit/77a1d241f8)] - fix(live-blog): item can not be expanded (nickhsine)
+* \[[`0838c047be`](https://github.com/readr-media/react/commit/0838c047be)] - chore(live-blog): update version to @1.1.1 (nickhsine)
+* \[[`77a1d241f8`](https://github.com/readr-media/react/commit/77a1d241f8)] - fix(live-blog): item can not be expanded (nickhsine)
 
 ## 2022-11-24, Version 1.1.0
 
