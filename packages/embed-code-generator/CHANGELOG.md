@@ -1,5 +1,10 @@
 # @readr-media/react
 
+## 2022-11-25, Version 2.0.2
+### Commits
+* \[[`25f94e9528`](https://github.com/readr-media/react/commit/25f94e9528)] - chore(ecg): update version to @2.0.2 (nickhsine)
+* \[[`45f0fb32b0`](https://github.com/readr-media/react/commit/45f0fb32b0)] - chore(ecg): upgrade react-live-blog to 1.1.0 (nickhsine)
+
 ## 2022-11-24, Version 2.0.1
 ### Commits
 * \[[`31dc640834`](https://github.com/readr-media/react/commit/31dc640834)] - chore(ecg): update version to 2.0.1 (nickhsine)
