@@ -35,7 +35,6 @@ const LiveBlogWrapper = styled.div`
 
 const LiveBlog = styled.div`
   overflow: hidden;
-  height: 100%;
 `
 
 let pageWasScrolled = false
