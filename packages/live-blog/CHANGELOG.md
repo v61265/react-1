@@ -1,5 +1,10 @@
 # @readr-media/react-live-blog Changelog
 
+## 2022-11-25, Version 1.1.1
+### Commits
+* \[[`0838c047be`](https://github.com/readr-media/react-live-blog/commit/0838c047be)] - chore(live-blog): update version to @1.1.1 (nickhsine)
+* \[[`77a1d241f8`](https://github.com/readr-media/react-live-blog/commit/77a1d241f8)] - fix(live-blog): item can not be expanded (nickhsine)
+
 ## 2022-11-24, Version 1.1.0
 
 ### Notable Changes

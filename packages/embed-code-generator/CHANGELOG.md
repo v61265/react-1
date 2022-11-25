@@ -1,5 +1,9 @@
 # @readr-media/react
 
+## 2022-11-25, Version 2.0.3
+### Commits
+* \[[`a3976bd672`](https://github.com/readr-media/react-embed-code-generator/commit/a3976bd672)] - chore(ecg): update version to 2.0.3 and upgrade react-live-blog to 1.1.1 (nickhsine)
+
 ## 2022-11-25, Version 2.0.2
 ### Commits
 * \[[`25f94e9528`](https://github.com/readr-media/react/commit/25f94e9528)] - chore(ecg): update version to @2.0.2 (nickhsine)
