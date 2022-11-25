@@ -79,7 +79,9 @@ export default function LiveBlogItemHeader({ article }) {
       {article.type !== 'external' ? (
         <>
           <CategoryWrapper>
-            {article.tags && <Category>{article.tags.name}</Category>}
+            {article.tags?.map((tag, idx) => {
+              return <Category key={idx}>{tag?.name}</Category>
+            })}
           </CategoryWrapper>
           <PublishInfoWrapper>
             <PublisherWrapper>
@@ -93,7 +95,11 @@ export default function LiveBlogItemHeader({ article }) {
         </>
       ) : (
         <PublishInfoWrapper>
-          <div>{article.tags && <Category>{article.tags.name}</Category>}</div>
+          <div>
+            {article.tags?.map((tag, idx) => {
+              return <Category key={idx}>{tag?.name}</Category>
+            })}
+          </div>
           <PublishDate>{toLocaleString(article.publishTime)}</PublishDate>
         </PublishInfoWrapper>
       )}
