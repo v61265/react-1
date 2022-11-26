@@ -5,84 +5,84 @@ const partiesColor = [
   {
     index: 1,
     name: '中國國民黨',
-    color: '#7CA1FF',
+    colors: ['#183193', '#122F9A', '#3356D8', '#5478FF', '#89A2FF'],
   },
   {
     index: 2,
     name: '民主進步黨',
-    color: '#499A6C',
+    colors: ['#18513B', '#165642', '#337C65', '#5CB096', '#80D4BA'],
   },
   {
     index: 3,
     name: '台灣民眾黨',
-    color: '#7EDBDB',
+    colors: ['#0E879D', '#1BA2BF', '#47C1E3', '#80DDF1', '#AAF0FF'],
   },
   {
     index: 4,
     name: '時代力量',
-    color: '#FFD337',
+    colors: ['#C88F00', '#DDA310', '#F9BE01', '#FFDA7B', '#FFE7A8'],
   },
   {
     index: 5,
     name: '台灣團結聯盟',
-    color: '#CB9869',
+    colors: ['#633E09', '#693D00', '#AB6300', '#D28A27', '#F6BB6A'],
   },
   {
     index: 6,
     name: '社會民主黨',
-    color: '#F777B4',
+    colors: ['#A7093B', '#C90D4C', '#E7316E', '#FA5F93', '#FF86AE'],
   },
   {
     index: 7,
     name: '勞動黨',
-    color: '#E24747',
+    colors: ['#8C1F18', '#9C241F', '#BC423D', '#D9716C', '#F6A39F'],
   },
   {
     index: 8,
     name: '親民黨',
-    color: '#F7973F',
+    colors: ['#DF5609', '#E25100', '#F27C0E', '#FE9634', '#FFAF64'],
   },
   {
     index: 9,
     name: '台灣基進',
-    color: '#BB4429',
+    colors: ['#77250E', '#952C11', '#A73F24', '#CE674C', '#DD856E'],
   },
   {
     index: 10,
     name: '新黨',
-    color: '#FCFF70',
+    colors: ['#DCC603', '#EFD915', '#FFF500', '#FFFA81', '#FFFCA9'],
   },
   {
     index: 11,
     name: '綠黨',
-    color: '#B4FA94',
+    colors: ['#3B920F', '#51C21C', '#77E046', '#9FFF73', '#69D437'],
   },
   {
     index: 12,
     name: '無黨團結聯盟',
-    color: '#B43F93',
+    colors: ['#600000', '#92001A', '#C20F51', '#DF4981', '#D18DA6'],
   },
   {
     index: 998,
     name: '開票中',
-    color: '#fff',
+    colors: ['#fff', '#fff', '#fff', '#fff', '#fff'],
   },
   {
     index: 999,
     name: '無黨籍',
-    color: '#333333',
+    colors: ['#272727', '#4A4A4A', '#666666', '#818181', '#B1B1B1'],
   },
   {
     index: 1000,
     name: '其他政黨',
-    color: '#958090',
+    colors: ['#634455', '#966982', '#958090', '#C3B4BD', '#E8DFE4'],
   },
 ]
 
 const getPartyColor = (party) => {
   const color =
     partiesColor.find((partyColor) => party.startsWith(partyColor.name))
-      ?.color || partiesColor[partiesColor.length - 1].color
+      ?.colors[2] || partiesColor[partiesColor.length - 1].colors[2]
   return color
 }
 
@@ -160,8 +160,7 @@ const SeatInfo = styled.div`
       left: ${coordinate[0]}px;
     `
       : `
-      top: 0;
-      left: 0;
+        display: none;
     `}
 `
 
