@@ -33,7 +33,7 @@ export default function LiveBlogContainr({ liveblog, fetchImageBaseUrl, onChange
     return tags
   }, [])
 
-  const uniqTags = [...new Set(tagsArr)].map((string) => string.slice(0, 4))
+  const uniqTags = [...new Set(tagsArr)].map((string) => string)
 
   useEffect(() => {
     if (liveblog?.liveblog_items) {
@@ -43,7 +43,7 @@ export default function LiveBlogContainr({ liveblog, fetchImageBaseUrl, onChange
         .filter((liveblogItem) => {
           const tags = liveblogItem.tags ?? []
           return activeTags.length
-            ? tags.find((tag) => activeTags.includes(tag?.name.slice(0, 4))) &&
+            ? tags.find((tag) => activeTags.includes(tag?.name)) &&
                 liveblogItem.boost
             : liveblogItem.boost
         })
@@ -57,7 +57,7 @@ export default function LiveBlogContainr({ liveblog, fetchImageBaseUrl, onChange
         .filter((liveblogItem) => {
           const tags = liveblogItem.tags ?? []
           return activeTags.length
-            ? tags.find((tag) => activeTags.includes(tag?.name.slice(0, 4))) &&
+            ? tags.find((tag) => activeTags.includes(tag?.name)) &&
                 !liveblogItem.boost
             : !liveblogItem.boost
         })

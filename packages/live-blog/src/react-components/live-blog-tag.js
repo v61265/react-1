@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components'
 
 const Tag = styled('button')`
-  width: 80px;
+  padding: 0 8px;
   height: 24px;
   color: #666666;
   font-size: 16px;
@@ -30,6 +30,7 @@ const Tag = styled('button')`
 const TagsWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   flex-direction: row;
   margin: 48px 0;
 
