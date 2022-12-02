@@ -5,7 +5,7 @@ const namespace = '@readr-media'
 
 function hydrate(namespace, pkgName, Component) {
   const dataArr = window[namespace][pkgName]
-  const data = dataArr.shift()
+  const data = Array.isArray(dataArr) ? dataArr.shift() : {}
   const { uuid, ...dataOfComponent } = data
   const container = document.getElementById(uuid)
   hydrateRoot(container, <Component {...dataOfComponent} />)
@@ -31,7 +31,7 @@ if (window?.[namespace]['react-feedback']) {
   import(
     /* webpackChunkName: "react-feedback" */ '@readr-media/react-feedback'
   ).then(({ default: Feedback }) => {
-    hydrate(namespace, 'react-questionnaire', Feedback)
+    hydrate(namespace, 'react-feedback', Feedback)
   })
 }
 
@@ -39,7 +39,7 @@ if (window?.[namespace]['react-karaoke']) {
   import(
     /* webpackChunkName: "react-karaoke" */ '@readr-media/react-karaoke'
   ).then(({ default: Karaoke }) => {
-    hydrate(namespace, 'react-questionnaire', Karaoke)
+    hydrate(namespace, 'react-karaoke', Karaoke)
   })
 }
 
