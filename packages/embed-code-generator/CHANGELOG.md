@@ -1,5 +1,10 @@
 # @readr-media/react
 
+## 2022-12-02, Version 2.0.5
+### Commits
+* \[[`1b58b012d9`](https://github.com/readr-media/react-embed-code-generator/commit/1b58b012d9)] - chore(ecg): update version to 2.0.5 (nickhsine)
+* \[[`cb1ee52872`](https://github.com/readr-media/react-embed-code-generator/commit/cb1ee52872)] - fix(ecg): fix typos (nickhsine)
+
 ## 2022-11-25, Version 2.0.4
 ### Commits
 * \[[`74e22e97b0`](https://github.com/readr-media/react/commit/74e22e97b0)] - chore(ecg): update version to @2.0.4 (nickhsine)
