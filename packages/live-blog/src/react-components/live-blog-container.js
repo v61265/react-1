@@ -12,10 +12,11 @@ const initialShowingCount = 5
 export default function LiveBlogContainr({ liveblog, fetchImageBaseUrl, onChange }) { // eslint-disable-line
   const liveblogItemsRef = useRef([])
   const [boostedLiveblogItems, setBoostedLiveblogItems] = useState([])
-  // showing means rendering non boosted liveblogItems
-  const [showingCount, setShowingCount] = useState(initialShowingCount)
+  // showing non boosted liveblogItems
+  // set default to 0 to prevent anchor scroll to wrong place
+  const [showingCount, setShowingCount] = useState(0)
   const [showingLiveblogItems, setShowingLiveblogItems] = useState(
-    [].concat(liveblog?.liveblog_items?.slice(0, initialShowingCount))
+    [].concat(liveblog?.liveblog_items?.slice(0, showingCount))
   )
   const [newToOld, setNewToOld] = useState(true)
   const loadingMoreRef = useRef(false)
@@ -38,6 +39,7 @@ export default function LiveBlogContainr({ liveblog, fetchImageBaseUrl, onChange
   useEffect(() => {
     if (liveblog?.liveblog_items) {
       liveblogItemsRef.current = liveblog.liveblog_items
+      let newShowingCount = showingCount
 
       const boostedLiveblogItems = liveblogItemsRef.current
         .filter((liveblogItem) => {
@@ -66,18 +68,24 @@ export default function LiveBlogContainr({ liveblog, fetchImageBaseUrl, onChange
           const tsB = new Date(b.publishTime).getTime()
           return newToOld ? tsB - tsA : tsA - tsB
         })
-      if (document.location.hash && firstMounted) {
-        const index = liveblogItemsToShow.findIndex(
-          (liveblogItem) =>
-            `#${liveblogItemId(liveblogItem.id)}` === document.location.hash
-        )
-        setShowingCount(Math.ceil((index + 1) / 5) * 5)
-        setFirstMounted(false)
+      if (firstMounted) {
+        if (document.location.hash) {
+          const index = liveblogItemsToShow.findIndex(
+            (liveblogItem) =>
+              `#${liveblogItemId(liveblogItem.id)}` === document.location.hash
+          )
+          newShowingCount = Math.ceil((index + 1) / 5) * 5
+          setFirstMounted(false)
+        } else {
+          newShowingCount = 5
+          setFirstMounted(false)
+        }
       }
-      const showingLiveblogItems = liveblogItemsToShow.slice(0, showingCount)
+      const showingLiveblogItems = liveblogItemsToShow.slice(0, newShowingCount)
 
       setBoostedLiveblogItems(boostedLiveblogItems)
       setShowingLiveblogItems(showingLiveblogItems)
+      setShowingCount(newShowingCount)
       loadingMoreRef.current = false
     }
   }, [liveblog, newToOld, showingCount, firstMounted, activeTags])
@@ -107,6 +115,8 @@ export default function LiveBlogContainr({ liveblog, fetchImageBaseUrl, onChange
       window.removeEventListener('scroll', loadMore)
     }
   }, [boostedLiveblogItems, showingLiveblogItems])
+
+  console.log('showingLiveblogItems', showingLiveblogItems)
 
   return (
     <LiveBlogWrapper>

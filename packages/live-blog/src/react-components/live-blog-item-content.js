@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import styled from 'styled-components'
 import DraftRenderer from './draft-js/draft-renderer'
 
@@ -36,9 +36,6 @@ const HeroImageWrapper = styled.div`
 
 const DraftEditorWrapper = styled.div`
   margin-top: 20px;
-  overflow: hidden;
-  height: ${({ expanded, height }) => (expanded ? 'unset' : `${height}px`)};
-  min-height: ${({ expanded, height }) => (expanded ? `${height}px` : 'unset')};
   font-size: 16px;
   line-height: 1.5;
   padding: 0 116px;
@@ -56,8 +53,17 @@ const ImgCaption = styled.div`
   margin-top: 4px;
 `
 
-// 5 lines of normal text
-const defaultContentHeight = 87.5
+const Img = styled.img`
+  width: 100%;
+  ${({ w, h }) => {
+    // set aspect-ratio to prevent cls cause anchor scroll to wrong position
+    if (w && h) {
+      return `aspect-ratio: ${w} / ${h}`
+    } else {
+      return `aspect-ratio: 16 / 9`
+    }
+  }}
+`
 
 export default function LiveBlogItemContent({
   article,
@@ -65,82 +71,49 @@ export default function LiveBlogItemContent({
   fetchImageBaseUrl,
   contentTooShort,
 }) {
-  const targetRef = useRef()
-  const [contentHeight, setContentHeight] = useState(defaultContentHeight)
-
-  let heroImage = {}
+  let heroImage
   if (article?.heroImage) {
     heroImage = {
-      name: article.heroImage.name,
+      caption: article.imageCaption || article.heroImage.name,
       url: fetchImageBaseUrl + article.heroImage.imageFile.url,
+      width: article.heroImage.imageFile.width,
+      height: article.heroImage.imageFile.height,
     }
   }
 
-  useEffect(() => {
-    // delay to calculate in order to get the real DOM height
-    setTimeout(() => {
-      if (targetRef.current) {
-        /*
-        accumulate the height of contentBlocks to render the wrapper with height closest to the spec (5 lines)
-        and prevent words got cut vertically
-        */
-        const contentBlocks = [
-          ...targetRef.current.querySelectorAll('[data-block="true"]'),
-        ]
-
-        let accumulationHeight = 0
-        let lastMarginBottom = 0
-
-        contentBlocks.every((contentBlock) => {
-          let height = contentBlock.clientHeight
-          const style = getComputedStyle(contentBlock)
-          let marginTop = parseInt(style.marginTop)
-          if (lastMarginBottom) {
-            // prevent double counting margin since margin collapses
-            marginTop =
-              lastMarginBottom > marginTop ? 0 : lastMarginBottom - marginTop
-          }
-          let marginBottom = parseInt(style.marginBottom)
-          lastMarginBottom = marginBottom
-
-          height += marginTop
-          height += marginBottom
-          accumulationHeight += height
-          return accumulationHeight > defaultContentHeight ? false : true
-        })
-        setContentHeight(accumulationHeight)
+  const previewArticle = expanded
+    ? article.name
+    : {
+        ...article.name,
+        blocks: article.name.blocks.slice(0, 1),
       }
-    }, 100)
-  }, [])
 
   useEffect(() => {
-    if (!expanded && contentHeight !== defaultContentHeight) {
-      const draftContentWrapper = targetRef.current.querySelector(
-        '.public-DraftEditor-content > div'
-      )
-
-      if (draftContentWrapper.offsetHeight === contentHeight) {
-        contentTooShort(true)
-      }
+    if (article.name.blocks.length === 1) {
+      contentTooShort(true)
     }
-  }, [expanded, contentHeight, contentTooShort])
+  }, [article])
 
   return (
     <Wrapper>
       <Title>{article.title}</Title>
       <HeroImageWrapper>
-        <img
-          src={heroImage?.url || article.externalCoverPhoto}
-          alt={heroImage?.name}
-        />
-        {heroImage?.name && <ImgCaption>圖說：{heroImage?.name}</ImgCaption>}
+        {(heroImage || article.externalCoverPhoto) && (
+          <>
+            <Img
+              src={heroImage?.url || article.externalCoverPhoto}
+              alt={heroImage?.caption}
+              w={heroImage?.width}
+              h={heroImage?.height}
+            />
+            {heroImage?.caption && (
+              <ImgCaption>圖說：{heroImage?.caption}</ImgCaption>
+            )}
+          </>
+        )}
       </HeroImageWrapper>
-      <DraftEditorWrapper
-        expanded={expanded}
-        ref={targetRef}
-        height={contentHeight}
-      >
-        <DraftRenderer rawContentBlock={article.name} />
+      <DraftEditorWrapper>
+        <DraftRenderer rawContentBlock={previewArticle} />
       </DraftEditorWrapper>
     </Wrapper>
   )

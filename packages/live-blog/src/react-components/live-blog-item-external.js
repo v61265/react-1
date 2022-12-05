@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useRef } from 'react'
 import styled from 'styled-components'
 import { liveblogItemId } from '../utils/anchor-scroll-helper'
 import LiveBlogBottomActions from './live-blog-bottom-actions'
@@ -37,8 +37,6 @@ const LiveBlog = styled.div`
   overflow: hidden;
 `
 
-let pageWasScrolled = false
-
 export default function LiveBlogItemExternal({
   pined,
   article,
@@ -48,17 +46,6 @@ export default function LiveBlogItemExternal({
   const [expanded, setExpanded] = useState(false)
   const [hideExpandButton, setHideExpandButton] = useState(false)
   const wrapperRef = useRef()
-
-  useEffect(() => {
-    if (
-      document.location.hash &&
-      `#${wrapperRef.current.id}` === document.location.hash &&
-      !pageWasScrolled
-    ) {
-      wrapperRef.current.scrollIntoView()
-      pageWasScrolled = true
-    }
-  }, [])
 
   const expandClickedHandler = (e) => {
     e.stopPropagation()

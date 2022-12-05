@@ -90,6 +90,7 @@ export default function LiveBlogItem({
   useEffect(() => {
     if (
       document.location.hash &&
+      wrapperRef.current &&
       `#${wrapperRef.current.id}` === document.location.hash &&
       !pageWasScrolled
     ) {
