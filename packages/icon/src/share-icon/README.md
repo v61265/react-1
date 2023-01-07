@@ -1,4 +1,4 @@
-# [@readr-media/icon](https://www.npmjs.com/package/@readr-media/icon) &middot; ![npm version](https://img.shields.io/npm/v/@readr-media/react-image.svg?style=flat)
+# [@readr-media/icon](https://www.npmjs.com/package/@readr-media/icon) &middot; ![npm version](https://img.shields.io/npm/v/@readr-media/react-icon.svg?style=flat)
 
 ## Feature - 社群分享 LOGO
 
