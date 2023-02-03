@@ -175,7 +175,7 @@ export default function CustomImage({
             const index = imagesList.findIndex((p) => p[1] === imageSrc)
             if (index === -1) {
               reject()
-            } else if (index < imagesList.length) {
+            } else if (index < imagesList.length - 1) {
               switch (eventType) {
                 case 'load':
                   resolve(imagesList[index][0])
