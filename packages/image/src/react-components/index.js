@@ -1,9 +1,25 @@
 import React, { useEffect, useRef } from 'react' // eslint-disable-line
 
 /**
+ * @typedef {Object} Rwd
+ * @property {string} [mobile]
+ * @property {string} [tablet]
+ * @property {string} [laptop]
+ * @property {string} [desktop]
+ */
+/**
+ * @typedef {Object} Breakpoint
+ * @property {string} [mobile]
+ * @property {string} [tablet]
+ * @property {string} [laptop]
+ * @property {string} [desktop]
+ */
+
+/**
  * Check an String contain integer, for example, 'w1200' is valid, 'original' or 'randomName' is not valid
  */
 const REGEX = /(\d+)/
+
 /**
  *
  * @param {Object} props
@@ -30,15 +46,15 @@ const REGEX = /(\d+)/
  * - can set if is in debug mode
  * - if `true`, then will print log after image loaded successfully of occur error.
  * - optional, default value is `false`.
- * @param {'auto' | 'manual'} [props.loadMode]
- * - Load images in different mode:
- * - If `'auto'`, it will automatically load the most suitable picture according to the screen width.
- * - If `'manual'`, it will load the corresponding picture according to the specified `loadResolution`.
- * - Optional, default value is `'auto'`
- * @param {string} [props.loadResolution]
- * - which size of image should load first.
- * - Only effective if `props.loadMode` is `'manual'`
- * - Optional, default value is `original`
+ * @param {Breakpoint} [props.breakpoint]
+ * - can change breakpoint of viewport width, which means sizes of images will change on different breakpoint.
+ * - optional, default value is `{ mobile: '767px', tablet: '1199px', laptop: '1439px', desktop: '2439px'}`
+ * @param {Rwd} [props.rwd]
+ * - can set different sizes of image want to load first on different breakpoint of vw (viewport width),
+ * such as {mobile: '300px', tablet: '400px', laptop: '800px', desktop: '1200px'}.
+ * - optional, default value is `{ mobile: '100vw', tablet: '100vw', laptop: '100vw', desktop: '100vw'}`
+ * - if this param is default value, this sizes of images will equal to vw.
+ * - using breakpoint and rwd, you can decide different sizes of image is on each vw.
  * @returns {JSX.Element}
  */
 export default function CustomImage({
@@ -50,8 +66,18 @@ export default function CustomImage({
   width = '100%',
   height = '100%',
   debugMode = false,
-  loadMode = 'auto',
-  loadResolution = 'original',
+  rwd = {
+    mobile: '100vw',
+    tablet: '100vw',
+    laptop: '100vw',
+    desktop: '100vw',
+  },
+  breakpoint = {
+    mobile: '767px',
+    tablet: '1199px',
+    laptop: '1439px',
+    desktop: '2439px',
+  },
 }) {
   const imageRef = useRef(null)
   /**
@@ -118,14 +144,28 @@ export default function CustomImage({
         return `${pair[1]} ${width}w`
       })
       .join(',')
-    const defaultSrc = imagesList
-      .filter((pair) => pair[0] === 'original')
-      .map((pair) => `${pair[1]}`)
-    return `${str}, ${defaultSrc}`
+    return `${str}`
   }
 
-  const imagesList = transformImagesContent(images)
-  const imageSrcSet = transformImagesSrcSet(imagesList)
+  /**
+   * @param {Object} rwd
+   * @param {Object} breakpoint
+   * @returns {string}
+   */
+  const transformImageSizes = (rwd, breakpoint) => {
+    if (rwd && Object.entries(rwd).length) {
+      const obj = {}
+      Object.keys(rwd).forEach((key) => {
+        obj[breakpoint[key]] = rwd[key]
+      })
+      const sizes = Object.entries(obj)
+        .map((pair) => `(max-width: ${pair[0]}) ${pair[1]}`)
+        .join(', ')
+      return `${sizes}, 100vw`
+    } else {
+      return '100vw'
+    }
+  }
 
   /**
    * Print log when `props.debugMode` is true
@@ -140,110 +180,44 @@ export default function CustomImage({
 
   /**
    * Check which image should be load first, and return the resolution of image.
-   * This function will act differently according to value of `loadMode`:
-   *
-   * 1. `loadMode` is "auto":
-   *    - This function check which url of image should be loaded according to the screen width.
-   *    - If loaded successfully, then return the resolution of image, such as 'w480', 'w800', 'original'.
-   *    - If not, then return the resolution of image with larger size.
-   * 2. `loadMode` is "manual":
-   *    - If `loadResolution` is not falsy and existed in item of `imagesList`, will return `loadResolution`.
-   *    - If `loadResolution` is falsy or not existed in item of `imagesList`, will return the smallest resolution in `imagesList`.
    * @param {[string, string][]} imagesList - The URL of the images to load
    * @returns {Promise<string>} - the resolution of image should be loaded
    */
   const getResolution = (imagesList) => {
-    const imagesWidthList = imagesList
-      .filter((pair) => pair[0] !== 'original')
-      .map((pair) => {
-        const width = pair[0].match(REGEX)[0]
-        return Number(width)
-      })
-    switch (loadMode) {
-      case 'auto':
-        const sizes = imagesWidthList
-          .map((width) => `(max-width: ${width}px) ${width}px`)
-          .join(', ')
-        return new Promise((resolve, reject) => {
-          const img = new Image()
-          /**
-           * @param {Event & { target: HTMLImageElement }} event
-           */
-          const eventHandler = (event) => {
-            const eventType = event.type
-            const imageSrc = event.target?.currentSrc
-            const index = imagesList.findIndex((p) => p[1] === imageSrc)
-            if (index === -1) {
-              reject()
-            } else if (index < imagesList.length - 1) {
-              switch (eventType) {
-                case 'load':
-                  resolve(imagesList[index][0])
-                  break
-                case 'error':
-                  resolve(imagesList[index + 1][0])
-              }
-            } else {
-              resolve(imagesList[imagesList.length - 1][0])
-            }
-
-            img.removeEventListener('load', eventHandler)
-            img.removeEventListener('error', eventHandler)
+    const imageSrcSet = transformImagesSrcSet(imagesList)
+    const sizes = transformImageSizes(rwd, breakpoint)
+    return new Promise((resolve, reject) => {
+      const img = new Image()
+      /**
+       * @param {Event & { target: HTMLImageElement }} event
+       */
+      const eventHandler = (event) => {
+        const eventType = event.type
+        const imageSrc = event.target?.currentSrc
+        const index = imagesList.findIndex((p) => p[1] === imageSrc)
+        if (index === -1) {
+          reject()
+        } else if (index < imagesList.length - 1) {
+          switch (eventType) {
+            case 'load':
+              resolve(imagesList[index][0])
+              break
+            case 'error':
+              resolve(imagesList[index + 1][0])
           }
+        } else {
+          resolve(imagesList[imagesList.length - 1][0])
+        }
 
-          img.addEventListener('load', eventHandler)
-          img.addEventListener('error', eventHandler)
-          img.sizes = sizes
-          img.srcset = imageSrcSet
-        })
+        img.removeEventListener('load', eventHandler)
+        img.removeEventListener('error', eventHandler)
+      }
 
-      case 'manual':
-        return new Promise((resolve) => {
-          //loadResolution is not existed,
-          //not an integer with letter 'w' start,
-          //is 'original', then return the biggest sizes in imagesList.
-          if (
-            !loadResolution ||
-            !loadResolution.match(REGEX) ||
-            loadResolution === 'original'
-          ) {
-            resolve(imagesList[imagesList.length - 1][0])
-          } else {
-            const width = Number(loadResolution.match(REGEX)[0])
-
-            /**
-             *
-             * @param {number[]} arr
-             * @param {number} num
-             * @returns {number}
-             */
-            const getClosestNumber = (arr, num) => {
-              let closest = arr[0]
-
-              arr.some((val, i) => {
-                if (val === num) {
-                  closest = val
-                } else if (
-                  i < arr.length - 1 &&
-                  num > val &&
-                  num < arr[i + 1]
-                ) {
-                  closest = arr[i + 1]
-                } else if (i === arr.length - 1 && num > val) {
-                  closest = undefined
-                }
-              })
-              return closest
-            }
-            const closestNumber = getClosestNumber(imagesWidthList, width)
-            if (closestNumber) {
-              resolve(`w${closestNumber}`)
-            } else {
-              resolve(imagesList[imagesList.length - 1][0])
-            }
-          }
-        })
-    }
+      img.addEventListener('load', eventHandler)
+      img.addEventListener('error', eventHandler)
+      img.sizes = sizes
+      img.srcset = imageSrcSet
+    })
   }
 
   /**
@@ -275,9 +249,10 @@ export default function CustomImage({
    * If previous promise is resolved, will end the promise chain, and return URL of image which successfully loaded.
    * If previous promise is rejected, will execute next promise
    * @param {string} resolution - The resolution determine which URL of image should loaded first.
+   * @param {[string,string][]} imagesList - The resolution determine which URL of image should loaded first.
    * @returns {Promise<string>} - The URL of the image should loaded
    */
-  const loadImages = (resolution) => {
+  const loadImages = (resolution, imagesList) => {
     const index = imagesList.findIndex((pair) => pair[0] === resolution)
     const loadList = imagesList.slice(index)
     return loadList.reduce((prevPromise, pair) => {
@@ -290,9 +265,11 @@ export default function CustomImage({
       let callback = (entries, observer) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
+            const imagesList = transformImagesContent(images)
+
             getResolution(imagesList)
               .then((resolution) => {
-                loadImages(resolution)
+                loadImages(resolution, imagesList)
                   .then((url) => {
                     imageRef.current.src = url
                     printLogInDevMode(
@@ -335,10 +312,11 @@ export default function CustomImage({
       imageRef.current.style.visibility = 'hidden'
       console.error(`Unhandled error happened, hide image element', ${err}`)
     }
-  }, [imagesList, defaultImage, printLogInDevMode])
+  }, [defaultImage, printLogInDevMode])
 
   return (
     <img
+      className="readr-media-react-image"
       style={imageStyle}
       ref={imageRef}
       src={loadingImage ? loadingImage : defaultImage}

@@ -6,9 +6,9 @@
 ## Feature
 
 - 可傳入的多個圖片URL，並依序載入。
-- 可選擇兩種載入模式，決定首次載入的圖片尺寸：
-  - `auto`: 可由元件判定裝置螢幕寬度，自動載入最適合的尺寸的圖片。
-  - `manual`：可傳入參數`loadResolution`，由使用者自行決定欲載入的圖片尺寸。
+- 可傳入參數`rwd`，決定不同螢幕寬度下的圖片。
+- 可傳入參數`breakpoint`，修改螢幕寬度斷點。
+- 元件會依據參數`rwd`與DPR（Device pixel ratio），決定最先載入的圖片URL為何。
 - 當特定圖片載入成功時，則顯示該圖片；當特定圖片載入失敗時，則載入更大尺寸的圖片。
 - 當所有圖片URL皆載入失敗時，載入預設圖片。
 - 實作圖片載入動畫效果。
@@ -26,12 +26,16 @@ export default function SomeComponent() {
   return (
     <div>
       <OtherComponent/>
-      
-      {/* If `loadMode` is auto, `CustomImage` will determine which size of image should load first based on screen width, so different URL of image will load on different screen width. */}
-      <CustomImage images={IMAGES_URL} loadMode="auto"/>
-      
-      {/* If `loadMode` is manual, `CustomImage` will determine which size of image should load first based on `loadResolution`. In here, "w800.png" will loaded first regardless of screen width*/}
-      <CustomImage images={IMAGES_URL} loadMode="manual" loadResolution="w800"/>
+   
+       <Image
+          images={IMAGES_URL}
+          rwd={{
+            mobile: '320px',
+            tablet: '244px',
+            laptop: '500px',
+            desktop: '1200px',
+          }}
+        ></Image>
 
     </div>
   )
@@ -52,8 +56,8 @@ export default function SomeComponent() {
 | objectFit    | String   |      | `"cover"`        | 圖片區塊填滿設定，即為CSS property `object-fit`                                                                                                                                                                                                         |
 | height       | String   |      | `"100%"`         | 圖片高度                                                                                                                                                                                                                                                |
 | width        | String   |      | `"100%"`         | 圖片寬度                                                                                                                                                                                                                                                |
-| loadMode     | String   |      | `"auto"`         | 圖片載入模式，若傳入`"auto"`，則會依據螢幕寬度載入最適合大小的圖片；若傳入`"manual"`，則會依據另一參數`"loadResolution"`，載入指定尺寸的圖片。若loadMode為manual，但`"loadResolution"`為falsy值或不存在參數images屬性的任一件鍵值，則從最小尺寸圖片載入。 |
-| loadResolution|String|      |`"original"`|圖片載入尺寸，只有在另一參數`loadMode`為`"manual"`時才有效。|
+| rwd     | Object   |      | `{mobile: '100vw', tablet: '100vw', laptop: '100vw', desktop: '100vw', }`         | 不同螢幕寬度斷點下的圖片尺寸。|
+| breakpoint| Object |      |`{ mobile: '767px', tablet: '1199px', laptop: '1439px', desktop: '2439px', }`|螢幕寬度斷點。 搭配rwd，可以組出不同螢幕寬度斷點下的圖片尺寸。|
 | debugMode    | Boolean  |      | `false`          | 是否開啟開發模式，若開啟，則在載入圖片成功或失敗時，透過`console.log`顯示相關訊息                                                                                                                                                                       |
 
 
