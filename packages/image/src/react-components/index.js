@@ -47,14 +47,17 @@ const REGEX = /(\d+)/
  * - if `true`, then will print log after image loaded successfully of occur error.
  * - optional, default value is `false`.
  * @param {Breakpoint} [props.breakpoint]
- * - can change breakpoint of viewport width, which means sizes of images will change on different breakpoint.
+ * - breakpoint of viewport width.
  * - optional, default value is `{ mobile: '767px', tablet: '1199px', laptop: '1439px', desktop: '2439px'}`
+ * - For example, if we set breakpoint as `{ mobile: '767px', tablet: '1199px', laptop: '1439px', desktop: '2439px'}`,
+ * - which means if viewport width is not greater then 767px, screen is mobile size, then we will get image sizes by comparing the value of `props.rwd`.
+ * - It will affect which url of 'props.images' should loaded first.
  * @param {Rwd} [props.rwd]
  * - can set different sizes of image want to load first on different breakpoint of vw (viewport width),
  * such as {mobile: '300px', tablet: '400px', laptop: '800px', desktop: '1200px'}.
  * - optional, default value is `{ mobile: '100vw', tablet: '100vw', laptop: '100vw', desktop: '100vw'}`
+ * - using `props.breakpoint` and `props.rwd`, you can decide different sizes of image is on each vw.
  * - if this param is default value, this sizes of images will equal to vw.
- * - using breakpoint and rwd, you can decide different sizes of image is on each vw.
  * @returns {JSX.Element}
  */
 export default function CustomImage({
@@ -144,7 +147,7 @@ export default function CustomImage({
         return `${pair[1]} ${width}w`
       })
       .join(',')
-    return `${str}`
+    return str
   }
 
   /**
@@ -186,37 +189,44 @@ export default function CustomImage({
   const getResolution = (imagesList) => {
     const imageSrcSet = transformImagesSrcSet(imagesList)
     const sizes = transformImageSizes(rwd, breakpoint)
+    const originalSrc = images['original']
     return new Promise((resolve, reject) => {
-      const img = new Image()
-      /**
-       * @param {Event & { target: HTMLImageElement }} event
-       */
-      const eventHandler = (event) => {
-        const eventType = event.type
-        const imageSrc = event.target?.currentSrc
-        const index = imagesList.findIndex((p) => p[1] === imageSrc)
-        if (index === -1) {
-          reject()
-        } else if (index < imagesList.length - 1) {
-          switch (eventType) {
-            case 'load':
-              resolve(imagesList[index][0])
-              break
-            case 'error':
-              resolve(imagesList[index + 1][0])
+      if (imageSrcSet) {
+        const img = new Image()
+        /**
+         * @param {Event & { target: HTMLImageElement }} event
+         */
+        const eventHandler = (event) => {
+          const eventType = event.type
+          const imageSrc = event.target?.currentSrc
+          const index = imagesList.findIndex((p) => p[1] === imageSrc)
+          if (index === -1) {
+            reject()
+          } else if (index < imagesList.length - 1) {
+            switch (eventType) {
+              case 'load':
+                resolve(imagesList[index][0])
+                break
+              case 'error':
+                resolve(imagesList[index + 1][0])
+            }
+          } else {
+            resolve(imagesList[imagesList.length - 1][0])
           }
-        } else {
-          resolve(imagesList[imagesList.length - 1][0])
+
+          img.removeEventListener('load', eventHandler)
+          img.removeEventListener('error', eventHandler)
         }
 
-        img.removeEventListener('load', eventHandler)
-        img.removeEventListener('error', eventHandler)
+        img.addEventListener('load', eventHandler)
+        img.addEventListener('error', eventHandler)
+        img.sizes = sizes
+        img.srcset = imageSrcSet
+      } else if (originalSrc) {
+        resolve('original')
+      } else {
+        reject()
       }
-
-      img.addEventListener('load', eventHandler)
-      img.addEventListener('error', eventHandler)
-      img.sizes = sizes
-      img.srcset = imageSrcSet
     })
   }
 
@@ -259,7 +269,14 @@ export default function CustomImage({
       return prevPromise.catch(() => loadImage(pair[1]))
     }, Promise.reject())
   }
-
+  /**
+   * set url on <img> and remove css `filter` property after loaded
+   * @param {string} url
+   */
+  const setImageUrl = (url) => {
+    imageRef.current.src = url
+    imageRef.current.style.filter = 'unset'
+  }
   useEffect(() => {
     try {
       let callback = (entries, observer) => {
@@ -271,13 +288,13 @@ export default function CustomImage({
               .then((resolution) => {
                 loadImages(resolution, imagesList)
                   .then((url) => {
-                    imageRef.current.src = url
+                    setImageUrl(url)
                     printLogInDevMode(
                       `Successfully Load image, current image source is ${url}`
                     )
                   })
                   .catch(() => {
-                    imageRef.current.src = defaultImage
+                    setImageUrl(defaultImage)
                     printLogInDevMode(
                       'Unable to load any image, try to use default image as image src'
                     )
@@ -287,13 +304,11 @@ export default function CustomImage({
                   })
               })
               .catch(() => {
-                imageRef.current.src = defaultImage
+                setImageUrl(defaultImage)
                 printLogInDevMode(
                   'Unable to get resolution, try to use default image as image src'
                 )
               })
-
-            imageRef.current.style.filter = 'unset'
             observer.unobserve(entry.target)
           }
         })
