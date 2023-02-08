@@ -294,19 +294,23 @@ export default function CustomImage({
                     )
                   })
                   .catch(() => {
-                    setImageUrl(defaultImage)
-                    printLogInDevMode(
-                      'Unable to load any image, try to use default image as image src'
-                    )
-                    imageRef.current.addEventListener('error', () => {
-                      printLogInDevMode('Unable to load default image')
-                    })
+                    if (imageRef.current?.src) {
+                      setImageUrl(defaultImage)
+                      printLogInDevMode(
+                        'Unable to load any image, try to use default image as image src'
+                      )
+                      imageRef.current.addEventListener('error', () => {
+                        printLogInDevMode('Unable to load default image')
+                      })
+                    }
                   })
               })
               .catch(() => {
                 setImageUrl(defaultImage)
                 printLogInDevMode(
-                  'Unable to get resolution, try to use default image as image src'
+                  `Unable to get resolution on ${JSON.stringify(
+                    images
+                  )}, which means doesn't provide any url of image, try to use default image as image src`
                 )
               })
             observer.unobserve(entry.target)
