@@ -1,9 +1,14 @@
 ## Monorepo setup
-This is a monorepo containing sub-packages:
-- [@readr-media/react-questionnaire](https://www.npmjs.com/package/@readr-media/react-questionnaire): see [`packages/questionnaire`](https://github.com/readr-media/react/tree/main/packages/questionnaire)
-- [@readr-media/react-feedback](https://www.npmjs.com/package/@readr-media/react-feedback): see [`packages/feedback`](https://github.com/readr-media/react/tree/main/packages/feedback)
-- [@readr-media/react-qa-list](https://www.npmjs.com/package/@readr-media/react-qa-list): see [`packages/qa-list`](https://github.com/readr-media/react/tree/main/packages/qa-list)
-- [@readr-media/react-embed-code-generator](https://www.npmjs.com/package/@readr-media/react-embed-code-generator): see [`packages/embed-code-genarator`](https://github.com/readr-media/react/tree/main/packages/embed-code-generator)
+This is a monorepo containing sub-packages that can be used across any projects or orgnizations:
+- [@readr-media/react-questionnaire](https://www.npmjs.com/package/@readr-media/react-questionnaire): see [`packages/questionnaire`](./packages/questionnaire)
+- [@readr-media/react-feedback](https://www.npmjs.com/package/@readr-media/react-feedback): see [`packages/feedback`](./packages/feedback)
+- [@readr-media/react-qa-list](https://www.npmjs.com/package/@readr-media/react-qa-list): see [`packages/qa-list`](./packages/qa-list)
+- [@readr-media/react-embed-code-generator](https://www.npmjs.com/package/@readr-media/react-embed-code-generator): see [`packages/embed-code-genarator`](./packages/embed-code-generator)
+- [@readr-media/react-election-votes-comparison](https://www.npmjs.com/package/@readr-media/react-election-votes-comparison): see [`packages/election-votes-comparison`](./packages/embed-code-generator)
+- [@readr-media/react-election-widgets](https://www.npmjs.com/package/@readr-media/react-election-widgets): see [`packages/react-election-widgets`](./packages/election-widgets)
+- [@readr-media/react-image](https://www.npmjs.com/package/@readr-media/react-image): see [`packages/image`](./packages/image)
+- [@readr-media/react-karaoke](https://www.npmjs.com/package/@readr-media/react-karaoke): see [`packages/karaoke`](./packages/karaoke)
+- [@readr-media/react-live-blog](https://www.npmjs.com/package/@readr-media/react-live-blog): see [`packages/live-blog`](./packages/live-blog)
 
 ### Development
 Before modifying sub-packages' source codes, make sure you install dependencies on root first.  
