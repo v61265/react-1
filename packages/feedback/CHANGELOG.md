@@ -1,5 +1,23 @@
 # @readr-media/react-feedback Changelog
 
+## 2022-11-11, Version 3.3.0
+
+### Notable Changes
+- chore: set react and styled-components as peerDependencies
+### Commits
+* \[[`c9ac6172b8`](https://github.com/readr-media/react-feedback/commit/c9ac6172b8)] - chore(feedback): bump version to 3.3.0 (Tsuki Akiba)
+* \[[`2becf223eb`](https://github.com/readr-media/react-feedback/commit/2becf223eb)] - chore(feedback): set react and styled-components as peerDependencies (Tsuki Akiba)
+* \[[`582fa5a437`](https://github.com/readr-media/react-feedback/commit/582fa5a437)] - docs(feedback): update CHANGELOG (Tsuki Akiba)
+
+## 2022-11-11, Version 3.2.0
+
+### Notable Changes
+- chore: update react package version to `^18.1.0`
+### Commits
+* \[[`e4ef821806`](https://github.com/readr-media/react-feedback/commit/e4ef821806)] - chore(feedback): bump version to 3.2.0 (Tsuki Akiba)
+* \[[`6c1e2054a7`](https://github.com/readr-media/react-feedback/commit/6c1e2054a7)] - chore(feedback): update react package version (Tsuki Akiba)
+* \[[`a33cbfec81`](https://github.com/readr-media/react-feedback/commit/a33cbfec81)] - docs(feedback): update CHANGELOG (Tsuki Akiba)
+
 ## 2022-11-11, Version 3.1.0
 
 ### Notable Changes
