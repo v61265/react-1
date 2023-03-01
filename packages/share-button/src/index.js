@@ -7,7 +7,6 @@ import SocialIcon from './react-components/social-icon'
 
 const ButtonWrapper = styled.div`
   display: inline-block;
-  cursor: pointer;
   position: relative;
   width: 21px;
 
@@ -17,6 +16,13 @@ const ButtonWrapper = styled.div`
     display: block;
   }
 
+  button {
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+
   @media (min-width: 768px) {
     width: 28px;
   }
@@ -24,7 +30,7 @@ const ButtonWrapper = styled.div`
 
 /**
  * @param {Object} props
- * @param {string} [props.pathColor]
+ * @param {string} [props.pathColor='']
  * @param {string} [props.direction='vertical']
  * @param {string} [props.className='readr-share-button']
  * @param {import("react").MouseEventHandler} [props.onClick]
@@ -50,15 +56,16 @@ export function ShareButton({
   }
 
   return (
-    <ButtonWrapper
-      className={className}
-      onClick={() => {
-        toggleShareIcons()
-        onClick()
-      }}
-      aria-label="點擊展開社群分享按鈕"
-    >
-      <ShareIcon pathColor={pathColor} />
+    <ButtonWrapper className={className}>
+      <button
+        onClick={() => {
+          toggleShareIcons()
+          typeof onClick === 'function' && onClick()
+        }}
+        aria-label="點擊展開社群分享按鈕"
+      >
+        <ShareIcon pathColor={pathColor} />
+      </button>
       <SocialIcon
         show={show}
         direction={direction}

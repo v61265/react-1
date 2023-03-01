@@ -2,6 +2,7 @@ import React from 'react' // eslint-disable-line
 import styled from 'styled-components'
 
 const CopyAlert = styled.div`
+  user-select: none;
   p {
     padding: 21px 10px;
     border-radius: 16px;
@@ -40,7 +41,7 @@ const CopyAlert = styled.div`
 
 /**
  * @param {Object} props
- * @param {boolean} [props.showAlert=false]
+ * @param {boolean} [props.showAlert]
  * @return {JSX.Element}
  */
 

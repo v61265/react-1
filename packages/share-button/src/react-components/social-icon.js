@@ -23,13 +23,6 @@ const IconWrapper = styled.div`
     display: inline-block;
   }
 
-  > button {
-    padding: 0;
-    border: none;
-    background: none;
-    cursor: pointer;
-  }
-
   .hide {
     visibility: hidden;
     transform: translateY(140%);
@@ -71,8 +64,8 @@ const IconWrapper = styled.div`
 
 /**
  * @param {Object} props
- * @param {boolean} [props.show=false]
- * @param {string} [props.direction='vertical']
+ * @param {boolean} [props.show]
+ * @param {string} [props.direction]
  * @param {import("react").MouseEventHandler} [props.FbClick]
  * @param {import("react").MouseEventHandler} [props.LineClick]
  * @param {import("react").MouseEventHandler} [props.LinkClick]
@@ -94,7 +87,7 @@ export default function SocialIcon({
     setShowAlert(true)
     setTimeout(() => {
       setShowAlert(false)
-    }, '2500')
+    }, '2000')
   }
 
   useEffect(() => {
@@ -103,7 +96,7 @@ export default function SocialIcon({
 
   function handleLinkClick() {
     handleCopy()
-    LinkClick()
+    typeof LinkClick === 'function' && LinkClick()
   }
 
   return (
@@ -112,7 +105,7 @@ export default function SocialIcon({
         href={`https://www.facebook.com/share.php?u=${origin}`}
         target="_blank"
         rel="noopener noreferrer"
-        onClick={FbClick}
+        onClick={typeof FbClick === 'function' && FbClick}
         className={show ? `show FB-${direction}` : 'hide'}
         aria-label="點擊後分享此網站連結至Facebook"
       >
@@ -122,13 +115,14 @@ export default function SocialIcon({
         href={`https://social-plugins.line.me/lineit/share?url=${origin}`}
         target="_blank"
         rel="noopener noreferrer"
-        onClick={LineClick}
+        onClick={typeof LineClick === 'function' && LineClick}
         className={show ? `show Line-${direction}` : 'hide'}
         aria-label="點擊後分享此網站連結至Line"
       >
         <LineIcon />
       </a>
       <button
+        disabled={showAlert ? true : false}
         onClick={handleLinkClick}
         className={show ? `show Link-${direction}` : 'hide'}
         aria-label="點擊後複製此網站連結至剪貼簿"

@@ -13,8 +13,30 @@ const Container = styled.div`
   padding: 30px;
 `
 
+const onClick = () => {
+  console.log('click share-button')
+}
+
+const FbClick = () => {
+  console.log('click FB-button')
+}
+
+const LineClick = () => {
+  console.log('click Line-button')
+}
+
+const LinkClick = () => {
+  console.log('click Link-button')
+}
+
 root.render(
   <Container>
-    <ShareButton direction="vertical" />
+    <ShareButton
+      direction="vertical"
+      FbClick={FbClick}
+      LineClick={LineClick}
+      LinkClick={LinkClick}
+      onClick={onClick}
+    />
   </Container>
 )
