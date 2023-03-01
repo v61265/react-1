@@ -15,6 +15,6 @@ const Container = styled.div`
 
 root.render(
   <Container>
-    <ShareButton direction="horizon" />
+    <ShareButton direction="vertical" />
   </Container>
 )

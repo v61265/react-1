@@ -17,27 +17,12 @@ const CopyAlert = styled.div`
   }
 
   .animate {
-    -webkit-animation-duration: 2s;
     animation-duration: 2s;
-    -webkit-animation-fill-mode: both;
     animation-fill-mode: both;
   }
 
   .fadeOut {
-    -webkit-animation-name: fadeOut;
     animation-name: fadeOut;
-  }
-
-  @-webkit-keyframes fadeOut {
-    0% {
-      opacity: 1;
-    }
-    80% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
   }
 
   @keyframes fadeOut {
@@ -55,14 +40,16 @@ const CopyAlert = styled.div`
 
 /**
  * @param {Object} props
- * @param {boolean} [props.showAlert]
- * @returns {JSX.Element}
+ * @param {boolean} [props.showAlert=false]
+ * @return {JSX.Element}
  */
 
 export default function Alert({ showAlert }) {
   return (
     <CopyAlert>
-      <p className={`${showAlert} copy-alert`}>已複製連結至剪貼簿</p>
+      <p className={showAlert ? 'animate fadeOut' : 'copy-alert'}>
+        已複製連結至剪貼簿
+      </p>
     </CopyAlert>
   )
 }

@@ -9,11 +9,7 @@ const ButtonWrapper = styled.div`
   display: inline-block;
   cursor: pointer;
   position: relative;
-
-  width: ${/**
-   *  @param {Object} props
-   *  @param {string} props.size
-   */ (props) => (props.size ? props.size : '21px')};
+  width: 21px;
 
   svg {
     width: 100%;
@@ -22,47 +18,26 @@ const ButtonWrapper = styled.div`
   }
 
   @media (min-width: 768px) {
-    width: ${/**
-     *  @param {Object} props
-     *  @param {string} props.size
-     */ (props) => (props.size ? props.size : '28px')};
+    width: 28px;
   }
 `
 
 /**
  * @param {Object} props
- * @param {string} [props.color]
- * - color of button.
- * - optional, default value is `''`.
- * @param {string | number} [props.size]
- * - size of button.
- * - optional, default value is `''`.
- * @param {string} [props.direction]
- * - toggle direction.
- * - optional, default value is `'vertical'`.
- * @param {string} [props.className]
- * - className of button.
- * - optional, default value is `'share-button'`.
+ * @param {string} [props.pathColor]
+ * @param {string} [props.direction='vertical']
+ * @param {string} [props.className='readr-share-button']
  * @param {import("react").MouseEventHandler} [props.onClick]
- * - share-icon onClick function.
- * - optional, default value is {()=> void}.
  * @param {import("react").MouseEventHandler} [props.FbClick]
- * - FB-icon onClick function.
- * - optional, default value is {()=> void}.
  * @param {import("react").MouseEventHandler} [props.LineClick]
- * - Line-icon onClick function.
- * - optional, default value is {()=> void}.
  * @param {import("react").MouseEventHandler} [props.LinkClick]
- * - Link-icon onClick function.
- * - optional, default value is {()=> void}.
- * @returns {JSX.Element}
+ * @return {JSX.Element}
  */
 
 export function ShareButton({
-  color = '',
-  size = '',
+  pathColor = '',
   direction = 'vertical',
-  className = 'share-button',
+  className = 'readr-share-button',
   onClick,
   LineClick,
   FbClick,
@@ -74,32 +49,18 @@ export function ShareButton({
     setShow((show) => !show)
   }
 
-  let buttonSize
-
-  switch (typeof size) {
-    case 'string':
-      buttonSize = size
-      break
-    case 'number':
-      buttonSize = `${size}px`
-      break
-    default:
-      buttonSize = size
-  }
-
   return (
     <ButtonWrapper
       className={className}
-      size={buttonSize}
       onClick={() => {
         toggleShareIcons()
         onClick()
       }}
+      aria-label="點擊展開社群分享按鈕"
     >
-      <ShareIcon color={color} />
+      <ShareIcon pathColor={pathColor} />
       <SocialIcon
         show={show}
-        size={buttonSize}
         direction={direction}
         FbClick={FbClick}
         LineClick={LineClick}

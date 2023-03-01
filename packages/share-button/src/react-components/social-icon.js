@@ -15,31 +15,19 @@ const IconAnimation = `
 `
 
 const IconWrapper = styled.div`
-  > a {
-    cursor: pointer;
-    display: inline-block;
+  width: 100%;
+  > a,
+  button {
+    width: 100%;
     height: auto;
-    width: ${/**
-     *  @param {Object} props
-     *  @param {string} props.size
-     */ (props) => (props.size ? props.size : '21px')};
+    display: inline-block;
+  }
 
-    height: ${/**
-     *  @param {Object} props
-     *  @param {string} props.size
-     */ (props) => (props.size ? props.size : '21px')};
-
-    @media (min-width: 768px) {
-      width: ${/**
-       *  @param {Object} props
-       *  @param {string} props.size
-       */ (props) => (props.size ? props.size : '28px')};
-
-      height: ${/**
-       *  @param {Object} props
-       *  @param {string} props.size
-       */ (props) => (props.size ? props.size : '28px')};
-    }
+  > button {
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
   }
 
   .hide {
@@ -83,43 +71,29 @@ const IconWrapper = styled.div`
 
 /**
  * @param {Object} props
- * @param {boolean} [props.show]
- * - toggle status.
- * - default value is `'false'`.
- * @param {string} [props.size]
- * - size of button.
- * - optional, default value is `''`.
- * @param {string} [props.direction]
- * - toggle direction.
- * - optional, default value is `'vertical'`.
+ * @param {boolean} [props.show=false]
+ * @param {string} [props.direction='vertical']
  * @param {import("react").MouseEventHandler} [props.FbClick]
- * - FB-icon onClick function.
- * - optional, default value is {()=> void}.
  * @param {import("react").MouseEventHandler} [props.LineClick]
- * - Line-icon onClick function.
- * - optional, default value is {()=> void}.
  * @param {import("react").MouseEventHandler} [props.LinkClick]
- * - Link-icon onClick function.
- * - optional, default value is {()=> void}.
- * @returns {JSX.Element}
+ * @return {JSX.Element}
  */
 
 export default function SocialIcon({
   show,
-  size,
   direction,
   FbClick,
   LineClick,
   LinkClick,
 }) {
   const [origin, setOrigin] = useState('')
-  const [showAlert, setShowAlert] = useState('')
+  const [showAlert, setShowAlert] = useState(false)
 
   function handleCopy() {
     navigator.clipboard.writeText(origin)
-    setShowAlert('animate fadeOut')
+    setShowAlert(true)
     setTimeout(() => {
-      setShowAlert('')
+      setShowAlert(false)
     }, '2500')
   }
 
@@ -132,54 +106,35 @@ export default function SocialIcon({
     LinkClick()
   }
 
-  const iconConfigs = [
-    {
-      index: 1,
-      icon: <FaceBookIcon />,
-      link: `https://www.facebook.com/share.php?u=${origin}`,
-      className: 'FB',
-      click: FbClick, // design for GA-click
-    },
-    {
-      index: 2,
-      icon: <LineIcon />,
-      link: `https://social-plugins.line.me/lineit/share?url=${origin}`,
-      className: 'Line',
-      click: LineClick, // design for GA-click
-    },
-    {
-      index: 3,
-      icon: <LinkIcon />,
-      className: 'Link',
-      click: handleLinkClick, // design for GA-click
-    },
-  ]
-
-  const socialIcon = iconConfigs.map((cfg) => {
-    let directionClassName =
-      direction === 'vertical'
-        ? `${cfg.className}-vertical`
-        : `${cfg.className}-horizon`
-
-    let style = show ? `show ${directionClassName}` : 'hide'
-
-    return (
+  return (
+    <IconWrapper>
       <a
-        href={cfg.link}
+        href={`https://www.facebook.com/share.php?u=${origin}`}
         target="_blank"
         rel="noopener noreferrer"
-        onClick={cfg.click}
-        key={cfg.index}
-        className={style}
+        onClick={FbClick}
+        className={show ? `show FB-${direction}` : 'hide'}
+        aria-label="點擊後分享此網站連結至Facebook"
       >
-        {cfg.icon}
+        <FaceBookIcon />
       </a>
-    )
-  })
-
-  return (
-    <IconWrapper size={size}>
-      {socialIcon}
+      <a
+        href={`https://social-plugins.line.me/lineit/share?url=${origin}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={LineClick}
+        className={show ? `show Line-${direction}` : 'hide'}
+        aria-label="點擊後分享此網站連結至Line"
+      >
+        <LineIcon />
+      </a>
+      <button
+        onClick={handleLinkClick}
+        className={show ? `show Link-${direction}` : 'hide'}
+        aria-label="點擊後複製此網站連結至剪貼簿"
+      >
+        <LinkIcon />
+      </button>
       <CopyAlert showAlert={showAlert} />
     </IconWrapper>
   )

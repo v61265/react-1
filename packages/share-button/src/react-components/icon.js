@@ -1,10 +1,10 @@
 import React from 'react' // eslint-disable-line
 
-export function ShareIcon({ color }) {
+export function ShareIcon({ pathColor }) {
   return (
     <svg
       viewBox="0 0 28 28"
-      fill={color ? color : '#000000'}
+      fill={pathColor ? pathColor : '#000000'}
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
