@@ -5,12 +5,11 @@
 ## Feature
 
 - 可傳入 `pathColor`，調整 Button 的 svg path 顏色。
-- 可傳入 `direction`，調整展開方向（ 'vertical' / 'horizon' )。
-- 使用預設的 className : `.readr-share-button` 調整 Button 尺寸或樣式，或傳入自訂的 className，並以該 className 進行調整。
+- 可傳入 `direction`，調整展開方向（ `"vertical"` / `"horizon"` )。
+- 使用預設的 className : `.share-button` 調整 Button 尺寸或樣式，或傳入自訂的 className，並以該 className 進行調整。
 - 可傳入 `onClick`, `FbClick`, `LineClick`, `LinkClick` ，設定按鈕點擊後所觸發的函式。( 可利用此 props 設定 GA Event )
-- 備註：「已複製連結至剪貼簿」( `/src/react-components/copy-alert` ) 有設定 z-index，淡入時 z-index = 9999 ; 淡出後 z-index = -1000
-
-![share button](./imgs/share-button.svg)
+- 備註：「已複製連結至剪貼簿」( `/src/react-components/copy-alert` ) 有設定 z-index，淡入時 z-index = 9999 ; 淡出後設定為：`display:none`
+  ![share button](./imgs/share-button.svg)
 
 ## How to Use This Pkg?
 
@@ -55,15 +54,15 @@ export default function SomeComponent() {
 
 ## Props
 
-| 名稱      | 資料型別          | 必須 | 預設值                 | 說明                                                                                          |
-| --------- | ----------------- | ---- | ---------------------- | --------------------------------------------------------------------------------------------- |
-| pathColor | String            |      | ' '                    | 設定 Button svg path 顏色。                                                                   |
-| direction | String            |      | `"vertical"`           | 設定 Button 展開方向。                                                                        |
-| className | String            |      | `"readr-share-button"` | 自訂 className。如無傳入自訂 className，仍可透過 `.readr-share-button` 更改 LOGO 樣式或尺寸。 |
-| onClick   | MouseEventHandler |      | ' '                    | 點擊 share-button 後觸發之函式。                                                              |
-| FbClick   | MouseEventHandler |      | ' '                    | 點擊 FB Icon 後觸發之函式。                                                                   |
-| LineClick | MouseEventHandler |      | ' '                    | 點擊 Line Icon 後觸發之函式。                                                                 |
-| LinkClick | MouseEventHandler |      | ' '                    | 點擊 Link Icon 後觸發之函式。                                                                 |
+| 名稱      | 資料型別          | 必須 | 預設值           | 說明                                                                                    |
+| --------- | ----------------- | ---- | ---------------- | --------------------------------------------------------------------------------------- |
+| pathColor | String            |      | `"#000000"`      | 設定 Button svg path 顏色。                                                             |
+| direction | String            |      | `"vertical"`     | 設定 Button 展開方向。                                                                  |
+| className | String            |      | `"share-button"` | 自訂 className。如無傳入自訂 className，仍可透過 `.share-button` 更改 LOGO 樣式或尺寸。 |
+| onClick   | MouseEventHandler |      |                  | 點擊 share-button 後觸發之函式。                                                        |
+| FbClick   | MouseEventHandler |      |                  | 點擊 FB Icon 後觸發之函式。                                                             |
+| LineClick | MouseEventHandler |      |                  | 點擊 Line Icon 後觸發之函式。                                                           |
+| LinkClick | MouseEventHandler |      |                  | 點擊 Link Icon 後觸發之函式。                                                           |
 
 ## Installation
 
