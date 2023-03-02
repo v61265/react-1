@@ -1,5 +1,5 @@
 import 'regenerator-runtime/runtime'
-import { hydrateRoot } from 'react-dom/client'
+import { createRoot, hydrateRoot } from 'react-dom/client'
 
 const namespace = '@readr-media'
 
@@ -9,6 +9,15 @@ function hydrate(namespace, pkgName, Component) {
   const { uuid, ...dataOfComponent } = data
   const container = document.getElementById(uuid)
   hydrateRoot(container, <Component {...dataOfComponent} />)
+}
+
+function render(namespace, pkgName, Component) {
+  const dataArr = window[namespace][pkgName]
+  const data = Array.isArray(dataArr) ? dataArr.shift() : {}
+  const { uuid, ...dataOfComponent } = data
+  const container = document.getElementById(uuid)
+  const root = createRoot(container)
+  root.render(<Component {...dataOfComponent} />)
 }
 
 if (window?.[namespace]['react-qa-list']) {
@@ -80,5 +89,13 @@ if (window?.[namespace]['react-election-widgets-votes-comparison']) {
       'react-election-widgets-votes-comparison',
       ew.VotesComparison.ReactComponent
     )
+  })
+}
+
+if (window?.[namespace]['react-three-story-points']) {
+  import(
+    /* webpackChunkName: "react-three-story-points" */ '@readr-media/react-three-story-points'
+  ).then(({ default: ThreeStoryPoints }) => {
+    render(namespace, 'react-three-story-points', ThreeStoryPoints)
   })
 }

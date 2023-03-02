@@ -6,9 +6,9 @@ import Karaoke from '@readr-media/react-karaoke'
 import QAList from '@readr-media/react-qa-list'
 import Questionnaire from '@readr-media/react-questionnaire'
 import ew from '@readr-media/react-election-widgets'
-import get from 'lodash/get'
+import get from 'lodash/get.js'
 import rlb from '@readr-media/react-live-blog'
-import map from 'lodash/map'
+import map from 'lodash/map.js'
 import serialize from 'serialize-javascript'
 import Video from '@readr-media/react-full-screen-video'
 import { ServerStyleSheet } from 'styled-components'
@@ -25,7 +25,8 @@ const _ = {
  * @param {('react-questionnaire'|'react-qa-list'|
  * 'react-feedback'|'react-karaoke'|'react-live-blog'|
  * 'react-election-widgets-seat-chart'|
- * 'react-election-widgets-votes-comparison')} pkgName
+ * 'react-election-widgets-votes-comparison'|
+ * 'react-three-story-points')} pkgName
  * @param {Object} data - Data for react component
  * @param {Object} webpackAssets - webpack bundles and chunks
  * @param {string[]} webpackAssets.entrypoints - webpack bundles
@@ -42,6 +43,7 @@ export function buildEmbeddedCode(pkgName, data, webpackAssets) {
   const { entrypoints: bundles } = webpackAssets
 
   let Component = null
+  let skipServerSideRendering = false
   switch (pkgName) {
     case 'react-feedback':
       Component = Feedback
@@ -67,26 +69,32 @@ export function buildEmbeddedCode(pkgName, data, webpackAssets) {
     case 'react-full-screen-video':
       Component = Video
       break
+    case 'react-three-story-points':
+      skipServerSideRendering = true
+      break
     default:
       throw new Error(`pkgName ${pkgName} is not supported`)
   }
 
-  const sheet = new ServerStyleSheet()
-  let jsx = ''
+  let jsx = `<div id="${uuid}"></div>`
   let styleTags = ''
-  try {
-    jsx = ReactDOMServer.renderToStaticMarkup(
-      sheet.collectStyles(
-        <div id={uuid}>
-          <Component {...data} />
-        </div>
+
+  if (!skipServerSideRendering) {
+    const sheet = new ServerStyleSheet()
+    try {
+      jsx = ReactDOMServer.renderToStaticMarkup(
+        sheet.collectStyles(
+          <div id={uuid}>
+            <Component {...data} />
+          </div>
+        )
       )
-    )
-    styleTags = sheet.getStyleTags()
-  } catch (err) {
-    throw err
-  } finally {
-    sheet.seal()
+      styleTags = sheet.getStyleTags()
+    } catch (err) {
+      throw err
+    } finally {
+      sheet.seal()
+    }
   }
 
   return `
