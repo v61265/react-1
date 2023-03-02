@@ -42,6 +42,8 @@ root.render(
         height="100%"
         objectFit="cover"
         debugMode={true}
+        loadMode="manual"
+        loadResolution="w800"
       ></Image>
     ))}
   </div>
