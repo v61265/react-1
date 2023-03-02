@@ -23,6 +23,10 @@ const IconWrapper = styled.div`
     display: inline-block;
   }
 
+  > button[disabled] {
+    cursor: not-allowed;
+  }
+
   .hide {
     visibility: hidden;
     transform: translateY(140%);
@@ -66,7 +70,7 @@ const IconWrapper = styled.div`
  * @param {Object} props
  * @param {boolean} props.show
  * @param {function} props.setShow
- * @param {string} [props.direction]
+ * @param {string} props.direction
  * @param {import("react").MouseEventHandler} [props.FbClick]
  * @param {import("react").MouseEventHandler} [props.LineClick]
  * @param {import("react").MouseEventHandler} [props.LinkClick]

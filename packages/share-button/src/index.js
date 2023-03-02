@@ -30,9 +30,9 @@ const ButtonWrapper = styled.div`
 
 /**
  * @param {Object} props
- * @param {string} [props.pathColor='']
+ * @param {string} [props.pathColor='#000000']
  * @param {string} [props.direction='vertical']
- * @param {string} [props.className='readr-share-button']
+ * @param {string} [props.className='share-button']
  * @param {import("react").MouseEventHandler} [props.onClick]
  * @param {import("react").MouseEventHandler} [props.FbClick]
  * @param {import("react").MouseEventHandler} [props.LineClick]
@@ -41,9 +41,9 @@ const ButtonWrapper = styled.div`
  */
 
 export function ShareButton({
-  pathColor = '',
+  pathColor = '#000000',
   direction = 'vertical',
-  className = 'readr-share-button',
+  className = 'share-button',
   onClick,
   LineClick,
   FbClick,

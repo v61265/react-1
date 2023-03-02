@@ -4,7 +4,7 @@ export function ShareIcon({ pathColor }) {
   return (
     <svg
       viewBox="0 0 28 28"
-      fill={pathColor ? pathColor : '#000000'}
+      fill={pathColor}
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
