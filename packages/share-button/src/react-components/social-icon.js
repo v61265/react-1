@@ -135,7 +135,7 @@ export default function SocialIcon({
         <LineIcon />
       </a>
       <button
-        disabled={showAlert ? true : false}
+        disabled={showAlert}
         onClick={handleLinkClick}
         className={show ? `show Link-${direction}` : 'hide'}
         aria-label="點擊後複製此網站連結至剪貼簿"
