@@ -15,11 +15,13 @@ const CopyAlert = styled.div`
     margin: auto;
     transform: translate(-50%, 0);
     opacity: 0;
+    z-index: -1000;
   }
 
   .animate {
     animation-duration: 2s;
     animation-fill-mode: both;
+    z-index: 9999;
   }
 
   .fadeOut {

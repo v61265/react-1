@@ -64,7 +64,8 @@ const IconWrapper = styled.div`
 
 /**
  * @param {Object} props
- * @param {boolean} [props.show]
+ * @param {boolean} props.show
+ * @param {function} props.setShow
  * @param {string} [props.direction]
  * @param {import("react").MouseEventHandler} [props.FbClick]
  * @param {import("react").MouseEventHandler} [props.LineClick]
@@ -74,6 +75,7 @@ const IconWrapper = styled.div`
 
 export default function SocialIcon({
   show,
+  setShow,
   direction,
   FbClick,
   LineClick,
@@ -94,7 +96,18 @@ export default function SocialIcon({
     setOrigin(() => window.location.origin)
   }, [])
 
+  function handleFbClick() {
+    setShow(false)
+    typeof FbClick === 'function' && FbClick()
+  }
+
+  function handleLineClick() {
+    setShow(false)
+    typeof LineClick === 'function' && LineClick()
+  }
+
   function handleLinkClick() {
+    setShow(false)
     handleCopy()
     typeof LinkClick === 'function' && LinkClick()
   }
@@ -105,7 +118,7 @@ export default function SocialIcon({
         href={`https://www.facebook.com/share.php?u=${origin}`}
         target="_blank"
         rel="noopener noreferrer"
-        onClick={typeof FbClick === 'function' && FbClick}
+        onClick={handleFbClick}
         className={show ? `show FB-${direction}` : 'hide'}
         aria-label="點擊後分享此網站連結至Facebook"
       >
@@ -115,7 +128,7 @@ export default function SocialIcon({
         href={`https://social-plugins.line.me/lineit/share?url=${origin}`}
         target="_blank"
         rel="noopener noreferrer"
-        onClick={typeof LineClick === 'function' && LineClick}
+        onClick={handleLineClick}
         className={show ? `show Line-${direction}` : 'hide'}
         aria-label="點擊後分享此網站連結至Line"
       >

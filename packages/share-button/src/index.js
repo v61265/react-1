@@ -68,6 +68,7 @@ export function ShareButton({
       </button>
       <SocialIcon
         show={show}
+        setShow={setShow}
         direction={direction}
         FbClick={FbClick}
         LineClick={LineClick}
