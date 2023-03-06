@@ -1,4 +1,18 @@
-# Share-button Changelog
+# @readr-media/share-button Changelog
+
+## 2023-03-06, Version 1.0.1 @ChangRongXuan
+
+### Notable Changes
+
+- chore(share-button): update version of `peerDependencies` (Xuan)
+- docs(share-button): update `package.json` author (Xuan)
+
+### commits
+
+- \[[`038c944375`](https://github.com/readr-media/share-button/commit/038c944375)] - Merge pull request #7 from readr-media/main (Xuan)
+- \[[`d3b9ccb77d`](https://github.com/readr-media/share-button/commit/d3b9ccb77d)] - chore(share-button): update version of `peerDependencies` (Xuan)
+- \[[`eb8340b939`](https://github.com/readr-media/share-button/commit/eb8340b939)] - docs(share-button): update `package.json` author (Xuan)
+- \[[`255e003e9b`](https://github.com/readr-media/share-button/commit/255e003e9b)] - Merge pull request #126 from ChangRongXuan/share-button (Xuan)
 
 ## Version 1.0.0
 
@@ -9,6 +23,8 @@
 
 ### commits
 
+- \[[`8419b1c2f4`](https://github.com/readr-media/share-button/commit/8419b1c2f4)] - docs(share-button): add comment about `z-index` (Xuan)
+- \[[`5e062c9baf`](https://github.com/readr-media/share-button/commit/5e062c9baf)] - docs(share-button): update `CHANGELOG` (Xuan)
 - \[[`279f3bfc94`](https://github.com/readr-media/share-button/commit/279f3bfc94)] - docs(share-button): update README (Xuan)
 - \[[`a8ab590c0a`](https://github.com/readr-media/share-button/commit/a8ab590c0a)] - fix(share-button): adjust button\[disabled] style (Xuan)
 - \[[`8f2daef684`](https://github.com/readr-media/share-button/commit/8f2daef684)] - fix(share-button): adjust button disabled (Xuan)
