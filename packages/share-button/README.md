@@ -8,7 +8,7 @@
 - 可傳入 `direction`，調整展開方向（ `"vertical"` / `"horizon"` )。
 - 使用預設的 className : `.share-button` 調整 Button 尺寸或樣式，或傳入自訂的 className，並以該 className 進行調整。
 - 可傳入 `onClick`, `FbClick`, `LineClick`, `LinkClick` ，設定按鈕點擊後所觸發的函式。( 可利用此 props 設定 GA Event )
-- 備註：「已複製連結至剪貼簿」( `/src/react-components/copy-alert` ) 有設定 z-index，淡入時 z-index = 9999 ; 淡出後設定為：`display:none`
+- 備註：「已複製連結至剪貼簿」( `/src/react-components/copy-alert` ) 有設定 z-index，淡入時 z-index = 9999（確保在不同專案下，複製的彈出畫面都能位於最上層不被遮蓋） ; 淡出後設定為：`display:none`。
   ![share button](./imgs/share-button.svg)
 
 ## How to Use This Pkg?

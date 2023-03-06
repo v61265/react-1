@@ -21,6 +21,7 @@ const CopyAlert = styled.div`
   .animate {
     animation-duration: 2s;
     animation-fill-mode: both;
+    //z-index：To ensure "已複製連結至剪貼簿" always appear on top and are not obscured when using the package across different projects.
     z-index: 9999;
     display: block;
   }
