@@ -19,6 +19,7 @@
     "react",
     "share-button"
   ],
+  "author": "xuanchang",
   "license": "MIT",
   "peerDependencies": {
     "react": "18.1.0",
