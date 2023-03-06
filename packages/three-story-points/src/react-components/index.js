@@ -12,6 +12,7 @@ import {
 } from 'three'
 import { loadGltfModel } from '../loader.js'
 import { useState, useEffect, useRef, useMemo } from 'react'
+import breakpoint from '../breakpoint.js'
 
 const _ = {
   throttle,
@@ -23,47 +24,71 @@ const Block = styled.div`
   height: 100vh;
   touch-action: none;
 `
+
 const Nav = styled.div`
   position: absolute;
-  top: 40%;
-  background-color: rgba(0, 0, 0, 0.8);
+  top: 50%;
+  background-color: #ea5f5f;
   cursor: pointer;
-  width: 4rem;
-  height: 4rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &:hover {
-    background-color: black;
-  }
+  width: 60px;
+  height: 60px;
+  transform: translateY(-50%);
+  text-align: center;
 
   &::after {
-    content: '‹';
-    display: block;
-    color: white;
-    font-size: 2.5rem;
-    font-weight: bold;
-    top: -5px;
-    left: -2px;
-    position: relative;
-    line-height: 1;
+    content: '>';
+    color: #000;
+    font-size: 48px;
+    font-weight: 900;
   }
 `
 const PrevNav = styled(Nav)`
   left: 0;
+  &::after {
+    content: '<';
+  }
 `
 
 const NextNav = styled(Nav)`
   right: 0;
-  &::after {
-    transform: rotate(180deg);
-    transform-origin: center 57%;
-    left: 2px;
-  }
 `
 
-const Caption = styled.div``
+const Caption = styled.div`
+  position: absolute;
+  background-color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 150%;
+  text-align: justify;
+  color: #4b4b4b;
+  bottom: 0;
+  padding: 16px;
+
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 63px;
+    height: 63px;
+    border-left: 9px #ea5f5f solid;
+    border-top: 9px #ea5f5f solid;
+  }
+
+  @media ${breakpoint.devices.tablet} {
+    left: 8px;
+    bottom: 65px;
+    width: 549px;
+    padding: 19px 24px 18px 21px;
+    border-radius: 0px 20px 20px 20px;
+
+    &::before {
+      top: -9px;
+      left: -9px;
+    }
+  }
+`
 
 /**
  *  @param {Object} model
@@ -76,8 +101,8 @@ function createThreeObj(model, pois, canvasRef) {
     return null
   }
 
-  const width = window.innerWidth
-  const height = window.innerHeight
+  const width = document.documentElement.clientWidth
+  const height = document.documentElement.clientHeight
 
   /**
    *  Scene
@@ -151,12 +176,12 @@ function createThreeObj(model, pois, canvasRef) {
  */
 export default function ThreeStoryPoints({
   model: modelObj,
-  // captions=[],
+  captions = [],
   pois: plainPois = [],
 }) {
   const { url: modelUrl, fileFormat = 'glb' } = modelObj || {}
   const [model, setModel] = useState(null)
-  // const [ poiIndex, setPoiIndex ] = useState(0)
+  const [poiIndex, setPoiIndex] = useState(0)
 
   /** @type POI[] */
   const pois = useMemo(() => {
@@ -180,6 +205,7 @@ export default function ThreeStoryPoints({
     canvasRef,
   ])
 
+  // Load 3D model
   useEffect(() => {
     if (modelUrl && fileFormat) {
       switch (fileFormat) {
@@ -193,6 +219,7 @@ export default function ThreeStoryPoints({
     }
   }, [modelUrl, fileFormat])
 
+  // Handle 3D model animation
   useEffect(() => {
     let requestId
     const tick = () => {
@@ -217,11 +244,12 @@ export default function ThreeStoryPoints({
     }
   }, [threeObj])
 
+  // Handle resize event
   useEffect(() => {
     const updateThreeObj = _.throttle(function() {
       const { camera, renderer } = threeObj
-      const width = window.innerWidth
-      const height = window.innerHeight
+      const width = document.documentElement.clientWidth
+      const height = document.documentElement.clientHeight
 
       // Update camera
       camera.aspect = width / height
@@ -238,12 +266,42 @@ export default function ThreeStoryPoints({
     }
   }, [threeObj])
 
+  // Handle `StoryPointsControls` `update` event
+  useEffect(() => {
+    if (threeObj !== null) {
+      const updateHandler = (e) => {
+        // Percentage of transition completed, between 0 and 1
+        if (e.progress === 0) {
+          // Go to the next poi
+          setPoiIndex(e.upcomingIndex)
+        }
+      }
+      threeObj.controls.addEventListener('update', updateHandler)
+
+      return () => {
+        threeObj.controls.removeEventListener('update', updateHandler)
+      }
+    }
+  }, [threeObj])
+
   return (
     <Block>
       <canvas ref={canvasRef}></canvas>
-      <PrevNav onClick={() => threeObj?.controls?.prevPOI()}>Previous</PrevNav>
-      <NextNav onClick={() => threeObj?.controls.nextPOI()}>Next</NextNav>
-      <Caption></Caption>
+      {poiIndex > 0 ? (
+        <PrevNav
+          onClick={() => {
+            threeObj.controls.prevPOI()
+          }}
+        />
+      ) : null}
+      {poiIndex < pois.length - 1 ? (
+        <NextNav
+          onClick={() => {
+            threeObj.controls.nextPOI()
+          }}
+        />
+      ) : null}
+      <Caption>{captions[poiIndex]}</Caption>
       <div></div>
     </Block>
   )
