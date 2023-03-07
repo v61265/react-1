@@ -9,18 +9,5 @@ export default {
         modules: false,
       },
     ],
-    [
-      '@babel/preset-react',
-      {
-        development: !isProduction,
-        runtime: 'automatic',
-      },
-    ],
-  ],
-  plugins: [
-    [
-      'babel-plugin-styled-components',
-      { ssr: true, displayName: true, preprocess: false },
-    ],
   ],
 }
