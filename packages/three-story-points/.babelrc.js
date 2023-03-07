@@ -5,6 +5,7 @@ export default {
     [
       '@babel/preset-env',
       {
+        // preserve ES modules
         modules: false,
       },
     ],
