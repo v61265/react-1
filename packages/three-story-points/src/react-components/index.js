@@ -167,19 +167,24 @@ function createThreeObj(model, pois, canvasRef) {
  */
 
 /**
+ *  @typedef {Object} ModelProp
+ *  @property {string} url
+ *  @property {'glb'} [fileFormat='glb']
+ */
+
+/**
  *  @param {Object} props
- *  @param {Object} props.model
- *  @param {string} props.model.url
- *  @param {'glb'|'tileset'} [props.model.fileFormat='glb']
+ *  @param {ModelProp} props.model
+ *  @param {ModelProp} [props.desktopModel={}]
  *  @param {string[]} [props.captions=[]]
  *  @param {PlainPOI[]} [props.pois=[]]
  */
 export default function ThreeStoryPoints({
-  model: modelObj,
+  model: mobileModel,
+  desktopModel,
   captions = [],
   pois: plainPois = [],
 }) {
-  const { url: modelUrl, fileFormat = 'glb' } = modelObj || {}
   const [model, setModel] = useState(null)
   const [poiIndex, setPoiIndex] = useState(0)
 
@@ -207,6 +212,12 @@ export default function ThreeStoryPoints({
 
   // Load 3D model
   useEffect(() => {
+    let modelUrl = mobileModel?.url
+    let fileFormat = mobileModel.fileFormat || 'glb'
+    if (window.innerWidth >= breakpoint.sizes.tablet) {
+      modelUrl = desktopModel?.url || modelUrl
+      fileFormat = desktopModel?.fileFormat || fileFormat
+    }
     if (modelUrl && fileFormat) {
       switch (fileFormat) {
         case 'glb':
@@ -217,7 +228,7 @@ export default function ThreeStoryPoints({
         }
       }
     }
-  }, [modelUrl, fileFormat])
+  }, [mobileModel, desktopModel])
 
   // Handle 3D model animation
   useEffect(() => {

@@ -8,8 +8,13 @@ const root = createRoot(container)
 
 const mocks = {
   model: {
-    url: './model.glb',
-    /** @type {'glb'|'tileset'} */
+    url: './fox.glb',
+    /** @type {'glb'} */
+    fileFormat: 'glb',
+  },
+  desktopModel: {
+    url: './desktop-fox.glb',
+    /** @type {'glb'} */
     fileFormat: 'glb',
   },
   pois: [
@@ -64,6 +69,7 @@ const mocks = {
 root.render(
   <ThreeStoryPoints
     model={mocks.model}
+    desktopModel={mocks.desktopModel}
     pois={mocks.pois}
     captions={mocks.captions}
   />
