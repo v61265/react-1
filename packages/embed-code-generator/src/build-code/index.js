@@ -26,7 +26,7 @@ const _ = {
  * 'react-feedback'|'react-karaoke'|'react-live-blog'|
  * 'react-election-widgets-seat-chart'|
  * 'react-election-widgets-votes-comparison'|
- * 'react-three-story-points')} pkgName
+ * 'react-three-story-points' | 'react-full-screen-video')} pkgName
  * @param {Object} data - Data for react component
  * @param {Object} webpackAssets - webpack bundles and chunks
  * @param {string[]} webpackAssets.entrypoints - webpack bundles
