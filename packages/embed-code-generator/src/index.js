@@ -1,5 +1,5 @@
 import path from 'path'
-import { buildEmbeddedCode } from './build-code/index.js'
+import { buildEmbeddedCode } from './build-code'
 
 export default {
   buildEmbeddedCode,
