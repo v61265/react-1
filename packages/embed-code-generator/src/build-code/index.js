@@ -10,6 +10,7 @@ import get from 'lodash/get'
 import rlb from '@readr-media/react-live-blog'
 import map from 'lodash/map'
 import serialize from 'serialize-javascript'
+import Video from '@readr-media/react-full-screen-video'
 import { ServerStyleSheet } from 'styled-components'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -62,6 +63,9 @@ export function buildEmbeddedCode(pkgName, data, webpackAssets) {
       break
     case 'react-election-widgets-votes-comparison':
       Component = ew.VotesComparison.ReactComponent
+      break
+    case 'react-full-screen-video':
+      Component = Video
       break
     default:
       throw new Error(`pkgName ${pkgName} is not supported`)
