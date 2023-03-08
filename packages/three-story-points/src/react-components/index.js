@@ -160,8 +160,8 @@ function createThreeObj(model, pois, canvasRef) {
 
 /**
  *  @typedef {Object} POI - Point of Interest in ThreeJS data structure
- *  @property {Vector3} position - array to present (x, y, z)
- *  @property {Quaternion} quaternion - array to present (x, y, z, w)
+ *  @property {Vector3} position
+ *  @property {Quaternion} quaternion
  *  @property {number} duration
  *  @property {string} ease
  */
@@ -261,6 +261,7 @@ export default function ThreeStoryPoints({
     })
     window.addEventListener('resize', updateThreeObj)
 
+    // Clean up
     return () => {
       window.removeEventListener('resize', updateThreeObj)
     }
@@ -278,6 +279,7 @@ export default function ThreeStoryPoints({
       }
       threeObj.controls.addEventListener('update', updateHandler)
 
+      // Clean up
       return () => {
         threeObj.controls.removeEventListener('update', updateHandler)
       }
