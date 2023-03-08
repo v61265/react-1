@@ -43,6 +43,14 @@ if (window?.[namespace]['react-karaoke']) {
   })
 }
 
+if (window?.[namespace]['react-full-screen-video']) {
+  import(
+    /* webpackChunkName: "react-karaoke" */ '@readr-media/react-full-screen-video'
+  ).then(({ default: FullScreenVideo }) => {
+    hydrate(namespace, 'react-full-screen-video', FullScreenVideo)
+  })
+}
+
 if (window?.[namespace]['react-live-blog']) {
   import(
     /* webpackChunkName: "react-live-blog" */ '@readr-media/react-live-blog'
