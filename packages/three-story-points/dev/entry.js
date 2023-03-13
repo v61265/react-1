@@ -84,7 +84,6 @@ const mocks = {
 
 root.render(
   <>
-    <DonateButton />
     <ThreeStoryPoints
       audios={mocks.audios}
       model={mocks.model}
