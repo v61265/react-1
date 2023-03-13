@@ -1,3 +1,5 @@
+import Audio from './audio.js'
+import breakpoint from '../breakpoint.js'
 import styled from 'styled-components'
 import throttle from 'lodash/throttle.js'
 import { CameraRig, StoryPointsControls } from 'three-story-controls'
@@ -12,7 +14,6 @@ import {
 } from 'three'
 import { loadGltfModel } from '../loader.js'
 import { useState, useEffect, useRef, useMemo } from 'react'
-import breakpoint from '../breakpoint.js'
 
 const _ = {
   throttle,
@@ -141,7 +142,7 @@ function createThreeObj(model, pois, canvasRef) {
   renderer.shadowMap.enabled = true
   renderer.shadowMap.type = PCFSoftShadowMap
   renderer.setSize(width, height)
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+  renderer.setPixelRatio(window.devicePixelRatio)
   return {
     scene,
     controls,
@@ -177,12 +178,14 @@ function createThreeObj(model, pois, canvasRef) {
  *  @param {ModelProp} props.model
  *  @param {ModelProp} [props.desktopModel={}]
  *  @param {string[]} [props.captions=[]]
+ *  @param {{urls: string[], preload: 'auto'|'none'|'metadata'}[]} [props.audios=[]]
  *  @param {PlainPOI[]} [props.pois=[]]
  */
 export default function ThreeStoryPoints({
   model: mobileModel,
   desktopModel,
   captions = [],
+  audios = [],
   pois: plainPois = [],
 }) {
   const [model, setModel] = useState(null)
@@ -315,7 +318,13 @@ export default function ThreeStoryPoints({
         />
       ) : null}
       <Caption>{captions[poiIndex]}</Caption>
-      <div></div>
+      {audios?.[poiIndex]?.urls && (
+        <Audio
+          key={poiIndex}
+          audioUrls={audios?.[poiIndex]?.urls}
+          preload={audios?.[poiIndex]?.preload}
+        />
+      )}
     </Block>
   )
 }

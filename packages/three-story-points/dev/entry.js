@@ -64,13 +64,33 @@ const mocks = {
     '我本來在香港就喜歡拍照。現在看到的風景是本身不會出現在我人生中的，我就更加覺得要記錄下一些事。',
     '拍照要去想怎麼拍，怎麼構圖，要很投入這件事裡，某程度上是讓我不要用那麼多空間去煩惱自己的事。可以拍照時，我發現自己不再喝那麼多酒。',
   ],
+  audios: [
+    {
+      urls: [
+        'https://editools-dev.readr.tw/files/the-maiden-s-prayer-tempo-1-n9Mhufcmyivb4aCEXjaL.MP3',
+      ],
+      /** @type {'auto'|'none'|'metadata'} */
+      preload: 'auto',
+    },
+    {
+      urls: [
+        'https://editools-dev.readr.tw/files/audio-example-2-gNAB2G2WizFxdJLsPEj.mp3',
+      ],
+      /** @type {'auto'|'none'|'metadata'} */
+      preload: 'auto',
+    },
+  ],
 }
 
 root.render(
-  <ThreeStoryPoints
-    model={mocks.model}
-    desktopModel={mocks.desktopModel}
-    pois={mocks.pois}
-    captions={mocks.captions}
-  />
+  <>
+    <DonateButton />
+    <ThreeStoryPoints
+      audios={mocks.audios}
+      model={mocks.model}
+      desktopModel={mocks.desktopModel}
+      pois={mocks.pois}
+      captions={mocks.captions}
+    />
+  </>
 )
