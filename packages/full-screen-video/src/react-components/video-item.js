@@ -144,6 +144,14 @@ const VideoContainer = styled.div`
     width: 100%;
   }
 
+  video::-webkit-media-controls-volume-slider {
+    display: none;
+  }
+
+  video::-webkit-media-controls-mute-button {
+    display: none;
+  }
+
   ${AudioBt} {
     left: 12px;
     bottom: 12px;
