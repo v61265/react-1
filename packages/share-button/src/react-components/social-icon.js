@@ -85,11 +85,11 @@ export default function SocialIcon({
   LineClick,
   LinkClick,
 }) {
-  const [origin, setOrigin] = useState('')
+  const [href, setHref] = useState('')
   const [showAlert, setShowAlert] = useState(false)
 
   function handleCopy() {
-    navigator.clipboard.writeText(origin)
+    navigator.clipboard.writeText(href)
     setShowAlert(true)
     setTimeout(() => {
       setShowAlert(false)
@@ -97,7 +97,7 @@ export default function SocialIcon({
   }
 
   useEffect(() => {
-    setOrigin(() => window.location.origin)
+    setHref(() => window.location.href)
   }, [])
 
   function handleFbClick() {
@@ -119,7 +119,7 @@ export default function SocialIcon({
   return (
     <IconWrapper>
       <a
-        href={`https://www.facebook.com/share.php?u=${origin}`}
+        href={`https://www.facebook.com/share.php?u=${href}`}
         target="_blank"
         rel="noopener noreferrer"
         onClick={handleFbClick}
@@ -129,7 +129,7 @@ export default function SocialIcon({
         <FaceBookIcon />
       </a>
       <a
-        href={`https://social-plugins.line.me/lineit/share?url=${origin}`}
+        href={`https://social-plugins.line.me/lineit/share?url=${href}`}
         target="_blank"
         rel="noopener noreferrer"
         onClick={handleLineClick}
