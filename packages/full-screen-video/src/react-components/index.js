@@ -69,13 +69,14 @@ export default function FullScreenVideo({
 
   useEffect(() => {
     for (let i = 0; i < videoUrls.length; i++) {
+      console.log(videoUrls[i].size, width)
       if (videoUrls[i].size > width) {
         setShownVideoIndex(i)
         break
       }
     }
     if (!shownVideoIndex) {
-      setShownVideoIndex(videoUrls.length)
+      setShownVideoIndex(videoUrls.length - 1)
     }
   }, [width])
 
