@@ -84,12 +84,18 @@ const webpackConfig = {
     ],
   },
   optimization: {
+    usedExports: true,
     splitChunks: {
       chunks: 'all',
       maxInitialRequests: Infinity,
       minSize: 0,
       minChunks: 1,
       cacheGroups: {
+        'threejs-vendor': {
+          test: /[\\/]node_modules[\\/](three|three-story-controls)[\\/]/,
+          name: 'threejs-vendor',
+          filename: '[name].js',
+        },
         'react-vendor': {
           test: /[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/,
           name: 'react-vendor',
@@ -118,6 +124,11 @@ const webpackConfig = {
         lodash: {
           test: /[\\/]node_modules[\\/](lodash)[\\/]/,
           name: 'lodash',
+          filename: '[name].js',
+        },
+        gsap: {
+          test: /[\\/]node_modules[\\/](gsap)[\\/]/,
+          name: 'gsap',
           filename: '[name].js',
         },
         staticFile: {
