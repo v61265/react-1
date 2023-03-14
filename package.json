@@ -34,5 +34,8 @@
   },
   "lint-staged": {
     "*.{js,ts,tsx}": "eslint --cache --fix"
+  },
+  "dependencies": {
+    "changelog-maker": "^3.2.1"
   }
 }

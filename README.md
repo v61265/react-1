@@ -9,6 +9,7 @@ This is a monorepo containing sub-packages that can be used across any projects 
 - [@readr-media/react-image](https://www.npmjs.com/package/@readr-media/react-image): see [`packages/image`](./packages/image)
 - [@readr-media/react-karaoke](https://www.npmjs.com/package/@readr-media/react-karaoke): see [`packages/karaoke`](./packages/karaoke)
 - [@readr-media/react-live-blog](https://www.npmjs.com/package/@readr-media/react-live-blog): see [`packages/live-blog`](./packages/live-blog)
+- [@readr-media/share-button](https://www.npmjs.com/package/@readr-media/share-button): see [`packages/share-button`](./packages/share-button)
 
 ### Development
 Before modifying sub-packages' source codes, make sure you install dependencies on root first.  

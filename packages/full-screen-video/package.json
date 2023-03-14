@@ -1,0 +1,37 @@
+{
+  "name": "@readr-media/react-full-screen-video",
+  "version": "1.0.1",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "make dev",
+    "build": "make build",
+    "clean": "make clean",
+    "build-dist": "make build-dist",
+    "build-lib": "make build-lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/readr-media/react.git",
+    "directory": "packages/full-screen-video"
+  },
+  "keywords": [
+    "react",
+    "readr",
+    "video",
+    "full-screen-video"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "react": "18.1.0",
+    "react-dom": "^18.1.0",
+    "react-intersection-observer": "^9.3.5",
+    "serialize-javascript": "^6.0.0",
+    "styled-components": "5.3.5",
+    "uuid": "^8.3.2"
+  },
+  "files": [
+    "lib"
+  ]
+}
