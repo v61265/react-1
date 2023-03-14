@@ -19,7 +19,7 @@ const managerName = '__readr_react_centralized_muted_manager'
  *  value is a string if any component calls manager's
  *  `updateMessage` function.
  */
-class CentralizedMutedManager {
+export class CentralizedMutedManager {
   /** @type events.EventEmitter */
   eventEmitter = null
   muted = true
@@ -75,7 +75,7 @@ class CentralizedMutedManager {
  *  Get the `CentralizedMutedManager` instance.
  *  @returns {CentralizedMutedManager|null}
  */
-function getCentralizedMutedManager() {
+export function getCentralizedMutedManager() {
   if (typeof window !== 'undefined') {
     return window[managerName]
   }

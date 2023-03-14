@@ -3,6 +3,7 @@ import breakpoint from '../breakpoint.js'
 import styled from 'styled-components'
 import throttle from 'lodash/throttle.js'
 import { CameraRig, StoryPointsControls } from 'three-story-controls'
+import { getCentralizedMutedManager } from './audio.js'
 import {
   PerspectiveCamera,
   Vector3,
@@ -91,14 +92,23 @@ const Caption = styled.div`
   }
 `
 
+const AudioPlayButton = styled.div`
+  border: 1px black solid;
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  padding: 3px;
+  cursor: pointer;
+`
+
 /**
- *  @param {Object} model
+ *  @param {Object} models
  *  @param {POI[]} pois
  *  @param {React.RefObject} canvasRef
  *  @returns {{controls: StoryPointsControls, camera: PerspectiveCamera, scene: Scene, renderer: WebGLRenderer}}
  */
-function createThreeObj(model, pois, canvasRef) {
-  if (model === null) {
+function createThreeObj(models, pois, canvasRef) {
+  if (!Array.isArray(models) || models.length === 0) {
     return null
   }
 
@@ -109,7 +119,11 @@ function createThreeObj(model, pois, canvasRef) {
    *  Scene
    */
   const scene = new Scene()
-  scene.add(model.scene)
+  if (Array.isArray(models)) {
+    models.forEach((model) => {
+      scene.add(model.scene)
+    })
+  }
 
   /**
    *  Lights
@@ -175,20 +189,22 @@ function createThreeObj(model, pois, canvasRef) {
 
 /**
  *  @param {Object} props
- *  @param {ModelProp} props.model
- *  @param {ModelProp} [props.desktopModel={}]
+ *  @param {ModelProp[]} props.models
+ *  @param {ModelProp[]} [props.desktopModels]
  *  @param {string[]} [props.captions=[]]
  *  @param {{urls: string[], preload: 'auto'|'none'|'metadata'}[]} [props.audios=[]]
  *  @param {PlainPOI[]} [props.pois=[]]
+ *  @param {boolean} [props.debugMode=false]
  */
 export default function ThreeStoryPoints({
-  model: mobileModel,
-  desktopModel,
+  models: mobileModels,
+  desktopModels,
   captions = [],
   audios = [],
   pois: plainPois = [],
+  debugMode = false,
 }) {
-  const [model, setModel] = useState(null)
+  const [models, setModels] = useState([])
   const [poiIndex, setPoiIndex] = useState(0)
 
   /** @type POI[] */
@@ -207,31 +223,33 @@ export default function ThreeStoryPoints({
   }, [plainPois])
 
   const canvasRef = useRef(null)
-  const threeObj = useMemo(() => createThreeObj(model, pois, canvasRef), [
-    model,
+  const threeObj = useMemo(() => createThreeObj(models, pois, canvasRef), [
+    models,
     pois,
     canvasRef,
   ])
 
   // Load 3D model
   useEffect(() => {
-    let modelUrl = mobileModel?.url
-    let fileFormat = mobileModel.fileFormat || 'glb'
+    let models = mobileModels
     if (window.innerWidth >= breakpoint.sizes.tablet) {
-      modelUrl = desktopModel?.url || modelUrl
-      fileFormat = desktopModel?.fileFormat || fileFormat
+      models = desktopModels
     }
-    if (modelUrl && fileFormat) {
-      switch (fileFormat) {
-        case 'glb':
-        default: {
-          loadGltfModel(modelUrl).then((model) => {
-            setModel(model)
-          })
+
+    if (Array.isArray(models)) {
+      const promises = models.map((model) => {
+        const url = model?.url
+        const fileFormat = model?.fileFormat
+        switch (fileFormat) {
+          case 'glb':
+          default: {
+            return loadGltfModel(url)
+          }
         }
-      }
+      })
+      Promise.all(promises).then(setModels)
     }
-  }, [mobileModel, desktopModel])
+  }, [mobileModels, desktopModels])
 
   // Handle 3D model animation
   useEffect(() => {
@@ -324,6 +342,17 @@ export default function ThreeStoryPoints({
           audioUrls={audios?.[poiIndex]?.urls}
           preload={audios?.[poiIndex]?.preload}
         />
+      )}
+      {debugMode && (
+        <AudioPlayButton
+          onClick={() => {
+            console.log('start to play audio')
+            const manager = getCentralizedMutedManager()
+            manager.updateMuted(false)
+          }}
+        >
+          播放聲音
+        </AudioPlayButton>
       )}
     </Block>
   )
