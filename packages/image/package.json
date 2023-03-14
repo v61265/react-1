@@ -3,12 +3,14 @@
   "version": "1.2.2",
   "description": "",
   "main": "lib/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "make dev",
     "build": "make build",
     "clean": "make clean",
-    "build-lib": "make build-lib"
+    "build-lib": "make build-lib",
+    "build-type": "tsc"
   },
   "repository": {
     "type": "git",
@@ -26,6 +28,11 @@
     "react-dom": "^18.1.0"
   },
   "files": [
-    "lib"
-  ]
+    "lib",
+    "dist"
+  ],
+  "devDependencies": {
+    "@types/node": "^18.15.3",
+    "typescript": "^4.9.5"
+  }
 }
