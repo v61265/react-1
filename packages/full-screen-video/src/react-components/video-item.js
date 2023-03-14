@@ -19,7 +19,7 @@ export default function VideoItem({
   preload = 'auto',
   videoUrl,
   setShownVideoIndex,
-  // mute,
+  muted,
 }) {
   const defaultDuration = 10 // second
   const videoRef = useRef(null)
@@ -27,7 +27,6 @@ export default function VideoItem({
   const [containerRef, inView] = useInView({
     threshold: [0.6],
   })
-  console.log(videoUrl)
 
   const [videoOpts, setVideoOpts] = useState({
     paused: !inView,
@@ -120,7 +119,7 @@ export default function VideoItem({
         data-readr-full-screen-video
         data-played={true}
         controls
-        // muted={mute}
+        muted={muted}
       >
         <source key={`video_source`} src={videoUrl}></source>
       </video>

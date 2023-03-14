@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import useWindowSize from './hooks/useViewport'
 import VideoItem from './video-item'
 import mockups from './mockups'
+import { getCentralizedMutedManager, useMuted } from './hooks/useMuted'
 
 /**
  *  @param {Object} opts
@@ -21,55 +22,14 @@ export default function FullScreenVideo({
   voiceButton = '確認',
   isDarkMode = false,
 }) {
+  const manager = getCentralizedMutedManager()
   const { width } = useWindowSize()
   const [shouldShowHint, setShouldShowHint] = useState(muteHint)
   const [shownVideoIndex, setShownVideoIndex] = useState(null)
-  const [muteAllVideo, setMuteAllVideo] = useState(false)
-
-  /**
-   *  The following codes are WORKAROUND for Safari.
-   *  Problem to workaround:
-   *  In Safari, we still encounter `audio.play()` Promise rejection
-   *  even users have had interactions. The interactions, in our case, will be button clicking.
-   *
-   *  Therefore, the following logics find all Karaoke `audio` elements which has NOT been played before,
-   *  and try to `audio.play()` them.
-   *  Since this event is triggered by user clicking,
-   *  `audio.play()` will be successful without Promise rejection.
-   *  After this event finishes, Safari browser won't block `audio.play()` anymore.
-   */
-  const safariWorkaround = () => {
-    const otherVideos = document.querySelectorAll(
-      'video[data-readr-full-screen-video][data-played=false]'
-    )
-    otherVideos.forEach(
-      (
-        /**
-         *  @type HTMLAudioElement
-         */
-        video
-      ) => {
-        video.muted = true
-        const playAttempt = video.play()
-        if (playAttempt) {
-          playAttempt
-            // play successfully
-            .then(() => {
-              // pause video immediately
-              video.pause()
-            })
-            // fail to play
-            .catch(() => {
-              // do nothing
-            })
-        }
-      }
-    )
-  }
+  const muted = useMuted(true)
 
   useEffect(() => {
     for (let i = 0; i < videoUrls.length; i++) {
-      console.log(videoUrls[i].size, width)
       if (videoUrls[i].size > width) {
         setShownVideoIndex(i)
         break
@@ -85,17 +45,9 @@ export default function FullScreenVideo({
     document.body.style.overflow = 'hidden'
   }, [])
 
-  useEffect(() => {
-    const otherVideos = document.querySelectorAll(
-      'video[data-readr-full-screen-video]'
-    )
-    otherVideos.forEach((video) => {
-      video.muted = true
-    })
-  }, [muteAllVideo])
-
   const handleClickHintButton = () => {
     setShouldShowHint(false)
+    manager.updateMuted(!muted)
     document.body.style.overflow = 'auto'
     window.scrollTo(0, 0)
   }
@@ -110,14 +62,13 @@ export default function FullScreenVideo({
           </Button>
           <AudioBt
             onClick={() => {
-              setMuteAllVideo(!muteAllVideo)
-              safariWorkaround()
+              manager.updateMuted(!muted)
             }}
           >
-            {muteAllVideo ? (
-              <mockups.audio.PausedButton />
-            ) : (
+            {muted ? (
               <mockups.audio.PlayingButton />
+            ) : (
+              <mockups.audio.PausedButton />
             )}
           </AudioBt>
         </HintContainer>
@@ -131,7 +82,7 @@ export default function FullScreenVideo({
                 videoUrl={video.videoUrl}
                 setShownVideoIndex={setShownVideoIndex}
                 preload={preload}
-                mute={muteAllVideo}
+                muted={muted}
               />
             )}
           </section>
