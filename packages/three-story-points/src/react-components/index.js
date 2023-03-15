@@ -11,7 +11,6 @@ import {
   Scene,
   WebGLRenderer,
   PCFSoftShadowMap,
-  HemisphereLight,
 } from 'three'
 import { loadGltfModel } from '../loader.js'
 import { useState, useEffect, useRef, useMemo } from 'react'
@@ -35,7 +34,6 @@ const Block = styled.div`
 `
 
 const Nav = styled.div`
-  z-index: 2;
   position: absolute;
   top: 50%;
   background-color: #ea5f5f;
@@ -159,12 +157,6 @@ function createThreeObj(models, pois, canvasRef) {
       scene.add(model.scene)
     })
   }
-
-  /**
-   *  Lights
-   */
-  const light = new HemisphereLight(0xffffbb, 0x080820, 1)
-  scene.add(light)
 
   /**
    *  Camera
