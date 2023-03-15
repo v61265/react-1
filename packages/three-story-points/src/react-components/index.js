@@ -94,6 +94,7 @@ const Caption = styled.div`
 
 const AudioPlayButton = styled.div`
   border: 1px black solid;
+  background-color: #fff;
   position: fixed;
   right: 10px;
   bottom: 10px;
