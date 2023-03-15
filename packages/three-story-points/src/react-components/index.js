@@ -11,7 +11,6 @@ import {
   Scene,
   WebGLRenderer,
   PCFSoftShadowMap,
-  HemisphereLight,
 } from 'three'
 import { loadGltfModel } from '../loader.js'
 import { useState, useEffect, useRef, useMemo } from 'react'
@@ -35,21 +34,31 @@ const Block = styled.div`
 `
 
 const Nav = styled.div`
-  z-index: 2;
   position: absolute;
   top: 50%;
   background-color: #ea5f5f;
   cursor: pointer;
-  width: 60px;
-  height: 60px;
+  width: 43px;
+  height: 43px;
   transform: translateY(-50%);
   text-align: center;
+  display: flex;
 
   &::after {
     content: '>';
     color: #000;
-    font-size: 48px;
+    font-size: 32px;
     font-weight: 900;
+    margin: auto;
+  }
+
+  @media ${breakpoint.devices.tablet} {
+    width: 60px;
+    height: 60px;
+
+    &::after {
+      font-size: 49px;
+    }
   }
 `
 const PrevNav = styled(Nav)`
@@ -111,6 +120,32 @@ const AudioPlayButton = styled.div`
 `
 
 /**
+ * get the distance from the element to viewport
+ *
+ * @param {HTMLElement} element
+ * @returns {number}
+ */
+function getLeftOffsetToViewport(element) {
+  if (element) {
+    const parent = element.parentElement
+    if (!parent) {
+      return element.getBoundingClientRect().left || 0
+    }
+    const parentComputedStyle = window.getComputedStyle(parent)
+    const parentPaddingLeft =
+      parseFloat(parentComputedStyle.getPropertyValue('padding-left')) || 0
+    const parentBorderLeft =
+      parseFloat(parentComputedStyle.getPropertyValue('border-left')) || 0
+    return (
+      parent.getBoundingClientRect().left +
+        parentPaddingLeft +
+        parentBorderLeft || 0
+    )
+  }
+  return 0
+}
+
+/**
  *  @param {Object} models
  *  @param {POI[]} pois
  *  @param {React.RefObject} canvasRef
@@ -133,12 +168,6 @@ function createThreeObj(models, pois, canvasRef) {
       scene.add(model.scene)
     })
   }
-
-  /**
-   *  Lights
-   */
-  const light = new HemisphereLight(0xffffbb, 0x080820, 1)
-  scene.add(light)
 
   /**
    *  Camera
@@ -291,16 +320,19 @@ export default function ThreeStoryPoints({
   useEffect(() => {
     const shiftLeft = function() {
       const containerElement = containerRef.current
-      if (typeof containerElement?.getBoundingClientRect === 'function') {
-        const rect = containerElement.getBoundingClientRect()
-        const leftOffset = rect?.x ?? rect?.left ?? 0
-        setLeftOffset(leftOffset)
-      }
+      const leftOffsetToViewPort = getLeftOffsetToViewport(containerElement)
+      setLeftOffset(leftOffsetToViewPort)
     }
+    window.addEventListener('orientationchange', shiftLeft)
     shiftLeft()
+
+    // Clean up
+    return () => {
+      window.removeEventListener('orientationchange', shiftLeft)
+    }
   }, [])
 
-  // Handle resize event
+  // Handle canvas size change
   useEffect(() => {
     const updateThreeObj = _.throttle(function() {
       const { camera, renderer } = threeObj
