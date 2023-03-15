@@ -42,6 +42,8 @@ const REGEX = /(\d+)/
  * @param {String | Number} [props.height]
  * - image height.
  * - optional, default value is `"100%"`.
+ * @param {boolean} [props.priority]
+ * - should preload image
  * @param {Boolean} [props.debugMode]
  * - can set if is in debug mode
  * - if `true`, then will print log after image loaded successfully of occur error.
@@ -68,6 +70,7 @@ export default function CustomImage({
   objectFit = 'cover',
   width = '100%',
   height = '100%',
+  priority = false,
   debugMode = false,
   rwd = {
     mobile: '100vw',
@@ -277,55 +280,69 @@ export default function CustomImage({
     imageRef.current.src = url
     imageRef.current.style.filter = 'unset'
   }
+
+  const loadImageProgress = () => {
+    const imagesList = transformImagesContent(images)
+
+    return getResolution(imagesList)
+      .then((resolution) => {
+        loadImages(resolution, imagesList)
+          .then((url) => {
+            setImageUrl(url)
+            printLogInDevMode(
+              `Successfully Load image, current image source is ${url}`
+            )
+          })
+          .catch(() => {
+            if (imageRef.current?.src) {
+              setImageUrl(defaultImage)
+              printLogInDevMode(
+                'Unable to load any image, try to use default image as image src'
+              )
+              imageRef.current.addEventListener('error', () => {
+                printLogInDevMode('Unable to load default image')
+              })
+            }
+          })
+      })
+      .catch(() => {
+        setImageUrl(defaultImage)
+        printLogInDevMode(
+          `Unable to get resolution on ${JSON.stringify(
+            images
+          )}, which means doesn't provide any url of image, try to use default image as image src`
+        )
+      })
+  }
+
+  const callback = (entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        loadImageProgress()
+        observer.unobserve(entry.target)
+      }
+    })
+  }
+
   useEffect(() => {
     try {
-      let callback = (entries, observer) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const imagesList = transformImagesContent(images)
+      let observer
 
-            getResolution(imagesList)
-              .then((resolution) => {
-                loadImages(resolution, imagesList)
-                  .then((url) => {
-                    setImageUrl(url)
-                    printLogInDevMode(
-                      `Successfully Load image, current image source is ${url}`
-                    )
-                  })
-                  .catch(() => {
-                    if (imageRef.current?.src) {
-                      setImageUrl(defaultImage)
-                      printLogInDevMode(
-                        'Unable to load any image, try to use default image as image src'
-                      )
-                      imageRef.current.addEventListener('error', () => {
-                        printLogInDevMode('Unable to load default image')
-                      })
-                    }
-                  })
-              })
-              .catch(() => {
-                setImageUrl(defaultImage)
-                printLogInDevMode(
-                  `Unable to get resolution on ${JSON.stringify(
-                    images
-                  )}, which means doesn't provide any url of image, try to use default image as image src`
-                )
-              })
-            observer.unobserve(entry.target)
-          }
+      if (!priority) {
+        observer = new IntersectionObserver(callback, {
+          root: null,
+          rootMargin: '0px',
+          threshold: 0.25,
         })
+        observer.observe(imageRef.current)
+      } else {
+        loadImageProgress()
       }
-      const observer = new IntersectionObserver(callback, {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.25,
-      })
-      observer.observe(imageRef.current)
 
       return () => {
-        observer.disconnect()
+        if (observer) {
+          observer.disconnect()
+        }
       }
     } catch (err) {
       imageRef.current.style.visibility = 'hidden'
@@ -340,6 +357,7 @@ export default function CustomImage({
       ref={imageRef}
       src={loadingImage ? loadingImage : defaultImage}
       alt={alt}
+      rel={priority ? 'preload' : ''}
     ></img>
   )
 }

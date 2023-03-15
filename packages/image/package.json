@@ -1,15 +1,16 @@
 {
   "name": "@readr-media/react-image",
-  "version": "1.2.2",
+  "version": "1.3.0",
   "description": "",
   "main": "lib/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "make dev",
     "build": "make build",
     "clean": "make clean",
-    "build-dist": "make build-dist",
-    "build-lib": "make build-lib"
+    "build-lib": "make build-lib",
+    "build-type": "tsc"
   },
   "repository": {
     "type": "git",
@@ -29,5 +30,9 @@
   "files": [
     "lib",
     "dist"
-  ]
+  ],
+  "devDependencies": {
+    "@types/node": "^18.15.3",
+    "typescript": "^4.9.5"
+  }
 }
