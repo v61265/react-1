@@ -54,7 +54,7 @@ export default function FullScreenVideo({
 
   return (
     <>
-      {shouldShowHint && (
+      {shouldShowHint ? (
         <HintContainer isDarkMode={isDarkMode}>
           <Text className="hint-text">{voiceHint}</Text>
           <Button className="hint-button" onClick={handleClickHintButton}>
@@ -72,6 +72,19 @@ export default function FullScreenVideo({
             )}
           </AudioBt>
         </HintContainer>
+      ) : (
+        <AudioBtnFixed
+          isMuted={muted}
+          onClick={() => {
+            manager.updateMuted(!muted)
+          }}
+        >
+          {muted ? (
+            <mockups.audio.PlayingButton />
+          ) : (
+            <mockups.audio.PausedButton />
+          )}
+        </AudioBtnFixed>
       )}
       {videoUrls.map((video, index) => {
         return (
@@ -91,6 +104,44 @@ export default function FullScreenVideo({
     </>
   )
 }
+
+const AudioBtnFixed = styled.button`
+  position: fixed;
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 50%;
+  border: 0;
+  top: 20px;
+  right: 20px;
+  background: #ea5f5f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: 0;
+  transition: 0.5s;
+  &:hover {
+    background: #c14d4d;
+    cursor: pointer;
+  }
+  svg {
+    width: 21.33px;
+    height: 17.33px;
+    path {
+      fill: #fff;
+    }
+  }
+  ${(props) => {
+    return (
+      props.isMuted &&
+      `
+      background: #3DC5BD;
+        &:hover {
+          background: #399E98;
+        }
+    `
+    )
+  }}
+`
 
 const AudioBt = styled.div`
   cursor: pointer;
