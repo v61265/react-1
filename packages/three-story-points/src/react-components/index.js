@@ -38,16 +38,27 @@ const Nav = styled.div`
   top: 50%;
   background-color: #ea5f5f;
   cursor: pointer;
-  width: 60px;
-  height: 60px;
+  width: 43px;
+  height: 43px;
   transform: translateY(-50%);
   text-align: center;
+  display: flex;
 
   &::after {
     content: '>';
     color: #000;
-    font-size: 48px;
+    font-size: 32px;
     font-weight: 900;
+    margin: auto;
+  }
+
+  @media ${breakpoint.devices.tablet} {
+    width: 60px;
+    height: 60px;
+
+    &::after {
+      font-size: 49px;
+    }
   }
 `
 const PrevNav = styled(Nav)`
