@@ -50,6 +50,7 @@ const Nav = styled.div`
     font-size: 32px;
     font-weight: 900;
     margin: auto;
+    line-height: 1;
   }
 
   @media ${breakpoint.devices.tablet} {
