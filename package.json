@@ -1,7 +1,16 @@
 {
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/election-widgets",
+    "packages/feedback",
+    "packages/full-screen-video",
+    "packages/image",
+    "packages/karaoke",
+    "packages/live-blog",
+    "packages/qa-list",
+    "packages/questionnaire",
+    "packages/share-button",
+    "packages/three-story-points"
   ],
   "scripts": {
     "prepare": "husky install"
