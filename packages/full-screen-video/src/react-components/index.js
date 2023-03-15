@@ -139,7 +139,7 @@ const AudioBtnFixed = styled.button`
   min-height: 40px;
   border-radius: 50%;
   border: 0;
-  top: 20px;
+  top: 89px;
   right: 20px;
   background: #ea5f5f;
   display: flex;
@@ -157,6 +157,9 @@ const AudioBtnFixed = styled.button`
     path {
       fill: #fff;
     }
+  }
+  @media ${breakpoint.devices.tablet} {
+    top: 105px;
   }
   ${(props) => {
     return (
