@@ -164,7 +164,7 @@ const mocks = {
 
 const ShiftRightBlock = styled.div`
   margin-top: 50vh;
-  margin-left: 10%;
+  padding-left: 50px;
   margin-bottom: 50vh;
 `
 
