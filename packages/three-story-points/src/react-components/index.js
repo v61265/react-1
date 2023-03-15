@@ -24,10 +24,18 @@ const Block = styled.div`
   position: relative;
   width: 100vw;
   height: 100vh;
-  touch-action: none;
+  ${/**
+   * @param {Object} props
+   * @param {number} props.leftOffset
+   */
+  (props) => {
+    const leftOffset = props.leftOffset
+    return `transform: translateX(${0 - leftOffset}px);`
+  }}
 `
 
 const Nav = styled.div`
+  z-index: 2;
   position: absolute;
   top: 50%;
   background-color: #ea5f5f;
@@ -205,6 +213,7 @@ export default function ThreeStoryPoints({
   pois: plainPois = [],
   debugMode = false,
 }) {
+  const [leftOffset, setLeftOffset] = useState(0)
   const [models, setModels] = useState([])
   const [poiIndex, setPoiIndex] = useState(0)
 
@@ -223,6 +232,7 @@ export default function ThreeStoryPoints({
     })
   }, [plainPois])
 
+  const containerRef = useRef(null)
   const canvasRef = useRef(null)
   const threeObj = useMemo(() => createThreeObj(models, pois, canvasRef), [
     models,
@@ -277,6 +287,19 @@ export default function ThreeStoryPoints({
     }
   }, [threeObj])
 
+  // Adjust canvas block to cover the whole viewport (100vw)
+  useEffect(() => {
+    const shiftLeft = function() {
+      const containerElement = containerRef.current
+      if (typeof containerElement?.getBoundingClientRect === 'function') {
+        const rect = containerElement.getBoundingClientRect()
+        const leftOffset = rect?.x ?? rect?.left ?? 0
+        setLeftOffset(leftOffset)
+      }
+    }
+    shiftLeft()
+  }, [])
+
   // Handle resize event
   useEffect(() => {
     const updateThreeObj = _.throttle(function() {
@@ -291,7 +314,7 @@ export default function ThreeStoryPoints({
       // Update renderer
       renderer.setSize(width, height)
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-    })
+    }, 100)
     window.addEventListener('resize', updateThreeObj)
 
     // Clean up
@@ -320,7 +343,7 @@ export default function ThreeStoryPoints({
   }, [threeObj])
 
   return (
-    <Block>
+    <Block leftOffset={leftOffset} ref={containerRef}>
       <canvas ref={canvasRef}></canvas>
       {poiIndex > 0 ? (
         <PrevNav

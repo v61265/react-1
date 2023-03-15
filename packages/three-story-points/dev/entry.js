@@ -1,5 +1,6 @@
 import ThreeStoryPoints from '../src/react-components/index.js'
 import React from 'react' // eslint-disable-line
+import styled from 'styled-components'
 import { createRoot } from 'react-dom/client'
 
 const reactRootId = 'root'
@@ -161,8 +162,14 @@ const mocks = {
   ],
 }
 
+const ShiftRightBlock = styled.div`
+  margin-top: 50vh;
+  margin-left: 10%;
+  margin-bottom: 50vh;
+`
+
 root.render(
-  <>
+  <ShiftRightBlock>
     <ThreeStoryPoints
       audios={mocks.audios}
       models={mocks.models}
@@ -171,5 +178,5 @@ root.render(
       captions={mocks.captions}
       debugMode
     />
-  </>
+  </ShiftRightBlock>
 )
