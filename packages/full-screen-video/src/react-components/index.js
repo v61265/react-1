@@ -32,7 +32,7 @@ export default function FullScreenVideo({
   const [leftOffset, setLeftOffset] = useState(0)
   const [shouldShowHint, setShouldShowHint] = useState(muteHint)
   const [shownVideoIndex, setShownVideoIndex] = useState(null)
-  const muted = useMuted(true)
+  const muted = useMuted(false)
 
   useEffect(() => {
     for (let i = 0; i < videoUrls.length; i++) {
@@ -63,7 +63,6 @@ export default function FullScreenVideo({
 
   const handleClickHintButton = () => {
     setShouldShowHint(false)
-    manager.updateMuted(!muted)
     document.body.style.overflow = 'auto'
     window.scrollTo(0, 0)
   }
@@ -82,9 +81,9 @@ export default function FullScreenVideo({
             }}
           >
             {muted ? (
-              <mockups.audio.PlayingButton />
-            ) : (
               <mockups.audio.PausedButton />
+            ) : (
+              <mockups.audio.PlayingButton />
             )}
           </AudioBt>
         </HintContainer>
@@ -96,9 +95,9 @@ export default function FullScreenVideo({
           }}
         >
           {muted ? (
-            <mockups.audio.PlayingButton />
-          ) : (
             <mockups.audio.PausedButton />
+          ) : (
+            <mockups.audio.PlayingButton />
           )}
         </AudioBtnFixed>
       )}
@@ -161,7 +160,7 @@ const AudioBtnFixed = styled.button`
   }
   ${(props) => {
     return (
-      props.isMuted &&
+      !props.isMuted &&
       `
       background: #3DC5BD;
         &:hover {
