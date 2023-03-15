@@ -1,4 +1,8 @@
-import React /* eslint-disable-line */, { useEffect, useState } from 'react'
+import React /* eslint-disable-line */, {
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import breakpoint from './breakpoint'
 import styled from 'styled-components'
 import useWindowSize from './hooks/useViewport'
@@ -22,8 +26,10 @@ export default function FullScreenVideo({
   voiceButton = '確認',
   isDarkMode = false,
 }) {
+  const allContainerRef = useRef(null)
   const manager = getCentralizedMutedManager()
   const { width } = useWindowSize()
+  const [leftOffset, setLeftOffset] = useState(0)
   const [shouldShowHint, setShouldShowHint] = useState(muteHint)
   const [shownVideoIndex, setShownVideoIndex] = useState(null)
   const muted = useMuted(true)
@@ -43,6 +49,16 @@ export default function FullScreenVideo({
   useEffect(() => {
     window.scrollTo(0, 0)
     document.body.style.overflow = 'hidden'
+    // Adjust video block to cover the whole viewport (100vw)
+    const shiftLeft = function() {
+      const containerElement = allContainerRef.current
+      if (typeof containerElement?.getBoundingClientRect === 'function') {
+        const rect = containerElement.getBoundingClientRect()
+        const leftOffset = rect?.x ?? rect?.left ?? 0
+        setLeftOffset(leftOffset)
+      }
+    }
+    shiftLeft()
   }, [])
 
   const handleClickHintButton = () => {
@@ -86,24 +102,37 @@ export default function FullScreenVideo({
           )}
         </AudioBtnFixed>
       )}
-      {videoUrls.map((video, index) => {
-        return (
-          <section key={`video_source_${index}`}>
-            {index === shownVideoIndex && (
-              <VideoItem
-                className={className}
-                videoUrl={video.videoUrl}
-                setShownVideoIndex={setShownVideoIndex}
-                preload={preload}
-                muted={muted}
-              />
-            )}
-          </section>
-        )
-      })}
+      <Container ref={allContainerRef} leftOffset={leftOffset}>
+        {videoUrls.map((video, index) => {
+          return (
+            <section key={`video_source_${index}`}>
+              {index === shownVideoIndex && (
+                <VideoItem
+                  className={className}
+                  videoUrl={video.videoUrl}
+                  setShownVideoIndex={setShownVideoIndex}
+                  preload={preload}
+                  muted={muted}
+                />
+              )}
+            </section>
+          )
+        })}
+      </Container>
     </>
   )
 }
+
+const Container = styled.div`
+  ${/**
+   * @param {Object} props
+   * @param {number} props.leftOffset
+   */
+  (props) => {
+    const leftOffset = props.leftOffset
+    return `transform: translateX(${0 - leftOffset}px);`
+  }}
+`
 
 const AudioBtnFixed = styled.button`
   position: fixed;

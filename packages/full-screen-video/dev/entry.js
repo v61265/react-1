@@ -36,11 +36,16 @@ const MockContentBlock = styled.div`
   background-color: pink;
 `
 
+const TestWrapper = styled.div`
+  margin: 20px auto;
+  max-width: 1200px;
+`
+
 root.render(
-  <div>
+  <TestWrapper>
     <MockContentBlock />
     <FullScreenVideo muteHint={true} videoUrls={mocks} isDarkMode={true} />
     <MockContentBlock />
     <FullScreenVideo muteHint={false} videoUrls={mocks} isDarkMode={false} />
-  </div>
+  </TestWrapper>
 )
