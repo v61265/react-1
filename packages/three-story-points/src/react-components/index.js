@@ -289,18 +289,30 @@ export default function ThreeStoryPoints({
 
   // Adjust canvas block to cover the whole viewport (100vw)
   useEffect(() => {
-    const shiftLeft = function() {
-      const containerElement = containerRef.current
-      if (typeof containerElement?.getBoundingClientRect === 'function') {
-        const rect = containerElement.getBoundingClientRect()
-        const leftOffset = rect?.x ?? rect?.left ?? 0
-        setLeftOffset(leftOffset)
-      }
-    }
+    const shiftLeft = _.throttle(function() {
+      // Use `setTimeout` here to avoid `getBoundingClientRect()`
+      // before CSS applied onto `containerElement`.
+      // If `getBoundingClientRect()` is invoked before CSS applied,
+      // the x/left value would not be the correct value.
+      setTimeout(() => {
+        const containerElement = containerRef.current
+        if (typeof containerElement?.getBoundingClientRect === 'function') {
+          const rect = containerElement.getBoundingClientRect()
+          const leftOffset = rect?.x ?? rect?.left ?? 0
+          setLeftOffset(leftOffset)
+        }
+      }, 500)
+    }, 100)
+    window.addEventListener('resize', shiftLeft)
     shiftLeft()
+
+    // Clean up
+    return () => {
+      window.removeEventListener('resize', shiftLeft)
+    }
   }, [])
 
-  // Handle resize event
+  // Handle canvas size change
   useEffect(() => {
     const updateThreeObj = _.throttle(function() {
       const { camera, renderer } = threeObj
