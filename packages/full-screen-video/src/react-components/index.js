@@ -147,6 +147,7 @@ const AudioBtnFixed = styled.button`
   align-items: center;
   outline: 0;
   transition: 0.5s;
+  z-index: 100;
   &:hover {
     background: #c14d4d;
     cursor: pointer;
