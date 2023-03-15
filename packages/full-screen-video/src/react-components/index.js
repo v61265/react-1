@@ -34,6 +34,45 @@ export default function FullScreenVideo({
   const [shownVideoIndex, setShownVideoIndex] = useState(null)
   const muted = useMuted(false)
 
+  /**
+   *  The following codes are WORKAROUND for Safari.
+   *  Problem to workaround:
+   *  In Safari, we still encounter `audio.play()` Promise rejection
+   *  even users have had interactions. The interactions, in our case, will be button clicking.
+   *
+   *  Therefore, the following logics find all Karaoke `audio` elements which has NOT been played before,
+   *  and try to `audio.play()` them.
+   *  Since this event is triggered by user clicking,
+   *  `audio.play()` will be successful without Promise rejection.
+   *  After this event finishes, Safari browser won't block `audio.play()` anymore.
+   */
+  const safariWorkaround = () => {
+    const otherVideos = document.querySelectorAll('video')
+    otherVideos.forEach(
+      (
+        /**
+         *  @type HTMLAudioElement
+         */
+        video
+      ) => {
+        manager.updateMuted(muted)
+        const playAttempt = video.play()
+        if (playAttempt) {
+          playAttempt
+            // play successfully
+            .then(() => {
+              // pause audio immediately
+              video.pause()
+            })
+            // fail to play
+            .catch(() => {
+              // do nothing
+            })
+        }
+      }
+    )
+  }
+
   useEffect(() => {
     for (let i = 0; i < videoUrls.length; i++) {
       if (videoUrls[i].size > width) {
@@ -65,6 +104,7 @@ export default function FullScreenVideo({
     setShouldShowHint(false)
     document.body.style.overflow = 'auto'
     window.scrollTo(0, 0)
+    safariWorkaround()
   }
 
   return (
@@ -78,6 +118,7 @@ export default function FullScreenVideo({
           <AudioBt
             onClick={() => {
               manager.updateMuted(!muted)
+              safariWorkaround()
             }}
           >
             {muted ? (

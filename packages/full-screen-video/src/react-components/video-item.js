@@ -23,7 +23,6 @@ export default function VideoItem({
 }) {
   const defaultDuration = 10 // second
   const videoRef = useRef(null)
-  // const [muted, setMuted] = useMuted(false)
   const [containerRef, inView] = useInView({
     threshold: [0.6],
   })
@@ -61,11 +60,12 @@ export default function VideoItem({
       if (!video) {
         return
       }
-      // video.muted = false
+      console.log({ inView })
       // in the viewport
       if (inView) {
         // start with `videoOpts.currentTime` to catch up `QuoteShadow` animation
         video.currentTime = videoOpts.currentTime
+        video.pause()
         const startPlayPromise = video.play()
         startPlayPromise
           // play successfully
