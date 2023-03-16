@@ -1231,10 +1231,10 @@
     styled-components "5.3.5"
     uuid "^8.3.2"
 
-"@readr-media/react-three-story-points@1.0.1-beta.4":
-  version "1.0.1-beta.4"
-  resolved "https://registry.yarnpkg.com/@readr-media/react-three-story-points/-/react-three-story-points-1.0.1-beta.4.tgz#3c6c92178bb974c5d9dfaf263a37bb108da83219"
-  integrity sha512-EHaPC9dh5RrRORG3SQ4nmtMD2eyHC+GSCI98qipvJO6lqOOod0yuAHakxAzCNfP6/fEyuCLI9+oDjRUQZ5H34Q==
+"@readr-media/react-three-story-points@1.0.1-beta.5":
+  version "1.0.1-beta.5"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-three-story-points/-/react-three-story-points-1.0.1-beta.5.tgz#e9137815a83856910ebef00de3eb9a0352ad14ed"
+  integrity sha512-f5xgv72Da2pphkgn+FDTjPDWP4AIdHqQLkJ4T7462+C0OqMQ60aNC25j9LyWEVzCnpAU2GyXO4Dn4evyVONnaA==
   dependencies:
     gsap "^3.11.4"
     lodash "^4.17.21"
