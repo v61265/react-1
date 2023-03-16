@@ -34,6 +34,7 @@ export default function SomeComponent() {
             tablet: '244px',
             laptop: '500px',
             desktop: '1200px',
+            default: '1600px'
           }}
         ></Image>
 
@@ -56,7 +57,7 @@ export default function SomeComponent() {
 | objectFit    | String   |      | `"cover"`        | 圖片區塊填滿設定，即為CSS property `object-fit`                                                                                                                                                                                                         |
 | height       | String   |      | `"100%"`         | 圖片高度                                                                                                                                                                                                                                                |
 | width        | String   |      | `"100%"`         | 圖片寬度                                                                                                                                                                                                                                                |
-| rwd     | Object   |      | `{mobile: '100vw', tablet: '100vw', laptop: '100vw', desktop: '100vw', }`         | 不同螢幕寬度斷點下的圖片尺寸。|
+| rwd     | Object   |      | `{mobile: '100vw', tablet: '100vw', laptop: '100vw', desktop: '100vw', default: '100vw' }`         | 不同螢幕寬度斷點下的圖片尺寸。|
 | breakpoint| Object |      |`{ mobile: '767px', tablet: '1199px', laptop: '1439px', desktop: '2439px', }`|螢幕寬度斷點。 搭配rwd，可以組出不同螢幕寬度斷點下的圖片尺寸。|
 | debugMode    | Boolean  |      | `false`          | 是否開啟開發模式，若開啟，則在載入圖片成功或失敗時，透過`console.log`顯示相關訊息                                                                                                                                                                       |
 | priority     | boolean  | `false` | 設定圖片是否 preload (`rel="preload"`) |
