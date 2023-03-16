@@ -1,6 +1,9 @@
+import Audio from './audio.js'
+import breakpoint from '../breakpoint.js'
 import styled from 'styled-components'
 import throttle from 'lodash/throttle.js'
 import { CameraRig, StoryPointsControls } from 'three-story-controls'
+import { getCentralizedMutedManager } from './audio.js'
 import {
   PerspectiveCamera,
   Vector3,
@@ -8,11 +11,9 @@ import {
   Scene,
   WebGLRenderer,
   PCFSoftShadowMap,
-  HemisphereLight,
 } from 'three'
 import { loadGltfModel } from '../loader.js'
 import { useState, useEffect, useRef, useMemo } from 'react'
-import breakpoint from '../breakpoint.js'
 
 const _ = {
   throttle,
@@ -22,7 +23,14 @@ const Block = styled.div`
   position: relative;
   width: 100vw;
   height: 100vh;
-  touch-action: none;
+  ${/**
+   * @param {Object} props
+   * @param {number} props.leftOffset
+   */
+  (props) => {
+    const leftOffset = props.leftOffset
+    return `transform: translateX(${0 - leftOffset}px);`
+  }}
 `
 
 const Nav = styled.div`
@@ -30,16 +38,28 @@ const Nav = styled.div`
   top: 50%;
   background-color: #ea5f5f;
   cursor: pointer;
-  width: 60px;
-  height: 60px;
+  width: 43px;
+  height: 43px;
   transform: translateY(-50%);
   text-align: center;
+  display: flex;
 
   &::after {
     content: '>';
     color: #000;
-    font-size: 48px;
+    font-size: 32px;
     font-weight: 900;
+    margin: auto;
+    line-height: 1;
+  }
+
+  @media ${breakpoint.devices.tablet} {
+    width: 60px;
+    height: 60px;
+
+    &::after {
+      font-size: 49px;
+    }
   }
 `
 const PrevNav = styled(Nav)`
@@ -90,14 +110,50 @@ const Caption = styled.div`
   }
 `
 
+const AudioPlayButton = styled.div`
+  border: 1px black solid;
+  background-color: #fff;
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  padding: 3px;
+  cursor: pointer;
+`
+
 /**
- *  @param {Object} model
+ * get the distance from the element to viewport
+ *
+ * @param {HTMLElement} element
+ * @returns {number}
+ */
+function getLeftOffsetToViewport(element) {
+  if (element) {
+    const parent = element.parentElement
+    if (!parent) {
+      return element.getBoundingClientRect().left || 0
+    }
+    const parentComputedStyle = window.getComputedStyle(parent)
+    const parentPaddingLeft =
+      parseFloat(parentComputedStyle.getPropertyValue('padding-left')) || 0
+    const parentBorderLeft =
+      parseFloat(parentComputedStyle.getPropertyValue('border-left')) || 0
+    return (
+      parent.getBoundingClientRect().left +
+        parentPaddingLeft +
+        parentBorderLeft || 0
+    )
+  }
+  return 0
+}
+
+/**
+ *  @param {Object} models
  *  @param {POI[]} pois
  *  @param {React.RefObject} canvasRef
  *  @returns {{controls: StoryPointsControls, camera: PerspectiveCamera, scene: Scene, renderer: WebGLRenderer}}
  */
-function createThreeObj(model, pois, canvasRef) {
-  if (model === null) {
+function createThreeObj(models, pois, canvasRef) {
+  if (!Array.isArray(models) || models.length === 0) {
     return null
   }
 
@@ -108,13 +164,11 @@ function createThreeObj(model, pois, canvasRef) {
    *  Scene
    */
   const scene = new Scene()
-  scene.add(model.scene)
-
-  /**
-   *  Lights
-   */
-  const light = new HemisphereLight(0xffffbb, 0x080820, 1)
-  scene.add(light)
+  if (Array.isArray(models)) {
+    models.forEach((model) => {
+      scene.add(model.scene)
+    })
+  }
 
   /**
    *  Camera
@@ -141,7 +195,7 @@ function createThreeObj(model, pois, canvasRef) {
   renderer.shadowMap.enabled = true
   renderer.shadowMap.type = PCFSoftShadowMap
   renderer.setSize(width, height)
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+  renderer.setPixelRatio(window.devicePixelRatio)
   return {
     scene,
     controls,
@@ -174,18 +228,23 @@ function createThreeObj(model, pois, canvasRef) {
 
 /**
  *  @param {Object} props
- *  @param {ModelProp} props.model
- *  @param {ModelProp} [props.desktopModel={}]
+ *  @param {ModelProp[]} props.models
+ *  @param {ModelProp[]} [props.desktopModels]
  *  @param {string[]} [props.captions=[]]
+ *  @param {{urls: string[], preload: 'auto'|'none'|'metadata'}[]} [props.audios=[]]
  *  @param {PlainPOI[]} [props.pois=[]]
+ *  @param {boolean} [props.debugMode=false]
  */
 export default function ThreeStoryPoints({
-  model: mobileModel,
-  desktopModel,
+  models: mobileModels,
+  desktopModels,
   captions = [],
+  audios = [],
   pois: plainPois = [],
+  debugMode = false,
 }) {
-  const [model, setModel] = useState(null)
+  const [leftOffset, setLeftOffset] = useState(0)
+  const [models, setModels] = useState([])
   const [poiIndex, setPoiIndex] = useState(0)
 
   /** @type POI[] */
@@ -203,32 +262,35 @@ export default function ThreeStoryPoints({
     })
   }, [plainPois])
 
+  const containerRef = useRef(null)
   const canvasRef = useRef(null)
-  const threeObj = useMemo(() => createThreeObj(model, pois, canvasRef), [
-    model,
+  const threeObj = useMemo(() => createThreeObj(models, pois, canvasRef), [
+    models,
     pois,
     canvasRef,
   ])
 
   // Load 3D model
   useEffect(() => {
-    let modelUrl = mobileModel?.url
-    let fileFormat = mobileModel.fileFormat || 'glb'
+    let models = mobileModels
     if (window.innerWidth >= breakpoint.sizes.tablet) {
-      modelUrl = desktopModel?.url || modelUrl
-      fileFormat = desktopModel?.fileFormat || fileFormat
+      models = desktopModels
     }
-    if (modelUrl && fileFormat) {
-      switch (fileFormat) {
-        case 'glb':
-        default: {
-          loadGltfModel(modelUrl).then((model) => {
-            setModel(model)
-          })
+
+    if (Array.isArray(models)) {
+      const promises = models.map((model) => {
+        const url = model?.url
+        const fileFormat = model?.fileFormat
+        switch (fileFormat) {
+          case 'glb':
+          default: {
+            return loadGltfModel(url)
+          }
         }
-      }
+      })
+      Promise.all(promises).then(setModels)
     }
-  }, [mobileModel, desktopModel])
+  }, [mobileModels, desktopModels])
 
   // Handle 3D model animation
   useEffect(() => {
@@ -255,7 +317,23 @@ export default function ThreeStoryPoints({
     }
   }, [threeObj])
 
-  // Handle resize event
+  // Adjust canvas block to cover the whole viewport (100vw)
+  useEffect(() => {
+    const shiftLeft = function() {
+      const containerElement = containerRef.current
+      const leftOffsetToViewPort = getLeftOffsetToViewport(containerElement)
+      setLeftOffset(leftOffsetToViewPort)
+    }
+    window.addEventListener('orientationchange', shiftLeft)
+    shiftLeft()
+
+    // Clean up
+    return () => {
+      window.removeEventListener('orientationchange', shiftLeft)
+    }
+  }, [])
+
+  // Handle canvas size change
   useEffect(() => {
     const updateThreeObj = _.throttle(function() {
       const { camera, renderer } = threeObj
@@ -269,7 +347,7 @@ export default function ThreeStoryPoints({
       // Update renderer
       renderer.setSize(width, height)
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-    })
+    }, 100)
     window.addEventListener('resize', updateThreeObj)
 
     // Clean up
@@ -298,7 +376,7 @@ export default function ThreeStoryPoints({
   }, [threeObj])
 
   return (
-    <Block>
+    <Block leftOffset={leftOffset} ref={containerRef}>
       <canvas ref={canvasRef}></canvas>
       {poiIndex > 0 ? (
         <PrevNav
@@ -315,7 +393,24 @@ export default function ThreeStoryPoints({
         />
       ) : null}
       <Caption>{captions[poiIndex]}</Caption>
-      <div></div>
+      {audios?.[poiIndex]?.urls && (
+        <Audio
+          key={poiIndex}
+          audioUrls={audios?.[poiIndex]?.urls}
+          preload={audios?.[poiIndex]?.preload}
+        />
+      )}
+      {debugMode && (
+        <AudioPlayButton
+          onClick={() => {
+            console.log('start to play audio')
+            const manager = getCentralizedMutedManager()
+            manager.updateMuted(false)
+          }}
+        >
+          播放聲音
+        </AudioPlayButton>
+      )}
     </Block>
   )
 }

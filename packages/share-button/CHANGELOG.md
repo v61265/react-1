@@ -1,5 +1,26 @@
 # @readr-media/share-button Changelog
 
+## 2023-03-14, Version 1.0.3 @ChangRongXuan
+
+### Notable Changes
+
+- fix(share-button): copy `window.location.href` instead of `window.location.origin` (Xuan)
+
+### commits
+
+- \[[`bd8a187e88`](https://github.com/readr-media/share-button/commit/bd8a187e88)] - fix(share-button): get `window.location.href` instead of `window.location.origin` (Xuan)
+
+## 2023-03-06, Version 1.0.2 @ChangRongXuan
+
+### Notable Changes
+
+- docs(share-button): update README (Xuan)
+
+### commits
+
+- \[[`73e955bd09`](https://github.com/readr-media/share-button/commit/73e955bd09)] - docs(share-button): update README (Xuan)
+- \[[`52c7114cb2`](https://github.com/readr-media/share-button/commit/52c7114cb2)] - chore(share-button): bump version to `1.0.2` (Xuan)
+
 ## 2023-03-06, Version 1.0.1 @ChangRongXuan
 
 ### Notable Changes
