@@ -1231,13 +1231,14 @@
     styled-components "5.3.5"
     uuid "^8.3.2"
 
-"@readr-media/react-three-story-points@1.0.1-beta.2":
-  version "1.0.1-beta.2"
-  resolved "https://registry.yarnpkg.com/@readr-media/react-three-story-points/-/react-three-story-points-1.0.1-beta.2.tgz#24ae386dc6d31f47b147eb94bb2e2bce2abbb6d8"
-  integrity sha512-6+ZpsmoE9URjfeXVPo5dM7O+uRaBRn8eN04ZiM4Ifpi+hNKRyoTF/LOlPICquISezxn55/iLUaHp+KQ8It0rmw==
+"@readr-media/react-three-story-points@1.0.1-beta.4":
+  version "1.0.1-beta.4"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-three-story-points/-/react-three-story-points-1.0.1-beta.4.tgz#3c6c92178bb974c5d9dfaf263a37bb108da83219"
+  integrity sha512-EHaPC9dh5RrRORG3SQ4nmtMD2eyHC+GSCI98qipvJO6lqOOod0yuAHakxAzCNfP6/fEyuCLI9+oDjRUQZ5H34Q==
   dependencies:
     gsap "^3.11.4"
     lodash "^4.17.21"
+    react-intersection-observer "^9.3.5"
     three "^0.150.1"
     three-story-controls "^1.0.6"
 

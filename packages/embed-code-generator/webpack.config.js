@@ -136,12 +136,12 @@ const webpackConfig = {
           name: 'static-file',
           filename: '[name].js',
         },
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendor',
-          filename: '[name].js',
-          priority: -10,
-        },
+        //vendor: {
+        //  test: /[\\/]node_modules[\\/]/,
+        //  name: 'vendor',
+        //  filename: '[name].js',
+        //  priority: -10,
+        //},
       },
     },
   },
