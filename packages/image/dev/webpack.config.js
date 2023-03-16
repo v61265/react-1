@@ -6,9 +6,6 @@ module.exports = {
   entry: {
     main: path.resolve(__dirname, './entry.js'),
   },
-  output: {
-    path: path.resolve(__dirname, './dist'),
-  },
   devServer: {
     hot: false,
     host: '0.0.0.0',
