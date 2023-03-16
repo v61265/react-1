@@ -19,19 +19,15 @@ export default function VideoItem({
   preload = 'auto',
   videoUrl,
   setShownVideoIndex,
-  // mute,
+  muted,
 }) {
-  const defaultDuration = 10 // second
   const videoRef = useRef(null)
-  // const [muted, setMuted] = useMuted(false)
   const [containerRef, inView] = useInView({
     threshold: [0.6],
   })
-  console.log(videoUrl)
 
   const [videoOpts, setVideoOpts] = useState({
     paused: !inView,
-    duration: defaultDuration,
     currentTime: 0,
     notice: '',
   })
@@ -62,11 +58,11 @@ export default function VideoItem({
       if (!video) {
         return
       }
-      // video.muted = false
       // in the viewport
       if (inView) {
         // start with `videoOpts.currentTime` to catch up `QuoteShadow` animation
         video.currentTime = videoOpts.currentTime
+        video.pause()
         const startPlayPromise = video.play()
         startPlayPromise
           // play successfully
@@ -120,7 +116,7 @@ export default function VideoItem({
         data-readr-full-screen-video
         data-played={true}
         controls
-        // muted={mute}
+        muted={muted}
       >
         <source key={`video_source`} src={videoUrl}></source>
       </video>
@@ -142,6 +138,14 @@ const VideoContainer = styled.div`
 
   video {
     width: 100%;
+  }
+
+  video::-webkit-media-controls-volume-slider {
+    display: none;
+  }
+
+  video::-webkit-media-controls-mute-button {
+    display: none;
   }
 
   ${AudioBt} {
