@@ -52,6 +52,30 @@ export default function VideoItem({
     }
   }, [])
 
+  useEffect(() => {
+    if (videoRef && videoRef.current && !videoRef.current.muted) {
+      videoRef.current.muted = true
+
+      const fixCornerCaseOnIOS = () => {
+        // video has not been played yet
+        if (videoRef.current && !videoRef.current.playing) {
+          // `play()` here is to clear play button when iOS is under the low battery mode.
+          const playPromise = videoRef.current.play()
+          playPromise
+            .then(() => {
+              // `pause()` video after `play()` successfully
+              videoRef.current.pause()
+            })
+            .catch((err) => {
+              console.warn('Can not play video by JavaScript due to ', err)
+            })
+        }
+        window.removeEventListener('touchstart', fixCornerCaseOnIOS)
+      }
+      window.addEventListener('touchstart', fixCornerCaseOnIOS)
+    }
+  }, [])
+
   useEffect(
     () => {
       const video = videoRef.current
@@ -62,7 +86,7 @@ export default function VideoItem({
       if (inView) {
         // start with `videoOpts.currentTime` to catch up `QuoteShadow` animation
         video.currentTime = videoOpts.currentTime
-        video.pause()
+        video.muted = muted
         const startPlayPromise = video.play()
         startPlayPromise
           // play successfully
@@ -105,7 +129,7 @@ export default function VideoItem({
     },
     // `inView` is used to avoid from infinite re-rendering.
     // `muted` is avoid state not changed due to closure.
-    [inView]
+    [inView, muted]
   )
 
   return (
@@ -113,10 +137,9 @@ export default function VideoItem({
       <video
         ref={videoRef}
         preload={preload}
+        playsInline
         data-readr-full-screen-video
         data-played={true}
-        controls
-        muted={muted}
       >
         <source key={`video_source`} src={videoUrl}></source>
       </video>
