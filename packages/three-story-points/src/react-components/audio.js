@@ -128,17 +128,18 @@ function useMuted(initialValue = true) {
 
 /**
  *  @param {Object} opts
+ *  @param {boolean} opts.play
  *  @param {string[]} opts.audioUrls
  *  @param {string} [opts.preload='auto'] - 'auto', 'none' or 'metadata'. `preload` attribute of `audio` tag.
  */
-export default function Audio({ audioUrls, preload = 'auto' }) {
+export default function Audio({ play, audioUrls, preload = 'auto' }) {
   const audioRef = useRef(null)
   const muted = useMuted(true)
 
   useEffect(() => {
     const audio = audioRef.current
     // Do not need to play audio if `muted` is true.
-    if (!audio || muted) {
+    if (!audio || muted || !play) {
       return
     }
 
@@ -170,7 +171,7 @@ export default function Audio({ audioUrls, preload = 'auto' }) {
         audio.pause()
       }
     }
-  }, [muted])
+  }, [muted, play])
 
   return (
     <audio ref={audioRef} preload={preload}>
