@@ -14,6 +14,7 @@ import {
 } from 'three'
 import { loadGltfModel } from '../loader.js'
 import { useState, useEffect, useRef, useMemo } from 'react'
+import { useInView } from 'react-intersection-observer'
 
 const _ = {
   throttle,
@@ -243,9 +244,13 @@ export default function ThreeStoryPoints({
   pois: plainPois = [],
   debugMode = false,
 }) {
+  const containerRef = useRef(null)
   const [leftOffset, setLeftOffset] = useState(0)
   const [models, setModels] = useState([])
   const [poiIndex, setPoiIndex] = useState(0)
+  const [inViewRef, inView] = useInView({
+    threshold: [0.6],
+  })
 
   /** @type POI[] */
   const pois = useMemo(() => {
@@ -262,7 +267,6 @@ export default function ThreeStoryPoints({
     })
   }, [plainPois])
 
-  const containerRef = useRef(null)
   const canvasRef = useRef(null)
   const threeObj = useMemo(() => createThreeObj(models, pois, canvasRef), [
     models,
@@ -376,30 +380,33 @@ export default function ThreeStoryPoints({
   }, [threeObj])
 
   return (
-    <Block leftOffset={leftOffset} ref={containerRef}>
-      <canvas ref={canvasRef}></canvas>
-      {poiIndex > 0 ? (
-        <PrevNav
-          onClick={() => {
-            threeObj.controls.prevPOI()
-          }}
-        />
-      ) : null}
-      {poiIndex < pois.length - 1 ? (
-        <NextNav
-          onClick={() => {
-            threeObj.controls.nextPOI()
-          }}
-        />
-      ) : null}
-      <Caption>{captions[poiIndex]}</Caption>
-      {audios?.[poiIndex]?.urls && (
-        <Audio
-          key={poiIndex}
-          audioUrls={audios?.[poiIndex]?.urls}
-          preload={audios?.[poiIndex]?.preload}
-        />
-      )}
+    <div ref={inViewRef}>
+      <Block leftOffset={leftOffset} ref={containerRef}>
+        <canvas ref={canvasRef}></canvas>
+        {poiIndex > 0 ? (
+          <PrevNav
+            onClick={() => {
+              threeObj.controls.prevPOI()
+            }}
+          />
+        ) : null}
+        {poiIndex < pois.length - 1 ? (
+          <NextNav
+            onClick={() => {
+              threeObj.controls.nextPOI()
+            }}
+          />
+        ) : null}
+        <Caption>{captions[poiIndex]}</Caption>
+        {audios?.[poiIndex]?.urls && (
+          <Audio
+            key={poiIndex}
+            play={inView}
+            audioUrls={audios?.[poiIndex]?.urls}
+            preload={audios?.[poiIndex]?.preload}
+          />
+        )}
+      </Block>
       {debugMode && (
         <AudioPlayButton
           onClick={() => {
@@ -411,6 +418,6 @@ export default function ThreeStoryPoints({
           播放聲音
         </AudioPlayButton>
       )}
-    </Block>
+    </div>
   )
 }
