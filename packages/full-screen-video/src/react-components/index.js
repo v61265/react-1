@@ -47,7 +47,9 @@ export default function FullScreenVideo({
    *  After this event finishes, Safari browser won't block `audio.play()` anymore.
    */
   const safariWorkaround = () => {
-    const otherVideos = document.querySelectorAll('video')
+    const otherVideos = document.querySelectorAll(
+      'video[data-readr-full-screen-video][data-played=false]'
+    )
     otherVideos.forEach(
       (
         /**
