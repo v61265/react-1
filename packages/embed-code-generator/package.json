@@ -1,6 +1,6 @@
 {
   "name": "@readr-media/react-embed-code-generator",
-  "version": "2.1.5-alpha.nick.2",
+  "version": "2.1.5-alpha.hsuan.3",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -30,7 +30,7 @@
   "dependencies": {
     "@readr-media/react-election-widgets": "1.0.2",
     "@readr-media/react-feedback": "^3.0.2",
-    "@readr-media/react-full-screen-video": "^1.0.1",
+    "@readr-media/react-full-screen-video": "1.0.4",
     "@readr-media/react-karaoke": "2.0.0",
     "@readr-media/react-live-blog": "1.1.2",
     "@readr-media/react-qa-list": "2.0.1",
