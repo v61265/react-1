@@ -11,6 +11,7 @@ import {
   Scene,
   WebGLRenderer,
   PCFSoftShadowMap,
+  sRGBEncoding,
 } from 'three'
 import { loadGltfModel } from '../loader.js'
 import { useState, useEffect, useRef, useMemo } from 'react'
@@ -195,6 +196,7 @@ function createThreeObj(models, pois, canvasRef) {
   })
   renderer.shadowMap.enabled = true
   renderer.shadowMap.type = PCFSoftShadowMap
+  renderer.outputEncoding = sRGBEncoding
   renderer.setSize(width, height)
   renderer.setPixelRatio(window.devicePixelRatio)
   return {
