@@ -32,8 +32,7 @@ export default function FullScreenVideo({
   const [leftOffset, setLeftOffset] = useState(0)
   const [shouldShowHint, setShouldShowHint] = useState(muteHint)
   const [shownVideoIndex, setShownVideoIndex] = useState(null)
-  const muted = useMuted(false)
-
+  const muted = useMuted(true)
   /**
    *  The following codes are WORKAROUND for Safari.
    *  Problem to workaround:
@@ -88,8 +87,6 @@ export default function FullScreenVideo({
   }, [width])
 
   useEffect(() => {
-    window.scrollTo(0, 0)
-    document.body.style.overflow = 'hidden'
     // Adjust video block to cover the whole viewport (100vw)
     const shiftLeft = function() {
       const containerElement = allContainerRef.current
@@ -104,33 +101,13 @@ export default function FullScreenVideo({
 
   const handleClickHintButton = () => {
     setShouldShowHint(false)
-    document.body.style.overflow = 'auto'
-    window.scrollTo(0, 0)
     safariWorkaround()
+    manager.updateMuted(false)
   }
 
   return (
     <>
-      {shouldShowHint ? (
-        <HintContainer isDarkMode={isDarkMode}>
-          <Text className="hint-text">{voiceHint}</Text>
-          <Button className="hint-button" onClick={handleClickHintButton}>
-            {voiceButton}
-          </Button>
-          <AudioBt
-            onClick={() => {
-              manager.updateMuted(!muted)
-              safariWorkaround()
-            }}
-          >
-            {muted ? (
-              <mockups.audio.PausedButton />
-            ) : (
-              <mockups.audio.PlayingButton />
-            )}
-          </AudioBt>
-        </HintContainer>
-      ) : (
+      {muteHint && (
         <AudioBtnFixed
           isMuted={muted}
           onClick={() => {
@@ -144,7 +121,18 @@ export default function FullScreenVideo({
           )}
         </AudioBtnFixed>
       )}
+
       <Container ref={allContainerRef} leftOffset={leftOffset}>
+        {shouldShowHint && (
+          <>
+            <HintContainer isDarkMode={isDarkMode}>
+              <Text className="hint-text">{voiceHint}</Text>
+              <Button className="hint-button" onClick={handleClickHintButton}>
+                {voiceButton}
+              </Button>
+            </HintContainer>
+          </>
+        )}
         {videoUrls.map((video, index) => {
           return (
             <section key={`video_source_${index}`}>
@@ -166,6 +154,8 @@ export default function FullScreenVideo({
 }
 
 const Container = styled.div`
+  z-index: 100;
+  position: relative;
   ${/**
    * @param {Object} props
    * @param {number} props.leftOffset
@@ -190,7 +180,7 @@ const AudioBtnFixed = styled.button`
   align-items: center;
   outline: 0;
   transition: 0.5s;
-  z-index: 100;
+  z-index: 200;
   &:hover {
     background: #c14d4d;
     cursor: pointer;
@@ -253,10 +243,6 @@ const HintContainer = styled.div`
   justify-content: center;
   position: relative;
   background-color: #fff;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 200;
 
   ${AudioBt} {
     margin-top: 50px;
