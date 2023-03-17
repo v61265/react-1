@@ -1,3 +1,4 @@
+import 'regenerator-runtime/runtime.js'
 import ThreeStoryPoints from '../src/react-components/index.js'
 import React from 'react' // eslint-disable-line
 import styled from 'styled-components'
@@ -8,7 +9,7 @@ const container = document.getElementById(reactRootId)
 const root = createRoot(container)
 
 const mocks = {
-  models: [
+  models1: [
     {
       url: './room.glb',
       /** @type {'glb'} */
@@ -20,7 +21,19 @@ const mocks = {
       fileFormat: 'glb',
     },
   ],
-  desktopModels: [
+  models2: [
+    {
+      url: './room-2.glb',
+      /** @type {'glb'} */
+      fileFormat: 'glb',
+    },
+    {
+      url: './room-2-light.glb',
+      /** @type {'glb'} */
+      fileFormat: 'glb',
+    },
+  ],
+  desktopModels1: [
     {
       url: './room.glb',
       /** @type {'glb'} */
@@ -28,6 +41,18 @@ const mocks = {
     },
     {
       url: './room-light.glb',
+      /** @type {'glb'} */
+      fileFormat: 'glb',
+    },
+  ],
+  desktopModels2: [
+    {
+      url: './room-2.glb',
+      /** @type {'glb'} */
+      fileFormat: 'glb',
+    },
+    {
+      url: './room-2-light.glb',
       /** @type {'glb'} */
       fileFormat: 'glb',
     },
@@ -172,8 +197,17 @@ root.render(
   <ShiftRightBlock>
     <ThreeStoryPoints
       audios={mocks.audios}
-      models={mocks.models}
-      desktopModels={mocks.desktopModels}
+      models={mocks.models1}
+      desktopModels={mocks.desktopModels1}
+      pois={mocks.pois}
+      captions={mocks.captions}
+      debugMode
+    />
+    <div style={{ height: '100vh' }}></div>
+    <ThreeStoryPoints
+      audios={mocks.audios}
+      models={mocks.models2}
+      desktopModels={mocks.desktopModels2}
       pois={mocks.pois}
       captions={mocks.captions}
       debugMode
