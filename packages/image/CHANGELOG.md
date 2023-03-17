@@ -1,5 +1,17 @@
 # @readr-media/react-image Changelog
 
+## 2023-03-17, Version 1.4.1
+
+### Notable Changes
+- fix generated `sizes` format
+
+### Commits
+* \[[`28b5e0df7b`](https://github.com/readr-media/react-image/commit/28b5e0df7b)] - Merge branch 'main' of <https://github.com/readr-media/react> (Tsuki Akiba)
+* \[[`fb09d56c65`](https://github.com/readr-media/react-image/commit/fb09d56c65)] - chore(image): bump version to 1.4.1 (Tsuki Akiba)
+* \[[`197ab1408c`](https://github.com/readr-media/react-image/commit/197ab1408c)] - refactor(image): fix `sizes` format issues (Tsuki Akiba)
+* \[[`a6b774089c`](https://github.com/readr-media/react-image/commit/a6b774089c)] - docs(image): update CHANGELOG.md (Tsuki Akiba)
+* \[[`9c54185cd1`](https://github.com/readr-media/react-image/commit/9c54185cd1)] - Merge branch 'main' of <https://github.com/readr-media/react> (Tsuki Akiba)
+
 ## 2023-03-16, Version 1.4.0
 
 ### Notable Changes
