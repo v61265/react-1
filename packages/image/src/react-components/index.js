@@ -168,7 +168,8 @@ export default function CustomImage({
 
   /**
    * @param {string} sizes
-   * @param {string} default
+   * @param {string} defaultValue
+   * @returns {string}
    */
   const joinSizesWidthDefaultValue = (sizes, defaultValue) => {
     if (/max-width/.test(sizes)) {
