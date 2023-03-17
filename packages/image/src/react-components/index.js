@@ -100,6 +100,17 @@ export default function CustomImage({
   }
 
   /**
+   * Print log when `props.debugMode` is true
+   * @param {String} message
+   * @returns {void}
+   */
+  const printLogInDevMode = (message) => {
+    if (debugMode) {
+      console.log(message)
+    }
+  }
+
+  /**
    * Transform params `images` into an array, which included three step:
    * 1. use `Object.entries` to transform object to an array, each item is an another array which item is the key and value of certain property.
    *    For example, { original: 'original.png' ,w480: 'w480.png' } will transform into [["original", "original.png"], ["w480","w480.png"] ], this array is composed of two item, each item contain two child-item.
@@ -156,38 +167,48 @@ export default function CustomImage({
   }
 
   /**
-   * @param {Object} rwd
-   * @param {Object} breakpoint
-   * @returns {string}
+   * @param {string} sizes
+   * @param {string} default
    */
-  const transformImageSizes = (rwd, breakpoint) => {
-    const defaultValue = '100vw'
-
-    if (rwd && Object.entries(rwd).length) {
-      const obj = {}
-      Object.keys(rwd).forEach((key) => {
-        obj[breakpoint[key]] = rwd[key]
-      })
-      const sizes = Object.entries(obj)
-        .map((pair) => `(max-width: ${pair[0]}) ${pair[1]}`)
-        .join(', ')
-
-      if (rwd.default) return `${sizes}, ${rwd.default}`
-      return `${sizes}, ${defaultValue}`
+  const joinSizesWidthDefaultValue = (sizes, defaultValue) => {
+    if (/max-width/.test(sizes)) {
+      return [sizes, defaultValue].join(', ')
     } else {
       return defaultValue
     }
   }
 
   /**
-   * Print log when `props.debugMode` is true
-   * @param {String} message
-   * @returns {void}
+   * @param {Object} rwd
+   * @param {Object} breakpoint
+   * @returns {string}
    */
-  const printLogInDevMode = (message) => {
-    if (debugMode) {
-      console.log(message)
+  const transformImageSizes = (rwd, breakpoint) => {
+    const defaultValue = '100vw'
+    let sizesStr
+
+    if (rwd && Object.entries(rwd).length) {
+      const obj = {}
+
+      Object.keys(rwd).forEach((key) => {
+        if (breakpoint[key]) {
+          obj[breakpoint[key]] = rwd[key]
+        }
+      })
+      const sizes = Object.entries(obj)
+        .map((pair) => `(max-width: ${pair[0]}) ${pair[1]}`)
+        .join(', ')
+
+      sizesStr = joinSizesWidthDefaultValue(
+        sizes,
+        rwd.default ? rwd.default : defaultValue
+      )
+    } else {
+      sizesStr = defaultValue
     }
+
+    printLogInDevMode(`Generated \`sizes\` info is \`${sizesStr}\``)
+    return sizesStr
   }
 
   /**
