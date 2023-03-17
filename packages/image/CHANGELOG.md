@@ -1,5 +1,39 @@
 # @readr-media/react-image Changelog
 
+## 2023-03-17, Version 1.4.2
+
+### Notable Changes
+- fix JSDoc comments
+
+### Commits
+* \[[`67eadfedf7`](https://github.com/readr-media/react-image/commit/67eadfedf7)] - chore(image): bump version to 1.4.2 (Tsuki Akiba)
+* \[[`55bf8a5b92`](https://github.com/readr-media/react-image/commit/55bf8a5b92)] - refactor(image): fix JSDoc comments (Tsuki Akiba)
+* \[[`00818d8d52`](https://github.com/readr-media/react-image/commit/00818d8d52)] - docs(image): update CHANGELOG.md (Tsuki Akiba)
+
+## 2023-03-17, Version 1.4.1
+
+### Notable Changes
+- fix generated `sizes` format
+
+### Commits
+* \[[`28b5e0df7b`](https://github.com/readr-media/react-image/commit/28b5e0df7b)] - Merge branch 'main' of <https://github.com/readr-media/react> (Tsuki Akiba)
+* \[[`fb09d56c65`](https://github.com/readr-media/react-image/commit/fb09d56c65)] - chore(image): bump version to 1.4.1 (Tsuki Akiba)
+* \[[`197ab1408c`](https://github.com/readr-media/react-image/commit/197ab1408c)] - refactor(image): fix `sizes` format issues (Tsuki Akiba)
+* \[[`a6b774089c`](https://github.com/readr-media/react-image/commit/a6b774089c)] - docs(image): update CHANGELOG.md (Tsuki Akiba)
+* \[[`9c54185cd1`](https://github.com/readr-media/react-image/commit/9c54185cd1)] - Merge branch 'main' of <https://github.com/readr-media/react> (Tsuki Akiba)
+
+## 2023-03-16, Version 1.4.0
+
+### Notable Changes
+- make default value of `sizes` configurable
+
+### Commits
+* \[[`573832a09c`](https://github.com/readr-media/react-image/commit/573832a09c)] - chore(image): bump version to 1.4.0 (Tsuki Akiba)
+* \[[`e520405226`](https://github.com/readr-media/react-image/commit/e520405226)] - docs(image): update `rwd` prop description (Tsuki Akiba)
+* \[[`4900aeb881`](https://github.com/readr-media/react-image/commit/4900aeb881)] - refactor(image): make default value of sizes configurable (Tsuki Akiba)
+* \[[`6aa3cfc7b8`](https://github.com/readr-media/react-image/commit/6aa3cfc7b8)] - chore(image): bump version to 1.3.0 (Tsuki Akiba)
+* \[[`de8ead1ca3`](https://github.com/readr-media/react-image/commit/de8ead1ca3)] - docs(image): add CHANGELOG.md (Tsuki Akiba)
+
 ## 2023-03-14, Version 1.3.0
 
 ### Notable Changes

@@ -6,6 +6,7 @@ import React, { useEffect, useRef } from 'react' // eslint-disable-line
  * @property {string} [tablet]
  * @property {string} [laptop]
  * @property {string} [desktop]
+ * @property {string} [default]
  */
 /**
  * @typedef {Object} Breakpoint
@@ -56,8 +57,8 @@ const REGEX = /(\d+)/
  * - It will affect which url of 'props.images' should loaded first.
  * @param {Rwd} [props.rwd]
  * - can set different sizes of image want to load first on different breakpoint of vw (viewport width),
- * such as {mobile: '300px', tablet: '400px', laptop: '800px', desktop: '1200px'}.
- * - optional, default value is `{ mobile: '100vw', tablet: '100vw', laptop: '100vw', desktop: '100vw'}`
+ * such as {mobile: '300px', tablet: '400px', laptop: '800px', desktop: '1200px', default: '1600px'}.
+ * - optional, default value is `{ mobile: '100vw', tablet: '100vw', laptop: '100vw', desktop: '100vw', default: '100vw'}`
  * - using `props.breakpoint` and `props.rwd`, you can decide different sizes of image is on each vw.
  * - if this param is default value, this sizes of images will equal to vw.
  * @returns {JSX.Element}
@@ -77,6 +78,7 @@ export default function CustomImage({
     tablet: '100vw',
     laptop: '100vw',
     desktop: '100vw',
+    default: '100vw',
   },
   breakpoint = {
     mobile: '767px',
@@ -95,6 +97,17 @@ export default function CustomImage({
     width,
     height,
     filter: loadingImage ? 'unset' : 'blur(8px)',
+  }
+
+  /**
+   * Print log when `props.debugMode` is true
+   * @param {String} message
+   * @returns {void}
+   */
+  const printLogInDevMode = (message) => {
+    if (debugMode) {
+      console.log(message)
+    }
   }
 
   /**
@@ -154,34 +167,49 @@ export default function CustomImage({
   }
 
   /**
+   * @param {string} sizes
+   * @param {string} defaultValue
+   * @returns {string}
+   */
+  const joinSizesWidthDefaultValue = (sizes, defaultValue) => {
+    if (/max-width/.test(sizes)) {
+      return [sizes, defaultValue].join(', ')
+    } else {
+      return defaultValue
+    }
+  }
+
+  /**
    * @param {Object} rwd
    * @param {Object} breakpoint
    * @returns {string}
    */
   const transformImageSizes = (rwd, breakpoint) => {
+    const defaultValue = '100vw'
+    let sizesStr
+
     if (rwd && Object.entries(rwd).length) {
       const obj = {}
+
       Object.keys(rwd).forEach((key) => {
-        obj[breakpoint[key]] = rwd[key]
+        if (breakpoint[key]) {
+          obj[breakpoint[key]] = rwd[key]
+        }
       })
       const sizes = Object.entries(obj)
         .map((pair) => `(max-width: ${pair[0]}) ${pair[1]}`)
         .join(', ')
-      return `${sizes}, 100vw`
-    } else {
-      return '100vw'
-    }
-  }
 
-  /**
-   * Print log when `props.debugMode` is true
-   * @param {String} message
-   * @returns {void}
-   */
-  const printLogInDevMode = (message) => {
-    if (debugMode) {
-      console.log(message)
+      sizesStr = joinSizesWidthDefaultValue(
+        sizes,
+        rwd.default ? rwd.default : defaultValue
+      )
+    } else {
+      sizesStr = defaultValue
     }
+
+    printLogInDevMode(`Generated \`sizes\` info is \`${sizesStr}\``)
+    return sizesStr
   }
 
   /**
