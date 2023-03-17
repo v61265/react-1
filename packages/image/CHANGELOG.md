@@ -1,5 +1,15 @@
 # @readr-media/react-image Changelog
 
+## 2023-03-17, Version 1.4.2
+
+### Notable Changes
+- fix JSDoc comments
+
+### Commits
+* \[[`67eadfedf7`](https://github.com/readr-media/react-image/commit/67eadfedf7)] - chore(image): bump version to 1.4.2 (Tsuki Akiba)
+* \[[`55bf8a5b92`](https://github.com/readr-media/react-image/commit/55bf8a5b92)] - refactor(image): fix JSDoc comments (Tsuki Akiba)
+* \[[`00818d8d52`](https://github.com/readr-media/react-image/commit/00818d8d52)] - docs(image): update CHANGELOG.md (Tsuki Akiba)
+
 ## 2023-03-17, Version 1.4.1
 
 ### Notable Changes
