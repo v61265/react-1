@@ -1,6 +1,6 @@
 {
   "name": "@readr-media/react-full-screen-video",
-  "version": "1.0.1",
+  "version": "1.0.5-beta.0",
   "description": "",
   "main": "lib/index.js",
   "scripts": {

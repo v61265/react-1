@@ -11,9 +11,13 @@ import {
   Scene,
   WebGLRenderer,
   PCFSoftShadowMap,
+  sRGBEncoding,
 } from 'three'
 import { loadGltfModel } from '../loader.js'
 import { useState, useEffect, useRef, useMemo } from 'react'
+import { useInView } from 'react-intersection-observer'
+
+const isLoading = '__readr_react_three_story_points_is_loading'
 
 const _ = {
   throttle,
@@ -194,6 +198,7 @@ function createThreeObj(models, pois, canvasRef) {
   })
   renderer.shadowMap.enabled = true
   renderer.shadowMap.type = PCFSoftShadowMap
+  renderer.outputEncoding = sRGBEncoding
   renderer.setSize(width, height)
   renderer.setPixelRatio(window.devicePixelRatio)
   return {
@@ -243,9 +248,14 @@ export default function ThreeStoryPoints({
   pois: plainPois = [],
   debugMode = false,
 }) {
+  const containerRef = useRef(null)
   const [leftOffset, setLeftOffset] = useState(0)
   const [models, setModels] = useState([])
   const [poiIndex, setPoiIndex] = useState(0)
+  const [retryCount, setRetryCount] = useState(0)
+  const [inViewRef, inView] = useInView({
+    threshold: [0.6],
+  })
 
   /** @type POI[] */
   const pois = useMemo(() => {
@@ -262,7 +272,6 @@ export default function ThreeStoryPoints({
     })
   }, [plainPois])
 
-  const containerRef = useRef(null)
   const canvasRef = useRef(null)
   const threeObj = useMemo(() => createThreeObj(models, pois, canvasRef), [
     models,
@@ -272,25 +281,36 @@ export default function ThreeStoryPoints({
 
   // Load 3D model
   useEffect(() => {
-    let models = mobileModels
-    if (window.innerWidth >= breakpoint.sizes.tablet) {
-      models = desktopModels
-    }
-
-    if (Array.isArray(models)) {
-      const promises = models.map((model) => {
+    const loadModels = async (modelsToLoad) => {
+      const threeModels = []
+      for (const model of modelsToLoad) {
         const url = model?.url
         const fileFormat = model?.fileFormat
         switch (fileFormat) {
           case 'glb':
           default: {
-            return loadGltfModel(url)
+            const loaded = await loadGltfModel(url)
+            threeModels.push(loaded)
           }
         }
-      })
-      Promise.all(promises).then(setModels)
+      }
+      setModels(threeModels)
     }
-  }, [mobileModels, desktopModels])
+    if (Array.isArray(models) && window?.[isLoading] !== true) {
+      window[isLoading] = true
+      loadModels(
+        window.innerWidth >= breakpoint.sizes.tablet
+          ? desktopModels
+          : mobileModels
+      ).then(() => {
+        window[isLoading] = false
+      })
+    } else {
+      setTimeout(() => {
+        setRetryCount(retryCount + 1)
+      }, 3000)
+    }
+  }, [mobileModels, desktopModels, retryCount])
 
   // Handle 3D model animation
   useEffect(() => {
@@ -336,17 +356,19 @@ export default function ThreeStoryPoints({
   // Handle canvas size change
   useEffect(() => {
     const updateThreeObj = _.throttle(function() {
-      const { camera, renderer } = threeObj
-      const width = document.documentElement.clientWidth
-      const height = document.documentElement.clientHeight
+      if (threeObj !== null) {
+        const { camera, renderer } = threeObj
+        const width = document.documentElement.clientWidth
+        const height = document.documentElement.clientHeight
 
-      // Update camera
-      camera.aspect = width / height
-      camera.updateProjectionMatrix()
+        // Update camera
+        camera.aspect = width / height
+        camera.updateProjectionMatrix()
 
-      // Update renderer
-      renderer.setSize(width, height)
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+        // Update renderer
+        renderer.setSize(width, height)
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+      }
     }, 100)
     window.addEventListener('resize', updateThreeObj)
 
@@ -376,30 +398,33 @@ export default function ThreeStoryPoints({
   }, [threeObj])
 
   return (
-    <Block leftOffset={leftOffset} ref={containerRef}>
-      <canvas ref={canvasRef}></canvas>
-      {poiIndex > 0 ? (
-        <PrevNav
-          onClick={() => {
-            threeObj.controls.prevPOI()
-          }}
-        />
-      ) : null}
-      {poiIndex < pois.length - 1 ? (
-        <NextNav
-          onClick={() => {
-            threeObj.controls.nextPOI()
-          }}
-        />
-      ) : null}
-      <Caption>{captions[poiIndex]}</Caption>
-      {audios?.[poiIndex]?.urls && (
-        <Audio
-          key={poiIndex}
-          audioUrls={audios?.[poiIndex]?.urls}
-          preload={audios?.[poiIndex]?.preload}
-        />
-      )}
+    <div ref={inViewRef}>
+      <Block leftOffset={leftOffset} ref={containerRef}>
+        <canvas ref={canvasRef}></canvas>
+        {poiIndex > 0 ? (
+          <PrevNav
+            onClick={() => {
+              threeObj.controls.prevPOI()
+            }}
+          />
+        ) : null}
+        {poiIndex < pois.length - 1 ? (
+          <NextNav
+            onClick={() => {
+              threeObj.controls.nextPOI()
+            }}
+          />
+        ) : null}
+        <Caption>{captions[poiIndex]}</Caption>
+        {audios?.[poiIndex]?.urls && (
+          <Audio
+            key={poiIndex}
+            play={inView}
+            audioUrls={audios?.[poiIndex]?.urls}
+            preload={audios?.[poiIndex]?.preload}
+          />
+        )}
+      </Block>
       {debugMode && (
         <AudioPlayButton
           onClick={() => {
@@ -411,6 +436,6 @@ export default function ThreeStoryPoints({
           播放聲音
         </AudioPlayButton>
       )}
-    </Block>
+    </div>
   )
 }
