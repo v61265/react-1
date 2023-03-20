@@ -1,5 +1,15 @@
 # @readr-media/react-image Changelog
 
+## 2023-03-17, Version 1.5.0
+
+### Notable Changes
+- fix issue that image path with special characters doesn't load
+
+### Commits
+* \[[`a910b6ba73`](https://github.com/readr-media/react-image/commit/a910b6ba73)] - chore(image): bump version to 1.5.0 (Tsuki Akiba)
+* \[[`6c840c12d2`](https://github.com/readr-media/react-image/commit/6c840c12d2)] - refactor(image): fix image path with special characters (Tsuki Akiba)
+* \[[`273c165155`](https://github.com/readr-media/react-image/commit/273c165155)] - docs(image): update CHANGELOG.md (Tsuki Akiba)
+
 ## 2023-03-17, Version 1.4.2
 
 ### Notable Changes
