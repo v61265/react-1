@@ -160,7 +160,7 @@ export default function CustomImage({
       .filter((pair) => pair[0] !== 'original')
       .map((pair) => {
         const width = pair[0].match(REGEX)[0]
-        return `${pair[1]} ${width}w`
+        return `${encodeURI(pair[1])} ${width}w`
       })
       .join(',')
     return str
