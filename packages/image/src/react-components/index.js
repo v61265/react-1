@@ -128,9 +128,11 @@ export default function CustomImage({
    */
   const transformImagesContent = (images) => {
     /** @type {[string,string][]} */
-    const imagesWithoutEmptyProperty = Object.entries(images).filter(
-      (pair) => (/^w\d+$/.test(pair[0]) && pair[1]) || pair[0] === 'original'
-    )
+    const imagesWithoutEmptyProperty = Object.entries(images)
+      .filter(
+        (pair) => (/^w\d+$/.test(pair[0]) && pair[1]) || pair[0] === 'original'
+      )
+      .map(([key, value]) => [key, encodeURI(value)])
     const sortedImagesList = imagesWithoutEmptyProperty.sort((pairA, pairB) => {
       // pair: [w800, image-w800.jpg], [original, image.jpg]
       const keyA = pairA[0]
@@ -160,7 +162,7 @@ export default function CustomImage({
       .filter((pair) => pair[0] !== 'original')
       .map((pair) => {
         const width = pair[0].match(REGEX)[0]
-        return `${encodeURI(pair[1])} ${width}w`
+        return `${pair[1]} ${width}w`
       })
       .join(',')
     return str
