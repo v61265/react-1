@@ -342,6 +342,9 @@ export default function ThreeStoryPoints({
   // Handle canvas size change
   useEffect(() => {
     const updateThreeObj = _.throttle(function() {
+      if (!threeObj) {
+        return
+      }
       const { camera, renderer } = threeObj
       const width = document.documentElement.clientWidth
       const height = document.documentElement.clientHeight
