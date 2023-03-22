@@ -1,5 +1,28 @@
 # @readr-media/react
 
+## 2022-03-23, Version 2.1.5
+### Notable Changes
+- update root package.json workspaces, remove ecg from workspaces.
+
+### Commits
+* \[[`c0ef4f7ab7`](https://github.com/readr-media/react/commit/c0ef4f7ab7)] - chore(ecg): update version to stable 2.1.5 (nickhsine)
+* \[[`cba87a84fe`](https://github.com/readr-media/react/commit/cba87a84fe)] - chore(ecg): upgrade tsp to @1.0.1 (nickhsine)
+* \[[`86592f0d6b`](https://github.com/readr-media/react/commit/86592f0d6b)] - chore(ecg): update version to 2.1.5-beta.nick.2 and upgrade tsp to latest beta version (nickhsine)
+* \[[`1015bb2df1`](https://github.com/readr-media/react/commit/1015bb2df1)] - refactor(ecg): hydrate/render all components at once (nickhsine)
+* \[[`1367ad4a97`](https://github.com/readr-media/react/commit/1367ad4a97)] - chore(ecg): update version to 2.1.5-beta.nick.0 and upgrade fsv (nickhsine)
+* \[[`3b54c6c338`](https://github.com/readr-media/react/commit/3b54c6c338)] - chore(ecg): update version to 2.1.5-alpha.3 (nickhsine)
+* \[[`8e4b398abd`](https://github.com/readr-media/react/commit/8e4b398abd)] - chore(ecg): bump version to 2.1.5-alpha.hsuan.3 (YiHsuan)
+* \[[`d827bb4969`](https://github.com/readr-media/react/commit/d827bb4969)] - chore(ecg): update version to 2.1.5-alpha.nick.2 (nickhsine)
+* \[[`3133820203`](https://github.com/readr-media/react/commit/3133820203)] - chore(ecg): temp remove vendor cache group (nickhsine)
+* \[[`d99f288fb4`](https://github.com/readr-media/react/commit/d99f288fb4)] - chore(ecg): add devDependencies (nickhsine)
+* \[[`689cb5ec40`](https://github.com/readr-media/react/commit/689cb5ec40)] - chore(root): update package.json. Update workspaces list (nickhsine)
+* \[[`919fed8129`](https://github.com/readr-media/react/commit/919fed8129)] - chore(ecg): add yarn.lock (nickhsine)
+* \[[`2e35a7a5a6`](https://github.com/readr-media/react/commit/2e35a7a5a6)] - chore(ecg): update version to 2.1.5-alpha.nick.1 (nickhsine)
+* \[[`5fd9f49226`](https://github.com/readr-media/react/commit/5fd9f49226)] - chore(ecg): update version to 2.1.5-beta.2 and upgrade dep (nickhsine)
+* \[[`056966cf0e`](https://github.com/readr-media/react/commit/056966cf0e)] - chore(ecg): update version to 2.1.5-beta.0 and upgrade dep (nickhsine)
+* \[[`03efb5100e`](https://github.com/readr-media/react/commit/03efb5100e)] - chore(ecg): update CHANGELOG.md (nickhsine)
+* \[[`4a586d3595`](https://github.com/readr-media/react/commit/4a586d3595)] - chore(ecg): update version to stable 2.1.4 and upgrade dep (nickhsine)
+
 ## 2022-03-15, Version 2.1.4
 
 ### Commits
