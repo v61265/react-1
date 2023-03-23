@@ -1,5 +1,11 @@
 # @readr-media/react
 
+## 2022-03-23, Version 2.1.6
+### Commits
+* \[[`9a8ce2a108`](https://github.com/readr-media/react/commit/9a8ce2a108)] - chore(ecg): update version to 2.1.6 (nickhsine)
+* \[[`3348a2b915`](https://github.com/readr-media/react/commit/3348a2b915)] - revert(ecg): hydrate/render all components at once (nickhsine)
+* \[[`15e054e1ab`](https://github.com/readr-media/react/commit/15e054e1ab)] - docs(root/ecg): update README.md (nickhsine)
+
 ## 2022-03-23, Version 2.1.5
 ### Notable Changes
 - update root package.json workspaces, remove ecg from workspaces.
