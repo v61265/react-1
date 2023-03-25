@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useInView } from 'react-intersection-observer'
-import styled from 'styled-components'
+import styled from '../styled-components.js'
 
 const Block = styled.div`
   height: 100%;

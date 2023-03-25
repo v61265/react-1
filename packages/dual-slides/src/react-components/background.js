@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import styled from 'styled-components'
+import styled from '../styled-components.js'
 import breakpoint from '../breakpoint.js'
 import { Transition } from 'react-transition-group'
 

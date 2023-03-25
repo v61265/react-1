@@ -1,6 +1,6 @@
 import Background from './background.js'
 import Forground from './foreground.js'
-import styled from 'styled-components'
+import styled from '../styled-components.js'
 import { useState } from 'react'
 
 const Block = styled.div`
