@@ -10,7 +10,8 @@
     "packages/qa-list",
     "packages/questionnaire",
     "packages/share-button",
-    "packages/three-story-points"
+    "packages/three-story-points",
+    "packages/dual-slides"
   ],
   "scripts": {
     "prepare": "husky install"
