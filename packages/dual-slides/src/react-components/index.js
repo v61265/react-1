@@ -61,6 +61,10 @@ export default function DualSlides({ slides }) {
         key={index}
         slide={slides[index]}
         inProp={index === currentSlideIndex}
+        showScrollDown={
+          // Do not show scroll down at last slide
+          index !== slides.length - 1 && currentSlideIndex === index
+        }
       />
     )
   })

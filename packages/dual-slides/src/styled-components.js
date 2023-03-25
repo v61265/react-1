@@ -1,5 +1,5 @@
-import { defaultImport } from 'default-import'
-import defaultStyled from 'styled-components'
-const styled = defaultImport(defaultStyled)
+import styled from 'styled-components'
+export { keyframes } from 'styled-components'
 
-export default styled
+// @ts-ignore
+export default styled.default || styled

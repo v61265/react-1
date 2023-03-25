@@ -1,7 +1,8 @@
-import { useRef } from 'react'
-import styled from '../styled-components.js'
+import ScrollDown from './scroll-down.js'
 import breakpoint from '../breakpoint.js'
+import styled from '../styled-components.js'
 import { Transition } from 'react-transition-group'
+import { useRef } from 'react'
 
 const Block = styled.div`
   transform: ${
@@ -45,10 +46,19 @@ const Content = styled.div`
   }
 `
 
-const Img = styled.img`
-  height: calc(50vh - 40px);
-  object-fit: cover;
+const ImgBlock = styled.div`
   margin-top: 40px;
+  position: relative;
+  width: 100%;
+  /* width:height = 4:3 */
+  padding-bottom: calc(280px / 4 * 3);
+`
+
+const Img = styled.img`
+  position: absolute;
+  top: 0;
+  height: 100%;
+  object-fit: cover;
 
   @media (${breakpoint.devices.laptop}) {
     width: 440px;
@@ -62,7 +72,14 @@ const Img = styled.img`
   }
 `
 
-const duration = 300
+const StyledScrollDown = styled(ScrollDown)`
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+`
+
+const duration = 500
 
 const defaultStyle = {
   transition: `opacity ${duration}ms ease-in-out`,
@@ -89,6 +106,7 @@ const transitionStyles = {
  *  @param {Slide} props.slide
  *  @param {string} [props.className]
  *  @param {string} [props.topOffset='0px']
+ *  @param {boolean} [props.showScrollDown=true]
  *  @returns {React.ReactElement}
  */
 export default function Background({
@@ -96,27 +114,36 @@ export default function Background({
   topOffset = '0px',
   slide,
   inProp,
+  showScrollDown = true,
 }) {
   const nodeRef = useRef(null)
   return (
     <div className={className}>
-      <Transition nodeRef={nodeRef} in={inProp} timeout={duration}>
-        {(state) => {
-          return (
-            <Block
-              ref={nodeRef}
-              topOffset={topOffset}
-              style={{
-                ...defaultStyle,
-                ...transitionStyles[state],
-              }}
-            >
-              <Img src={slide.imgSrc}></Img>
-              <Content>{slide.content}</Content>
-            </Block>
-          )
-        }}
-      </Transition>
+      <Block topOffset={topOffset}>
+        <Transition nodeRef={nodeRef} in={inProp} timeout={duration}>
+          {(state) => {
+            return (
+              <div
+                ref={nodeRef}
+                style={{
+                  ...defaultStyle,
+                  ...transitionStyles[state],
+                }}
+              >
+                <ImgBlock>
+                  <Img src={slide.imgSrc}></Img>
+                </ImgBlock>
+                <Content>
+                  {slide.content.map((text, index) => {
+                    return <p key={index}>{text}</p>
+                  })}
+                </Content>
+              </div>
+            )
+          }}
+        </Transition>
+        {showScrollDown && <StyledScrollDown />}
+      </Block>
     </div>
   )
 }
