@@ -1,4 +1,5 @@
 /* eslint no-console: 0 */
+import DualSlides from '@readr-media/react-dual-slides'
 import React from 'react' // eslint-disable-line
 import ReactDOMServer from 'react-dom/server'
 import Feedback from '@readr-media/react-feedback'
@@ -26,7 +27,8 @@ const _ = {
  * 'react-feedback'|'react-karaoke'|'react-live-blog'|
  * 'react-election-widgets-seat-chart'|
  * 'react-election-widgets-votes-comparison'|
- * 'react-three-story-points' | 'react-full-screen-video')} pkgName
+ * 'react-three-story-points' | 'react-full-screen-video' |
+ * 'react-dual-slides')} pkgName
  * @param {Object} data - Data for react component
  * @param {Object} webpackAssets - webpack bundles and chunks
  * @param {string[]} webpackAssets.entrypoints - webpack bundles
@@ -68,6 +70,9 @@ export function buildEmbeddedCode(pkgName, data, webpackAssets) {
       break
     case 'react-full-screen-video':
       Component = Video
+      break
+    case 'react-dual-slides':
+      Component = DualSlides
       break
     case 'react-three-story-points':
       skipServerSideRendering = true

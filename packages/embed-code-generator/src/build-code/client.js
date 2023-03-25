@@ -99,3 +99,19 @@ if (window?.[namespace]['react-three-story-points']) {
     render(namespace, 'react-three-story-points', ThreeStoryPoints)
   })
 }
+
+if (window?.[namespace]['react-three-story-points']) {
+  import(
+    /* webpackChunkName: "react-three-story-points" */ '@readr-media/react-three-story-points'
+  ).then(({ default: ThreeStoryPoints }) => {
+    render(namespace, 'react-three-story-points', ThreeStoryPoints)
+  })
+}
+
+if (window?.[namespace]['react-dual-slides']) {
+  import(
+    /* webpackChunkName: "react-dual-slides" */ '@readr-media/react-dual-slides'
+  ).then(({ default: DualSlides }) => {
+    render(namespace, 'react-dual-slides', DualSlides)
+  })
+}
