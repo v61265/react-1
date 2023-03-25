@@ -28,6 +28,7 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "@readr-media/react-dual-slides": "0.0.0",
     "@readr-media/react-election-widgets": "1.0.2",
     "@readr-media/react-feedback": "^3.0.2",
     "@readr-media/react-full-screen-video": "1.0.5-beta.0",
