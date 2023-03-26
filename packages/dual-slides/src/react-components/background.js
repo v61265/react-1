@@ -14,12 +14,16 @@ const Block = styled.div`
       return `translateY(${props.topOffset || '0px'});`
     }
   }
-
-  display: flex;
-  flex-direction: column;
   height: 100%;
   width: calc(280 / 320 * 100%);
   margin: 0 auto;
+`
+
+const FlexBox = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 
   @media (${breakpoint.devices.laptop}) {
     flex-direction: row;
@@ -27,7 +31,6 @@ const Block = styled.div`
     justify-content: center;
     gap: 80px;
   }
-
 `
 
 const Content = styled.div`
@@ -51,25 +54,27 @@ const ImgBlock = styled.div`
   position: relative;
   width: 100%;
   /* width:height = 4:3 */
-  padding-bottom: calc(280px / 4 * 3);
-`
-
-const Img = styled.img`
-  position: absolute;
-  top: 0;
-  height: 100%;
-  object-fit: cover;
+  padding-bottom: 75%;
 
   @media (${breakpoint.devices.laptop}) {
     width: 440px;
     height: 330px;
     order: 2;
+    padding-bottom: 0;
   }
 
   @media (${breakpoint.devices.laptopL}) {
     width: 560px;
     height: 420px;
   }
+`
+
+const Img = styled.img`
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `
 
 const StyledScrollDown = styled(ScrollDown)`
@@ -123,7 +128,7 @@ export default function Background({
         <Transition nodeRef={nodeRef} in={inProp} timeout={duration}>
           {(state) => {
             return (
-              <div
+              <FlexBox
                 ref={nodeRef}
                 style={{
                   ...defaultStyle,
@@ -138,7 +143,7 @@ export default function Background({
                     return <p key={index}>{text}</p>
                   })}
                 </Content>
-              </div>
+              </FlexBox>
             )
           }}
         </Transition>
