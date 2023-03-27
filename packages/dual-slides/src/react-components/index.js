@@ -4,6 +4,7 @@ import styled from '../styled-components.js'
 import { useState } from 'react'
 
 const Block = styled.div`
+  background-color: #fff;
   position: relative;
   height: ${/**
    *  @param {Object} props

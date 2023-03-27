@@ -25,7 +25,7 @@ const FlexBox = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media (${breakpoint.devices.laptop}) {
+  @media ${breakpoint.devices.laptop} {
     flex-direction: row;
     align-items: center;
     justify-content: center;
@@ -39,12 +39,12 @@ const Content = styled.div`
   font-weight: 400;
   margin-top: 32px;
 
-  @media (${breakpoint.devices.laptop}) {
+  @media ${breakpoint.devices.laptop} {
     width: 440px;
     order: 1;
   }
 
-  @media (${breakpoint.devices.laptopL}) {
+  @media ${breakpoint.devices.laptopL} {
     width: 560px;
   }
 `
@@ -56,14 +56,14 @@ const ImgBlock = styled.div`
   /* width:height = 4:3 */
   padding-bottom: 75%;
 
-  @media (${breakpoint.devices.laptop}) {
+  @media ${breakpoint.devices.laptop} {
     width: 440px;
     height: 330px;
     order: 2;
     padding-bottom: 0;
   }
 
-  @media (${breakpoint.devices.laptopL}) {
+  @media ${breakpoint.devices.laptopL} {
     width: 560px;
     height: 420px;
   }
