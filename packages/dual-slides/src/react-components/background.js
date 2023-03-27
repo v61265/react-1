@@ -34,6 +34,7 @@ const FlexBox = styled.div`
 `
 
 const Content = styled.div`
+  color: rgba(0, 9, 40, 0.87);
   font-size: 20px;
   line-height: 150%;
   font-weight: 400;
