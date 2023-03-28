@@ -2777,11 +2777,6 @@ default-gateway@^6.0.3:
   dependencies:
     execa "^5.0.0"
 
-default-import@^1.1.5:
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/default-import/-/default-import-1.1.5.tgz#6ba81645f79fa2e122bbac09651f30b55a8d9d5d"
-  integrity sha512-aaJ6uzZlmaEcN1U8yvtiyV7MG3/zZQf1XtGSW5dTfAVvfk0VZuriJelXxVL9a0ni42vMkhjWcztFfpIhwFcfOQ==
-
 defaults@^1.0.3:
   version "1.0.4"
   resolved "https://registry.npmjs.org/defaults/-/defaults-1.0.4.tgz"
