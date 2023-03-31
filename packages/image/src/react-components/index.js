@@ -6,6 +6,7 @@ import React, { useEffect, useRef } from 'react' // eslint-disable-line
  * @property {string} [tablet]
  * @property {string} [laptop]
  * @property {string} [desktop]
+ * @property {string} [default]
  */
 /**
  * @typedef {Object} Breakpoint
@@ -42,6 +43,8 @@ const REGEX = /(\d+)/
  * @param {String | Number} [props.height]
  * - image height.
  * - optional, default value is `"100%"`.
+ * @param {boolean} [props.priority]
+ * - should preload image
  * @param {Boolean} [props.debugMode]
  * - can set if is in debug mode
  * - if `true`, then will print log after image loaded successfully of occur error.
@@ -54,8 +57,8 @@ const REGEX = /(\d+)/
  * - It will affect which url of 'props.images' should loaded first.
  * @param {Rwd} [props.rwd]
  * - can set different sizes of image want to load first on different breakpoint of vw (viewport width),
- * such as {mobile: '300px', tablet: '400px', laptop: '800px', desktop: '1200px'}.
- * - optional, default value is `{ mobile: '100vw', tablet: '100vw', laptop: '100vw', desktop: '100vw'}`
+ * such as {mobile: '300px', tablet: '400px', laptop: '800px', desktop: '1200px', default: '1600px'}.
+ * - optional, default value is `{ mobile: '100vw', tablet: '100vw', laptop: '100vw', desktop: '100vw', default: '100vw'}`
  * - using `props.breakpoint` and `props.rwd`, you can decide different sizes of image is on each vw.
  * - if this param is default value, this sizes of images will equal to vw.
  * @returns {JSX.Element}
@@ -68,12 +71,14 @@ export default function CustomImage({
   objectFit = 'cover',
   width = '100%',
   height = '100%',
+  priority = false,
   debugMode = false,
   rwd = {
     mobile: '100vw',
     tablet: '100vw',
     laptop: '100vw',
     desktop: '100vw',
+    default: '100vw',
   },
   breakpoint = {
     mobile: '767px',
@@ -95,6 +100,17 @@ export default function CustomImage({
   }
 
   /**
+   * Print log when `props.debugMode` is true
+   * @param {String} message
+   * @returns {void}
+   */
+  const printLogInDevMode = (message) => {
+    if (debugMode) {
+      console.log(message)
+    }
+  }
+
+  /**
    * Transform params `images` into an array, which included three step:
    * 1. use `Object.entries` to transform object to an array, each item is an another array which item is the key and value of certain property.
    *    For example, { original: 'original.png' ,w480: 'w480.png' } will transform into [["original", "original.png"], ["w480","w480.png"] ], this array is composed of two item, each item contain two child-item.
@@ -112,9 +128,11 @@ export default function CustomImage({
    */
   const transformImagesContent = (images) => {
     /** @type {[string,string][]} */
-    const imagesWithoutEmptyProperty = Object.entries(images).filter(
-      (pair) => (/^w\d+$/.test(pair[0]) && pair[1]) || pair[0] === 'original'
-    )
+    const imagesWithoutEmptyProperty = Object.entries(images)
+      .filter(
+        (pair) => (/^w\d+$/.test(pair[0]) && pair[1]) || pair[0] === 'original'
+      )
+      .map(([key, value]) => [key, encodeURI(value)])
     const sortedImagesList = imagesWithoutEmptyProperty.sort((pairA, pairB) => {
       // pair: [w800, image-w800.jpg], [original, image.jpg]
       const keyA = pairA[0]
@@ -151,34 +169,49 @@ export default function CustomImage({
   }
 
   /**
+   * @param {string} sizes
+   * @param {string} defaultValue
+   * @returns {string}
+   */
+  const joinSizesWidthDefaultValue = (sizes, defaultValue) => {
+    if (/max-width/.test(sizes)) {
+      return [sizes, defaultValue].join(', ')
+    } else {
+      return defaultValue
+    }
+  }
+
+  /**
    * @param {Object} rwd
    * @param {Object} breakpoint
    * @returns {string}
    */
   const transformImageSizes = (rwd, breakpoint) => {
+    const defaultValue = '100vw'
+    let sizesStr
+
     if (rwd && Object.entries(rwd).length) {
       const obj = {}
+
       Object.keys(rwd).forEach((key) => {
-        obj[breakpoint[key]] = rwd[key]
+        if (breakpoint[key]) {
+          obj[breakpoint[key]] = rwd[key]
+        }
       })
       const sizes = Object.entries(obj)
         .map((pair) => `(max-width: ${pair[0]}) ${pair[1]}`)
         .join(', ')
-      return `${sizes}, 100vw`
-    } else {
-      return '100vw'
-    }
-  }
 
-  /**
-   * Print log when `props.debugMode` is true
-   * @param {String} message
-   * @returns {void}
-   */
-  const printLogInDevMode = (message) => {
-    if (debugMode) {
-      console.log(message)
+      sizesStr = joinSizesWidthDefaultValue(
+        sizes,
+        rwd.default ? rwd.default : defaultValue
+      )
+    } else {
+      sizesStr = defaultValue
     }
+
+    printLogInDevMode(`Generated \`sizes\` info is \`${sizesStr}\``)
+    return sizesStr
   }
 
   /**
@@ -277,55 +310,69 @@ export default function CustomImage({
     imageRef.current.src = url
     imageRef.current.style.filter = 'unset'
   }
+
+  const loadImageProgress = () => {
+    const imagesList = transformImagesContent(images)
+
+    return getResolution(imagesList)
+      .then((resolution) => {
+        loadImages(resolution, imagesList)
+          .then((url) => {
+            setImageUrl(url)
+            printLogInDevMode(
+              `Successfully Load image, current image source is ${url}`
+            )
+          })
+          .catch(() => {
+            if (imageRef.current?.src) {
+              setImageUrl(defaultImage)
+              printLogInDevMode(
+                'Unable to load any image, try to use default image as image src'
+              )
+              imageRef.current.addEventListener('error', () => {
+                printLogInDevMode('Unable to load default image')
+              })
+            }
+          })
+      })
+      .catch(() => {
+        setImageUrl(defaultImage)
+        printLogInDevMode(
+          `Unable to get resolution on ${JSON.stringify(
+            images
+          )}, which means doesn't provide any url of image, try to use default image as image src`
+        )
+      })
+  }
+
+  const callback = (entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        loadImageProgress()
+        observer.unobserve(entry.target)
+      }
+    })
+  }
+
   useEffect(() => {
     try {
-      let callback = (entries, observer) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const imagesList = transformImagesContent(images)
+      let observer
 
-            getResolution(imagesList)
-              .then((resolution) => {
-                loadImages(resolution, imagesList)
-                  .then((url) => {
-                    setImageUrl(url)
-                    printLogInDevMode(
-                      `Successfully Load image, current image source is ${url}`
-                    )
-                  })
-                  .catch(() => {
-                    if (imageRef.current?.src) {
-                      setImageUrl(defaultImage)
-                      printLogInDevMode(
-                        'Unable to load any image, try to use default image as image src'
-                      )
-                      imageRef.current.addEventListener('error', () => {
-                        printLogInDevMode('Unable to load default image')
-                      })
-                    }
-                  })
-              })
-              .catch(() => {
-                setImageUrl(defaultImage)
-                printLogInDevMode(
-                  `Unable to get resolution on ${JSON.stringify(
-                    images
-                  )}, which means doesn't provide any url of image, try to use default image as image src`
-                )
-              })
-            observer.unobserve(entry.target)
-          }
+      if (!priority) {
+        observer = new IntersectionObserver(callback, {
+          root: null,
+          rootMargin: '0px',
+          threshold: 0.25,
         })
+        observer.observe(imageRef.current)
+      } else {
+        loadImageProgress()
       }
-      const observer = new IntersectionObserver(callback, {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.25,
-      })
-      observer.observe(imageRef.current)
 
       return () => {
-        observer.disconnect()
+        if (observer) {
+          observer.disconnect()
+        }
       }
     } catch (err) {
       imageRef.current.style.visibility = 'hidden'
@@ -340,6 +387,7 @@ export default function CustomImage({
       ref={imageRef}
       src={loadingImage ? loadingImage : defaultImage}
       alt={alt}
+      rel={priority ? 'preload' : ''}
     ></img>
   )
 }

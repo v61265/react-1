@@ -19,19 +19,15 @@ export default function VideoItem({
   preload = 'auto',
   videoUrl,
   setShownVideoIndex,
-  // mute,
+  muted,
 }) {
-  const defaultDuration = 10 // second
   const videoRef = useRef(null)
-  // const [muted, setMuted] = useMuted(false)
   const [containerRef, inView] = useInView({
     threshold: [0.6],
   })
-  console.log(videoUrl)
 
   const [videoOpts, setVideoOpts] = useState({
     paused: !inView,
-    duration: defaultDuration,
     currentTime: 0,
     notice: '',
   })
@@ -56,17 +52,41 @@ export default function VideoItem({
     }
   }, [])
 
+  useEffect(() => {
+    if (videoRef && videoRef.current && !videoRef.current.muted) {
+      videoRef.current.muted = true
+
+      const fixCornerCaseOnIOS = () => {
+        // video has not been played yet
+        if (videoRef.current && !videoRef.current.playing) {
+          // `play()` here is to clear play button when iOS is under the low battery mode.
+          const playPromise = videoRef.current.play()
+          playPromise
+            .then(() => {
+              // `pause()` video after `play()` successfully
+              videoRef.current.pause()
+            })
+            .catch((err) => {
+              console.warn('Can not play video by JavaScript due to ', err)
+            })
+        }
+        window.removeEventListener('touchstart', fixCornerCaseOnIOS)
+      }
+      window.addEventListener('touchstart', fixCornerCaseOnIOS)
+    }
+  }, [])
+
   useEffect(
     () => {
       const video = videoRef.current
       if (!video) {
         return
       }
-      // video.muted = false
       // in the viewport
       if (inView) {
         // start with `videoOpts.currentTime` to catch up `QuoteShadow` animation
         video.currentTime = videoOpts.currentTime
+        video.muted = muted
         const startPlayPromise = video.play()
         startPlayPromise
           // play successfully
@@ -109,7 +129,7 @@ export default function VideoItem({
     },
     // `inView` is used to avoid from infinite re-rendering.
     // `muted` is avoid state not changed due to closure.
-    [inView]
+    [inView, muted]
   )
 
   return (
@@ -117,10 +137,9 @@ export default function VideoItem({
       <video
         ref={videoRef}
         preload={preload}
+        playsInline
         data-readr-full-screen-video
         data-played={true}
-        controls
-        // muted={mute}
       >
         <source key={`video_source`} src={videoUrl}></source>
       </video>
@@ -142,6 +161,14 @@ const VideoContainer = styled.div`
 
   video {
     width: 100%;
+  }
+
+  video::-webkit-media-controls-volume-slider {
+    display: none;
+  }
+
+  video::-webkit-media-controls-mute-button {
+    display: none;
   }
 
   ${AudioBt} {

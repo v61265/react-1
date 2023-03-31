@@ -17,6 +17,11 @@ Before modifying sub-packages' source codes, make sure you install dependencies 
 ### Installation
 `yarn install`
 
+### Monorepo Settings
+In root package.json, we configure `workspaces` property to manage subpkgs. The reason that we don't set `workspaces: [ "packages/*" ]` is because we don't want `packages/embed-code-generator` to be managed by workspaces. You can see this [PR](https://github.com/readr-media/react/pull/138) for more details.
+
+Therefore, if you add new subpkg in this monorepo, please make sure you add the new subpkg into `workspaces` property.
+
 ## Use package as react component
 To use the package in a react project, we just import the react component directly from the installed package.
 

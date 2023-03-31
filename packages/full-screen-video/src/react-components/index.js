@@ -1,9 +1,14 @@
-import React /* eslint-disable-line */, { useEffect, useState } from 'react'
+import React /* eslint-disable-line */, {
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import breakpoint from './breakpoint'
 import styled from 'styled-components'
 import useWindowSize from './hooks/useViewport'
 import VideoItem from './video-item'
 import mockups from './mockups'
+import { getCentralizedMutedManager, useMuted } from './hooks/useMuted'
 
 /**
  *  @param {Object} opts
@@ -21,11 +26,13 @@ export default function FullScreenVideo({
   voiceButton = '確認',
   isDarkMode = false,
 }) {
+  const allContainerRef = useRef(null)
+  const manager = getCentralizedMutedManager()
   const { width } = useWindowSize()
+  const [leftOffset, setLeftOffset] = useState(0)
   const [shouldShowHint, setShouldShowHint] = useState(muteHint)
   const [shownVideoIndex, setShownVideoIndex] = useState(null)
-  const [muteAllVideo, setMuteAllVideo] = useState(false)
-
+  const muted = useMuted(true)
   /**
    *  The following codes are WORKAROUND for Safari.
    *  Problem to workaround:
@@ -49,13 +56,13 @@ export default function FullScreenVideo({
          */
         video
       ) => {
-        video.muted = true
+        manager.updateMuted(muted)
         const playAttempt = video.play()
         if (playAttempt) {
           playAttempt
             // play successfully
             .then(() => {
-              // pause video immediately
+              // pause audio immediately
               video.pause()
             })
             // fail to play
@@ -75,70 +82,131 @@ export default function FullScreenVideo({
       }
     }
     if (!shownVideoIndex) {
-      setShownVideoIndex(videoUrls.length)
+      setShownVideoIndex(videoUrls.length - 1)
     }
   }, [width])
 
   useEffect(() => {
-    window.scrollTo(0, 0)
-    document.body.style.overflow = 'hidden'
+    // Adjust video block to cover the whole viewport (100vw)
+    const shiftLeft = function() {
+      const containerElement = allContainerRef.current
+      if (typeof containerElement?.getBoundingClientRect === 'function') {
+        const rect = containerElement.getBoundingClientRect()
+        const leftOffset = rect?.x ?? rect?.left ?? 0
+        setLeftOffset(leftOffset)
+      }
+    }
+    shiftLeft()
   }, [])
-
-  useEffect(() => {
-    const otherVideos = document.querySelectorAll(
-      'video[data-readr-full-screen-video]'
-    )
-    otherVideos.forEach((video) => {
-      video.muted = true
-    })
-  }, [muteAllVideo])
 
   const handleClickHintButton = () => {
     setShouldShowHint(false)
-    document.body.style.overflow = 'auto'
-    window.scrollTo(0, 0)
+    safariWorkaround()
+    manager.updateMuted(false)
   }
 
   return (
     <>
-      {shouldShowHint && (
-        <HintContainer isDarkMode={isDarkMode}>
-          <Text className="hint-text">{voiceHint}</Text>
-          <Button className="hint-button" onClick={handleClickHintButton}>
-            {voiceButton}
-          </Button>
-          <AudioBt
-            onClick={() => {
-              setMuteAllVideo(!muteAllVideo)
-              safariWorkaround()
-            }}
-          >
-            {muteAllVideo ? (
-              <mockups.audio.PausedButton />
-            ) : (
-              <mockups.audio.PlayingButton />
-            )}
-          </AudioBt>
-        </HintContainer>
+      {muteHint && (
+        <AudioBtnFixed
+          isMuted={muted}
+          onClick={() => {
+            manager.updateMuted(!muted)
+          }}
+        >
+          {muted ? (
+            <mockups.audio.PausedButton />
+          ) : (
+            <mockups.audio.PlayingButton />
+          )}
+        </AudioBtnFixed>
       )}
-      {videoUrls.map((video, index) => {
-        return (
-          <section key={`video_source_${index}`}>
-            {index === shownVideoIndex && (
-              <VideoItem
-                className={className}
-                videoUrl={video.videoUrl}
-                setShownVideoIndex={setShownVideoIndex}
-                preload={preload}
-                mute={muteAllVideo}
-              />
-            )}
-          </section>
-        )
-      })}
+
+      <Container ref={allContainerRef} leftOffset={leftOffset}>
+        {shouldShowHint && (
+          <>
+            <HintContainer isDarkMode={isDarkMode}>
+              <Text className="hint-text">{voiceHint}</Text>
+              <Button className="hint-button" onClick={handleClickHintButton}>
+                {voiceButton}
+              </Button>
+            </HintContainer>
+          </>
+        )}
+        {videoUrls.map((video, index) => {
+          return (
+            <section key={`video_source_${index}`}>
+              {index === shownVideoIndex && (
+                <VideoItem
+                  className={className}
+                  videoUrl={video.videoUrl}
+                  setShownVideoIndex={setShownVideoIndex}
+                  preload={preload}
+                  muted={muted}
+                />
+              )}
+            </section>
+          )
+        })}
+      </Container>
     </>
   )
 }
+
+const Container = styled.div`
+  z-index: 100;
+  position: relative;
+  ${/**
+   * @param {Object} props
+   * @param {number} props.leftOffset
+   */
+  (props) => {
+    const leftOffset = props.leftOffset
+    return `transform: translateX(${0 - leftOffset}px);`
+  }}
+`
+
+const AudioBtnFixed = styled.button`
+  position: fixed;
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 50%;
+  border: 0;
+  top: 89px;
+  right: 20px;
+  background: #ea5f5f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: 0;
+  transition: 0.5s;
+  z-index: 200;
+  &:hover {
+    background: #c14d4d;
+    cursor: pointer;
+  }
+  svg {
+    width: 21.33px;
+    height: 17.33px;
+    path {
+      fill: #fff;
+    }
+  }
+  @media ${breakpoint.devices.tablet} {
+    top: 105px;
+  }
+  ${(props) => {
+    return (
+      !props.isMuted &&
+      `
+      background: #3DC5BD;
+        &:hover {
+          background: #399E98;
+        }
+    `
+    )
+  }}
+`
 
 const AudioBt = styled.div`
   cursor: pointer;
@@ -175,10 +243,6 @@ const HintContainer = styled.div`
   justify-content: center;
   position: relative;
   background-color: #fff;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 200;
 
   ${AudioBt} {
     margin-top: 50px;

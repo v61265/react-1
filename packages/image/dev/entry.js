@@ -44,6 +44,7 @@ root.render(
         debugMode={true}
         loadMode="manual"
         loadResolution="w800"
+        priority={false}
       ></Image>
     ))}
   </div>
