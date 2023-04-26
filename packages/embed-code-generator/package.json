@@ -1,6 +1,6 @@
 {
   "name": "@readr-media/react-embed-code-generator",
-  "version": "2.3.0-alpha.0",
+  "version": "2.3.0-alpha.1",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -37,7 +37,7 @@
     "@readr-media/react-qa-list": "2.0.1",
     "@readr-media/react-questionnaire": "2.0.0",
     "@readr-media/react-three-story-points": "1.0.1",
-    "@readr-media/text-selector": "^1.1.0",
+    "@readr-media/text-selector": "^1.1.1-alpha-1",
     "lodash": "^4.17.21",
     "serialize-javascript": "^6.0.0",
     "uuid": "^8.3.2"
