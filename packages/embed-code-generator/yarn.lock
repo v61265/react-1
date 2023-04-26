@@ -1416,10 +1416,10 @@
     three "^0.150.1"
     three-story-controls "^1.0.6"
 
-"@readr-media/text-selector@^1.1.1-alpha.4":
-  version "1.1.1-alpha.4"
-  resolved "https://registry.yarnpkg.com/@readr-media/text-selector/-/text-selector-1.1.1-alpha.4.tgz#2873156799b2f89d53743b25bf2ca34e642ed504"
-  integrity sha512-AqGSPQ8IX/ZXyhmnqL4dUOlkhVOLFTmg9GwjZxdNMNjUuSof/uKEtTS6IolQAxeD3Nt/AxH93m1G8jbot3oUEw==
+"@readr-media/text-selector@^1.1.1-alpha.5":
+  version "1.1.1-alpha.5"
+  resolved "https://registry.yarnpkg.com/@readr-media/text-selector/-/text-selector-1.1.1-alpha.5.tgz#8770fb5213062f26425eb6f3b43c099d336a2763"
+  integrity sha512-1sbH6O9FwJwAVYspWcSlOxioLjrLA9MNQzoPd1+BAl/rf13gsm9blfArwpoVHTW0jzQKc7ZEDgygU/WCXMnJQQ==
   dependencies:
     "@babel/cli" "^7.21.0"
     "@babel/core" "^7.21.4"
