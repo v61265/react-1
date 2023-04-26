@@ -115,3 +115,11 @@ if (window?.[namespace]['react-dual-slides']) {
     render(namespace, 'react-dual-slides', DualSlides)
   })
 }
+
+if (window?.[namespace]['text-selector']) {
+  import(
+    /* webpackChunkName: "text-selector" */ '@readr-media/text-selector'
+  ).then(({ default: TextSelector }) => {
+    hydrate(namespace, 'text-selector', TextSelector)
+  })
+}
