@@ -1,4 +1,5 @@
 /* eslint no-console: 0 */
+import DroppingText from '@readr-media/react-dropping-text'
 import DualSlides from '@readr-media/react-dual-slides'
 import React from 'react' // eslint-disable-line
 import ReactDOMServer from 'react-dom/server'
@@ -29,7 +30,7 @@ const _ = {
  * 'react-election-widgets-seat-chart'|
  * 'react-election-widgets-votes-comparison'|
  * 'react-three-story-points' | 'react-full-screen-video' |
- * 'react-dual-slides' | text-selector)} pkgName
+ * 'react-dual-slides' | 'text-selector' | 'react-dropping-text')} pkgName
  * @param {Object} data - Data for react component
  * @param {Object} webpackAssets - webpack bundles and chunks
  * @param {string[]} webpackAssets.entrypoints - webpack bundles
@@ -80,6 +81,9 @@ export function buildEmbeddedCode(pkgName, data, webpackAssets) {
       break
     case 'text-selector':
       Component = TextSelector
+      break
+    case 'react-dropping-text':
+      Component = DroppingText
       break
     default:
       throw new Error(`pkgName ${pkgName} is not supported`)

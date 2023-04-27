@@ -1318,6 +1318,14 @@
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.21.tgz#5de5a2385a35309427f6011992b544514d559aa1"
   integrity sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==
 
+"@readr-media/react-dropping-text@^1.0.0-beta.0":
+  version "1.0.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-dropping-text/-/react-dropping-text-1.0.0-beta.0.tgz#94afc955ba94e7126fdfc02777314573580d5977"
+  integrity sha512-Fr997nYM52PIv4mSpbvVVzLi2p3KuCcX/uGDCjpFclGkRYFB8yDeXxT1JUmWk2FuK1oopJchZs5kH61PAJwFcw==
+  dependencies:
+    matter-js "^0.19.0"
+    react-intersection-observer "^9.3.5"
+
 "@readr-media/react-dual-slides@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@readr-media/react-dual-slides/-/react-dual-slides-1.0.0.tgz#f083db1c39cde0bf9b937d2ca193c63008c04396"
@@ -4128,6 +4136,11 @@ make-dir@^3.0.2, make-dir@^3.1.0:
   integrity sha512-g3FeP20LNwhALb/6Cz6Dd4F2ngze0jz7tbzrD2wAV+o9FeNHe4rL+yK2md0J/fiSf1sa1ADhXqi5+oVwOM/eGw==
   dependencies:
     semver "^6.0.0"
+
+matter-js@^0.19.0:
+  version "0.19.0"
+  resolved "https://registry.yarnpkg.com/matter-js/-/matter-js-0.19.0.tgz#185e518146ae4fa20c33826ebc7e6e42685e3642"
+  integrity sha512-v2huwvQGOHTGOkMqtHd2hercCG3f6QAObTisPPHg8TZqq2lz7eIY/5i/5YUV8Ibf3mEioFEmwibcPUF2/fnKKQ==
 
 mdn-data@2.0.14:
   version "2.0.14"
