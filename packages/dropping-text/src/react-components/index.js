@@ -1,38 +1,133 @@
 import Matter from 'matter-js'
 import styled from '../styled-components.js'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { useInView } from 'react-intersection-observer'
 
 const { Bodies, Body, Common, Composite, Engine } = Matter
 
 const Block = styled.div`
+  /* font-family set here is for better performance. */
+  /* If the webpage uses other font-family, such as adobe fonts, google fonts */
+  /* and the dropping effect will be slow and laggy. */
+  font-family: sans-serif;
+
+  line-height: 1;
+
   position: relative;
+  font-size: 20px;
+  overflow: hidden;
+  & > img.loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  ${/**
+   *  @param {Object} props
+   *  @param {boolean} porps.initialRender
+   */
+  ({ initialRender }) => {
+    if (initialRender) {
+      return `
+        & > span {
+          position: static;
+          line-height: 20px;
+        }
+
+        @media (max-width: 767px) {
+          & > span {
+            font-size: 12px;
+            line-height: 12px;
+          }
+        }
+      `
+    }
+    return `
+      & > span {
+        position: absolute;
+        line-height: 1.2;
+      }
+      @media (max-width: 767px) {
+        & > span {
+          font-size: 12px;
+          line-height: 1.5;
+        }
+      }
+    `
+  }}
 `
 
 const Text = styled.span`
-  position: absolute;
-  color: black;
-  cursor: move;
+  font-size: 20px;
   user-select: none;
+  visibility: hidden;
 `
+
+function findOverflowIdx(nodeList, overflowThreshold) {
+  for (let i = nodeList.length - 1; i >= 0; i--) {
+    const node = nodeList[i]
+    if (node.offsetTop < overflowThreshold) {
+      return i + 1
+    }
+  }
+
+  return nodeList.length
+}
 
 /**
  *  @param {Object} props
  *  @param {string[]} props.textArr
  *  @param {number} [props.canvasWidth] - if not provided, then default value will be `window.innerWidth`
  *  @param {number} [props.canvasHeight] - if not provided, then default value will be `window.innerHeight`
+ *  @param {boolean} [props.showLoadingImg=true]
+ *  @param {string} [props.loadingImgSrc='https://unpkg.com/@readr-media/react-dropping-text/assets/loading.gif']
  *  @returns {React.ReactElement}
  */
-export default function DroppingText({ textArr, canvasWidth, canvasHeight }) {
+export default function DroppingText({
+  textArr,
+  canvasWidth,
+  canvasHeight,
+  showLoadingImg = true,
+  loadingImgSrc = 'https://unpkg.com/@readr-media/react-dropping-text/assets/loading.gif',
+}) {
+  const defaultOverflowIdx = textArr.length + 1
+  // `overflowIdx` is used to truncate `textArr` if `textArr` items are
+  // over the `DroppingText` canvas.
+  const [overflowIdx, setOverflowIdx] = useState(defaultOverflowIdx)
+  const [objsForRequestAnimationFrame, setObjsForRaf] = useState(null)
+  const [inViewRef, inView] = useInView()
+  const truncatedTextArr = textArr.slice(0, overflowIdx)
+  const initialRender = overflowIdx === defaultOverflowIdx
+
   useEffect(() => {
-    const wallWidth = 60 // px
-    const droppingDistanceInterval = 100 // px
-
-    const windowWidth = canvasWidth ?? window.innerWidth
-    const windowHeight = canvasHeight ?? window.innerHeight
-
     const droppingTextNodes = document.querySelectorAll(
       '[data-dropping-text=true]'
     )
+
+    const _canvasWidth = canvasWidth ?? window.innerWidth
+    const _canvasHeight = canvasHeight ?? window.innerHeight
+
+    if (initialRender) {
+      // If `textArr` has too many items, and then the items may fill up the screen,
+      // or even overflow the screen.
+      // For better perforance, we could truncate those overflowed items.
+      // `findOverflowIdx` is to find the index of an item which overflows the screen.
+      const idx = findOverflowIdx(droppingTextNodes, _canvasHeight)
+
+      // intentionally to render loading image
+      if (showLoadingImg) {
+        setTimeout(() => {
+          setOverflowIdx(idx)
+        }, 1000)
+      } else {
+        setOverflowIdx(idx)
+      }
+      return
+    }
+
+    const wallWidth = 60 // px
+    const droppingDistanceInterval = 100 // px
 
     const engine = Engine.create()
 
@@ -48,7 +143,7 @@ export default function DroppingText({ textArr, canvasWidth, canvasHeight }) {
       const blockHeight = dtn.clientHeight
 
       // random x for initial position of dropping texts
-      const randomX = Common.random(wallWidth, windowWidth - wallWidth)
+      const randomX = Common.random(wallWidth, _canvasWidth - wallWidth)
 
       // the smaller value, the later dropping
       const y = 0 - i * droppingDistanceInterval
@@ -57,7 +152,7 @@ export default function DroppingText({ textArr, canvasWidth, canvasHeight }) {
       const rectangle = Bodies.rectangle(randomX, y, blockWidth, blockHeight)
 
       // random rotate degree of the dropping rectangle
-      const randomDegree = Common.random(0, 60)
+      const randomDegree = Common.random(-60, 60)
       const radian = (randomDegree * Math.PI) / 180
 
       // rotate the rectangle
@@ -70,18 +165,18 @@ export default function DroppingText({ textArr, canvasWidth, canvasHeight }) {
         domElement: dtn,
         render() {
           const { x, y } = this.matterBody.position
-          if (x > windowWidth || x < 0) {
+          if (x > _canvasWidth || x < 0) {
             return
           }
-          if (y > windowHeight) {
+          if (y > _canvasHeight) {
             return
           }
+          const _y = `${y - this.h / 2}px`
+          const _x = `${x - this.w / 2}px`
           // @ts-ignore
-          this.domElement.style.top = `${y - this.h / 2}px`
+          this.domElement.style.transform = `translate(${_x}, ${_y}) rotate(${this.matterBody.angle}rad)`
           // @ts-ignore
-          this.domElement.style.left = `${x - this.w / 2}px`
-          // @ts-ignore
-          this.domElement.style.transform = `rotate(${this.matterBody.angle}rad)`
+          this.domElement.style.visibility = 'visible'
         },
       }
 
@@ -97,9 +192,9 @@ export default function DroppingText({ textArr, canvasWidth, canvasHeight }) {
     const walls = [
       // ground
       Bodies.rectangle(
-        windowWidth / 2, // x position
-        windowHeight, // y position
-        windowWidth, // ground width
+        _canvasWidth / 2, // x position
+        _canvasHeight, // y position
+        _canvasWidth, // ground width
         wallWidth, // ground height
         { isStatic: true }
       ), // static in the engine world, which means it won't move
@@ -107,18 +202,18 @@ export default function DroppingText({ textArr, canvasWidth, canvasHeight }) {
       // left wall
       Bodies.rectangle(
         0, // x position
-        windowHeight / 2, // y position
+        _canvasHeight / 2, // y position
         wallWidth, // wall width
-        windowHeight, // wall height
+        _canvasHeight, // wall height
         { isStatic: true }
       ),
 
       // right wall
       Bodies.rectangle(
-        windowWidth, // x position
-        windowHeight / 2, // y position
+        _canvasWidth, // x position
+        _canvasHeight / 2, // y position
         wallWidth, // wall width
-        windowHeight, // wall height
+        _canvasHeight, // wall height
         { isStatic: true }
       ),
     ]
@@ -126,34 +221,75 @@ export default function DroppingText({ textArr, canvasWidth, canvasHeight }) {
     // Add walls into world
     Composite.add(engine.world, walls)
 
+    setObjsForRaf({
+      matterEngine: engine,
+      textRectangles,
+    })
+  }, [overflowIdx])
+
+  useEffect(() => {
+    if (objsForRequestAnimationFrame === null) {
+      return
+    }
+    const { matterEngine, textRectangles } = objsForRequestAnimationFrame
+
     let raf
-    const rerender = () => {
-      // update dropping text css
-      textRectangles.forEach((tr) => {
-        tr.render()
-      })
-      Engine.update(engine)
+    if (inView) {
+      const rerender = () => {
+        // update dropping text css
+        textRectangles.forEach((tr) => {
+          tr.render()
+        })
+        Engine.update(matterEngine)
+        raf = requestAnimationFrame(rerender)
+      }
       raf = requestAnimationFrame(rerender)
     }
-    raf = requestAnimationFrame(rerender)
-
     return () => {
-      console.log('cancelAnimationFrame')
       cancelAnimationFrame(raf)
     }
-  }, [])
+  }, [objsForRequestAnimationFrame, inView])
 
-  return (
-    <Block>
-      {textArr.map((txt, idx) => {
+  const jsx = (
+    <>
+      {showLoadingImg && initialRender && (
+        <img className="loading" src={loadingImgSrc} />
+      )}
+      {truncatedTextArr.map((txt, idx) => {
         return (
           <Text
-            data-dropping-text
             key={idx}
+            data-dropping-text
             dangerouslySetInnerHTML={{ __html: txt }}
           />
         )
       })}
+    </>
+  )
+
+  return (
+    <Block
+      style={{
+        width: typeof canvasWidth === 'number' ? `${canvasWidth}px` : '100vw',
+        height:
+          typeof canvasHeight === 'number' ? `${canvasHeight}px` : '100vh',
+      }}
+      ref={inViewRef}
+      /**
+       * For better performance,
+       * we separate rendering logics to two steps.
+       * First step, also called initial render,
+       * is to render `visibility: hidden` texts.
+       * These hidden texts are used to calculate `overflowIdx` state.
+       *
+       * After `overflowIdx` state changed,
+       * we rerender the truncated texts,
+       * and start to run matter engine to
+       * drop the texts.
+       */
+      initialRender={initialRender}
+    >
+      {jsx}
     </Block>
   )
 }

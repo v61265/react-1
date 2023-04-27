@@ -429,4 +429,13 @@ const mockTextArr = [
   '我。',
 ]
 
-root.render(<DroppingText textArr={mockTextArr} />)
+root.render(
+  <div>
+    <DroppingText
+      showLoadingImg
+      textArr={mockTextArr}
+      loadingImgSrc="./loading.gif"
+    />
+    <div style={{ height: '150vh', width: '100vw', backgroundColor: 'pink' }} />
+  </div>
+)
