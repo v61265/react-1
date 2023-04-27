@@ -123,3 +123,11 @@ if (window?.[namespace]['text-selector']) {
     hydrate(namespace, 'text-selector', TextSelector)
   })
 }
+
+if (window?.[namespace]['react-dropping-text']) {
+  import(
+    /* webpackChunkName: "react-dropping-text" */ '@readr-media/react-dropping-text'
+  ).then(({ default: DroppingText }) => {
+    hydrate(namespace, 'react-dropping-text', DroppingText)
+  })
+}
