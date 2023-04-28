@@ -1318,10 +1318,10 @@
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.21.tgz#5de5a2385a35309427f6011992b544514d559aa1"
   integrity sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==
 
-"@readr-media/react-dropping-text@^1.0.0-beta.0":
-  version "1.0.0-beta.0"
-  resolved "https://registry.yarnpkg.com/@readr-media/react-dropping-text/-/react-dropping-text-1.0.0-beta.0.tgz#94afc955ba94e7126fdfc02777314573580d5977"
-  integrity sha512-Fr997nYM52PIv4mSpbvVVzLi2p3KuCcX/uGDCjpFclGkRYFB8yDeXxT1JUmWk2FuK1oopJchZs5kH61PAJwFcw==
+"@readr-media/react-dropping-text@1.0.0-beta.1":
+  version "1.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-dropping-text/-/react-dropping-text-1.0.0-beta.1.tgz#4d33c111809bee65c942c39eeec1d0b31c3d5bb0"
+  integrity sha512-SPTiOQ0+ipYcrFWv2HJsMJf9XoEE2oLLGZaXa1qO0LtWJ2LxszRYMI7ocE4+efPyP6vQsRrxdDNRRBJCAGBMgw==
   dependencies:
     matter-js "^0.19.0"
     react-intersection-observer "^9.3.5"
