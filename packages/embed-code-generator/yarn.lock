@@ -1318,10 +1318,10 @@
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.21.tgz#5de5a2385a35309427f6011992b544514d559aa1"
   integrity sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==
 
-"@readr-media/react-dropping-text@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@readr-media/react-dropping-text/-/react-dropping-text-1.0.0.tgz#0b06a0387ee4947de7d93d4a0b27c036f4e3af39"
-  integrity sha512-mxY5B03szgL5SfmnmiLSX3rOuB7WIojtVip/j5eGnH3REMsWWBJ78CwEKD2q5rnuD0Qs4vFmp3MS/l+IoN2/NA==
+"@readr-media/react-dropping-text@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-dropping-text/-/react-dropping-text-1.0.1.tgz#f555ab272a428ee46efc93ecc1a4d13334fae296"
+  integrity sha512-SCwNEekvKOE4oO7duUO5Ud8Da9ZSiAB8WDmT5YCw1m54uAQ7dABJs88+8FbUXr0YDWGuD+CI3Ch+qj1SFBfmfg==
   dependencies:
     matter-js "^0.19.0"
     react-intersection-observer "^9.3.5"
