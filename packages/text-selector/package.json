@@ -1,6 +1,6 @@
 {
   "name": "@readr-media/text-selector",
-  "version": "1.1.1-alpha.14",
+  "version": "1.1.1-beta.3",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -38,6 +38,7 @@
     "styled-components": "5.3.5"
   },
   "files": [
-    "lib"
+    "lib",
+    "assets"
   ]
 }

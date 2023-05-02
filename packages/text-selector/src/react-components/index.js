@@ -20,7 +20,7 @@ import Debugger from './components/debugger.js'
  *  @param {string} [opts.buttonBackground]
  *  @param {string} [opts.buttonWording]
  *  @param {string} [opts.circleUrlMobile]
- *  @param {boolean} [shouldShiftLeft]
+ *  @param {boolean} [props.shouldShiftLeft]
  */
 export default function TextSelector({
   className,
@@ -29,26 +29,26 @@ export default function TextSelector({
     'https://v61265.github.io/demo-text-selector/test-02.json',
   ],
   backgroundColor = '#000000',
-  circleUrl = 'https://www.mirrormedia.mg/campaigns/tyreplus2022/hsuan_test.png',
-  buttonBackground = 'https://www.mirrormedia.mg/campaigns/tyreplus2022/%E6%9C%AA%E5%91%BD%E5%90%8D%E7%9A%84%E4%BD%9C%E5%93%81%20%E6%8B%B7%E8%B2%9D2%202.png',
-  circleUrlMobile = 'https://storage.googleapis.com/statics.mirrormedia.mg/campaigns/tyreplus2022/circle-mobile',
+  circleUrl = 'https://unpkg.com/@readr-media/text-selector@1.1.1-beta.1/assets/circle.png',
+  buttonBackground = 'https://unpkg.com/@readr-media/text-selector@1.1.1-beta.1/assets/button-background.png',
+  circleUrlMobile = 'https://unpkg.com/@readr-media/text-selector@1.1.1-beta.1/assets/circle-mobile.png',
   buttonWording = '其他案例',
   shouldShiftLeft = true,
   isDebugMode = false,
-  loadingImgSrc = 'https://unpkg.com/@readr-media/react-dropping-text@1.0.0/assets/loading.gif',
+  loadingImgSrc = 'https://unpkg.com/@readr-media/text-selector@1.1.1-beta.1/assets/loading.gif',
 }) {
   const firstOrder = 0
   const { height, width } = useWindowSize()
   const allContainerRef = useRef(null)
-  const nowHeightlightSpanRef = useRef(null)
+  const nowHighlightSpanRef = useRef(null)
   const itemStartRef = useRef(null)
   const listRef = useRef(null)
   const [data, setData] = useState([])
-  const [heightlightIndex, setHeightlightIndex] = useState(0)
+  const [highlightIndex, setHighlightIndex] = useState(0)
   const [leftOffset, setLeftOffset] = useState(0)
   const [translateToParagraph, setTranslateToParagraph] = useState(0)
   const [jsonFileIndex, setJsonFileIndex] = useState(0)
-  const [isLoaded, setisLoaded] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false)
 
   const dataLength = useMemo(() => {
     let result = 0
@@ -63,14 +63,14 @@ export default function TextSelector({
     data.forEach((item) => {
       returnArr.push(...item)
     })
-    const datasWithoutorder = returnArr.map((item) => {
+    const dataWithoutOrder = returnArr.map((item) => {
       return {
         ...item,
         order: -1,
       }
     })
-    returnArr.unshift(...datasWithoutorder)
-    returnArr.push(...datasWithoutorder)
+    returnArr.unshift(...dataWithoutOrder)
+    returnArr.push(...dataWithoutOrder)
     return returnArr
   }, [data])
 
@@ -123,7 +123,7 @@ export default function TextSelector({
           newList[jsonIndex] = newData
           return newList
         })
-        setisLoaded(true)
+        setIsLoaded(true)
       } catch (e) {
         console.log(e)
       }
@@ -132,12 +132,32 @@ export default function TextSelector({
   )
 
   const handleOnClickBtn = () => {
-    setHeightlightIndex((prev) => prev + 1)
-    if (heightlightIndex > dataLength - 2) {
-      setHeightlightIndex(1)
+    setHighlightIndex((prev) => prev + 1)
+    if (highlightIndex > dataLength - 2) {
+      setHighlightIndex(1)
     }
   }
 
+  // 如果剩下兩個，則抓下一個檔案
+  useEffect(() => {
+    console.log({ dataLength, highlightIndex })
+    if (highlightIndex >= dataLength - 3 && highlightIndex) {
+      setJsonFileIndex((prev) => prev + 1)
+    }
+  }, [dataLength, highlightIndex])
+
+  useEffect(() => {
+    //  改變 jsonFileIndex 時，觸發 fetchData
+    if (!data[jsonFileIndex]) {
+      fetchData(jsonFileIndex)
+    }
+    // 如果是 isDebugMode，重新計算 index
+    if (isDebugMode) {
+      setHighlightIndex(0)
+    }
+  }, [jsonFileIndex, isDebugMode])
+
+  // 取得整個 container 和左邊的距離
   useEffect(() => {
     if (shouldShiftLeft && isLoaded) {
       const shiftLeft = function() {
@@ -152,30 +172,16 @@ export default function TextSelector({
     }
   }, [shouldShiftLeft, isLoaded])
 
+  // 取得 highlight item 和 list 左邊的距離
   useEffect(() => {
-    if (!data[jsonFileIndex]) {
-      fetchData(jsonFileIndex)
-    }
-    if (isDebugMode) {
-      setHeightlightIndex(0)
-    }
-  }, [jsonFileIndex, isDebugMode])
-
-  useEffect(() => {
-    console.log({ dataLength, heightlightIndex })
-    if (heightlightIndex >= dataLength - 3 && heightlightIndex) {
-      setJsonFileIndex((prev) => prev + 1)
-    }
-  }, [dataLength, heightlightIndex])
-
-  useEffect(() => {
+    if (!isLoaded) return
     const element = itemStartRef.current
     if (typeof element?.getBoundingClientRect === 'function') {
       const rect = element.getBoundingClientRect()
       const itemLeftOffset = rect?.x ?? rect?.left ?? 0
       setTranslateToParagraph(listRef.current.offsetLeft - itemLeftOffset)
     }
-  }, [heightlightIndex, leftOffset])
+  }, [highlightIndex, isLoaded, leftOffset])
 
   return (
     <ScrollTrack
@@ -200,7 +206,7 @@ export default function TextSelector({
               jsonLength={jsonUrls.length}
               jsonFileIndex={jsonFileIndex}
               dataLength={dataLength}
-              heightlightIndex={heightlightIndex}
+              highlightIndex={highlightIndex}
               setJsonFileIndex={setJsonFileIndex}
             />
           )}
@@ -208,7 +214,7 @@ export default function TextSelector({
             ref={listRef}
             translateY={
               listRef.current?.offsetTop -
-                nowHeightlightSpanRef.current?.offsetTop +
+                nowHighlightSpanRef.current?.offsetTop +
                 height * (1 / 4) -
                 itemStartRef.current?.clientHeight * 0.5 || -height * (1 / 3)
             }
@@ -216,16 +222,16 @@ export default function TextSelector({
             {renderedData.map((dataItem, dataIndex) => {
               return (
                 <span key={dataIndex}>
-                  {dataItem.order === heightlightIndex ? (
-                    <HeightlightWrapper
-                      ref={nowHeightlightSpanRef}
+                  {dataItem.order === highlightIndex ? (
+                    <HighlightWrapper
+                      ref={nowHighlightSpanRef}
                       className="nowItem"
                     >
                       <Anchor ref={itemStartRef} />
-                      <HeightlightItem
-                        dangerouslySetInnerHTML={{ __html: dataItem.item }}
+                      <HighlightItem
+                        dangerouslySetInnerHTML={{ __html: dataItem.content }}
                       />
-                      <HeightlightCircle
+                      <HighlightCircle
                         src={width >= 768 ? circleUrl : circleUrlMobile}
                         translateToParagraph={translateToParagraph}
                       />
@@ -237,7 +243,7 @@ export default function TextSelector({
                       >
                         {buttonWording}
                       </NextBtn>
-                    </HeightlightWrapper>
+                    </HighlightWrapper>
                   ) : (
                     <GreyItem>{removeHtmlTags(dataItem.content)}</GreyItem>
                   )}
@@ -340,11 +346,11 @@ const GreyItem = styled.li`
   color: #505050;
 `
 
-const HeightlightWrapper = styled.span`
+const HighlightWrapper = styled.span`
   position: relative;
 `
 
-const HeightlightCircle = styled.img`
+const HighlightCircle = styled.img`
   position: absolute;
   top: 0px;
   left: 0;
@@ -358,7 +364,7 @@ const HeightlightCircle = styled.img`
     `translate(${translateToParagraph - 40}px, -30%)`};
 `
 
-const HeightlightItem = styled.span``
+const HighlightItem = styled.span``
 
 const NextBtn = styled.button`
   position: absolute;
