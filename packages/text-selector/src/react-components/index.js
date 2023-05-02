@@ -225,7 +225,7 @@ export default function TextSelector({
                       <HeightlightItem
                         dangerouslySetInnerHTML={{ __html: dataItem.item }}
                       />
-                      <EmpasizedCircle
+                      <HeightlightCircle
                         src={width >= 768 ? circleUrl : circleUrlMobile}
                         translateToParagraph={translateToParagraph}
                       />
@@ -344,7 +344,7 @@ const HeightlightWrapper = styled.span`
   position: relative;
 `
 
-const EmpasizedCircle = styled.img`
+const HeightlightCircle = styled.img`
   position: absolute;
   top: 0px;
   left: 0;
