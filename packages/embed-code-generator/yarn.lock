@@ -1259,10 +1259,10 @@
     three "^0.150.1"
     three-story-controls "^1.0.6"
 
-"@readr-media/text-selector@^1.1.1-beta.2":
-  version "1.1.1-beta.2"
-  resolved "https://registry.yarnpkg.com/@readr-media/text-selector/-/text-selector-1.1.1-beta.2.tgz#1add0044b4dd061dc06ce2d3ea7823483f4e1530"
-  integrity sha512-X0EYJlr2BhH9BxG0DpSLUDwlNUuRdUpWy+1EAQw3JgHuC+t+AvujnLoANygUN6qSoY/uz9rBbMu4n+mNkGR2ww==
+"@readr-media/text-selector@^1.1.1-beta.3":
+  version "1.1.1-beta.3"
+  resolved "https://registry.yarnpkg.com/@readr-media/text-selector/-/text-selector-1.1.1-beta.3.tgz#29866e9ec84bb45bbc8ab4761265bf3522b73265"
+  integrity sha512-YHpjDK1X2FfL7reZLB9LQX9KVpDEwW8IjEEdQK3upwfKoYX/x3N+vNLoX+K4hlcBRpgfitycKtj79IPXC45XKw==
   dependencies:
     axios "^1.3.5"
     styled-components "5.3.5"
