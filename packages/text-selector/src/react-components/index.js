@@ -82,8 +82,15 @@ export default function TextSelector({
   const fetchData = useCallback(
     async (jsonIndex) => {
       if (data[jsonIndex] || !jsonUrls[jsonIndex]) return
+      console.log(jsonUrls)
       try {
-        const { data: resData } = await axios.get(jsonUrls[jsonIndex])
+        const { data: resData } = await axios.get(jsonUrls[jsonIndex], {
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+        })
+        console.log({ resData })
         const isContinue = !isDebugMode
         const orderArray = Array.from(
           { length: jsonIndex ? resData.length : resData.length - 1 },
@@ -97,14 +104,14 @@ export default function TextSelector({
           // 第一筆 json 資料一定從第一個 object 開始跑
           if (index === firstOrder && !jsonIndex) {
             return {
-              ...item,
+              content: item,
               order: 0,
             }
           }
           const randomIndex = Math.floor(Math.random() * orderArray.length)
           const order = orderArray.splice(randomIndex, 1)[0]
           return {
-            ...item,
+            content: item,
             order,
           }
         })
@@ -143,7 +150,7 @@ export default function TextSelector({
       }
       shiftLeft()
     }
-  }, [allContainerRef, isLoaded])
+  }, [shouldShiftLeft, isLoaded])
 
   useEffect(() => {
     if (!data[jsonFileIndex]) {
@@ -216,7 +223,7 @@ export default function TextSelector({
                     >
                       <Anchor ref={itemStartRef} />
                       <HeightlightItem
-                        dangerouslySetInnerHTML={{ __html: dataItem.content }}
+                        dangerouslySetInnerHTML={{ __html: dataItem.item }}
                       />
                       <EmpasizedCircle
                         src={width >= 768 ? circleUrl : circleUrlMobile}
@@ -257,6 +264,7 @@ const ScrollTrack = styled.div`
     min-width: 100%;
     max-width: 100%;
     display: flex;
+    z-index: 800;
   `}
 `
 
@@ -285,7 +293,6 @@ const Container = styled.div`
   overflow: hidden;
   padding: 48px 0;
   border-bottom: 48px;
-  z-index: 800;
   background: ${(props) => props.backgroundColor};
   ::before {
     content: '';
@@ -296,7 +303,7 @@ const Container = styled.div`
     left: 0;
     background: #fff;
     background: ${(props) => props.backgroundColor};
-    z-index: 801;
+    z-index: 2;
   }
   ::after {
     content: '';
@@ -307,7 +314,7 @@ const Container = styled.div`
     left: 0;
     background: #fff;
     background: ${(props) => props.backgroundColor};
-    z-index: 801;
+    z-index: 2;
   }
 `
 
