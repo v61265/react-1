@@ -172,10 +172,10 @@ export default function TextSelector({
     const element = itemStartRef.current
     if (typeof element?.getBoundingClientRect === 'function') {
       const rect = element.getBoundingClientRect()
-      const leftOffset = rect?.x ?? rect?.left ?? 0
-      setTranslateToParagraph(listRef.current.offsetLeft - leftOffset)
+      const itemLeftOffset = rect?.x ?? rect?.left ?? 0
+      setTranslateToParagraph(listRef.current.offsetLeft - itemLeftOffset)
     }
-  }, [heightlightIndex, data])
+  }, [heightlightIndex, leftOffset])
 
   return (
     <ScrollTrack
@@ -264,7 +264,6 @@ const ScrollTrack = styled.div`
     min-width: 100%;
     max-width: 100%;
     display: flex;
-    z-index: 800;
   `}
 `
 
@@ -293,6 +292,7 @@ const Container = styled.div`
   overflow: hidden;
   padding: 48px 0;
   border-bottom: 48px;
+  z-index: 800;
   background: ${(props) => props.backgroundColor};
   ::before {
     content: '';
@@ -303,7 +303,7 @@ const Container = styled.div`
     left: 0;
     background: #fff;
     background: ${(props) => props.backgroundColor};
-    z-index: 2;
+    z-index: 801;
   }
   ::after {
     content: '';
@@ -314,12 +314,12 @@ const Container = styled.div`
     left: 0;
     background: #fff;
     background: ${(props) => props.backgroundColor};
-    z-index: 2;
+    z-index: 801;
   }
 `
 
 const CaseList = styled.ul`
-  poaition: relative;
+  position: relative;
   width: calc(100vw - 40px);
   padding-inline-start: 20px;
   max-width: 712px;
@@ -332,7 +332,7 @@ const CaseList = styled.ul`
   color: #fff;
   transition: 1s;
   transform: translate(0, ${(props) => props.translateY}px);
-  heigth: 100vh;
+  height: 100vh;
 `
 
 const GreyItem = styled.li`
@@ -353,10 +353,9 @@ const EmpasizedCircle = styled.img`
   width: 100vw;
   max-width: 900px;
   height: calc(200% + 100px);
-  transform: translate(${(props) => props.translateToParagraph}px, -30%);
-  @media (min-width: 768px) {
-    transform: translate(${(props) => props.translateToParagraph - 40}px, -30%);
-  }
+
+  transform: ${({ translateToParagraph }) =>
+    `translate(${translateToParagraph - 40}px, -30%)`};
 `
 
 const HeightlightItem = styled.span``
@@ -367,7 +366,7 @@ const NextBtn = styled.button`
   left: 0;
   width: 129px;
   height: 70px;
-  dispaly: flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0);
@@ -376,7 +375,7 @@ const NextBtn = styled.button`
   line-height: 180%;
   color: #ffffff;
   display: flex;
-  justify-contnet: center;
+  justify-content: center;
   align-items: center;
   background-image: url(${(props) => props.buttonBackground});
   border: 0;
