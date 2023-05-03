@@ -25,8 +25,11 @@ import Debugger from './components/debugger.js'
 export default function TextSelector({
   className,
   jsonUrls = [
-    'https://v61265.github.io/demo-text-selector/test-01.json',
-    'https://v61265.github.io/demo-text-selector/test-02.json',
+    'https://editools-gcs.readr.tw/psycho/file_1.json',
+    'https://editools-gcs.readr.tw/psycho/file_2.json',
+    'https://editools-gcs.readr.tw/psycho/file_3.json',
+    'https://editools-gcs.readr.tw/psycho/file_4.json',
+    'https://editools-gcs.readr.tw/psycho/file_5.json',
   ],
   backgroundColor = '#000000',
   circleUrl = 'https://unpkg.com/@readr-media/text-selector@1.1.1-beta.1/assets/circle.png',
@@ -44,7 +47,7 @@ export default function TextSelector({
   const itemStartRef = useRef(null)
   const listRef = useRef(null)
   const [data, setData] = useState([])
-  const [highlightIndex, setHighlightIndex] = useState(0)
+  const [highlightIndex, setHighlightIndex] = useState(-1)
   const [leftOffset, setLeftOffset] = useState(0)
   const [translateToParagraph, setTranslateToParagraph] = useState(0)
   const [jsonFileIndex, setJsonFileIndex] = useState(0)
@@ -61,12 +64,13 @@ export default function TextSelector({
   const renderedData = useMemo(() => {
     const returnArr = []
     data.forEach((item) => {
+      console.log(item)
       returnArr.push(...item)
     })
     const dataWithoutOrder = returnArr.map((item) => {
       return {
         ...item,
-        order: -1,
+        order: -2,
       }
     })
     returnArr.unshift(...dataWithoutOrder)
@@ -91,12 +95,10 @@ export default function TextSelector({
           },
         })
         console.log({ resData })
-        const isContinue = !isDebugMode
         const orderArray = Array.from(
           { length: jsonIndex ? resData.length : resData.length - 1 },
           (_, index) => {
             if (!jsonIndex) return index + 1
-            if (!isContinue) return index
             return dataLength + index
           }
         )
@@ -116,11 +118,11 @@ export default function TextSelector({
           }
         })
         setData((prev) => {
-          let newList = []
-          if (isContinue) {
-            newList = [...prev]
-          }
+          let newList = [...prev]
           newList[jsonIndex] = newData
+          // debug 模式中，直接跳到下個 json 檔 order 最小的
+          if (isDebugMode && renderedData[0])
+            setHighlightIndex(renderedData.length / 3 + 1)
           return newList
         })
         setIsLoaded(true)
@@ -138,10 +140,15 @@ export default function TextSelector({
     }
   }
 
-  // 如果剩下兩個，則抓下一個檔案
+  // mounted 後，才變動 highlightIndex
   useEffect(() => {
-    console.log({ dataLength, highlightIndex })
-    if (highlightIndex >= dataLength - 3 && highlightIndex) {
+    setHighlightIndex(0)
+  }, [])
+
+  // 如果剩下兩個 item，則抓下一個檔案
+  useEffect(() => {
+    console.log({ dataLength, highlightIndex, jsonFileIndex })
+    if (highlightIndex >= dataLength - 3 && highlightIndex && jsonFileIndex) {
       setJsonFileIndex((prev) => prev + 1)
     }
   }, [dataLength, highlightIndex])
@@ -151,11 +158,7 @@ export default function TextSelector({
     if (!data[jsonFileIndex]) {
       fetchData(jsonFileIndex)
     }
-    // 如果是 isDebugMode，重新計算 index
-    if (isDebugMode) {
-      setHighlightIndex(0)
-    }
-  }, [jsonFileIndex, isDebugMode])
+  }, [jsonFileIndex])
 
   // 取得整個 container 和左邊的距離
   useEffect(() => {
@@ -170,7 +173,7 @@ export default function TextSelector({
       }
       shiftLeft()
     }
-  }, [shouldShiftLeft, isLoaded])
+  }, [shouldShiftLeft, isLoaded, jsonFileIndex])
 
   // 取得 highlight item 和 list 左邊的距離
   useEffect(() => {
@@ -184,7 +187,7 @@ export default function TextSelector({
     if (typeof element?.getBoundingClientRect === 'function') {
       window.requestAnimationFrame(getTranslateToParagraph)
     }
-  }, [highlightIndex, isLoaded])
+  }, [highlightIndex, isLoaded, jsonFileIndex])
 
   return (
     <ScrollTrack
@@ -219,7 +222,8 @@ export default function TextSelector({
               listRef.current?.offsetTop -
                 nowHighlightSpanRef.current?.offsetTop +
                 height * (1 / 4) -
-                itemStartRef.current?.clientHeight * 0.5 || -height * (1 / 3)
+                nowHighlightSpanRef.current?.clientHeight * 0.5 ||
+              -height * (1 / 3)
             }
           >
             {renderedData.map((dataItem, dataIndex) => {
