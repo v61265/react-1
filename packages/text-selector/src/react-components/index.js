@@ -176,12 +176,15 @@ export default function TextSelector({
   useEffect(() => {
     if (!isLoaded) return
     const element = itemStartRef.current
-    if (typeof element?.getBoundingClientRect === 'function') {
+    const getTranslateToParagraph = () => {
       const rect = element.getBoundingClientRect()
       const itemLeftOffset = rect?.x ?? rect?.left ?? 0
       setTranslateToParagraph(listRef.current.offsetLeft - itemLeftOffset)
     }
-  }, [highlightIndex, isLoaded, leftOffset])
+    if (typeof element?.getBoundingClientRect === 'function') {
+      window.requestAnimationFrame(getTranslateToParagraph)
+    }
+  }, [highlightIndex, isLoaded])
 
   return (
     <ScrollTrack
@@ -359,7 +362,6 @@ const HighlightCircle = styled.img`
   width: 100vw;
   max-width: 900px;
   height: calc(200% + 100px);
-
   transform: ${({ translateToParagraph }) =>
     `translate(${translateToParagraph - 40}px, -30%)`};
 `
