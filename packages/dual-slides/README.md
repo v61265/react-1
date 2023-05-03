@@ -36,6 +36,9 @@ root.render(
 )
 ```
 
+## Create Embed Code
+See [@readr-media/react-embed-code-generator](https://github.com/readr-media/react/blob/main/packages/embed-code-generator/README.md) for more information.
+
 ## Installation
 `yarn install`
 
