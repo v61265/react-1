@@ -131,9 +131,10 @@ export default function TextSelector({
   )
 
   const handleOnClickBtn = () => {
-    setHighlightIndex((prev) => prev + 1)
     if (highlightIndex > dataLength - 2) {
       setHighlightIndex(1)
+    } else {
+      setHighlightIndex((prev) => prev + 1)
     }
   }
 
