@@ -64,7 +64,6 @@ export default function TextSelector({
   const renderedData = useMemo(() => {
     const returnArr = []
     data.forEach((item) => {
-      console.log(item)
       returnArr.push(...item)
     })
     const dataWithoutOrder = returnArr.map((item) => {
@@ -86,7 +85,6 @@ export default function TextSelector({
   const fetchData = useCallback(
     async (jsonIndex) => {
       if (data[jsonIndex] || !jsonUrls[jsonIndex]) return
-      console.log(jsonUrls)
       try {
         const { data: resData } = await axios.get(jsonUrls[jsonIndex], {
           headers: {
@@ -94,7 +92,6 @@ export default function TextSelector({
             Accept: 'application/json',
           },
         })
-        console.log({ resData })
         const orderArray = Array.from(
           { length: jsonIndex ? resData.length : resData.length - 1 },
           (_, index) => {
@@ -147,7 +144,6 @@ export default function TextSelector({
 
   // 如果剩下兩個 item，則抓下一個檔案
   useEffect(() => {
-    console.log({ dataLength, highlightIndex, jsonFileIndex })
     if (highlightIndex >= dataLength - 3 && highlightIndex && jsonFileIndex) {
       setJsonFileIndex((prev) => prev + 1)
     }
