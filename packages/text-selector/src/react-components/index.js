@@ -332,7 +332,7 @@ const CaseList = styled.ul`
   width: calc(100vw - 40px);
   padding-inline-start: 20px;
   max-width: 712px;
-  font-family: 'Noto Sans TC';
+  font-family: inherit;
   font-style: normal;
   font-weight: 350;
   font-size: 14px;
