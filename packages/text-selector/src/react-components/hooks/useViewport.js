@@ -31,12 +31,21 @@ function useWindowSize() {
   })
   useEffect(() => {
     // Handler to call on window resize
+    let prevHeight = 0
     function handleResize() {
-      // Set window width/height to state
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      })
+      const nowHeight = window.innerHeight
+      if (
+        nowHeight > prevHeight * 1.4 ||
+        nowHeight < prevHeight * 0.6 ||
+        nowHeight === prevHeight
+      ) {
+        prevHeight = window.innerHeight
+        // Set window width/height to state
+        setWindowSize({
+          width: window.innerWidth,
+          height: window.innerHeight,
+        })
+      }
     }
 
     const handleResizeWithThrottle = throttle(handleResize, 250)

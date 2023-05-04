@@ -197,20 +197,20 @@ export default function TextSelector({
     }
   }, [jsonFileIndex])
 
-  // 取得整個 container 和左邊的距離
+  // Adjust container block to cover the whole viewport (100vw)
   useEffect(() => {
     if (shouldShiftLeft && isLoaded) {
+      const containerElement = allContainerRef?.current
       const shiftLeft = function() {
-        const containerElement = allContainerRef?.current
         if (typeof containerElement?.getBoundingClientRect === 'function') {
           const rect = containerElement.getBoundingClientRect()
           const leftOffset = rect?.x ?? rect?.left ?? 0
-          setLeftOffset(leftOffset)
+          if (leftOffset) setLeftOffset(leftOffset)
         }
       }
       shiftLeft()
     }
-  }, [shouldShiftLeft, isLoaded, jsonFileIndex])
+  }, [shouldShiftLeft, isLoaded, jsonFileIndex, width])
 
   // 取得 highlight item 和 list 左邊的距離
   useEffect(() => {
