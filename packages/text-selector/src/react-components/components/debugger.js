@@ -7,14 +7,14 @@ import React from 'react' // eslint-disable-line
  *  @param {number} [opts.jsonFileIndex]
  *  @param {number} [opts.dataLength]
  *  @param {number} [opts.highlightIndex]
- *  @param {React.Dispatch<React.SetStateAction<number>>} [opts.setJsonFileIndex]
+ *  @param {Function} [opts.handleChangeFileIndex]
  */
 export default function Debugger({
   jsonLength = 0,
   jsonFileIndex = 0,
   dataLength = 0,
   highlightIndex = 0,
-  setJsonFileIndex = () => {},
+  handleChangeFileIndex = () => {},
 }) {
   return (
     <Wrapper>
@@ -26,12 +26,12 @@ export default function Debugger({
       </InfoItem>
       <InfoItem>Select JSON File:</InfoItem>
       {jsonFileIndex > 0 && (
-        <ControllerBtn onClick={() => setJsonFileIndex((prev) => prev - 1)}>
+        <ControllerBtn onClick={() => handleChangeFileIndex(jsonFileIndex - 1)}>
           prev
         </ControllerBtn>
       )}
       {jsonFileIndex < jsonLength - 1 && (
-        <ControllerBtn onClick={() => setJsonFileIndex((prev) => prev + 1)}>
+        <ControllerBtn onClick={() => handleChangeFileIndex(jsonFileIndex + 1)}>
           next
         </ControllerBtn>
       )}

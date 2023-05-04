@@ -82,9 +82,16 @@ export default function TextSelector({
     return inputString?.replace(regex, '')
   }
 
+  /**
+   * @param {number} jsonIndex - 要抓取的 json index
+   */
   const fetchData = useCallback(
-    async (jsonIndex) => {
+    async (jsonIndex, debugModeCb) => {
+      // data 的結構是 [[jsonUrls 中 index = 0 抓到的 data], [jsonUrls 中 index = 1 抓到的 data]...]
+      // 如果 data[jsonIndex]，就表示該 json 的資料已經被抓過了，直接 return。
+      // !jsonUrls[jsonIndex] 表示 jsonUuls 中並沒有那麼多檔案可以抓，直接 return。
       if (data[jsonIndex] || !jsonUrls[jsonIndex]) return
+
       try {
         const { data: resData } = await axios.get(jsonUrls[jsonIndex], {
           headers: {
@@ -92,6 +99,10 @@ export default function TextSelector({
             Accept: 'application/json',
           },
         })
+
+        // 產生一個 array，包含這次 resData 會分配到的 order 值。
+        // 0 這個值已經強制分給第一個檔案的第一筆資料，因此是從 1 ~ resData.length - 1，總長度是 resData.length - 1。
+        // 不是第一個檔案的話，則是從 dataLength 開始跑，跑到 dataLength + resData.length。
         const orderArray = Array.from(
           { length: jsonIndex ? resData.length : resData.length - 1 },
           (_, index) => {
@@ -99,6 +110,16 @@ export default function TextSelector({
             return dataLength + index
           }
         )
+
+        /**
+         * @typedef {Object} newDataItem
+         * @property {string} content
+         * @property {number} order
+         */
+
+        /**
+         * @type {newDataItem[]}
+         */
         const newData = resData.map((item, index) => {
           // 第一筆 json 資料一定從第一個 object 開始跑
           if (index === firstOrder && !jsonIndex) {
@@ -107,6 +128,7 @@ export default function TextSelector({
               order: 0,
             }
           }
+          // 將 orderArray 的值隨機分給 resData 作為 order 值。
           const randomIndex = Math.floor(Math.random() * orderArray.length)
           const order = orderArray.splice(randomIndex, 1)[0]
           return {
@@ -117,15 +139,13 @@ export default function TextSelector({
         setData((prev) => {
           let newList = [...prev]
           newList[jsonIndex] = newData
-          // debug 模式中，直接跳到下個 json 檔 order 最小的
-          if (isDebugMode && renderedData[0])
-            setHighlightIndex(renderedData.length / 3 + 1)
           return newList
         })
         setIsLoaded(true)
       } catch (e) {
         console.log(e)
       }
+      if (isDebugMode) debugModeCb()
     },
     [dataLength]
   )
@@ -135,6 +155,26 @@ export default function TextSelector({
       setHighlightIndex(1)
     } else {
       setHighlightIndex((prev) => prev + 1)
+    }
+  }
+
+  // // 跳轉至該 file order 最小的 item，debug mode 方便使用者檢查 file 格式
+  const jumpToFileFirstOrder = (index) => {
+    let length = 0
+    for (let i = 0; i < index; i++) {
+      length += data[i]?.length
+    }
+    setHighlightIndex(length ? length - 1 : 0)
+  }
+
+  const handleChangeFileIndex = (index) => {
+    setJsonFileIndex(index)
+    if (data[index]) {
+      jumpToFileFirstOrder(index)
+    } else {
+      fetchData(index, () => {
+        jumpToFileFirstOrder(index)
+      })
     }
   }
 
@@ -153,7 +193,7 @@ export default function TextSelector({
   useEffect(() => {
     //  改變 jsonFileIndex 時，觸發 fetchData
     if (!data[jsonFileIndex]) {
-      fetchData(jsonFileIndex)
+      fetchData(jsonFileIndex, () => {})
     }
   }, [jsonFileIndex])
 
@@ -210,7 +250,7 @@ export default function TextSelector({
               jsonFileIndex={jsonFileIndex}
               dataLength={dataLength}
               highlightIndex={highlightIndex}
-              setJsonFileIndex={setJsonFileIndex}
+              handleChangeFileIndex={handleChangeFileIndex}
             />
           )}
           <CaseList
