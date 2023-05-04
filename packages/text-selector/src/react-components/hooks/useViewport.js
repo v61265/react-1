@@ -1,5 +1,27 @@
 import { useEffect, useState } from 'react'
 
+function throttle(func, timeout = 250) {
+  let last
+  let timer
+
+  return function() {
+    const context = this
+    const args = arguments
+    const now = +new Date()
+
+    if (last && now < last + timeout) {
+      clearTimeout(timer)
+      timer = setTimeout(function() {
+        last = now
+        func.apply(context, args)
+      }, timeout)
+    } else {
+      last = now
+      func.apply(context, args)
+    }
+  }
+}
+
 function useWindowSize() {
   // Initialize state with undefined width/height so server and client renders match
   // Learn more here: https://joshwcomeau.com/react/the-perils-of-rehydration/
@@ -16,13 +38,15 @@ function useWindowSize() {
         height: window.innerHeight,
       })
     }
+
+    const handleResizeWithThrottle = throttle(handleResize, 250)
     // Add event listener
-    window.addEventListener('resize', handleResize)
+    window.addEventListener('resize', handleResizeWithThrottle)
     // Call handler right away so state gets updated with initial window size
     handleResize()
     // Remove event listener on cleanup
     return () => {
-      window.removeEventListener('resize', handleResize)
+      window.removeEventListener('resize', handleResizeWithThrottle)
     }
   }, []) // Empty array ensures that effect is only run on mount
   return windowSize

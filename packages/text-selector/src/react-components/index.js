@@ -145,7 +145,7 @@ export default function TextSelector({
   // 如果剩下兩個 item，則抓下一個檔案
   useEffect(() => {
     if (highlightIndex >= dataLength - 3 && highlightIndex && jsonFileIndex) {
-      setJsonFileIndex((prev) => prev + 1)
+      setJsonFileIndex(jsonFileIndex + 1)
     }
   }, [dataLength, highlightIndex])
 
