@@ -76,12 +76,16 @@ function findOverflowIdx(nodeList, overflowThreshold) {
 }
 
 /**
- *  @param {Object} props
- *  @param {string[]} props.textArr
- *  @param {number} [props.canvasWidth] - if not provided, then default value will be `window.innerWidth`
- *  @param {number} [props.canvasHeight] - if not provided, then default value will be `window.innerHeight`
- *  @param {boolean} [props.showLoadingImg=true]
- *  @param {string} [props.loadingImgSrc='https://unpkg.com/@readr-media/react-dropping-text/assets/loading.gif']
+ *  @typedef {Object} DroppingTextProps
+ *  @property {string[]} textArr
+ *  @property {number} [canvasWidth] - if not provided, then default value will be `window.innerWidth`
+ *  @property {number} [canvasHeight] - if not provided, then default value will be `window.innerHeight`
+ *  @property {boolean} showLoadingImg=true]
+ *  @property {string} [loadingImgSrc='https://unpkg.com/@readr-media/react-dropping-text/assets/loading.gif']
+ */
+
+/**
+ *  @param {DroppingTextProps} props
  *  @returns {React.ReactElement}
  */
 export default function DroppingText({
