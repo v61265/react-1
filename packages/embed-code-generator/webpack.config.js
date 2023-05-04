@@ -31,6 +31,7 @@ WebpackAssetPlugin.prototype.apply = function(compiler) {
 
     webpackAssets.chunks = chunks
     webpackAssets.entrypoints = entryChunks
+    webpackAssets.version = pkg.version
 
     if (!fs.existsSync(distDir)) {
       fs.mkdirSync(distDir)
@@ -146,7 +147,10 @@ const webpackConfig = {
     },
   },
   plugins: [
-    new webpack.EnvironmentPlugin(['NODE_ENV']),
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: process.env.NODE_ENV,
+      EMBED_CODE_GENERATOR_VERSION: pkg.version,
+    }),
     new WebpackAssetPlugin(),
     // new BundleAnalyzerPlugin(),
   ],

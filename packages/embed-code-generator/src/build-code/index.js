@@ -34,6 +34,7 @@ const _ = {
  * @param {Object} data - Data for react component
  * @param {Object} webpackAssets - webpack bundles and chunks
  * @param {string[]} webpackAssets.entrypoints - webpack bundles
+ * @param {string} webpackAssets.version - webpack bundles version
  * @returns {string} embedded code
  */
 export function buildEmbeddedCode(pkgName, data, webpackAssets) {
@@ -115,7 +116,7 @@ export function buildEmbeddedCode(pkgName, data, webpackAssets) {
     <script>
       (function() {
         var namespace = '@readr-media';
-        var pkg = '${pkgName}';
+        var pkg = '${pkgName}@${webpackAssets.version}';
         if (typeof window != 'undefined') {
           if (!window.hasOwnProperty(namespace)) {
             window[namespace] = {};
