@@ -1153,18 +1153,18 @@
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.21.tgz#5de5a2385a35309427f6011992b544514d559aa1"
   integrity sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==
 
-"@readr-media/react-dropping-text@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@readr-media/react-dropping-text/-/react-dropping-text-1.0.1.tgz#f555ab272a428ee46efc93ecc1a4d13334fae296"
-  integrity sha512-SCwNEekvKOE4oO7duUO5Ud8Da9ZSiAB8WDmT5YCw1m54uAQ7dABJs88+8FbUXr0YDWGuD+CI3Ch+qj1SFBfmfg==
+"@readr-media/react-dropping-text@1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-dropping-text/-/react-dropping-text-1.0.4.tgz#a38d9e31ba3a3ec800bb4b2b181abceeb4791c16"
+  integrity sha512-I/v7vmVLQLsMc2sD66zD7Yv/kVxhawd3e6SHSAKclDHSZ4LrsACP2rbX+j09lIFHZdrKS6yI0Bs44GkTxvraTg==
   dependencies:
     matter-js "^0.19.0"
     react-intersection-observer "^9.3.5"
 
-"@readr-media/react-dual-slides@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@readr-media/react-dual-slides/-/react-dual-slides-1.0.0.tgz#f083db1c39cde0bf9b937d2ca193c63008c04396"
-  integrity sha512-Ie5oKVoQL0Th6rSYjuPlidYCFQdieCAEm1kZKm7ZhzbSLjp+zN23BqaIl0Qn68Fv20QH140ReaDzhorxODKXVQ==
+"@readr-media/react-dual-slides@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-dual-slides/-/react-dual-slides-1.0.1.tgz#aa06718a79f650d938c2cfb9b079b5e14f8dff90"
+  integrity sha512-COKaEMiFzCDs+nhxjf6P1LHNfSZJvY88/IjrFwR5VFsKsQy9cwJWgqBmoYYesiS0AiKgwY4xX7Rub6hEbS6qng==
   dependencies:
     default-import "^1.1.5"
     react-intersection-observer "^9.3.5"
@@ -1201,10 +1201,10 @@
     styled-components "5.3.5"
     uuid "^8.3.2"
 
-"@readr-media/react-karaoke@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@readr-media/react-karaoke/-/react-karaoke-2.0.0.tgz#1b05e302b52ab3e4e29612fb4028ce277890d44b"
-  integrity sha512-5I/LuE2afARzkK1SwUcYMZQC6nubrRCC/42jLWY4OBxTge79VbHsLJQe+yEn+TKGmVHz2D1OjX1z0Udq05Xv1A==
+"@readr-media/react-karaoke@2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-karaoke/-/react-karaoke-2.0.1.tgz#4013e02a23e6a776bcecb2747f7f630c2a84f85c"
+  integrity sha512-MUElzZxbqhSDHeeatP4aV+Ut7MCmigL07P4uT1bIdI3bx7mybu+YWELfaiaVu+hMc7SrRIi8WF+tYYd1OQ79oQ==
   dependencies:
     react "18.1.0"
     react-dom "^18.1.0"
@@ -1248,10 +1248,10 @@
     styled-components "5.3.5"
     uuid "^8.3.2"
 
-"@readr-media/react-three-story-points@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@readr-media/react-three-story-points/-/react-three-story-points-1.0.1.tgz#dca955166e4582c8bf60b9f4030ca605518f82bb"
-  integrity sha512-ZrbqLnqhpgr+dVjRmu+tQ+YL7hSSELDeeUev0LNaECrXhtBuxTXY3e0eTdL2nNzPv1f2sGNpd+at3jtS2ZJASg==
+"@readr-media/react-three-story-points@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-three-story-points/-/react-three-story-points-1.0.2.tgz#7a24cdc13cea2fda1ac83df1f610bdd943f0fef6"
+  integrity sha512-yHKNCAKuJ6S+ivIkAml25UUciL7/AzYEbQJl+n5AiiWd+Hvsfea7LJqK7rFVTkm+wHVgtN15MlGRdc3MEqa2HA==
   dependencies:
     gsap "^3.11.4"
     lodash "^4.17.21"
