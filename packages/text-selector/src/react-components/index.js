@@ -388,7 +388,6 @@ const HighlightCircle = styled.img`
   top: 0px;
   left: 0;
   background-size: 100% 100%;
-  content: '';
   width: 100vw;
   max-width: 900px;
   height: calc(200% + 100px);
