@@ -286,13 +286,7 @@ const ScrollTrack = styled.div`
   max-width: 100vw;
   min-height: 200vh;
   max-height: 200vh;
-  ${({ isLoaded }) =>
-    !isLoaded &&
-    `
-    min-width: 100%;
-    max-width: 100%;
-    display: flex;
-  `}
+  display: flex;
 `
 
 const LoadingContainer = styled.div`
@@ -310,46 +304,28 @@ const Loading = styled.img``
 
 const Container = styled.div`
   position: sticky;
-  top: 0;
+  top: 32px;
+  bottom: 32px;
   min-width: 100vw;
   max-width: 100vw;
-  min-height: 100vh;
-  max-height: 100vh;
+  height: calc(100vh - 64px);
   display: flex;
   justify-content: center;
   overflow: hidden;
-  padding: 48px 0;
-  border-bottom: 48px;
-  z-index: 800;
+  margin: 32px 0;
   background: ${(props) => props.backgroundColor};
-  ::before {
-    content: '';
-    width: 100vw;
-    height: 48px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: #fff;
-    background: ${(props) => props.backgroundColor};
-    z-index: 801;
-  }
-  ::after {
-    content: '';
-    width: 100vw;
-    height: 48px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    background: #fff;
-    background: ${(props) => props.backgroundColor};
-    z-index: 801;
+  @media screen and (min-width: 768px) {
+    height: calc(100vh - 96px);
+    margin: 48px 0;
+    top: 48px;
+    bottom: 48px;
   }
 `
 
 const CaseList = styled.ul`
   position: relative;
   width: calc(100vw - 40px);
-  padding-inline-start: 20px;
+  padding-inline-start: 0;
   max-width: 712px;
   font-family: inherit;
   font-style: normal;
@@ -359,8 +335,11 @@ const CaseList = styled.ul`
   text-align: justify;
   color: #fff;
   transition: 1s;
-  transform: translate(0, calc(${(props) => props.translateY}px + 20vh));
+  transform: translate(0, calc(${(props) => props.translateY}px + 10vh));
   height: 100vh;
+  @media screen and (min-width: 768px) {
+    transform: translate(0, calc(${(props) => props.translateY}px + 20vh));
+  }
 `
 
 const GreyItem = styled.li`
@@ -392,7 +371,11 @@ const HighlightCircle = styled.img`
   max-width: 900px;
   height: calc(200% + 100px);
   transform: ${({ translateToParagraph }) =>
-    `translate(${translateToParagraph - 40}px, -30%)`};
+    `translate(${translateToParagraph}px, -30%)`};
+  @media screen and (min-width: 768px) {
+    transform: ${({ translateToParagraph }) =>
+      `translate(${translateToParagraph - 40}px, -30%)`};
+  }
 `
 
 const HighlightItem = styled.span``
@@ -417,6 +400,7 @@ const NextBtn = styled.button`
   background-image: url(${(props) => props.buttonBackground});
   border: 0;
   outline: 0;
+  z-index: 3;
   transform: translate(
     calc(
       ${(props) => props.translateToParagraph + props.paraWidth * 0.5}px - 50%
