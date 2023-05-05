@@ -3,6 +3,7 @@ const fs = require('fs')
 const path = require('path')
 const pkg = require('./package.json')
 const webpack = require('webpack')
+const port = process.env.PORT || 8080
 
 const webpackAssets = {
   chunks: [],
@@ -12,7 +13,7 @@ const webpackAssets = {
 const isProduction = process.env.NODE_ENV === 'production'
 const publicPath = isProduction
   ? `https://unpkg.com/${pkg.name}@${pkg.version}/dist/`
-  : './dist/'
+  : `http://localhost:${port}/dist/`
 
 function WebpackAssetPlugin() {}
 
