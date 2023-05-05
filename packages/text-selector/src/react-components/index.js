@@ -8,7 +8,6 @@ import React, { // eslint-disable-line
 import styled from 'styled-components'
 import axios from 'axios'
 import 'regenerator-runtime/runtime'
-import useWindowSize from './hooks/useViewport'
 import Debugger from './components/debugger.js'
 
 /**
@@ -36,19 +35,16 @@ export default function TextSelector({
   buttonBackground = 'https://unpkg.com/@readr-media/text-selector@1.1.1-beta.1/assets/button-background.png',
   circleUrlMobile = 'https://unpkg.com/@readr-media/text-selector@1.1.1-beta.1/assets/circle-mobile.png',
   buttonWording = '其他案例',
-  shouldShiftLeft = true,
   isDebugMode = false,
   loadingImgSrc = 'https://unpkg.com/@readr-media/text-selector@1.1.1-beta.1/assets/loading.gif',
 }) {
   const firstOrder = 0
-  const { height, width } = useWindowSize()
   const allContainerRef = useRef(null)
   const nowHighlightSpanRef = useRef(null)
   const itemStartRef = useRef(null)
   const listRef = useRef(null)
   const [data, setData] = useState([])
   const [highlightIndex, setHighlightIndex] = useState(-1)
-  const [leftOffset, setLeftOffset] = useState(0)
   const [translateToParagraph, setTranslateToParagraph] = useState(0)
   const [jsonFileIndex, setJsonFileIndex] = useState(0)
   const [isLoaded, setIsLoaded] = useState(false)
@@ -197,21 +193,6 @@ export default function TextSelector({
     }
   }, [jsonFileIndex])
 
-  // Adjust container block to cover the whole viewport (100vw)
-  useEffect(() => {
-    if (shouldShiftLeft && isLoaded) {
-      const containerElement = allContainerRef?.current
-      const shiftLeft = function() {
-        if (typeof containerElement?.getBoundingClientRect === 'function') {
-          const rect = containerElement.getBoundingClientRect()
-          const leftOffset = rect?.x ?? rect?.left ?? 0
-          if (leftOffset) setLeftOffset(leftOffset)
-        }
-      }
-      shiftLeft()
-    }
-  }, [shouldShiftLeft, isLoaded, jsonFileIndex, width])
-
   // 取得 highlight item 和 list 左邊的距離
   useEffect(() => {
     if (!isLoaded) return
@@ -227,12 +208,7 @@ export default function TextSelector({
   }, [highlightIndex, isLoaded, jsonFileIndex])
 
   return (
-    <ScrollTrack
-      backgroundColor={backgroundColor}
-      leftOffset={leftOffset}
-      style={{ transform: `translateX(${0 - leftOffset}px)` }}
-      isLoaded={isLoaded}
-    >
+    <ScrollTrack backgroundColor={backgroundColor} isLoaded={isLoaded}>
       {!isLoaded && (
         <LoadingContainer>
           <Loading src={loadingImgSrc} />
@@ -257,10 +233,8 @@ export default function TextSelector({
             ref={listRef}
             translateY={
               listRef.current?.offsetTop -
-                nowHighlightSpanRef.current?.offsetTop +
-                height * (1 / 4) -
-                nowHighlightSpanRef.current?.clientHeight * 0.5 ||
-              -height * (1 / 3)
+              nowHighlightSpanRef.current?.offsetTop -
+              nowHighlightSpanRef.current?.clientHeight * 0.5
             }
           >
             {renderedData.map((dataItem, dataIndex) => {
@@ -276,7 +250,13 @@ export default function TextSelector({
                         dangerouslySetInnerHTML={{ __html: dataItem.content }}
                       />
                       <HighlightCircle
-                        src={width >= 768 ? circleUrl : circleUrlMobile}
+                        className="desktop"
+                        src={circleUrl}
+                        translateToParagraph={translateToParagraph}
+                      />
+                      <HighlightCircle
+                        className="mobile"
+                        src={circleUrlMobile}
                         translateToParagraph={translateToParagraph}
                       />
                       <NextBtn
@@ -381,7 +361,7 @@ const CaseList = styled.ul`
   text-align: justify;
   color: #fff;
   transition: 1s;
-  transform: translate(0, ${(props) => props.translateY}px);
+  transform: translate(0, calc(${(props) => props.translateY}px + 20vh));
   height: 100vh;
 `
 
@@ -392,6 +372,17 @@ const GreyItem = styled.li`
 
 const HighlightWrapper = styled.span`
   position: relative;
+  .desktop {
+    display: none;
+  }
+  @media screen and (min-width: 768px) {
+    .desktop {
+      display: block;
+    }
+    .mobile {
+      display: none;
+    }
+  }
 `
 
 const HighlightCircle = styled.img`
