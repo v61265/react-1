@@ -13,22 +13,20 @@ import Debugger from './components/debugger.js'
 /**
  *  @param {Object} opts
  *  @param {string} [opts.className]
- *  @param {string[]} [opts.jsonUrls]
- *  @param {string} [opts.backgroundColor]
- *  @param {string} [opts.circleUrl]
- *  @param {string} [opts.buttonBackground]
- *  @param {string} [opts.buttonWording]
- *  @param {string} [opts.circleUrlMobile]
- *  @param {boolean} [props.shouldShiftLeft]
+ *  @param {string[]} [opts.jsonUrls = ["https://editools-gcs.readr.tw/psycho/file_1.json","https://editools-gcs.readr.tw/psycho/file_2.json"]]
+ *  @param {string} [opts.backgroundColor = '#000000']
+ *  @param {string} [opts.circleUrl='https://unpkg.com/@readr-media/text-selector@1.1.1-beta.1/assets/circle.png']
+ *  @param {string} [opts.buttonBackground = 'https://unpkg.com/@readr-media/text-selector@1.1.1-beta.1/assets/button-background.png']
+ *  @param {string} [opts.buttonWording = '其他案例']
+ *  @param {string} [opts.circleUrlMobile = 'https://unpkg.com/@readr-media/text-selector@1.1.1-beta.1/assets/circle-mobile.png']
+ *  @param {boolean} [props.isDebugMode = false]
+ *  @param {string} [props.loadingImgSrc = 'https://unpkg.com/@readr-media/text-selector@1.1.1-beta.1/assets/loading.gif']
  */
 export default function TextSelector({
   className,
   jsonUrls = [
     'https://editools-gcs.readr.tw/psycho/file_1.json',
     'https://editools-gcs.readr.tw/psycho/file_2.json',
-    'https://editools-gcs.readr.tw/psycho/file_3.json',
-    'https://editools-gcs.readr.tw/psycho/file_4.json',
-    'https://editools-gcs.readr.tw/psycho/file_5.json',
   ],
   backgroundColor = '#000000',
   circleUrl = 'https://unpkg.com/@readr-media/text-selector@1.1.1-beta.1/assets/circle.png',
