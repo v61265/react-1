@@ -369,10 +369,11 @@ const HighlightCircle = styled.img`
   background-size: 100% 100%;
   width: 100vw;
   max-width: 900px;
-  height: calc(200% + 100px);
+  height: 150%;
   transform: ${({ translateToParagraph }) =>
-    `translate(${translateToParagraph}px, -30%)`};
+    `translate(${translateToParagraph}px, -10%)`};
   @media screen and (min-width: 768px) {
+    height: calc(200% + 100px);
     transform: ${({ translateToParagraph }) =>
       `translate(${translateToParagraph - 40}px, -30%)`};
   }
@@ -382,7 +383,7 @@ const HighlightItem = styled.span``
 
 const NextBtn = styled.button`
   position: absolute;
-  bottom: -100%;
+  bottom: 0;
   left: 0;
   width: 129px;
   height: 70px;
@@ -409,6 +410,9 @@ const NextBtn = styled.button`
   );
   &:hover {
     cursor: pointer;
+  }
+  @media screen and (min-width: 768px) {
+    bottom: -100%;
   }
 `
 
