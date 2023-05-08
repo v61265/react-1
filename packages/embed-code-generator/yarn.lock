@@ -1161,6 +1161,14 @@
     matter-js "^0.19.0"
     react-intersection-observer "^9.3.5"
 
+"@readr-media/react-dropping-text@1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-dropping-text/-/react-dropping-text-1.0.5.tgz#49b6320e10bd00689fcd61fccebc044e797fdf43"
+  integrity sha512-HgT0DObr3ZLkMkce/OOsQaQ1CarhGikemwCN95B2kmyp71ROYzPFGFcNe1k0qlp0fyCQhjT0vCpd+WhmyWbB7w==
+  dependencies:
+    matter-js "^0.19.0"
+    react-intersection-observer "^9.3.5"
+
 "@readr-media/react-dual-slides@1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@readr-media/react-dual-slides/-/react-dual-slides-1.0.1.tgz#aa06718a79f650d938c2cfb9b079b5e14f8dff90"

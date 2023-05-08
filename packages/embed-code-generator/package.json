@@ -28,7 +28,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@readr-media/react-dropping-text": "1.0.4",
+    "@readr-media/react-dropping-text": "1.0.5",
     "@readr-media/react-dual-slides": "1.0.1",
     "@readr-media/react-election-widgets": "1.0.2",
     "@readr-media/react-feedback": "^3.0.2",
