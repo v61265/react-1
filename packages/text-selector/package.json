@@ -1,6 +1,6 @@
 {
   "name": "@readr-media/text-selector",
-  "version": "1.1.1-beta.12",
+  "version": "1.1.1-beta.13",
   "description": "",
   "main": "lib/index.js",
   "scripts": {

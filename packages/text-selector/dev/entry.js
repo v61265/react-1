@@ -8,7 +8,8 @@ const container = document.getElementById(reactRootId)
 const root = createRoot(container)
 
 const MockContentBlock = styled.div`
-  height: 100vh;
+  height: calc(100vh - constant(safe-area-inset-bottom)); /* iOS < 11.2 */
+  height: calc(100vh - env(safe-area-inset-bottom)); /* iOS >= 11.2 */
   background-color: pink;
   margin: 0 auto;
 `
@@ -19,7 +20,7 @@ const TestWrapper = styled.div`
 
 root.render(
   <TestWrapper>
-    <MockContentBlock />
+    {/* <MockContentBlock /> */}
     <TextSelector
       isDebugMode={true}
       jsonUrls={[

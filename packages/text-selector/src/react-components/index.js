@@ -46,6 +46,11 @@ export default function TextSelector({
   const [translateToParagraph, setTranslateToParagraph] = useState(0)
   const [jsonFileIndex, setJsonFileIndex] = useState(0)
   const [isLoaded, setIsLoaded] = useState(false)
+  const [viewportHeight, setViewportHeight] = useState(0)
+
+  useEffect(() => {
+    setViewportHeight(window.innerHeight)
+  }, [])
 
   const dataLength = useMemo(() => {
     let result = 0
@@ -206,7 +211,11 @@ export default function TextSelector({
   }, [highlightIndex, isLoaded, jsonFileIndex])
 
   return (
-    <ScrollTrack backgroundColor={backgroundColor} isLoaded={isLoaded}>
+    <ScrollTrack
+      backgroundColor={backgroundColor}
+      isLoaded={isLoaded}
+      viewportHeight={viewportHeight}
+    >
       {!isLoaded && (
         <LoadingContainer>
           <Loading src={loadingImgSrc} />
@@ -284,8 +293,8 @@ const ScrollTrack = styled.div`
   position: relative;
   min-width: 100vw;
   max-width: 100vw;
-  min-height: 200vh;
-  max-height: 200vh;
+  height: ${(props) =>
+    props.viewportHeight ? `${props.viewportHeight * 2}px` : '200vh'};
   display: flex;
 `
 
@@ -335,7 +344,7 @@ const CaseList = styled.ul`
   text-align: justify;
   color: #fff;
   transition: 1s;
-  transform: translate(0, calc(${(props) => props.translateY}px + 10vh));
+  transform: translate(0, calc(${(props) => props.translateY}px + 20vh));
   height: 100vh;
   @media screen and (min-width: 768px) {
     transform: translate(0, calc(${(props) => props.translateY}px + 20vh));
