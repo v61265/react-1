@@ -132,7 +132,7 @@ function Panel() {
       <LeftBlock>
         <div>
           <Dropdown
-            title="請選擇要產生的 embed code pkg"
+            title="請選擇要產生 embed code 的 component"
             options={pkgOptions}
             checkedValue={selectedPkg}
             onChange={(pkg) => {
