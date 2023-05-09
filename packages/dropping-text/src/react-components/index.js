@@ -1,6 +1,6 @@
 import Matter from 'matter-js'
 import styled from '../styled-components.js'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState, useRef } from 'react'
 import { useInView } from 'react-intersection-observer'
 
 const { Bodies, Body, Common, Composite, Engine } = Matter
@@ -100,9 +100,39 @@ export default function DroppingText({
   // over the `DroppingText` canvas.
   const [overflowIdx, setOverflowIdx] = useState(defaultOverflowIdx)
   const [objsForRequestAnimationFrame, setObjsForRaf] = useState(null)
+  const [height, setHeight] = useState(canvasHeight ?? '100vh')
   const [inViewRef, inView] = useInView()
+  const blockRef = useRef()
   const truncatedTextArr = textArr.slice(0, overflowIdx)
   const initialRender = overflowIdx === defaultOverflowIdx
+
+  // Use `useCallback` so we don't recreate the function on each render
+  const setRefs = useCallback(
+    (node) => {
+      // Ref's from useRef needs to have the node assigned to `current`
+      blockRef.current = node
+      // Callback refs, like the one from `useInView`, is a function that takes the node as an argument
+      inViewRef(node)
+    },
+    [inViewRef]
+  )
+
+  // This a workaround to solve in-app rendering issue.
+  // If we use iOS in-app browser to render 100vh block,
+  // and the in-app browser will change block's height
+  // while scrolling down/up.
+  //
+  // Therefore, we use state to store the block's height
+  // rather than setting `100vh`.
+  useEffect(() => {
+    if (blockRef.current) {
+      const block = blockRef.current
+      const height = block?.clientHeight
+      if (height) {
+        setHeight(height)
+      }
+    }
+  }, [])
 
   useEffect(() => {
     const droppingTextNodes = document.querySelectorAll(
@@ -275,10 +305,9 @@ export default function DroppingText({
     <Block
       style={{
         width: typeof canvasWidth === 'number' ? `${canvasWidth}px` : '100vw',
-        height:
-          typeof canvasHeight === 'number' ? `${canvasHeight}px` : '100vh',
+        height,
       }}
-      ref={inViewRef}
+      ref={setRefs}
       /**
        * For better performance,
        * we separate rendering logics to two steps.
