@@ -34,7 +34,7 @@ const RightBlock = styled.div`
   width: 50vw;
 `
 
-const TextBlock = styled.pre`
+const TextBlock = styled.textarea`
   font-size: 16px;
   max-height: 80vh;
   overflow: scroll;
@@ -42,6 +42,8 @@ const TextBlock = styled.pre`
   padding: 10px;
   border: 1px solid #000;
   border-radius: 5px;
+  width: 100%;
+  height: 100%;
 `
 
 const pkgOptions = [
@@ -150,12 +152,12 @@ function Panel() {
         </div>
         <div>
           <h3>Component Props:</h3>
-          <TextBlock>{JSON.stringify(mockData, null, 2)}</TextBlock>
+          <TextBlock readOnly value={JSON.stringify(mockData, null, 2)} />
         </div>
       </LeftBlock>
       <RightBlock>
         <h3>Embed Code:</h3>
-        <TextBlock>{embedCode}</TextBlock>
+        <TextBlock readOnly value={embedCode} />
       </RightBlock>
     </Block>
   )
