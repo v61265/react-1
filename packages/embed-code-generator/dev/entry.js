@@ -55,6 +55,41 @@ const pkgOptions = [
     name: 'Text Selector',
     value: 'text-selector',
   },
+  {
+    id: 'react-karaoke',
+    name: 'Karaoke',
+    value: 'react-karaoke',
+  },
+  {
+    id: 'react-dual-slides',
+    name: 'Dual Slides',
+    value: 'react-dual-slides',
+  },
+  {
+    id: 'react-three-story-points',
+    name: 'Three Story Points',
+    value: 'react-three-story-points',
+  },
+  {
+    id: 'react-live-blog',
+    name: 'Live Blog',
+    value: 'react-live-blog',
+  },
+  {
+    id: 'react-election-widgets-votes-comparison',
+    name: 'Election Widgets: Votes Comparison',
+    value: 'react-election-widgets-votes-comparison',
+  },
+  {
+    id: 'react-election-widgets-seat-chart',
+    name: 'Election Widgets: Seat Chart',
+    value: 'react-election-widgets-seat-chart',
+  },
+  {
+    id: 'react-questionnaire',
+    name: 'Questionnaire',
+    value: 'react-questionnaire',
+  },
 ]
 
 const scriptUrlOptios = [
@@ -81,8 +116,8 @@ function Panel() {
       // @ts-ignore
       embedCode = buildEmbeddedCode(selectedPkg, mockData, webpackAssets)
     } else if (selectedScriptUrl === 'cdn') {
-      // @ts-ignore
       embedCode = ecg.buildEmbeddedCode(
+        // @ts-ignore
         selectedPkg,
         mockData,
         ecg.webpackAssets

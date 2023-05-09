@@ -1,0 +1,33 @@
+{
+  "updatedAt": "2022-11-26 22:20:22",
+  "parties": [
+    {
+      "label": "中國國民黨",
+      "seats": 29
+    },
+    {
+      "label": "民主進步黨",
+      "seats": 19
+    },
+    {
+      "label": "無黨籍",
+      "seats": 7
+    },
+    {
+      "label": "時代力量",
+      "seats": 3
+    },
+    {
+      "label": "新黨",
+      "seats": 2
+    },
+    {
+      "label": "親民黨",
+      "seats": 2
+    },
+    {
+      "label": "社會民主黨",
+      "seats": 1
+    }
+  ]
+}
