@@ -23,6 +23,49 @@ const _ = {
 }
 
 /**
+ *  @typedef {Object} WebpackAssets
+ *  @property {string[]} entrypoints - webpack bundles
+ *  @property {string} version - webpack bundles version
+ *
+ */
+
+/**
+ *  @param {import('@readr-media/react-dropping-text').DroppingTextProps} data
+ *  @param {WebpackAssets} webpackAssets
+ *  @returns string
+ */
+export function buildDroppingTextEmbedCode(data, webpackAssets) {
+  return buildEmbeddedCode('react-dropping-text', data, webpackAssets)
+}
+
+/**
+ *  @param {import('@readr-media/react-dual-slides').DualSlidesProps} data
+ *  @param {WebpackAssets} webpackAssets
+ *  @returns string
+ */
+export function buildDualSlidesEmbedCode(data, webpackAssets) {
+  return buildEmbeddedCode('react-dual-slides', data, webpackAssets)
+}
+
+/**
+ *  @param {import('@readr-media/react-three-story-points').ThreeStoryPointsProps} data
+ *  @param {WebpackAssets} webpackAssets
+ *  @returns string
+ */
+export function buildThreeStoryPointsEmbedCode(data, webpackAssets) {
+  return buildEmbeddedCode('react-three-story-points', data, webpackAssets)
+}
+
+/**
+ *  @param {import('@readr-media/react-karaoke').KaraokeProps} data
+ *  @param {WebpackAssets} webpackAssets
+ *  @returns string
+ */
+export function buildKaraokeEmbedCode(data, webpackAssets) {
+  return buildEmbeddedCode('react-karaoke', data, webpackAssets)
+}
+
+/**
  *
  * @export
  * @param {('react-questionnaire'|'react-qa-list'|
@@ -34,6 +77,7 @@ const _ = {
  * @param {Object} data - Data for react component
  * @param {Object} webpackAssets - webpack bundles and chunks
  * @param {string[]} webpackAssets.entrypoints - webpack bundles
+ * @param {string} webpackAssets.version - webpack bundles version
  * @returns {string} embedded code
  */
 export function buildEmbeddedCode(pkgName, data, webpackAssets) {
@@ -115,7 +159,7 @@ export function buildEmbeddedCode(pkgName, data, webpackAssets) {
     <script>
       (function() {
         var namespace = '@readr-media';
-        var pkg = '${pkgName}';
+        var pkg = '${pkgName}@${webpackAssets.version}';
         if (typeof window != 'undefined') {
           if (!window.hasOwnProperty(namespace)) {
             window[namespace] = {};

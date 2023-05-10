@@ -13,6 +13,7 @@
     "packages/three-story-points",
     "packages/dual-slides",
     "packages/text-selector"
+    "packages/dropping-text"
   ],
   "scripts": {
     "prepare": "husky install"

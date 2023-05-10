@@ -230,13 +230,17 @@ function createThreeObj(models, pois, canvasRef) {
  */
 
 /**
- *  @param {Object} props
- *  @param {ModelProp[]} props.models
- *  @param {ModelProp[]} [props.desktopModels]
- *  @param {string[]} [props.captions=[]]
- *  @param {{urls: string[], preload: 'auto'|'none'|'metadata'}[]} [props.audios=[]]
- *  @param {PlainPOI[]} [props.pois=[]]
- *  @param {boolean} [props.debugMode=false]
+ *  @typedef {Object} ThreeStoryPointsProps
+ *  @property {ModelProp[]} models
+ *  @property {ModelProp[]} [desktopModels]
+ *  @property {string[]} [captions=[]]
+ *  @property {{urls: string[], preload: 'auto'|'none'|'metadata'}[]} [audios=[]]
+ *  @property {PlainPOI[]} [pois=[]]
+ *  @property {boolean} [debugMode=false]
+ */
+
+/**
+ *  @param {ThreeStoryPointsProps} props
  */
 export default function ThreeStoryPoints({
   models: mobileModels,
