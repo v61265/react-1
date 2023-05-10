@@ -34,7 +34,7 @@ const RightBlock = styled.div`
   width: 50vw;
 `
 
-const TextBlock = styled.pre`
+const TextBlock = styled.textarea`
   font-size: 16px;
   max-height: 80vh;
   overflow: scroll;
@@ -42,6 +42,8 @@ const TextBlock = styled.pre`
   padding: 10px;
   border: 1px solid #000;
   border-radius: 5px;
+  width: 100%;
+  height: 100%;
 `
 
 const pkgOptions = [
@@ -54,6 +56,41 @@ const pkgOptions = [
     id: 'react-text-selector',
     name: 'Text Selector',
     value: 'text-selector',
+  },
+  {
+    id: 'react-karaoke',
+    name: 'Karaoke',
+    value: 'react-karaoke',
+  },
+  {
+    id: 'react-dual-slides',
+    name: 'Dual Slides',
+    value: 'react-dual-slides',
+  },
+  {
+    id: 'react-three-story-points',
+    name: 'Three Story Points',
+    value: 'react-three-story-points',
+  },
+  {
+    id: 'react-live-blog',
+    name: 'Live Blog',
+    value: 'react-live-blog',
+  },
+  {
+    id: 'react-election-widgets-votes-comparison',
+    name: 'Election Widgets: Votes Comparison',
+    value: 'react-election-widgets-votes-comparison',
+  },
+  {
+    id: 'react-election-widgets-seat-chart',
+    name: 'Election Widgets: Seat Chart',
+    value: 'react-election-widgets-seat-chart',
+  },
+  {
+    id: 'react-questionnaire',
+    name: 'Questionnaire',
+    value: 'react-questionnaire',
   },
 ]
 
@@ -81,8 +118,8 @@ function Panel() {
       // @ts-ignore
       embedCode = buildEmbeddedCode(selectedPkg, mockData, webpackAssets)
     } else if (selectedScriptUrl === 'cdn') {
-      // @ts-ignore
       embedCode = ecg.buildEmbeddedCode(
+        // @ts-ignore
         selectedPkg,
         mockData,
         ecg.webpackAssets
@@ -95,7 +132,7 @@ function Panel() {
       <LeftBlock>
         <div>
           <Dropdown
-            title="請選擇要產生的 embed code pkg"
+            title="請選擇要產生 embed code 的 component"
             options={pkgOptions}
             checkedValue={selectedPkg}
             onChange={(pkg) => {
@@ -115,12 +152,12 @@ function Panel() {
         </div>
         <div>
           <h3>Component Props:</h3>
-          <TextBlock>{JSON.stringify(mockData, null, 2)}</TextBlock>
+          <TextBlock readOnly value={JSON.stringify(mockData, null, 2)} />
         </div>
       </LeftBlock>
       <RightBlock>
         <h3>Embed Code:</h3>
-        <TextBlock>{embedCode}</TextBlock>
+        <TextBlock readOnly value={embedCode} />
       </RightBlock>
     </Block>
   )
