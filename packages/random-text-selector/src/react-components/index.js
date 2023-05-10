@@ -22,7 +22,7 @@ import Debugger from './components/debugger.js'
  *  @param {boolean} [props.isDebugMode = false]
  *  @param {string} [props.loadingImgSrc = 'https://unpkg.com/@readr-media/text-selector@1.1.1-beta.1/assets/loading.gif']
  */
-export default function TextSelector({
+export default function RandomTextSelector({
   className,
   jsonUrls = [
     'https://editools-gcs.readr.tw/psycho/file_1.json',

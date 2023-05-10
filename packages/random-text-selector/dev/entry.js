@@ -1,4 +1,4 @@
-import TextSelector from '../src/react-components'
+import RandomTextSelector from '../src/react-components'
 import React from 'react' // eslint-disable-line
 import styled from 'styled-components'
 import { createRoot } from 'react-dom/client'
@@ -20,8 +20,7 @@ const TestWrapper = styled.div`
 
 root.render(
   <TestWrapper>
-    {/* <MockContentBlock /> */}
-    <TextSelector
+    <RandomTextSelector
       isDebugMode={true}
       jsonUrls={[
         'https://editools-gcs.readr.tw/psycho/file_1.json',
