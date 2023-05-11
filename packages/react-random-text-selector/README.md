@@ -1,4 +1,4 @@
-# [@readr-media/random-text-selector](https://www.npmjs.com/package/@readr-media/random-text-selector) &middot; ![npm version](https://img.shields.io/npm/v/@readr-media/react-karaoke.svg?style=flat)
+# [@readr-media/react-random-text-selector](https://www.npmjs.com/package/@readr-media/react-random-text-selector) &middot; ![npm version](https://img.shields.io/npm/v/@readr-media/react-karaoke.svg?style=flat)
 
 ## Demo
 
@@ -7,7 +7,7 @@
 ## Usage Example
 
 ```javascript
-import RandomTextSelector from '../src/react-components'
+import ReactRandomTextSelector from '@readr-media/react-random-text-selector'
 import React from 'react'
 import styled from 'styled-components'
 import { createRoot } from 'react-dom/client'
@@ -24,7 +24,7 @@ const jsonUrls = [
 ]
 
 root.render(
-  <RandomTextSelector
+  <ReactRandomTextSelector
     className="random-text-selector"
     isDebugMode={true}
     jsonUrls={jsonUrls}

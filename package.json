@@ -12,7 +12,7 @@
     "packages/share-button",
     "packages/three-story-points",
     "packages/dual-slides",
-    "packages/text-selector"
+    "packages/text-selector",
     "packages/dropping-text"
   ],
   "scripts": {

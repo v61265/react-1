@@ -1,5 +1,5 @@
 {
-  "name": "@readr-media/random-text-selector",
+  "name": "@readr-media/react-random-text-selector",
   "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
@@ -14,7 +14,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/readr-media/react.git",
-    "directory": "packages/random-text-selector"
+    "directory": "packages/react-random-text-selector"
   },
   "keywords": [
     "react",
