@@ -28,7 +28,6 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "default-import": "^1.1.5",
     "react-intersection-observer": "^9.3.5",
     "react-transition-group": "^4.4.5"
   },
