@@ -7,7 +7,7 @@ import React, { // eslint-disable-line
 } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
-import 'regenerator-runtime/runtime'
+import 'regenerator-runtime/runtime.js'
 import Debugger from './components/debugger.js'
 
 /**

@@ -53,9 +53,9 @@ const pkgOptions = [
     value: 'react-dropping-text',
   },
   {
-    id: 'react-text-selector',
-    name: 'Text Selector',
-    value: 'text-selector',
+    id: 'react-random-text-selector',
+    name: 'Random Text Selector',
+    value: 'react-random-text-selector',
   },
   {
     id: 'react-karaoke',
