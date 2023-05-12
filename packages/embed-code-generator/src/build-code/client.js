@@ -117,11 +117,11 @@ if (window?.[namespace][`react-dual-slides${pkgVersion}`]) {
   })
 }
 
-if (window?.[namespace][`text-selector${pkgVersion}`]) {
+if (window?.[namespace][`react-random-text-selector${pkgVersion}`]) {
   import(
-    /* webpackChunkName: "text-selector" */ '@readr-media/text-selector'
+    /* webpackChunkName: "react-random-text-selector" */ '@readr-media/react-random-text-selector'
   ).then(({ default: TextSelector }) => {
-    hydrate(namespace, `text-selector${pkgVersion}`, TextSelector)
+    hydrate(namespace, `react-random-text-selector${pkgVersion}`, TextSelector)
   })
 }
 

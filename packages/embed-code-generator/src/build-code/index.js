@@ -13,7 +13,7 @@ import rlb from '@readr-media/react-live-blog'
 import map from 'lodash/map'
 import serialize from 'serialize-javascript'
 import Video from '@readr-media/react-full-screen-video'
-import TextSelector from '@readr-media/text-selector'
+import RandomTextSelector from '@readr-media/react-random-text-selector'
 import { ServerStyleSheet } from 'styled-components'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -73,7 +73,7 @@ export function buildKaraokeEmbedCode(data, webpackAssets) {
  * 'react-election-widgets-seat-chart'|
  * 'react-election-widgets-votes-comparison'|
  * 'react-three-story-points' | 'react-full-screen-video' |
- * 'react-dual-slides' | 'text-selector' | 'react-dropping-text')} pkgName
+ * 'react-dual-slides' | 'react-random-text-selector' | 'react-dropping-text')} pkgName
  * @param {Object} data - Data for react component
  * @param {Object} webpackAssets - webpack bundles and chunks
  * @param {string[]} webpackAssets.entrypoints - webpack bundles
@@ -123,8 +123,8 @@ export function buildEmbeddedCode(pkgName, data, webpackAssets) {
     case 'react-three-story-points':
       skipServerSideRendering = true
       break
-    case 'text-selector':
-      Component = TextSelector
+    case 'react-random-text-selector':
+      Component = RandomTextSelector
       break
     case 'react-dropping-text':
       Component = DroppingText

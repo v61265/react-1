@@ -1276,6 +1276,13 @@
     styled-components "5.3.5"
     uuid "^8.3.2"
 
+"@readr-media/react-random-text-selector@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-random-text-selector/-/react-random-text-selector-1.0.2.tgz#2a25571929fdc2dd14aab6ddc9e0319bff3e4308"
+  integrity sha512-SfHVRM47xVuyIEzBF0vg7NTOsRbDPkx14mbDTVmEjBDrlhB/aXvrvonUg6E8VJWYjqrK/PjqrhGYiQTgPt37Ng==
+  dependencies:
+    axios "^1.3.5"
+
 "@readr-media/react-three-story-points@1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@readr-media/react-three-story-points/-/react-three-story-points-1.0.2.tgz#7a24cdc13cea2fda1ac83df1f610bdd943f0fef6"
@@ -1286,13 +1293,6 @@
     react-intersection-observer "^9.3.5"
     three "^0.150.1"
     three-story-controls "^1.0.6"
-
-"@readr-media/text-selector@^1.1.1-beta.13":
-  version "1.1.1-beta.13"
-  resolved "https://registry.yarnpkg.com/@readr-media/text-selector/-/text-selector-1.1.1-beta.13.tgz#867c7cb65bc2449f20ff04e476c267ba5b302af7"
-  integrity sha512-AElljoVyVX9G91L+KU0QsjRdtysMAmyvtG9xvFlJccJGePdu/m7g/ux+5vfPStK6A4783EAFiKJ3CCj+xpJ+ug==
-  dependencies:
-    axios "^1.3.5"
 
 "@readr-media/text-selector@^1.1.1-beta.9":
   version "1.1.1-beta.9"

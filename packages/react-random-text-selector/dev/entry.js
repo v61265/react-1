@@ -1,4 +1,4 @@
-import ReactRandomTextSelector from '../src/react-components'
+import ReactRandomTextSelector from '../src/react-components/index.js'
 import React from 'react' // eslint-disable-line
 import styled from 'styled-components'
 import { createRoot } from 'react-dom/client'
