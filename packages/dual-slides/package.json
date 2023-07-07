@@ -1,6 +1,6 @@
 {
   "name": "@readr-media/react-dual-slides",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
@@ -28,7 +28,6 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "default-import": "^1.1.5",
     "react-intersection-observer": "^9.3.5",
     "react-transition-group": "^4.4.5"
   },

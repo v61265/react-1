@@ -3,6 +3,7 @@ const fs = require('fs')
 const path = require('path')
 const pkg = require('./package.json')
 const webpack = require('webpack')
+const port = process.env.PORT || 8080
 
 const webpackAssets = {
   chunks: [],
@@ -12,7 +13,7 @@ const webpackAssets = {
 const isProduction = process.env.NODE_ENV === 'production'
 const publicPath = isProduction
   ? `https://unpkg.com/${pkg.name}@${pkg.version}/dist/`
-  : './dist/'
+  : `http://localhost:${port}/dist/`
 
 function WebpackAssetPlugin() {}
 
@@ -31,6 +32,7 @@ WebpackAssetPlugin.prototype.apply = function(compiler) {
 
     webpackAssets.chunks = chunks
     webpackAssets.entrypoints = entryChunks
+    webpackAssets.version = pkg.version
 
     if (!fs.existsSync(distDir)) {
       fs.mkdirSync(distDir)
@@ -146,7 +148,10 @@ const webpackConfig = {
     },
   },
   plugins: [
-    new webpack.EnvironmentPlugin(['NODE_ENV']),
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: process.env.NODE_ENV,
+      EMBED_CODE_GENERATOR_VERSION: pkg.version,
+    }),
     new WebpackAssetPlugin(),
     // new BundleAnalyzerPlugin(),
   ],

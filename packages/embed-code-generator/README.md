@@ -1,4 +1,4 @@
-# [@readr-media/react-questionnaire](https://www.npmjs.com/package/@readr-media/react-embed-code-generator) &middot; ![npm version](https://img.shields.io/npm/v/@readr-media/react-embed-code-generator.svg?style=flat)
+# [@readr-media/react-embed-code-generator](https://www.npmjs.com/package/@readr-media/react-embed-code-generator) &middot; ![npm version](https://img.shields.io/npm/v/@readr-media/react-embed-code-generator.svg?style=flat)
 
 ## Installation
 `yarn install`
@@ -53,8 +53,3 @@ You can see this [PR](https://github.com/readr-media/react/pull/138) for more in
 
 Since this subpkg is NOT under `workspaces` control,
 please do not forget to commit `yarn.lock` if changed.
-
-## TODOs
-- [ ] 建立 CI pipeline，透過 CI 產生 npm package，並且上傳至 npm registry
-- [ ] 透過 Lerna 控制 packages 之間的版號
-- [ ] 加入 React lazy load，讓 webpack 可以動態載入 webpack chunks

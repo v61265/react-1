@@ -61,6 +61,10 @@ const REGEX = /(\d+)/
  * - optional, default value is `{ mobile: '100vw', tablet: '100vw', laptop: '100vw', desktop: '100vw', default: '100vw'}`
  * - using `props.breakpoint` and `props.rwd`, you can decide different sizes of image is on each vw.
  * - if this param is default value, this sizes of images will equal to vw.
+ * @param {IntersectionObserverInit} [props.intersectionObserverOptions]
+ * - Options of intersection observers, let you control the circumstance of observers.
+ * - Optional, default value is `{ root: null, rootMargin: '0px', threshold: 0.25, }`.
+ * - See [Mdn Docs](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) to get more information.
  * @returns {JSX.Element}
  */
 export default function CustomImage({
@@ -85,6 +89,11 @@ export default function CustomImage({
     tablet: '1199px',
     laptop: '1439px',
     desktop: '2439px',
+  },
+  intersectionObserverOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.25,
   },
 }) {
   const imageRef = useRef(null)
@@ -359,11 +368,10 @@ export default function CustomImage({
       let observer
 
       if (!priority) {
-        observer = new IntersectionObserver(callback, {
-          root: null,
-          rootMargin: '0px',
-          threshold: 0.25,
-        })
+        observer = new IntersectionObserver(
+          callback,
+          intersectionObserverOptions
+        )
         observer.observe(imageRef.current)
       } else {
         loadImageProgress()
@@ -378,7 +386,7 @@ export default function CustomImage({
       imageRef.current.style.visibility = 'hidden'
       console.error(`Unhandled error happened, hide image element', ${err}`)
     }
-  }, [defaultImage, printLogInDevMode])
+  }, [defaultImage, printLogInDevMode, intersectionObserverOptions])
 
   return (
     <img

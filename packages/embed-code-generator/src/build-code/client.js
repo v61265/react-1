@@ -1,6 +1,9 @@
 import 'regenerator-runtime/runtime'
 import { createRoot, hydrateRoot } from 'react-dom/client'
 
+const pkgVersion = process.env.EMBED_CODE_GENERATOR_VERSION
+  ? `@${process.env.EMBED_CODE_GENERATOR_VERSION}`
+  : ''
 const namespace = '@readr-media'
 
 function hydrate(namespace, pkgName, Component) {
@@ -20,98 +23,112 @@ function render(namespace, pkgName, Component) {
   root.render(<Component {...dataOfComponent} />)
 }
 
-if (window?.[namespace]['react-qa-list']) {
+if (window?.[namespace][`react-qa-list${pkgVersion}`]) {
   import(
     /* webpackChunkName: "react-qa-list" */ '@readr-media/react-qa-list'
   ).then(({ default: QAList }) => {
-    hydrate(namespace, 'react-qa-list', QAList)
+    hydrate(namespace, `react-qa-list${pkgVersion}`, QAList)
   })
 }
 
-if (window?.[namespace]['react-questionnaire']) {
+if (window?.[namespace][`react-questionnaire${pkgVersion}`]) {
   import(
     /* webpackChunkName: "react-questionnaire" */ '@readr-media/react-questionnaire'
   ).then(({ default: Questionnaire }) => {
-    hydrate(namespace, 'react-questionnaire', Questionnaire)
+    hydrate(namespace, `react-questionnaire${pkgVersion}`, Questionnaire)
   })
 }
 
-if (window?.[namespace]['react-feedback']) {
+if (window?.[namespace][`react-feedback${pkgVersion}`]) {
   import(
     /* webpackChunkName: "react-feedback" */ '@readr-media/react-feedback'
   ).then(({ default: Feedback }) => {
-    hydrate(namespace, 'react-feedback', Feedback)
+    hydrate(namespace, `react-feedback${pkgVersion}`, Feedback)
   })
 }
 
-if (window?.[namespace]['react-karaoke']) {
+if (window?.[namespace][`react-karaoke${pkgVersion}`]) {
   import(
     /* webpackChunkName: "react-karaoke" */ '@readr-media/react-karaoke'
   ).then(({ default: Karaoke }) => {
-    hydrate(namespace, 'react-karaoke', Karaoke)
+    hydrate(namespace, `react-karaoke${pkgVersion}`, Karaoke)
   })
 }
 
-if (window?.[namespace]['react-full-screen-video']) {
+if (window?.[namespace][`react-full-screen-video${pkgVersion}`]) {
   import(
     /* webpackChunkName: "react-full-screen-video" */ '@readr-media/react-full-screen-video'
   ).then(({ default: FullScreenVideo }) => {
-    hydrate(namespace, 'react-full-screen-video', FullScreenVideo)
+    hydrate(namespace, `react-full-screen-video${pkgVersion}`, FullScreenVideo)
   })
 }
 
-if (window?.[namespace]['react-live-blog']) {
+if (window?.[namespace][`react-live-blog${pkgVersion}`]) {
   import(
     /* webpackChunkName: "react-live-blog" */ '@readr-media/react-live-blog'
   ).then(({ default: lb }) => {
-    hydrate(namespace, 'react-live-blog', lb.ReactComponent.LiveBlog)
+    hydrate(
+      namespace,
+      `react-live-blog${pkgVersion}`,
+      lb.ReactComponent.LiveBlog
+    )
   })
 }
 
-if (window?.[namespace]['react-election-widgets-seat-chart']) {
+if (window?.[namespace][`react-election-widgets-seat-chart${pkgVersion}`]) {
   import(
     /* webpackChunkName: "react-election-widgets" */ '@readr-media/react-election-widgets'
   ).then(({ default: ew }) => {
     hydrate(
       namespace,
-      'react-election-widgets-seat-chart',
+      `react-election-widgets-seat-chart${pkgVersion}`,
       ew.SeatChart.ReactComponent
     )
   })
 }
 
-if (window?.[namespace]['react-election-widgets-votes-comparison']) {
+if (
+  window?.[namespace][`react-election-widgets-votes-comparison${pkgVersion}`]
+) {
   import(
     /* webpackChunkName: "react-election-widgets" */ '@readr-media/react-election-widgets'
   ).then(({ default: ew }) => {
     hydrate(
       namespace,
-      'react-election-widgets-votes-comparison',
+      `react-election-widgets-votes-comparison${pkgVersion}`,
       ew.VotesComparison.ReactComponent
     )
   })
 }
 
-if (window?.[namespace]['react-three-story-points']) {
+if (window?.[namespace][`react-three-story-points${pkgVersion}`]) {
   import(
     /* webpackChunkName: "react-three-story-points" */ '@readr-media/react-three-story-points'
   ).then(({ default: ThreeStoryPoints }) => {
-    render(namespace, 'react-three-story-points', ThreeStoryPoints)
+    render(namespace, `react-three-story-points${pkgVersion}`, ThreeStoryPoints)
   })
 }
 
-if (window?.[namespace]['react-three-story-points']) {
-  import(
-    /* webpackChunkName: "react-three-story-points" */ '@readr-media/react-three-story-points'
-  ).then(({ default: ThreeStoryPoints }) => {
-    render(namespace, 'react-three-story-points', ThreeStoryPoints)
-  })
-}
-
-if (window?.[namespace]['react-dual-slides']) {
+if (window?.[namespace][`react-dual-slides${pkgVersion}`]) {
   import(
     /* webpackChunkName: "react-dual-slides" */ '@readr-media/react-dual-slides'
   ).then(({ default: DualSlides }) => {
-    render(namespace, 'react-dual-slides', DualSlides)
+    hydrate(namespace, `react-dual-slides${pkgVersion}`, DualSlides)
+  })
+}
+
+if (window?.[namespace][`react-random-text-selector${pkgVersion}`]) {
+  import(
+    /* webpackChunkName: "react-random-text-selector" */ '@readr-media/react-random-text-selector'
+  ).then(({ default: TextSelector }) => {
+    hydrate(namespace, `react-random-text-selector${pkgVersion}`, TextSelector)
+  })
+}
+
+if (window?.[namespace][`react-dropping-text${pkgVersion}`]) {
+  import(
+    /* webpackChunkName: "react-dropping-text" */ '@readr-media/react-dropping-text'
+  ).then(({ default: DroppingText }) => {
+    hydrate(namespace, `react-dropping-text${pkgVersion}`, DroppingText)
   })
 }

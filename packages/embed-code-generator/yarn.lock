@@ -1153,10 +1153,26 @@
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.21.tgz#5de5a2385a35309427f6011992b544514d559aa1"
   integrity sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==
 
-"@readr-media/react-dual-slides@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@readr-media/react-dual-slides/-/react-dual-slides-1.0.0.tgz#f083db1c39cde0bf9b937d2ca193c63008c04396"
-  integrity sha512-Ie5oKVoQL0Th6rSYjuPlidYCFQdieCAEm1kZKm7ZhzbSLjp+zN23BqaIl0Qn68Fv20QH140ReaDzhorxODKXVQ==
+"@readr-media/react-dropping-text@1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-dropping-text/-/react-dropping-text-1.0.4.tgz#a38d9e31ba3a3ec800bb4b2b181abceeb4791c16"
+  integrity sha512-I/v7vmVLQLsMc2sD66zD7Yv/kVxhawd3e6SHSAKclDHSZ4LrsACP2rbX+j09lIFHZdrKS6yI0Bs44GkTxvraTg==
+  dependencies:
+    matter-js "^0.19.0"
+    react-intersection-observer "^9.3.5"
+
+"@readr-media/react-dropping-text@1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-dropping-text/-/react-dropping-text-1.0.5.tgz#49b6320e10bd00689fcd61fccebc044e797fdf43"
+  integrity sha512-HgT0DObr3ZLkMkce/OOsQaQ1CarhGikemwCN95B2kmyp71ROYzPFGFcNe1k0qlp0fyCQhjT0vCpd+WhmyWbB7w==
+  dependencies:
+    matter-js "^0.19.0"
+    react-intersection-observer "^9.3.5"
+
+"@readr-media/react-dual-slides@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-dual-slides/-/react-dual-slides-1.0.1.tgz#aa06718a79f650d938c2cfb9b079b5e14f8dff90"
+  integrity sha512-COKaEMiFzCDs+nhxjf6P1LHNfSZJvY88/IjrFwR5VFsKsQy9cwJWgqBmoYYesiS0AiKgwY4xX7Rub6hEbS6qng==
   dependencies:
     default-import "^1.1.5"
     react-intersection-observer "^9.3.5"
@@ -1169,6 +1185,26 @@
   dependencies:
     "@twreporter/errors" "^1.1.1"
     axios "^0.27.2"
+
+"@readr-media/react-embed-code-generator@^2.3.0-beta.9":
+  version "2.3.0-beta.12"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-embed-code-generator/-/react-embed-code-generator-2.3.0-beta.12.tgz#7b0107eccc50022cfefd1677385a67caaad420c9"
+  integrity sha512-TKRtxNb94Lty4dmzX0lSbqvoioH6hybyZ6EspL49OoOXwOSHeDOBwipvodeRnn4K73ux3Fyz6GCphWYSqlctlQ==
+  dependencies:
+    "@readr-media/react-dropping-text" "1.0.4"
+    "@readr-media/react-dual-slides" "1.0.1"
+    "@readr-media/react-election-widgets" "1.0.2"
+    "@readr-media/react-feedback" "^3.0.2"
+    "@readr-media/react-full-screen-video" "1.0.5-beta.0"
+    "@readr-media/react-karaoke" "2.0.1"
+    "@readr-media/react-live-blog" "1.1.2"
+    "@readr-media/react-qa-list" "2.0.1"
+    "@readr-media/react-questionnaire" "2.0.0"
+    "@readr-media/react-three-story-points" "1.0.2"
+    "@readr-media/text-selector" "^1.1.1-beta.9"
+    lodash "^4.17.21"
+    serialize-javascript "^6.0.0"
+    uuid "^8.3.2"
 
 "@readr-media/react-feedback@^3.0.2":
   version "3.3.0"
@@ -1193,10 +1229,10 @@
     styled-components "5.3.5"
     uuid "^8.3.2"
 
-"@readr-media/react-karaoke@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@readr-media/react-karaoke/-/react-karaoke-2.0.0.tgz#1b05e302b52ab3e4e29612fb4028ce277890d44b"
-  integrity sha512-5I/LuE2afARzkK1SwUcYMZQC6nubrRCC/42jLWY4OBxTge79VbHsLJQe+yEn+TKGmVHz2D1OjX1z0Udq05Xv1A==
+"@readr-media/react-karaoke@2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-karaoke/-/react-karaoke-2.0.1.tgz#4013e02a23e6a776bcecb2747f7f630c2a84f85c"
+  integrity sha512-MUElzZxbqhSDHeeatP4aV+Ut7MCmigL07P4uT1bIdI3bx7mybu+YWELfaiaVu+hMc7SrRIi8WF+tYYd1OQ79oQ==
   dependencies:
     react "18.1.0"
     react-dom "^18.1.0"
@@ -1240,16 +1276,30 @@
     styled-components "5.3.5"
     uuid "^8.3.2"
 
-"@readr-media/react-three-story-points@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@readr-media/react-three-story-points/-/react-three-story-points-1.0.1.tgz#dca955166e4582c8bf60b9f4030ca605518f82bb"
-  integrity sha512-ZrbqLnqhpgr+dVjRmu+tQ+YL7hSSELDeeUev0LNaECrXhtBuxTXY3e0eTdL2nNzPv1f2sGNpd+at3jtS2ZJASg==
+"@readr-media/react-random-text-selector@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-random-text-selector/-/react-random-text-selector-1.0.2.tgz#2a25571929fdc2dd14aab6ddc9e0319bff3e4308"
+  integrity sha512-SfHVRM47xVuyIEzBF0vg7NTOsRbDPkx14mbDTVmEjBDrlhB/aXvrvonUg6E8VJWYjqrK/PjqrhGYiQTgPt37Ng==
+  dependencies:
+    axios "^1.3.5"
+
+"@readr-media/react-three-story-points@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-three-story-points/-/react-three-story-points-1.0.2.tgz#7a24cdc13cea2fda1ac83df1f610bdd943f0fef6"
+  integrity sha512-yHKNCAKuJ6S+ivIkAml25UUciL7/AzYEbQJl+n5AiiWd+Hvsfea7LJqK7rFVTkm+wHVgtN15MlGRdc3MEqa2HA==
   dependencies:
     gsap "^3.11.4"
     lodash "^4.17.21"
     react-intersection-observer "^9.3.5"
     three "^0.150.1"
     three-story-controls "^1.0.6"
+
+"@readr-media/text-selector@^1.1.1-beta.9":
+  version "1.1.1-beta.9"
+  resolved "https://registry.yarnpkg.com/@readr-media/text-selector/-/text-selector-1.1.1-beta.9.tgz#d889254f810a51d2dfe9abe400ea549896641b4f"
+  integrity sha512-rVmXhlZhrIzKekjF2/rqJwfw2XhtpFeJhddvISVZvaDsbMPV+ppuujp8xQtyyO1lkiBnsInZjCvZH2nR4SeyFA==
+  dependencies:
+    axios "^1.3.5"
 
 "@svgr/babel-plugin-add-jsx-attribute@^6.5.1":
   version "6.5.1"
@@ -1886,6 +1936,15 @@ axios@^0.27.2:
   dependencies:
     follow-redirects "^1.14.9"
     form-data "^4.0.0"
+
+axios@^1.3.5:
+  version "1.3.6"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.3.6.tgz#1ace9a9fb994314b5f6327960918406fa92c6646"
+  integrity sha512-PEcdkk7JcdPiMDkvM4K6ZBRYq9keuVJsToxm2zQIM70Qqo2WHTdJZMXcG9X+RmRp2VPNUQC8W1RAGbgt6b1yMg==
+  dependencies:
+    follow-redirects "^1.15.0"
+    form-data "^4.0.0"
+    proxy-from-env "^1.1.0"
 
 babel-eslint@^10.1.0:
   version "10.1.0"
@@ -3072,7 +3131,7 @@ flatted@^3.1.0:
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.2.7.tgz#609f39207cb614b89d0765b477cb2d437fbf9787"
   integrity sha512-5nqDSxl8nn5BSNxyR3n4I6eDmbolI6WT+QqR547RwxQapgjQBmtktdP+HTBb/a/zLsbzERTONyUB5pefh5TtjQ==
 
-follow-redirects@^1.0.0, follow-redirects@^1.14.9:
+follow-redirects@^1.0.0, follow-redirects@^1.14.9, follow-redirects@^1.15.0:
   version "1.15.2"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.2.tgz#b460864144ba63f2681096f274c4e57026da2c13"
   integrity sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==
@@ -3929,6 +3988,11 @@ make-dir@^3.0.2, make-dir@^3.1.0:
   dependencies:
     semver "^6.0.0"
 
+matter-js@^0.19.0:
+  version "0.19.0"
+  resolved "https://registry.yarnpkg.com/matter-js/-/matter-js-0.19.0.tgz#185e518146ae4fa20c33826ebc7e6e42685e3642"
+  integrity sha512-v2huwvQGOHTGOkMqtHd2hercCG3f6QAObTisPPHg8TZqq2lz7eIY/5i/5YUV8Ibf3mEioFEmwibcPUF2/fnKKQ==
+
 mdn-data@2.0.14:
   version "2.0.14"
   resolved "https://registry.yarnpkg.com/mdn-data/-/mdn-data-2.0.14.tgz#7113fc4281917d63ce29b43446f701e68c25ba50"
@@ -4400,6 +4464,11 @@ proxy-addr@~2.0.7:
     forwarded "0.2.0"
     ipaddr.js "1.9.1"
 
+proxy-from-env@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/proxy-from-env/-/proxy-from-env-1.1.0.tgz#e102f16ca355424865755d2c9e8ea4f24d58c3e2"
+  integrity sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==
+
 punycode@^2.1.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.3.0.tgz#f67fa67c94da8f4d0cfff981aee4118064199b8f"
@@ -4433,6 +4502,14 @@ raw-body@2.5.1:
     http-errors "2.0.0"
     iconv-lite "0.4.24"
     unpipe "1.0.0"
+
+react-dom@18.1.0:
+  version "18.1.0"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.1.0.tgz#7f6dd84b706408adde05e1df575b3a024d7e8a2f"
+  integrity sha512-fU1Txz7Budmvamp7bshe4Zi32d0ll7ect+ccxNu9FlObT605GOEB8BfO4tmRJ39R5Zj831VCpvQ05QPBW5yb+w==
+  dependencies:
+    loose-envify "^1.1.0"
+    scheduler "^0.22.0"
 
 react-dom@^18.1.0:
   version "18.2.0"
@@ -4678,6 +4755,13 @@ safe-regex-test@^1.0.0:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
+
+scheduler@^0.22.0:
+  version "0.22.0"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.22.0.tgz#83a5d63594edf074add9a7198b1bae76c3db01b8"
+  integrity sha512-6QAm1BgQI88NPYymgGQLCZgvep4FyePDWFpXVK+zNSUgHwlqpJy8VEh8Et0KxTACS4VWwMousBElAZOH9nkkoQ==
+  dependencies:
+    loose-envify "^1.1.0"
 
 scheduler@^0.23.0:
   version "0.23.0"
