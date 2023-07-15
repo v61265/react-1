@@ -14,7 +14,8 @@
     "packages/dual-slides",
     "packages/react-random-text-selector",
     "packages/dropping-text",
-    "packages/react-theatre"
+    "packages/react-theatre",
+    "packages/timeline"
   ],
   "scripts": {
     "prepare": "husky install"
