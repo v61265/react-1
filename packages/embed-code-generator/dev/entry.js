@@ -92,6 +92,11 @@ const pkgOptions = [
     name: 'Questionnaire',
     value: 'react-questionnaire',
   },
+  {
+    id: 'react-theatre',
+    name: 'Theatre',
+    value: 'react-theatre',
+  },
 ]
 
 const scriptUrlOptios = [
@@ -111,6 +116,10 @@ function Panel() {
   const [selectedPkg, setSelectedPkg] = useState('')
   const [selectedScriptUrl, setSelectedScriptUrl] = useState('')
   const mockData = mocks?.[selectedPkg] || {}
+
+  console.log('selectedPkg', selectedPkg)
+  console.log('mockData', mockData)
+  console.log('webpackAssets', webpackAssets)
 
   let embedCode = ''
   if (selectedPkg) {
