@@ -37,8 +37,16 @@ const StickyBackground = styled.div`
 `
 
 /**
- *  @param {Object} props
- *  @param {import('./background').Slide[]} props.slides
+ *  @typedef {import('./background').Slide} Slide
+ */
+
+/**
+ *  @typedef {Object} DualSlidesProps
+ *  @property {Slide[]} slides
+ */
+
+/**
+ *  @param {DualSlidesProps} props
  *  @returns {React.ReactElement}
  */
 export default function DualSlides({ slides }) {

@@ -11,7 +11,9 @@
     "packages/questionnaire",
     "packages/share-button",
     "packages/three-story-points",
-    "packages/dual-slides"
+    "packages/dual-slides",
+    "packages/react-random-text-selector",
+    "packages/dropping-text"
   ],
   "scripts": {
     "prepare": "husky install"

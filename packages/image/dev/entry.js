@@ -8,17 +8,17 @@ const root = createRoot(container)
 
 const mocks = [
   {
+    original:
+      'https://storage.googleapis.com/statics-readr-tw-dev/images/20200831111932-5f4cdcc42f0f930023f79ab1.png',
     w480:
-      'https://dev.readr.tw/assets/images/cl8slvqpc000710ysgvdm4vsd-tiny.png',
+      'https://storage.googleapis.com/statics-readr-tw-dev/images/20200831111932-5f4cdcc42f0f930023f79ab1-w480.png',
     w800:
-      'https://dev.readr.tw/assets/images/cl8slvqpc000710ysgvdm4vsd-mobile.png',
+      'https://storage.googleapis.com/statics-readr-tw-dev/images/20200831111932-5f4cdcc42f0f930023f79ab1-w800.png',
     w1200: '',
     w1600:
-      'https://dev.readr.tw/assets/images/cl8slvqpc000710ysgvdm4vsd-mobile.png',
+      'https://storage.googleapis.com/statics-readr-tw-dev/images/20200831111932-5f4cdcc42f0f930023f79ab1-w1600.png',
     w2400:
-      'https://dev.readr.tw/assets/images/cl8slvqpc000710ysgvdm4vsd-desktop.png',
-    original:
-      'https://dev.readr.tw/assets/images/cl8slvqpc000710ysgvdm4vsd.png',
+      'https://storage.googleapis.com/statics-readr-tw-dev/images/20200831111932-5f4cdcc42f0f930023f79ab1-w2400.png',
   },
 ]
 
@@ -42,9 +42,12 @@ root.render(
         height="100%"
         objectFit="cover"
         debugMode={true}
-        loadMode="manual"
-        loadResolution="w800"
         priority={false}
+        intersectionObserverOptions={{
+          root: null,
+          rootMargin: '0px',
+          threshold: 0.1,
+        }}
       ></Image>
     ))}
   </div>

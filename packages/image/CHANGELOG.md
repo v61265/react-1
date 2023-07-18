@@ -1,5 +1,19 @@
 # @readr-media/react-image Changelog
 
+
+## 2023-05-14, Version 1.6.0
+
+### Notable Changes
+- add param `intersectionObserverOptions` to control observers for lazy-loading image. 
+
+
+### Commits
+* \[[`b7bf2b7d15`](https://github.com/readr-media/react-image/commit/b7bf2b7d15)] - chore(image): bump version into 1.6.0 (DianYangFu)
+* \[[`4d163026bb`](https://github.com/readr-media/react-image/commit/4d163026bb)] - docs(image): update README.md (DianYangFu)
+* \[[`c2ea7e9333`](https://github.com/readr-media/react-image/commit/c2ea7e9333)] - refactor(image): update mock data (DianYangFu)
+* \[[`8e22f948c2`](https://github.com/readr-media/react-image/commit/8e22f948c2)] - feat(image): add param `intersectionObserverOptions` (DianYangFu)
+
+
 ## 2023-03-17, Version 1.5.1
 
 ### Notable Changes

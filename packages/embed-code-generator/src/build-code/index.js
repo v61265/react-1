@@ -1,4 +1,5 @@
 /* eslint no-console: 0 */
+import DroppingText from '@readr-media/react-dropping-text'
 import DualSlides from '@readr-media/react-dual-slides'
 import React from 'react' // eslint-disable-line
 import ReactDOMServer from 'react-dom/server'
@@ -12,12 +13,56 @@ import rlb from '@readr-media/react-live-blog'
 import map from 'lodash/map'
 import serialize from 'serialize-javascript'
 import Video from '@readr-media/react-full-screen-video'
+import RandomTextSelector from '@readr-media/react-random-text-selector'
 import { ServerStyleSheet } from 'styled-components'
 import { v4 as uuidv4 } from 'uuid'
 
 const _ = {
   get,
   map,
+}
+
+/**
+ *  @typedef {Object} WebpackAssets
+ *  @property {string[]} entrypoints - webpack bundles
+ *  @property {string} version - webpack bundles version
+ *
+ */
+
+/**
+ *  @param {import('@readr-media/react-dropping-text').DroppingTextProps} data
+ *  @param {WebpackAssets} webpackAssets
+ *  @returns string
+ */
+export function buildDroppingTextEmbedCode(data, webpackAssets) {
+  return buildEmbeddedCode('react-dropping-text', data, webpackAssets)
+}
+
+/**
+ *  @param {import('@readr-media/react-dual-slides').DualSlidesProps} data
+ *  @param {WebpackAssets} webpackAssets
+ *  @returns string
+ */
+export function buildDualSlidesEmbedCode(data, webpackAssets) {
+  return buildEmbeddedCode('react-dual-slides', data, webpackAssets)
+}
+
+/**
+ *  @param {import('@readr-media/react-three-story-points').ThreeStoryPointsProps} data
+ *  @param {WebpackAssets} webpackAssets
+ *  @returns string
+ */
+export function buildThreeStoryPointsEmbedCode(data, webpackAssets) {
+  return buildEmbeddedCode('react-three-story-points', data, webpackAssets)
+}
+
+/**
+ *  @param {import('@readr-media/react-karaoke').KaraokeProps} data
+ *  @param {WebpackAssets} webpackAssets
+ *  @returns string
+ */
+export function buildKaraokeEmbedCode(data, webpackAssets) {
+  return buildEmbeddedCode('react-karaoke', data, webpackAssets)
 }
 
 /**
@@ -28,10 +73,11 @@ const _ = {
  * 'react-election-widgets-seat-chart'|
  * 'react-election-widgets-votes-comparison'|
  * 'react-three-story-points' | 'react-full-screen-video' |
- * 'react-dual-slides')} pkgName
+ * 'react-dual-slides' | 'react-random-text-selector' | 'react-dropping-text')} pkgName
  * @param {Object} data - Data for react component
  * @param {Object} webpackAssets - webpack bundles and chunks
  * @param {string[]} webpackAssets.entrypoints - webpack bundles
+ * @param {string} webpackAssets.version - webpack bundles version
  * @returns {string} embedded code
  */
 export function buildEmbeddedCode(pkgName, data, webpackAssets) {
@@ -77,6 +123,12 @@ export function buildEmbeddedCode(pkgName, data, webpackAssets) {
     case 'react-three-story-points':
       skipServerSideRendering = true
       break
+    case 'react-random-text-selector':
+      Component = RandomTextSelector
+      break
+    case 'react-dropping-text':
+      Component = DroppingText
+      break
     default:
       throw new Error(`pkgName ${pkgName} is not supported`)
   }
@@ -107,7 +159,7 @@ export function buildEmbeddedCode(pkgName, data, webpackAssets) {
     <script>
       (function() {
         var namespace = '@readr-media';
-        var pkg = '${pkgName}';
+        var pkg = '${pkgName}@${webpackAssets.version}';
         if (typeof window != 'undefined') {
           if (!window.hasOwnProperty(namespace)) {
             window[namespace] = {};

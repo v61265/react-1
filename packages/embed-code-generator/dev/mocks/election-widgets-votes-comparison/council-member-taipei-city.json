@@ -1,0 +1,1929 @@
+{
+  "updatedAt": "2022-11-26 23:53:49",
+  "year": "2022",
+  "type": "councilMember",
+  "title": "縣市議員選舉(臺北市)",
+  "version": "v2",
+  "districts": [
+    {
+      "districtName": "01",
+      "type": "normal",
+      "candidates": [
+        {
+          "candNo": "1",
+          "name": {
+            "label": "林延鳳",
+            "href": "https://whoareyou.readr.tw/person/43298",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43298.jpg"
+          },
+          "party": {
+            "label": "民主進步黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 23427,
+          "tksRate": 8.51,
+          "candVictor": true
+        },
+        {
+          "candNo": "2",
+          "name": {
+            "label": "陳賢蔚",
+            "href": "https://whoareyou.readr.tw/person/38294",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38294.jpg"
+          },
+          "party": {
+            "label": "民主進步黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 16153,
+          "tksRate": 5.87,
+          "candVictor": true
+        },
+        {
+          "candNo": "3",
+          "name": {
+            "label": "李光輝",
+            "href": "https://whoareyou.readr.tw/person/13093",
+            "imgSrc": ""
+          },
+          "party": {
+            "label": "無黨籍",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 228,
+          "tksRate": 0.08,
+          "candVictor": false
+        },
+        {
+          "candNo": "4",
+          "name": {
+            "label": "林杏兒",
+            "href": "https://whoareyou.readr.tw/person/38307",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38307.jpg"
+          },
+          "party": {
+            "label": "中國國民黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 16369,
+          "tksRate": 5.95,
+          "candVictor": true
+        },
+        {
+          "candNo": "5",
+          "name": {
+            "label": "汪志冰",
+            "href": "https://whoareyou.readr.tw/person/36794",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/36794.jpg"
+          },
+          "party": {
+            "label": "中國國民黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 18450,
+          "tksRate": 6.7,
+          "candVictor": true
+        },
+        {
+          "candNo": "6",
+          "name": {
+            "label": "林世宗",
+            "href": "https://whoareyou.readr.tw/person/38305",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38305.jpg"
+          },
+          "party": {
+            "label": "民主進步黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 13971,
+          "tksRate": 5.08,
+          "candVictor": true
+        },
+        {
+          "candNo": "7",
+          "name": {
+            "label": "陳重文",
+            "href": "https://whoareyou.readr.tw/person/38303",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38303.jpg"
+          },
+          "party": {
+            "label": "中國國民黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 13606,
+          "tksRate": 4.94,
+          "candVictor": true
+        },
+        {
+          "candNo": "8",
+          "name": {
+            "label": "劉仕傑",
+            "href": "https://whoareyou.readr.tw/person/38295",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38295.jpg"
+          },
+          "party": {
+            "label": "時代力量",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 4636,
+          "tksRate": 1.68,
+          "candVictor": false
+        },
+        {
+          "candNo": "9",
+          "name": {
+            "label": "陳慈慧",
+            "href": "https://whoareyou.readr.tw/person/38306",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38306.jpg"
+          },
+          "party": {
+            "label": "民主進步黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 15611,
+          "tksRate": 5.67,
+          "candVictor": true
+        },
+        {
+          "candNo": "10",
+          "name": {
+            "label": "鍾佩玲",
+            "href": "https://whoareyou.readr.tw/person/38304",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38304.jpg"
+          },
+          "party": {
+            "label": "民主進步黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 18264,
+          "tksRate": 6.63,
+          "candVictor": true
+        },
+        {
+          "candNo": "11",
+          "name": {
+            "label": "侯漢廷",
+            "href": "https://whoareyou.readr.tw/person/38299",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38299.jpg"
+          },
+          "party": {
+            "label": "新黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 17253,
+          "tksRate": 6.27,
+          "candVictor": true
+        },
+        {
+          "candNo": "12",
+          "name": {
+            "label": "郝淑薏",
+            "href": "https://whoareyou.readr.tw/person/43303",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43303.jpg"
+          },
+          "party": {
+            "label": "無黨籍",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 175,
+          "tksRate": 0.06,
+          "candVictor": false
+        },
+        {
+          "candNo": "13",
+          "name": {
+            "label": "黃瀞瑩",
+            "href": "https://whoareyou.readr.tw/person/43301",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43301.jpg"
+          },
+          "party": {
+            "label": "台灣民眾黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 29270,
+          "tksRate": 10.63,
+          "candVictor": true
+        },
+        {
+          "candNo": "14",
+          "name": {
+            "label": "林瑞圖",
+            "href": "https://whoareyou.readr.tw/person/165",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/165.jpg"
+          },
+          "party": {
+            "label": "無黨籍",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 13150,
+          "tksRate": 4.78,
+          "candVictor": false
+        },
+        {
+          "candNo": "15",
+          "name": {
+            "label": "陳思宇",
+            "href": "https://whoareyou.readr.tw/person/43299",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43299.jpg"
+          },
+          "party": {
+            "label": "台灣民眾黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 11453,
+          "tksRate": 4.16,
+          "candVictor": false
+        },
+        {
+          "candNo": "16",
+          "name": {
+            "label": "張渝江",
+            "href": "https://whoareyou.readr.tw/person/36929",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/36929.jpg"
+          },
+          "party": {
+            "label": "無黨籍",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 393,
+          "tksRate": 0.14,
+          "candVictor": false
+        },
+        {
+          "candNo": "17",
+          "name": {
+            "label": "林志穎",
+            "href": "https://whoareyou.readr.tw/person/43297",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43297.jpg"
+          },
+          "party": {
+            "label": "無黨籍",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 473,
+          "tksRate": 0.17,
+          "candVictor": false
+        },
+        {
+          "candNo": "18",
+          "name": {
+            "label": "鄭穎隆",
+            "href": "https://whoareyou.readr.tw/person/43302",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43302.jpg"
+          },
+          "party": {
+            "label": "共和黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 67,
+          "tksRate": 0.02,
+          "candVictor": false
+        },
+        {
+          "candNo": "19",
+          "name": {
+            "label": "王郁揚",
+            "href": "https://whoareyou.readr.tw/person/36790",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/36790.jpg"
+          },
+          "party": {
+            "label": "金色力量黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 816,
+          "tksRate": 0.3,
+          "candVictor": false
+        },
+        {
+          "candNo": "20",
+          "name": {
+            "label": "張斯綱",
+            "href": "https://whoareyou.readr.tw/person/38302",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38302.jpg"
+          },
+          "party": {
+            "label": "中國國民黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 15683,
+          "tksRate": 5.7,
+          "candVictor": true
+        },
+        {
+          "candNo": "21",
+          "name": {
+            "label": "蘇府庭",
+            "href": "https://whoareyou.readr.tw/person/17691",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/17691.jpg"
+          },
+          "party": {
+            "label": "無黨籍",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 5559,
+          "tksRate": 2.02,
+          "candVictor": false
+        },
+        {
+          "candNo": "22",
+          "name": {
+            "label": "黃郁芬",
+            "href": "https://whoareyou.readr.tw/person/38300",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38300.jpg"
+          },
+          "party": {
+            "label": "無黨籍",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 12033,
+          "tksRate": 4.37,
+          "candVictor": false
+        },
+        {
+          "candNo": "23",
+          "name": {
+            "label": "楊靜宇",
+            "href": "https://whoareyou.readr.tw/person/38308",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38308.jpg"
+          },
+          "party": {
+            "label": "無黨籍",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 9884,
+          "tksRate": 3.59,
+          "candVictor": false
+        },
+        {
+          "candNo": "24",
+          "name": {
+            "label": "項豪",
+            "href": "https://whoareyou.readr.tw/person/43300",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43300.jpg"
+          },
+          "party": {
+            "label": "中國國家社會主義勞工黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 99,
+          "tksRate": 0.04,
+          "candVictor": false
+        },
+        {
+          "candNo": "25",
+          "name": {
+            "label": "陳政忠",
+            "href": "https://whoareyou.readr.tw/person/38301",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38301.jpg"
+          },
+          "party": {
+            "label": "無黨籍",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 18256,
+          "tksRate": 6.63,
+          "candVictor": true
+        }
+      ]
+    },
+    {
+      "districtName": "02",
+      "type": "normal",
+      "candidates": [
+        {
+          "candNo": "1",
+          "name": {
+            "label": "陳志明",
+            "href": "https://whoareyou.readr.tw/person/38500",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38500.jpg"
+          },
+          "party": {
+            "label": "時代力量",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 3548,
+          "tksRate": 1.72,
+          "candVictor": false
+        },
+        {
+          "candNo": "2",
+          "name": {
+            "label": "劉榮之",
+            "href": "https://whoareyou.readr.tw/person/16923",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/16923.jpg"
+          },
+          "party": {
+            "label": "新黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 238,
+          "tksRate": 0.12,
+          "candVictor": false
+        },
+        {
+          "candNo": "3",
+          "name": {
+            "label": "江志銘",
+            "href": "https://whoareyou.readr.tw/person/38318",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38318.jpg"
+          },
+          "party": {
+            "label": "民主進步黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 9767,
+          "tksRate": 4.74,
+          "candVictor": false
+        },
+        {
+          "candNo": "4",
+          "name": {
+            "label": "李明賢",
+            "href": "https://whoareyou.readr.tw/person/38312",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38312.jpg"
+          },
+          "party": {
+            "label": "中國國民黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 20657,
+          "tksRate": 10.02,
+          "candVictor": true
+        },
+        {
+          "candNo": "5",
+          "name": {
+            "label": "吳世正",
+            "href": "https://whoareyou.readr.tw/person/38316",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38316.jpg"
+          },
+          "party": {
+            "label": "中國國民黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 11576,
+          "tksRate": 5.62,
+          "candVictor": true
+        },
+        {
+          "candNo": "6",
+          "name": {
+            "label": "王孝維",
+            "href": "https://whoareyou.readr.tw/person/38310",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38310.jpg"
+          },
+          "party": {
+            "label": "民主進步黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 13872,
+          "tksRate": 6.73,
+          "candVictor": true
+        },
+        {
+          "candNo": "7",
+          "name": {
+            "label": "陳宥丞",
+            "href": "https://whoareyou.readr.tw/person/43305",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43305.jpg"
+          },
+          "party": {
+            "label": "台灣民眾黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 25899,
+          "tksRate": 12.57,
+          "candVictor": true
+        },
+        {
+          "candNo": "8",
+          "name": {
+            "label": "何孟樺",
+            "href": "https://whoareyou.readr.tw/person/43304",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43304.jpg"
+          },
+          "party": {
+            "label": "民主進步黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 19340,
+          "tksRate": 9.38,
+          "candVictor": true
+        },
+        {
+          "candNo": "9",
+          "name": {
+            "label": "吳欣岱",
+            "href": "https://whoareyou.readr.tw/person/43306",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43306.jpg"
+          },
+          "party": {
+            "label": "台灣基進",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 10186,
+          "tksRate": 4.94,
+          "candVictor": false
+        },
+        {
+          "candNo": "10",
+          "name": {
+            "label": "李建昌",
+            "href": "https://whoareyou.readr.tw/person/37196",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/37196.jpg"
+          },
+          "party": {
+            "label": "民主進步黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 12103,
+          "tksRate": 5.87,
+          "candVictor": true
+        },
+        {
+          "candNo": "11",
+          "name": {
+            "label": "闕枚莎",
+            "href": "https://whoareyou.readr.tw/person/38309",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38309.jpg"
+          },
+          "party": {
+            "label": "中國國民黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 18684,
+          "tksRate": 9.06,
+          "candVictor": true
+        },
+        {
+          "candNo": "12",
+          "name": {
+            "label": "游淑慧",
+            "href": "https://whoareyou.readr.tw/person/38313",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38313.jpg"
+          },
+          "party": {
+            "label": "中國國民黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 22577,
+          "tksRate": 10.95,
+          "candVictor": true
+        },
+        {
+          "candNo": "13",
+          "name": {
+            "label": "李彥秀",
+            "href": "https://whoareyou.readr.tw/person/454",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/454.jpg"
+          },
+          "party": {
+            "label": "中國國民黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 37669,
+          "tksRate": 18.28,
+          "candVictor": true
+        }
+      ]
+    },
+    {
+      "districtName": "03",
+      "type": "normal",
+      "candidates": [
+        {
+          "candNo": "1",
+          "name": {
+            "label": "郭榮先",
+            "href": "https://whoareyou.readr.tw/person/43311",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43311.jpg"
+          },
+          "party": {
+            "label": "新黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 604,
+          "tksRate": 0.28,
+          "candVictor": false
+        },
+        {
+          "candNo": "2",
+          "name": {
+            "label": "張文潔",
+            "href": "https://whoareyou.readr.tw/person/43309",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43309.jpg"
+          },
+          "party": {
+            "label": "民主進步黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 21011,
+          "tksRate": 9.83,
+          "candVictor": true
+        },
+        {
+          "candNo": "3",
+          "name": {
+            "label": "許家蓓",
+            "href": "https://whoareyou.readr.tw/person/38334",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38334.jpg"
+          },
+          "party": {
+            "label": "民主進步黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 17618,
+          "tksRate": 8.24,
+          "candVictor": true
+        },
+        {
+          "candNo": "4",
+          "name": {
+            "label": "吳蕚洋",
+            "href": "https://whoareyou.readr.tw/person/38253",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38253.jpg"
+          },
+          "party": {
+            "label": "無黨籍",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 1479,
+          "tksRate": 0.69,
+          "candVictor": false
+        },
+        {
+          "candNo": "5",
+          "name": {
+            "label": "林柏勛",
+            "href": "https://whoareyou.readr.tw/person/38335",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38335.jpg"
+          },
+          "party": {
+            "label": "時代力量",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 1955,
+          "tksRate": 0.91,
+          "candVictor": false
+        },
+        {
+          "candNo": "6",
+          "name": {
+            "label": "楊寶楨",
+            "href": "https://whoareyou.readr.tw/person/43308",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43308.jpg"
+          },
+          "party": {
+            "label": "台灣民眾黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 12158,
+          "tksRate": 5.69,
+          "candVictor": false
+        },
+        {
+          "candNo": "7",
+          "name": {
+            "label": "洪士奇",
+            "href": "https://whoareyou.readr.tw/person/38337",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38337.jpg"
+          },
+          "party": {
+            "label": "無黨籍",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 3272,
+          "tksRate": 1.53,
+          "candVictor": false
+        },
+        {
+          "candNo": "8",
+          "name": {
+            "label": "秦慧珠",
+            "href": "https://whoareyou.readr.tw/person/171",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/171.jpg"
+          },
+          "party": {
+            "label": "中國國民黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 17103,
+          "tksRate": 8.0,
+          "candVictor": true
+        },
+        {
+          "candNo": "9",
+          "name": {
+            "label": "詹為元",
+            "href": "https://whoareyou.readr.tw/person/43307",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43307.jpg"
+          },
+          "party": {
+            "label": "中國國民黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 19273,
+          "tksRate": 9.01,
+          "candVictor": true
+        },
+        {
+          "candNo": "10",
+          "name": {
+            "label": "高毓安",
+            "href": "https://whoareyou.readr.tw/person/43310",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43310.jpg"
+          },
+          "party": {
+            "label": "無黨籍",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 161,
+          "tksRate": 0.08,
+          "candVictor": false
+        },
+        {
+          "candNo": "11",
+          "name": {
+            "label": "徐巧芯",
+            "href": "https://whoareyou.readr.tw/person/38329",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38329.jpg"
+          },
+          "party": {
+            "label": "中國國民黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 27205,
+          "tksRate": 12.72,
+          "candVictor": true
+        },
+        {
+          "candNo": "12",
+          "name": {
+            "label": "戴錫欽",
+            "href": "https://whoareyou.readr.tw/person/38332",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38332.jpg"
+          },
+          "party": {
+            "label": "中國國民黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 15944,
+          "tksRate": 7.46,
+          "candVictor": true
+        },
+        {
+          "candNo": "13",
+          "name": {
+            "label": "許淑華",
+            "href": "https://whoareyou.readr.tw/person/36823",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/36823.jpg"
+          },
+          "party": {
+            "label": "民主進步黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 20539,
+          "tksRate": 9.61,
+          "candVictor": true
+        },
+        {
+          "candNo": "14",
+          "name": {
+            "label": "王鴻薇",
+            "href": "https://whoareyou.readr.tw/person/38333",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38333.jpg"
+          },
+          "party": {
+            "label": "中國國民黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 25727,
+          "tksRate": 12.03,
+          "candVictor": true
+        },
+        {
+          "candNo": "15",
+          "name": {
+            "label": "吳崢",
+            "href": "https://whoareyou.readr.tw/person/38328",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38328.jpg"
+          },
+          "party": {
+            "label": "無黨籍",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 14686,
+          "tksRate": 6.87,
+          "candVictor": false
+        },
+        {
+          "candNo": "16",
+          "name": {
+            "label": "洪健益",
+            "href": "https://whoareyou.readr.tw/person/38326",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38326.jpg"
+          },
+          "party": {
+            "label": "民主進步黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 15082,
+          "tksRate": 7.05,
+          "candVictor": true
+        }
+      ]
+    },
+    {
+      "districtName": "04",
+      "type": "normal",
+      "candidates": [
+        {
+          "candNo": "1",
+          "name": {
+            "label": "陳怡君",
+            "href": "https://whoareyou.readr.tw/person/38345",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38345.jpg"
+          },
+          "party": {
+            "label": "民主進步黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 15782,
+          "tksRate": 8.79,
+          "candVictor": true
+        },
+        {
+          "candNo": "2",
+          "name": {
+            "label": "高世俊",
+            "href": "https://whoareyou.readr.tw/person/20365",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/20365.jpg"
+          },
+          "party": {
+            "label": "中國國民黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 3082,
+          "tksRate": 1.72,
+          "candVictor": false
+        },
+        {
+          "candNo": "3",
+          "name": {
+            "label": "林婕麗",
+            "href": "https://whoareyou.readr.tw/person/38342",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38342.jpg"
+          },
+          "party": {
+            "label": "新黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 3137,
+          "tksRate": 1.75,
+          "candVictor": false
+        },
+        {
+          "candNo": "4",
+          "name": {
+            "label": "林亮君",
+            "href": "https://whoareyou.readr.tw/person/38344",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38344.jpg"
+          },
+          "party": {
+            "label": "無黨籍",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 13817,
+          "tksRate": 7.7,
+          "candVictor": true
+        },
+        {
+          "candNo": "5",
+          "name": {
+            "label": "陳炳甫",
+            "href": "https://whoareyou.readr.tw/person/38353",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38353.jpg"
+          },
+          "party": {
+            "label": "中國國民黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 23934,
+          "tksRate": 13.33,
+          "candVictor": true
+        },
+        {
+          "candNo": "6",
+          "name": {
+            "label": "王世堅",
+            "href": "https://whoareyou.readr.tw/person/316",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/316.jpg"
+          },
+          "party": {
+            "label": "民主進步黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 29796,
+          "tksRate": 16.6,
+          "candVictor": true
+        },
+        {
+          "candNo": "7",
+          "name": {
+            "label": "連紹傑",
+            "href": "https://whoareyou.readr.tw/person/43314",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43314.jpg"
+          },
+          "party": {
+            "label": "小民參政歐巴桑聯盟",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 1469,
+          "tksRate": 0.82,
+          "candVictor": false
+        },
+        {
+          "candNo": "8",
+          "name": {
+            "label": "柳采葳",
+            "href": "https://whoareyou.readr.tw/person/43312",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43312.jpg"
+          },
+          "party": {
+            "label": "中國國民黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 18372,
+          "tksRate": 10.23,
+          "candVictor": true
+        },
+        {
+          "candNo": "9",
+          "name": {
+            "label": "葉林傳",
+            "href": "https://whoareyou.readr.tw/person/38347",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38347.jpg"
+          },
+          "party": {
+            "label": "中國國民黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 17076,
+          "tksRate": 9.51,
+          "candVictor": true
+        },
+        {
+          "candNo": "10",
+          "name": {
+            "label": "顏若芳",
+            "href": "https://whoareyou.readr.tw/person/38350",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38350.jpg"
+          },
+          "party": {
+            "label": "民主進步黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 22718,
+          "tksRate": 12.65,
+          "candVictor": true
+        },
+        {
+          "candNo": "11",
+          "name": {
+            "label": "徐千淳",
+            "href": "https://whoareyou.readr.tw/person/43315",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43315.jpg"
+          },
+          "party": {
+            "label": "時代力量",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 637,
+          "tksRate": 0.35,
+          "candVictor": false
+        },
+        {
+          "candNo": "12",
+          "name": {
+            "label": "梁文傑",
+            "href": "https://whoareyou.readr.tw/person/38341",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38341.jpg"
+          },
+          "party": {
+            "label": "民主進步黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 12919,
+          "tksRate": 7.2,
+          "candVictor": false
+        },
+        {
+          "candNo": "13",
+          "name": {
+            "label": "林珍羽",
+            "href": "https://whoareyou.readr.tw/person/43313",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43313.jpg"
+          },
+          "party": {
+            "label": "台灣民眾黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 16787,
+          "tksRate": 9.35,
+          "candVictor": true
+        }
+      ]
+    },
+    {
+      "districtName": "05",
+      "type": "normal",
+      "candidates": [
+        {
+          "candNo": "1",
+          "name": {
+            "label": "劉耀仁",
+            "href": "https://whoareyou.readr.tw/person/38364",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38364.jpg"
+          },
+          "party": {
+            "label": "民主進步黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 14518,
+          "tksRate": 8.51,
+          "candVictor": true
+        },
+        {
+          "candNo": "2",
+          "name": {
+            "label": "郭智亭",
+            "href": "https://whoareyou.readr.tw/person/43317",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43317.jpg"
+          },
+          "party": {
+            "label": "無黨籍",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 319,
+          "tksRate": 0.19,
+          "candVictor": false
+        },
+        {
+          "candNo": "3",
+          "name": {
+            "label": "鍾小平",
+            "href": "https://whoareyou.readr.tw/person/38365",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38365.jpg"
+          },
+          "party": {
+            "label": "中國國民黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 15422,
+          "tksRate": 9.04,
+          "candVictor": true
+        },
+        {
+          "candNo": "4",
+          "name": {
+            "label": "吳沛憶",
+            "href": "https://whoareyou.readr.tw/person/38357",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38357.jpg"
+          },
+          "party": {
+            "label": "民主進步黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 17034,
+          "tksRate": 9.98,
+          "candVictor": true
+        },
+        {
+          "candNo": "5",
+          "name": {
+            "label": "徐立信",
+            "href": "https://whoareyou.readr.tw/person/36807",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/36807.jpg"
+          },
+          "party": {
+            "label": "無黨籍",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 15747,
+          "tksRate": 9.23,
+          "candVictor": true
+        },
+        {
+          "candNo": "6",
+          "name": {
+            "label": "吳志剛",
+            "href": "https://whoareyou.readr.tw/person/38362",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38362.jpg"
+          },
+          "party": {
+            "label": "中國國民黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 16022,
+          "tksRate": 9.39,
+          "candVictor": true
+        },
+        {
+          "candNo": "7",
+          "name": {
+            "label": "曾琳詒",
+            "href": "https://whoareyou.readr.tw/person/43316",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43316.jpg"
+          },
+          "party": {
+            "label": "台灣動物保護黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 1277,
+          "tksRate": 0.75,
+          "candVictor": false
+        },
+        {
+          "candNo": "8",
+          "name": {
+            "label": "吳怡萱",
+            "href": "https://whoareyou.readr.tw/person/43319",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43319.jpg"
+          },
+          "party": {
+            "label": "台灣民眾黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 13368,
+          "tksRate": 7.83,
+          "candVictor": false
+        },
+        {
+          "candNo": "9",
+          "name": {
+            "label": "邵維倫",
+            "href": "https://whoareyou.readr.tw/person/43318",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43318.jpg"
+          },
+          "party": {
+            "label": "民主進步黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 12451,
+          "tksRate": 7.3,
+          "candVictor": false
+        },
+        {
+          "candNo": "10",
+          "name": {
+            "label": "李有宜",
+            "href": "https://whoareyou.readr.tw/person/43321",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43321.jpg"
+          },
+          "party": {
+            "label": "無黨籍",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 4864,
+          "tksRate": 2.85,
+          "candVictor": false
+        },
+        {
+          "candNo": "11",
+          "name": {
+            "label": "張榮法",
+            "href": "https://whoareyou.readr.tw/person/38355",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38355.jpg"
+          },
+          "party": {
+            "label": "新黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 2802,
+          "tksRate": 1.64,
+          "candVictor": false
+        },
+        {
+          "candNo": "12",
+          "name": {
+            "label": "應曉薇",
+            "href": "https://whoareyou.readr.tw/person/38363",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38363.jpg"
+          },
+          "party": {
+            "label": "中國國民黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 19440,
+          "tksRate": 11.39,
+          "candVictor": true
+        },
+        {
+          "candNo": "13",
+          "name": {
+            "label": "李菁琪",
+            "href": "https://whoareyou.readr.tw/person/43322",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43322.jpg"
+          },
+          "party": {
+            "label": "綠黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 1704,
+          "tksRate": 1.0,
+          "candVictor": false
+        },
+        {
+          "candNo": "14",
+          "name": {
+            "label": "王麒傑",
+            "href": "https://whoareyou.readr.tw/person/43324",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43324.jpg"
+          },
+          "party": {
+            "label": "無黨籍",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 195,
+          "tksRate": 0.11,
+          "candVictor": false
+        },
+        {
+          "candNo": "15",
+          "name": {
+            "label": "陳樹霖",
+            "href": "https://whoareyou.readr.tw/person/37967",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/37967.jpg"
+          },
+          "party": {
+            "label": "無黨籍",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 71,
+          "tksRate": 0.04,
+          "candVictor": false
+        },
+        {
+          "candNo": "16",
+          "name": {
+            "label": "郭昭巖",
+            "href": "https://whoareyou.readr.tw/person/38368",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38368.jpg"
+          },
+          "party": {
+            "label": "中國國民黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 19228,
+          "tksRate": 11.27,
+          "candVictor": true
+        },
+        {
+          "candNo": "17",
+          "name": {
+            "label": "洪婉臻",
+            "href": "https://whoareyou.readr.tw/person/43320",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43320.jpg"
+          },
+          "party": {
+            "label": "民主進步黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 16096,
+          "tksRate": 9.43,
+          "candVictor": true
+        },
+        {
+          "candNo": "18",
+          "name": {
+            "label": "呂增塔",
+            "href": "https://whoareyou.readr.tw/person/43325",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43325.jpg"
+          },
+          "party": {
+            "label": "無黨籍",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 106,
+          "tksRate": 0.06,
+          "candVictor": false
+        }
+      ]
+    },
+    {
+      "districtName": "06",
+      "type": "normal",
+      "candidates": [
+        {
+          "candNo": "1",
+          "name": {
+            "label": "張幸松",
+            "href": "https://whoareyou.readr.tw/person/36832",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/36832.jpg"
+          },
+          "party": {
+            "label": "台灣民眾黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 3883,
+          "tksRate": 1.36,
+          "candVictor": false
+        },
+        {
+          "candNo": "2",
+          "name": {
+            "label": "張四維",
+            "href": "https://whoareyou.readr.tw/person/43328",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43328.jpg"
+          },
+          "party": {
+            "label": "無黨籍",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 316,
+          "tksRate": 0.11,
+          "candVictor": false
+        },
+        {
+          "candNo": "3",
+          "name": {
+            "label": "林泓泰",
+            "href": "https://whoareyou.readr.tw/person/43331",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43331.jpg"
+          },
+          "party": {
+            "label": "時代力量",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 991,
+          "tksRate": 0.35,
+          "candVictor": false
+        },
+        {
+          "candNo": "4",
+          "name": {
+            "label": "曾獻瑩",
+            "href": "https://whoareyou.readr.tw/person/37069",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/37069.jpg"
+          },
+          "party": {
+            "label": "無黨籍",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 21888,
+          "tksRate": 7.68,
+          "candVictor": true
+        },
+        {
+          "candNo": "5",
+          "name": {
+            "label": "王閔生",
+            "href": "https://whoareyou.readr.tw/person/38373",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38373.jpg"
+          },
+          "party": {
+            "label": "民主進步黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 11811,
+          "tksRate": 4.14,
+          "candVictor": true
+        },
+        {
+          "candNo": "6",
+          "name": {
+            "label": "華珮君",
+            "href": "https://whoareyou.readr.tw/person/36826",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/36826.jpg"
+          },
+          "party": {
+            "label": "台灣動物保護黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 3203,
+          "tksRate": 1.12,
+          "candVictor": false
+        },
+        {
+          "candNo": "7",
+          "name": {
+            "label": "鄭淑娟",
+            "href": "https://whoareyou.readr.tw/person/43332",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43332.jpg"
+          },
+          "party": {
+            "label": "無黨籍",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 392,
+          "tksRate": 0.14,
+          "candVictor": false
+        },
+        {
+          "candNo": "8",
+          "name": {
+            "label": "詹晉鑒",
+            "href": "https://whoareyou.readr.tw/person/17426",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/17426.jpg"
+          },
+          "party": {
+            "label": "民主進步黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 9074,
+          "tksRate": 3.18,
+          "candVictor": false
+        },
+        {
+          "candNo": "9",
+          "name": {
+            "label": "高揚凱",
+            "href": "https://whoareyou.readr.tw/person/43330",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43330.jpg"
+          },
+          "party": {
+            "label": "中國國民黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 9081,
+          "tksRate": 3.19,
+          "candVictor": false
+        },
+        {
+          "candNo": "10",
+          "name": {
+            "label": "李柏毅",
+            "href": "https://whoareyou.readr.tw/person/38371",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38371.jpg"
+          },
+          "party": {
+            "label": "中國國民黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 30325,
+          "tksRate": 10.64,
+          "candVictor": true
+        },
+        {
+          "candNo": "11",
+          "name": {
+            "label": "蘇恆",
+            "href": "https://whoareyou.readr.tw/person/38338",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38338.jpg"
+          },
+          "party": {
+            "label": "無黨籍",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 4332,
+          "tksRate": 1.52,
+          "candVictor": false
+        },
+        {
+          "candNo": "12",
+          "name": {
+            "label": "林岳龍",
+            "href": "https://whoareyou.readr.tw/person/43333",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43333.jpg"
+          },
+          "party": {
+            "label": "新黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 3433,
+          "tksRate": 1.2,
+          "candVictor": false
+        },
+        {
+          "candNo": "13",
+          "name": {
+            "label": "趙怡翔",
+            "href": "https://whoareyou.readr.tw/person/43327",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43327.jpg"
+          },
+          "party": {
+            "label": "民主進步黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 17489,
+          "tksRate": 6.13,
+          "candVictor": true
+        },
+        {
+          "candNo": "14",
+          "name": {
+            "label": "張志豪",
+            "href": "https://whoareyou.readr.tw/person/43110",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43110.jpg"
+          },
+          "party": {
+            "label": "台灣民眾黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 10693,
+          "tksRate": 3.75,
+          "candVictor": true
+        },
+        {
+          "candNo": "15",
+          "name": {
+            "label": "鍾沛君",
+            "href": "https://whoareyou.readr.tw/person/38384",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38384.jpg"
+          },
+          "party": {
+            "label": "中國國民黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 15074,
+          "tksRate": 5.29,
+          "candVictor": true
+        },
+        {
+          "candNo": "16",
+          "name": {
+            "label": "徐正文",
+            "href": "https://whoareyou.readr.tw/person/43335",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43335.jpg"
+          },
+          "party": {
+            "label": "無黨籍",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 866,
+          "tksRate": 0.3,
+          "candVictor": false
+        },
+        {
+          "candNo": "17",
+          "name": {
+            "label": "徐弘庭",
+            "href": "https://whoareyou.readr.tw/person/38375",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38375.jpg"
+          },
+          "party": {
+            "label": "中國國民黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 19340,
+          "tksRate": 6.78,
+          "candVictor": true
+        },
+        {
+          "candNo": "18",
+          "name": {
+            "label": "王欣儀",
+            "href": "https://whoareyou.readr.tw/person/38370",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38370.jpg"
+          },
+          "party": {
+            "label": "中國國民黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 18253,
+          "tksRate": 6.4,
+          "candVictor": true
+        },
+        {
+          "candNo": "19",
+          "name": {
+            "label": "苗博雅",
+            "href": "https://whoareyou.readr.tw/person/37078",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/37078.jpg"
+          },
+          "party": {
+            "label": "社會民主黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 28417,
+          "tksRate": 9.97,
+          "candVictor": true
+        },
+        {
+          "candNo": "20",
+          "name": {
+            "label": "陳錦祥",
+            "href": "https://whoareyou.readr.tw/person/38385",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38385.jpg"
+          },
+          "party": {
+            "label": "中國國民黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 14309,
+          "tksRate": 5.02,
+          "candVictor": true
+        },
+        {
+          "candNo": "21",
+          "name": {
+            "label": "林穎孟",
+            "href": "https://whoareyou.readr.tw/person/38379",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38379.jpg"
+          },
+          "party": {
+            "label": "無黨籍",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 4630,
+          "tksRate": 1.62,
+          "candVictor": false
+        },
+        {
+          "candNo": "22",
+          "name": {
+            "label": "簡舒培",
+            "href": "https://whoareyou.readr.tw/person/38372",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38372.jpg"
+          },
+          "party": {
+            "label": "民主進步黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 20742,
+          "tksRate": 7.28,
+          "candVictor": true
+        },
+        {
+          "candNo": "23",
+          "name": {
+            "label": "林元敏",
+            "href": "https://whoareyou.readr.tw/person/43334",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43334.jpg"
+          },
+          "party": {
+            "label": "無黨籍",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 2221,
+          "tksRate": 0.78,
+          "candVictor": false
+        },
+        {
+          "candNo": "24",
+          "name": {
+            "label": "鄭建炘",
+            "href": "https://whoareyou.readr.tw/person/27656",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/27656.jpg"
+          },
+          "party": {
+            "label": "臺灣人民共產黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 165,
+          "tksRate": 0.06,
+          "candVictor": false
+        },
+        {
+          "candNo": "25",
+          "name": {
+            "label": "耿葳",
+            "href": "https://whoareyou.readr.tw/person/38378",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38378.jpg"
+          },
+          "party": {
+            "label": "中國國民黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 11603,
+          "tksRate": 4.07,
+          "candVictor": true
+        },
+        {
+          "candNo": "26",
+          "name": {
+            "label": "楊植斗",
+            "href": "https://whoareyou.readr.tw/person/43326",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43326.jpg"
+          },
+          "party": {
+            "label": "中國國民黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 13797,
+          "tksRate": 4.84,
+          "candVictor": true
+        },
+        {
+          "candNo": "27",
+          "name": {
+            "label": "陳聖文",
+            "href": "https://whoareyou.readr.tw/person/43329",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43329.jpg"
+          },
+          "party": {
+            "label": "民主進步黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 8774,
+          "tksRate": 3.08,
+          "candVictor": false
+        }
+      ]
+    },
+    {
+      "districtName": "07",
+      "type": "plainIndigenous",
+      "candidates": [
+        {
+          "candNo": "1",
+          "name": {
+            "label": "吳郁瑾 Sawmah Kawlo",
+            "href": "https://whoareyou.readr.tw/person/43336",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/43336.jpg"
+          },
+          "party": {
+            "label": "民主進步黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 1114,
+          "tksRate": 29.72,
+          "candVictor": false
+        },
+        {
+          "candNo": "2",
+          "name": {
+            "label": "李芳儒",
+            "href": "https://whoareyou.readr.tw/person/38279",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38279.jpg"
+          },
+          "party": {
+            "label": "中國國民黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 2634,
+          "tksRate": 70.28,
+          "candVictor": true
+        }
+      ]
+    },
+    {
+      "districtName": "08",
+      "type": "mountainIndigenous",
+      "candidates": [
+        {
+          "candNo": "1",
+          "name": {
+            "label": "李傅中武",
+            "href": "https://whoareyou.readr.tw/person/38800",
+            "imgSrc": "https://whoareyou-gcs.readr.tw/person/38800.jpg"
+          },
+          "party": {
+            "label": "中國國民黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 2100,
+          "tksRate": 73.97,
+          "candVictor": true
+        },
+        {
+          "candNo": "2",
+          "name": {
+            "label": "陳慧君 Mulas・Ismahasan",
+            "href": "https://whoareyou.readr.tw/person/43337",
+            "imgSrc": ""
+          },
+          "party": {
+            "label": "民主進步黨",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 590,
+          "tksRate": 20.78,
+          "candVictor": false
+        },
+        {
+          "candNo": "3",
+          "name": {
+            "label": "高為人 Sayun Watan",
+            "href": "https://whoareyou.readr.tw/person/43338",
+            "imgSrc": ""
+          },
+          "party": {
+            "label": "無黨籍",
+            "href": "",
+            "imgSrc": ""
+          },
+          "tks": 149,
+          "tksRate": 5.25,
+          "candVictor": false
+        }
+      ]
+    }
+  ]
+}

@@ -83,14 +83,18 @@ function useMuted(initialValue = false) {
 }
 
 /**
- *  @param {Object} opts
- *  @param {import('./typedef').KaraokeStyles} [opts.styles]
- *  @param {string[]} opts.audioUrls,
- *  @param {string} [opts.className]
- *  @param {string} [opts.preload='auto'] - 'auto', 'none' or 'metadata'. `preload` attribute of `audio` tag.
- *  @param {string[]} opts.textArr - quote text
- *  @param {string} [opts.imgSrc]
- *  @param {boolean} [opts.muteHint=false] - if true, there is another full page to hint how to mute/unmute audio.
+ *  @typedef {Object} KaraokeProps
+ *  @property {import('./typedef').KaraokeStyles} [styles]
+ *  @property {string[]} audioUrls,
+ *  @property {string} [className]
+ *  @property {string} [preload='auto'] - 'auto', 'none' or 'metadata'. `preload` attribute of `audio` tag.
+ *  @property {string[]} textArr - quote text
+ *  @property {string} [imgSrc]
+ *  @property {boolean} [muteHint=false] - if true, there is another full page to hint how to mute/unmute audio.
+ */
+
+/**
+ *  @param {KaraokeProps} props
  */
 export default function Karaoke({
   audioUrls,
