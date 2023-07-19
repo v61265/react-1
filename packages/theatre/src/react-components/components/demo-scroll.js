@@ -1,4 +1,5 @@
 import { val, getProject } from '@theatre/core'
+import { v4 as uuidv4 } from 'uuid'
 import { useState, useEffect, useRef } from 'react' // eslint-disable-line
 import styled from '../../styled-components.js'
 import Stage from '../components/stage.js'
@@ -24,8 +25,19 @@ const StageWrapper = styled.div`
 
 const defaultScrollScale = 1500
 
-export default function DemoScroll({ state = {}, elements = [] }) {
-  const project = getProject('Project', { state })
+export default function DemoScroll({ animateJson = {}, objectJson = [] }) {
+  /**
+   * Since projectName in Theatre.getProject(projectName) must have between 3 and 32 characters.
+   * Here only take the first 10 characters
+   * And when the content is less than 3 characters, add 0 to it.
+   */
+  const [PROJECT_ID] = useState(() =>
+    uuidv4()
+      .slice(0, 10)
+      .padEnd(3, '0')
+  )
+
+  const project = getProject(`${PROJECT_ID}`, { state: animateJson })
   const sheet = project.sheet('Scene', 'default')
   project.ready.then(() => sheet.sequence.pause())
 
@@ -65,11 +77,11 @@ export default function DemoScroll({ state = {}, elements = [] }) {
   // ------------------------------
 
   useEffect(() => {
-    if (elements.length > 0) {
-      renderFontObject(elements, sheet)
-      renderImageObject(elements, sheet)
+    if (objectJson.length > 0) {
+      renderFontObject(objectJson, sheet)
+      renderImageObject(objectJson, sheet)
     }
-  }, [elements])
+  }, [objectJson])
 
   return (
     <ViewBox
@@ -77,7 +89,7 @@ export default function DemoScroll({ state = {}, elements = [] }) {
       style={{ height: `${sequenceLength * defaultScrollScale}px` }}
     >
       <StageWrapper ref={stageRef}>
-        <Stage elements={elements} />
+        <Stage objectJson={objectJson} />
       </StageWrapper>
     </ViewBox>
   )
