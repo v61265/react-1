@@ -117,10 +117,6 @@ function Panel() {
   const [selectedScriptUrl, setSelectedScriptUrl] = useState('')
   const mockData = mocks?.[selectedPkg] || {}
 
-  console.log('selectedPkg', selectedPkg)
-  console.log('mockData', mockData)
-  console.log('webpackAssets', webpackAssets)
-
   let embedCode = ''
   if (selectedPkg) {
     if (selectedScriptUrl === 'localhost') {
