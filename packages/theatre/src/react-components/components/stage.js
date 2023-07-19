@@ -22,8 +22,8 @@ const ImageElement = styled.div`
   background-image: url(${(props) => props.url});
 `
 
-export default function Stage({ elements = [] }) {
-  const fontElements = elements
+export default function Stage({ objectJson = [] }) {
+  const fontElements = objectJson
     .filter((data) => data.type === 'FONT')
     .map((data, index) => {
       return (
@@ -33,7 +33,7 @@ export default function Stage({ elements = [] }) {
       )
     })
 
-  const imageElements = elements
+  const imageElements = objectJson
     .filter((data) => data.type === 'IMAGE')
     .map((data, index) => {
       return <ImageElement key={index} id={data.id} url={data.url} />

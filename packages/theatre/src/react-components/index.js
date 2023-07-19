@@ -3,30 +3,30 @@ import Video from './components/demo-video.js'
 import Scroll from './components/demo-scroll.js'
 
 /**
- *  @typedef {Object} VisualAnimation
- *  @property {Array} elements
- *  @property {Object} state
- *  @property {'scroll' | 'video'} type
+ *  @typedef {Object} Theatre
+ *  @property {Array} objectJson
+ *  @property {Object} animateJson
+ *  @property {'scroll' | 'video'} [type]
  */
 /**
- *  @param {VisualAnimation} props
+ *  @param {Theatre} props
  */
 export default function Theatre({
-  state = {},
-  elements = [],
+  objectJson = [],
+  animateJson = {},
   type = 'scroll',
 }) {
   let component = null
 
   switch (type) {
     case 'scroll':
-      component = <Scroll elements={elements} state={state} />
+      component = <Scroll objectJson={objectJson} animateJson={animateJson} />
       break
     case 'video':
-      component = <Video elements={elements} state={state} />
+      component = <Video objectJson={objectJson} animateJson={animateJson} />
       break
     default:
-      component = <Scroll elements={elements} state={state} />
+      component = <Scroll objectJson={objectJson} animateJson={animateJson} />
       break
   }
 
