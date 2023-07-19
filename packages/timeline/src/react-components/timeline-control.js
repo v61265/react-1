@@ -1,14 +1,38 @@
 import styled from 'styled-components'
-import { Minus, Plus } from './icons'
+import icons from './icons'
 
 const LevelControl = styled.div`
-  position: fixed;
   left: 14px;
-  bottom: 20px;
   width: 36px;
   height: 84px;
   display: flex;
   flex-direction: column;
+  ${({ stickyStrategy }) => {
+    switch (stickyStrategy) {
+      case 'fixed':
+        return `
+            position: fixed;
+            bottom: 20px;
+
+          `
+      case 'absolute-top':
+        return `
+            position: absolute;
+            top: 440px;
+            bottom: unset;
+          `
+
+      case 'absolute-bottom':
+      default:
+        return `
+          position: absolute;
+          bottom: 20px;
+
+        `
+    }
+  }}
+  
+  }}
 `
 
 const LevelControlTopButton = styled.button`
@@ -29,28 +53,35 @@ const LevelControlBottomButton = styled.button`
   z-index: 100;
 `
 
-export default function TimelineControl({ maxLevel, level, updateLevel }) {
+export default function TimelineControl({
+  maxLevel,
+  level,
+  updateLevel,
+  stickyStrategy,
+}) {
   return (
     <>
-      <LevelControl>
-        {level !== 1 && (
-          <LevelControlTopButton
-            onClick={() => {
-              updateLevel(level - 1)
-            }}
-          >
-            <Plus />
-          </LevelControlTopButton>
-        )}
-        {level < maxLevel && (
-          <LevelControlBottomButton
-            onClick={() => {
-              updateLevel(level + 1)
-            }}
-          >
-            <Minus />
-          </LevelControlBottomButton>
-        )}
+      <LevelControl stickyStrategy={stickyStrategy}>
+        <LevelControlTopButton
+          onClick={() => {
+            if (level === 1) {
+              return
+            }
+            updateLevel(level - 1)
+          }}
+        >
+          <icons.Plus />
+        </LevelControlTopButton>
+        <LevelControlBottomButton
+          onClick={() => {
+            if (level === maxLevel) {
+              return
+            }
+            updateLevel(level + 1)
+          }}
+        >
+          <icons.Minus />
+        </LevelControlBottomButton>
       </LevelControl>
     </>
   )

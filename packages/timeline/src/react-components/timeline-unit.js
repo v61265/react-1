@@ -81,6 +81,7 @@ export default function TimelineUnit({
   bubbleSizeLevel,
   date,
   onBubbleClick,
+  onSingleTimelineNodeSelect,
 }) {
   const isSingleEvent = eventsCount === 1
 
@@ -93,7 +94,7 @@ export default function TimelineUnit({
       </LeftPanel>
       <TimelineWrapper>
         {isSingleEvent ? (
-          <SingleTimelineNode />
+          <SingleTimelineNode onClick={onSingleTimelineNodeSelect} />
         ) : (
           <TimelineNode bubbleSize={bubbleSize} onClick={onBubbleClick}>
             {eventsCount}

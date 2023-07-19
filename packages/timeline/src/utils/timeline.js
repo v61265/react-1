@@ -77,6 +77,11 @@ export function transformLiveblogToTimeline(liveblog) {
     return
   }
 
+  const tagsSet = liveblog.liveblog_items.reduce((tagsSet, item) => {
+    item.tags.forEach((tag) => tagsSet.add(tag.name))
+    return tagsSet
+  }, new Set())
+
   return {
     id: liveblog.id,
     active: liveblog.active,
@@ -87,10 +92,17 @@ export function transformLiveblogToTimeline(liveblog) {
     maxMeasures: liveblog.maxMeasures,
     slug: liveblog.slug,
     sort: liveblog.sort,
-    tags: liveblog.tags,
+    tags: Array.from(tagsSet),
     updatedAt: liveblog.updatedAt,
     timelineEvents: liveblog.liveblog_items,
   }
+}
+
+export function getSortedTimelineFromLiveblog(liveblog) {
+  const timeline = transformLiveblogToTimeline(liveblog)
+  const isAsc = timeline.sort === 'asc' // default to 'desc'
+  timeline.timelineEvents = sortTimelineEvents(timeline.timelineEvents, isAsc)
+  return timeline
 }
 
 function getLevelFromMeasure(measures) {
@@ -119,7 +131,7 @@ export function getMeasureFromLevel(level) {
     case 1:
       return 'event'
     default:
-      return 4
+      return 'year'
   }
 }
 
@@ -141,7 +153,16 @@ function getTimelineKeys(timestamp) {
   return { yearKey, monthKey, dayKey, eventKey }
 }
 
-function generateTimeUnitEvents(events) {
+export function sortTimelineEvents(events, isAsc) {
+  return events.sort((eventA, eventB) => {
+    const d1 = new Date(eventA.publishTime)
+    const d2 = new Date(eventB.publishTime)
+    return isAsc ? d1 - d2 : d2 - d1
+  })
+}
+
+export function generateTimelineData(timeline, filterTags) {
+  const events = timeline.timelineEvents
   const yearEvents = {}
   let yearKeys = new Set()
   const monthEvents = {}
@@ -150,7 +171,17 @@ function generateTimeUnitEvents(events) {
   let dayKeys = new Set()
   let eventKeys = []
 
-  events.forEach((event) => {
+  for (let event of events) {
+    const isFilterOut = event.tags.reduce((isFilterOut, tag) => {
+      if (isFilterOut) {
+        return isFilterOut
+      } else {
+        return filterTags.includes(tag.name)
+      }
+    }, false)
+    if (isFilterOut) {
+      continue
+    }
     const { yearKey, monthKey, dayKey, eventKey } = getTimelineKeys(
       event.publishTime
     )
@@ -173,7 +204,7 @@ function generateTimeUnitEvents(events) {
     }
     dayKeys.add(dayKey)
     eventKeys.push(eventKey)
-  })
+  }
 
   yearKeys = Array.from(yearKeys)
   monthKeys = Array.from(monthKeys)
@@ -207,21 +238,6 @@ function generateTimeUnitEvents(events) {
     },
     timeMax: { year: yearMax, month: monthMax, day: dayMax, event: 0 },
   }
-}
-
-export function sortTimelineEvents(events, isAsc) {
-  return events.sort((eventA, eventB) => {
-    const d1 = new Date(eventA.publishTime)
-    const d2 = new Date(eventB.publishTime)
-    return isAsc ? d1 - d2 : d2 - d1
-  })
-}
-
-export function generateTimelineData(timeline) {
-  const isAsc = (timeline.sort = 'asc') // default to 'desc'
-  const events = sortTimelineEvents(timeline.timelineEvents, isAsc)
-  const { timeEvents, timeKeys, timeMax } = generateTimeUnitEvents(events)
-  return { timeEvents, timeKeys, timeMax }
 }
 
 export function generateTimeLevel(timeline) {
