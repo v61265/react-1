@@ -1,5 +1,5 @@
 export default {
-  state: {
+  animateJson: {
     sheetsById: {
       Scene: {
         staticOverrides: {
@@ -154,6 +154,6 @@ export default {
     definitionVersion: '0.4.0',
     revisionHistory: ['eoQYCiPyGkiGLjQw'],
   },
-  elements: [{ id: 'test01', content: 'test01', type: 'FONT' }],
-  type: 'video',
+  objectJson: [{ id: 'test01', content: 'test01', type: 'FONT' }],
+  type: 'scroll',
 }
