@@ -162,7 +162,7 @@ const animateJson = {
   definitionVersion: '0.4.0',
 }
 
-const elementJson = [
+const objectJson = [
   {
     id: 'test01',
     type: 'FONT',
@@ -171,5 +171,5 @@ const elementJson = [
 ]
 
 root.render(
-  <Theatre state={animateJson} elements={elementJson} type="scroll" />
+  <Theatre animateJson={animateJson} objectJson={objectJson} type="scroll" />
 )
