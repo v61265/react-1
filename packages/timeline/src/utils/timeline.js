@@ -143,7 +143,7 @@ function getTimelineKeys(timestamp) {
   let day = '' + d.getDate()
   day = day.length < 2 ? '0' + day : day
   let hour = '' + d.getHours()
-  hour = day.length < 2 ? '0' + hour : hour
+  hour = hour.length < 2 ? '0' + hour : hour
   let minute = '' + d.getMinutes()
   minute = minute.length < 2 ? '0' + minute : minute
   const yearKey = year
@@ -155,6 +155,9 @@ function getTimelineKeys(timestamp) {
 
 export function sortTimelineEvents(events, isAsc) {
   return events.sort((eventA, eventB) => {
+    if (eventA.publishTime === eventB.publishTime) {
+      return isAsc ? eventA.id - eventB.id : eventB - eventA
+    }
     const d1 = new Date(eventA.publishTime)
     const d2 = new Date(eventB.publishTime)
     return isAsc ? d1 - d2 : d2 - d1
@@ -162,16 +165,17 @@ export function sortTimelineEvents(events, isAsc) {
 }
 
 export function generateTimelineData(timeline, filterTags) {
-  const events = timeline.timelineEvents
+  const timelineEvents = timeline.timelineEvents
   const yearEvents = {}
   let yearKeys = new Set()
   const monthEvents = {}
   let monthKeys = new Set()
   const dayEvents = {}
   let dayKeys = new Set()
-  let eventKeys = []
+  const events = {}
+  let eventKeys = new Set()
 
-  for (let event of events) {
+  for (let event of timelineEvents) {
     const isFilterOut = event.tags.reduce((isFilterOut, tag) => {
       if (isFilterOut) {
         return isFilterOut
@@ -203,12 +207,23 @@ export function generateTimelineData(timeline, filterTags) {
       dayEvents[dayKey] = [event]
     }
     dayKeys.add(dayKey)
-    eventKeys.push(eventKey)
+    let uniqueEventKey = eventKey.padEnd(15, '0')
+    // since some events have same timestamp, add three digits to create unique key
+    while (true) {
+      if (events[uniqueEventKey]) {
+        uniqueEventKey = (parseInt(uniqueEventKey) + 1).toString()
+      } else {
+        events[uniqueEventKey] = event
+        break
+      }
+    }
+    eventKeys.add(uniqueEventKey)
   }
 
   yearKeys = Array.from(yearKeys)
   monthKeys = Array.from(monthKeys)
   dayKeys = Array.from(dayKeys)
+  eventKeys = Array.from(eventKeys)
 
   const yearMax = yearKeys.reduce((max, yearkey) => {
     const events = yearEvents[yearkey]

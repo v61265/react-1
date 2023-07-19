@@ -10,7 +10,7 @@ import {
 import TimelineControl from './timeline-control'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import TimelineEventPanel from './timeline-event-panel'
-import TimelineEventList from './timeline-event-list'
+import TimelineEvent from './timeline-event'
 
 const GlobalStyles = createGlobalStyle`
   * {
@@ -50,6 +50,15 @@ const Wrapper = styled.div`
   position: relative;
   width: 320px;
   margin: 0 auto;
+`
+
+const TimelineWrapper = styled.div`
+  ${({ eventMode }) => eventMode && `padding: 0 36px 12px;`}
+`
+
+const EventWrapper = styled.div`
+  margin-top: 12px;
+  border: 2px solid #000;
 `
 
 function getBubbleLevel(max, count) {
@@ -103,27 +112,29 @@ export default function Timeline({
   }
 
   useEffect(() => {
-    const timelineLength = timeUnitKeys?.length
     const onScroll = () => {
       /** @type {HTMLDivElement} */
       const containerDiv = containerRef.current
       const containerTop = containerDiv.getBoundingClientRect().top
-      const cellHeight = 140
-      function getIndexOfTheTopMostItem(top, itemHeight) {
+
+      function getIndexOfTheTopMostItemV2(top, parentDom) {
         if (top >= 0) {
           return 0
-        } else if (top + timelineLength * itemHeight < 0) {
-          // timeline fully below the viewport
-          return timelineLength - 1
         } else {
-          let index = 0
-          while (top + (index + 1) * itemHeight < 0) {
-            index++
+          let topSum = top
+          for (let i = 0; i < parentDom.children.length; i++) {
+            let node = parentDom.children[i]
+            topSum += node.getBoundingClientRect().height
+            if (topSum >= 0) {
+              return i
+            }
+            if (i === parentDom.children.length - 1) {
+              return parentDom.children.length - 1
+            }
           }
-          return index
         }
       }
-      const index = getIndexOfTheTopMostItem(containerTop, cellHeight)
+      const index = getIndexOfTheTopMostItemV2(containerTop, containerDiv)
       setFocusIndex(index)
     }
     window.addEventListener('scroll', onScroll)
@@ -187,37 +198,43 @@ export default function Timeline({
       : null
 
   let timelineJsx =
-    measure !== 'event' ? (
-      timeUnitKeys.map((timeUnitKey, index) => {
-        const events = timeUnitEvents[timeUnitKey]
-        return (
-          <TimelineUnit
-            eventsCount={events.length}
-            bubbleSizeLevel={getBubbleLevel(timeUnitMax, events.length)}
-            date={timeUnitKey}
-            key={timeUnitKey}
-            onBubbleClick={() => {
-              updateLevel(level - 1, index)
-            }}
-            containerRef={containerRef}
-            onSingleTimelineNodeSelect={() => {
-              setFocusIndex(index)
-            }}
-          />
-        )
-      })
-    ) : (
-      <TimelineEventList
-        events={timeUnitEvents}
-        fetchImageBaseUrl={fetchImageBaseUrl}
-      />
-    )
+    measure !== 'event'
+      ? timeUnitKeys.map((timeUnitKey, index) => {
+          const events = timeUnitEvents[timeUnitKey]
+          return (
+            <TimelineUnit
+              eventsCount={events.length}
+              bubbleSizeLevel={getBubbleLevel(timeUnitMax, events.length)}
+              date={timeUnitKey}
+              key={timeUnitKey}
+              onBubbleClick={() => {
+                updateLevel(level - 1, index)
+              }}
+              onSingleTimelineNodeSelect={() => {
+                setFocusIndex(index)
+              }}
+            />
+          )
+        })
+      : timeUnitKeys.map((timeUnitKey) => {
+          const event = timeUnitEvents[timeUnitKey]
+          return (
+            <EventWrapper key={timeUnitKey} id={`node-${timeUnitKey}`}>
+              <TimelineEvent
+                event={event}
+                fetchImageBaseUrl={fetchImageBaseUrl}
+              />
+            </EventWrapper>
+          )
+        })
 
   return (
-    <Wrapper ref={containerRef}>
+    <Wrapper>
       <div id="top" ref={topRef} />
       <GlobalStyles />
-      {timelineJsx}
+      <TimelineWrapper ref={containerRef} eventMode={measure === 'event'}>
+        {timelineJsx}
+      </TimelineWrapper>
       <TimelineControl
         maxLevel={maxLevel}
         level={level}
