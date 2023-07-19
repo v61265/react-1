@@ -92,6 +92,11 @@ const pkgOptions = [
     name: 'Questionnaire',
     value: 'react-questionnaire',
   },
+  {
+    id: 'react-theatre',
+    name: 'Theatre',
+    value: 'react-theatre',
+  },
 ]
 
 const scriptUrlOptios = [

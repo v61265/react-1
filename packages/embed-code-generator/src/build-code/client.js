@@ -132,3 +132,11 @@ if (window?.[namespace][`react-dropping-text${pkgVersion}`]) {
     hydrate(namespace, `react-dropping-text${pkgVersion}`, DroppingText)
   })
 }
+
+if (window?.[namespace][`react-theatre${pkgVersion}`]) {
+  import(
+    /* webpackChunkName: "react-theatre" */ '@readr-media/react-theatre'
+  ).then(({ default: Theatre }) => {
+    hydrate(namespace, `react-theatre${pkgVersion}`, Theatre)
+  })
+}
