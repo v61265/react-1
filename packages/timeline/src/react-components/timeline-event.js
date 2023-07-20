@@ -59,7 +59,11 @@ const TimeEvent = styled.div`
   overflow: hidden;
 `
 
-export default function TimelineEvent({ event, fetchImageBaseUrl }) {
+export default function TimelineEvent({
+  event,
+  fetchImageBaseUrl,
+  timeUnitKey,
+}) {
   const [showAsLightbox, setShowAsLightbox] = useState(false)
   const wrapperRef = useRef()
 
@@ -78,7 +82,7 @@ export default function TimelineEvent({ event, fetchImageBaseUrl }) {
       <TimelineEventWrapper showAsLightbox={showAsLightbox}>
         <TimeEventWrapper id="TimeEventWrapper">
           <TimeEvent>
-            <TimelineEventHeader event={event} />
+            <TimelineEventHeader event={event} timeUnitKey={timeUnitKey} />
             <TimelineEventContent
               event={event}
               fetchImageBaseUrl={fetchImageBaseUrl}

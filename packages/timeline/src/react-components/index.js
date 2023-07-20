@@ -1,7 +1,7 @@
 import styled, { createGlobalStyle } from 'styled-components'
 import TimelineUnit from './timeline-unit'
 import {
-  calcNextLevelIndex,
+  calcNextLevelUnitKey,
   generateTimeLevel,
   generateTimelineData,
   getMeasureFromLevel,
@@ -11,6 +11,7 @@ import TimelineControl from './timeline-control'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import TimelineEventPanel from './timeline-event-panel'
 import TimelineEvent from './timeline-event'
+import { TagsContext, initialTags } from './useTags'
 
 const GlobalStyles = createGlobalStyle`
   * {
@@ -73,13 +74,13 @@ export default function Timeline({
   const timeline = useMemo(() => getSortedTimelineFromLiveblog(liveblog), [
     liveblog,
   ])
-  const [filterTags] = useState([])
+  const [tags, setTags] = useState(initialTags)
   const [stickyStrategy, setStickStrategy] = useState('absolute-top')
-  const [focusIndex, setFocusIndex] = useState(0)
+  const [focusUnitKey, setFocusUnitKey] = useState(0)
 
   const { timeEvents, timeKeys, timeMax } = useMemo(
-    () => generateTimelineData(timeline, filterTags),
-    [timeline]
+    () => generateTimelineData(timeline, tags),
+    [timeline, tags]
   )
   const { initialLevel, maxLevel } = useMemo(
     () => generateTimeLevel(timeline),
@@ -93,21 +94,21 @@ export default function Timeline({
   /** @type {React.RefObject<HTMLDivElement>} */
   const containerRef = useRef(null)
 
-  const isLevelChangedRef = useRef(false)
+  const shouldScroIntoView = useRef(false)
   /** @type {React.RefObject<HTMLDivElement>} */
   const topRef = useRef(null)
   /** @type {React.RefObject<HTMLDivElement>} */
   const bottomRef = useRef(null)
 
-  const updateLevel = (newLevel, spFocusIndex) => {
-    const oldFocusIndex = spFocusIndex || focusIndex
-    const newFocusIndex = calcNextLevelIndex(
-      timeUnitKeys[oldFocusIndex],
+  const updateLevel = (newLevel, spFocusUnitKey) => {
+    const oldFocusUnitKey = spFocusUnitKey || focusUnitKey
+    const newFocusUnitKey = calcNextLevelUnitKey(
+      oldFocusUnitKey,
       timeKeys[getMeasureFromLevel(newLevel)],
       level - newLevel > 0
     )
-    isLevelChangedRef.current = true
-    setFocusIndex(newFocusIndex)
+    shouldScroIntoView.current = true
+    setFocusUnitKey(newFocusUnitKey)
     setLevel(newLevel)
   }
 
@@ -135,7 +136,9 @@ export default function Timeline({
         }
       }
       const index = getIndexOfTheTopMostItemV2(containerTop, containerDiv)
-      setFocusIndex(index)
+      const focusNode = containerDiv.children[index]
+      const focusUnitKey = focusNode.id.split('-')[1]
+      setFocusUnitKey(focusUnitKey)
     }
     window.addEventListener('scroll', onScroll)
 
@@ -145,10 +148,9 @@ export default function Timeline({
   }, [timeUnitKeys])
 
   useEffect(() => {
-    if (containerRef.current && isLevelChangedRef.current) {
-      const focusTimeUnitKey = timeUnitKeys[focusIndex]
+    if (containerRef.current && shouldScroIntoView.current) {
       const focusTimelineUnitEle = containerRef.current.querySelector(
-        `#node-${focusTimeUnitKey}`
+        `#node-${focusUnitKey}`
       )
       if (focusTimelineUnitEle) {
         // add 1 px to prevent focusIndex count on scroll mistaken
@@ -157,9 +159,9 @@ export default function Timeline({
           window.scrollY + focusTimelineUnitEle.getBoundingClientRect().top + 1
         )
       }
-      isLevelChangedRef.current = false
+      shouldScroIntoView.current = false
     }
-  }, [level, timeUnitKeys, focusIndex])
+  }, [level, timeUnitKeys, focusUnitKey])
 
   useEffect(() => {
     if (topRef.current && bottomRef.current) {
@@ -192,14 +194,22 @@ export default function Timeline({
     }
   }, [])
 
+  const addTag = (newTag, timeUnitKey) => {
+    if (!tags.includes(newTag.name)) {
+      setTags((oldTags) => oldTags.concat(newTag.name))
+      setFocusUnitKey(timeUnitKey)
+      shouldScroIntoView.current = true
+    }
+  }
+
   const focusEvent =
-    timeUnitEvents[timeUnitKeys[focusIndex]]?.length === 1
-      ? timeUnitEvents[timeUnitKeys[focusIndex]][0]
+    timeUnitEvents[focusUnitKey]?.length === 1
+      ? timeUnitEvents[focusUnitKey][0]
       : null
 
   let timelineJsx =
     measure !== 'event'
-      ? timeUnitKeys.map((timeUnitKey, index) => {
+      ? timeUnitKeys.map((timeUnitKey) => {
           const events = timeUnitEvents[timeUnitKey]
           return (
             <TimelineUnit
@@ -208,10 +218,10 @@ export default function Timeline({
               date={timeUnitKey}
               key={timeUnitKey}
               onBubbleClick={() => {
-                updateLevel(level - 1, index)
+                updateLevel(level - 1, timeUnitKey)
               }}
               onSingleTimelineNodeSelect={() => {
-                setFocusIndex(index)
+                setFocusUnitKey(timeUnitKey)
               }}
             />
           )
@@ -223,32 +233,36 @@ export default function Timeline({
               <TimelineEvent
                 event={event}
                 fetchImageBaseUrl={fetchImageBaseUrl}
+                timeUnitKey={timeUnitKey}
               />
             </EventWrapper>
           )
         })
 
   return (
-    <Wrapper>
-      <div id="top" ref={topRef} />
-      <GlobalStyles />
-      <TimelineWrapper ref={containerRef} eventMode={measure === 'event'}>
-        {timelineJsx}
-      </TimelineWrapper>
-      <TimelineControl
-        maxLevel={maxLevel}
-        level={level}
-        updateLevel={updateLevel}
-        stickyStrategy={stickyStrategy}
-      />
-      {measure !== 'event' && (
-        <TimelineEventPanel
-          event={focusEvent}
-          fetchImageBaseUrl={fetchImageBaseUrl}
+    <TagsContext.Provider value={{ tags, addTag }}>
+      <Wrapper>
+        <div id="top" ref={topRef} />
+        <GlobalStyles />
+        <TimelineWrapper ref={containerRef} eventMode={measure === 'event'}>
+          {timelineJsx}
+        </TimelineWrapper>
+        <TimelineControl
+          maxLevel={maxLevel}
+          level={level}
+          updateLevel={updateLevel}
           stickyStrategy={stickyStrategy}
         />
-      )}
-      <div id="bottom" ref={bottomRef} />
-    </Wrapper>
+        {measure !== 'event' && (
+          <TimelineEventPanel
+            event={focusEvent}
+            fetchImageBaseUrl={fetchImageBaseUrl}
+            stickyStrategy={stickyStrategy}
+            timeUnitKey={focusUnitKey}
+          />
+        )}
+        <div id="bottom" ref={bottomRef} />
+      </Wrapper>
+    </TagsContext.Provider>
   )
 }

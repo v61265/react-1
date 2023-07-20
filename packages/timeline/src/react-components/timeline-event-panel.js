@@ -38,9 +38,14 @@ export default function TimelineEventPanel({
   event,
   fetchImageBaseUrl,
   stickyStrategy,
+  timeUnitKey,
 }) {
   const panelContentJsx = !!event ? (
-    <TimelineEvent event={event} fetchImageBaseUrl={fetchImageBaseUrl} />
+    <TimelineEvent
+      event={event}
+      fetchImageBaseUrl={fetchImageBaseUrl}
+      timeUnitKey={timeUnitKey}
+    />
   ) : (
     <span
       style={{

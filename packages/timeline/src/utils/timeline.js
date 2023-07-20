@@ -176,14 +176,20 @@ export function generateTimelineData(timeline, filterTags) {
   let eventKeys = new Set()
 
   for (let event of timelineEvents) {
-    const isFilterOut = event.tags.reduce((isFilterOut, tag) => {
-      if (isFilterOut) {
-        return isFilterOut
-      } else {
-        return filterTags.includes(tag.name)
-      }
-    }, false)
-    if (isFilterOut) {
+    let skip = false
+    if (filterTags.length !== 0 && event.tags.length === 0) {
+      skip = true
+    } else if (filterTags.length !== 0) {
+      // conditionally skip
+      skip = event.tags.reduce((isFilterOut, tag) => {
+        if (isFilterOut) {
+          return isFilterOut
+        } else {
+          return !filterTags.includes(tag.name)
+        }
+      }, false)
+    }
+    if (skip) {
       continue
     }
     const { yearKey, monthKey, dayKey, eventKey } = getTimelineKeys(
@@ -262,20 +268,20 @@ export function generateTimeLevel(timeline) {
   return { initialLevel, maxLevel }
 }
 
-export function calcNextLevelIndex(oldTimeUnitKey, newTimeUnitKeys, zoomIn) {
-  let index = 0
+export function calcNextLevelUnitKey(oldTimeUnitKey, newTimeUnitKeys, zoomIn) {
+  let newUnitKey
   if (zoomIn) {
     // handle narrow down level change ex: 2023 -> 202301
-    index = newTimeUnitKeys.findIndex((newTimeUnitKey) =>
-      newTimeUnitKey.startsWith(oldTimeUnitKey)
+    newUnitKey = newTimeUnitKeys.find((timeUnitKey) =>
+      timeUnitKey.startsWith(oldTimeUnitKey)
     )
   } else {
     // handle scale up level change ex: 202301 -> 2023
     const newTimeUnitKeyLength = newTimeUnitKeys[0].length
-    index = newTimeUnitKeys.findIndex(
-      (newTimeUnitKey) =>
-        newTimeUnitKey === oldTimeUnitKey.slice(0, newTimeUnitKeyLength)
+    newUnitKey = newTimeUnitKeys.find(
+      (timeUnitKey) =>
+        timeUnitKey === oldTimeUnitKey.slice(0, newTimeUnitKeyLength)
     )
   }
-  return index
+  return newUnitKey
 }
