@@ -166,11 +166,11 @@ export function sortTimelineEvents(events, isAsc) {
 
 export function generateTimelineData(timeline, filterTags) {
   const timelineEvents = timeline.timelineEvents
-  const yearEvents = {}
+  const yearEvents = { empty: [] }
   let yearKeys = new Set()
-  const monthEvents = {}
+  const monthEvents = { empty: [] }
   let monthKeys = new Set()
-  const dayEvents = {}
+  const dayEvents = { empty: [] }
   let dayKeys = new Set()
   const events = {}
   let eventKeys = new Set()
@@ -232,8 +232,8 @@ export function generateTimelineData(timeline, filterTags) {
   dayKeys = Array.from(dayKeys)
   eventKeys = Array.from(eventKeys)
 
-  const yearMax = yearKeys.reduce((max, yearkey) => {
-    const events = yearEvents[yearkey]
+  const yearMax = yearKeys.reduce((max, yearKey) => {
+    const events = yearEvents[yearKey]
     return events.length > max ? events.length : max
   }, 0)
   const monthMax = monthKeys.reduce((max, monthKey) => {
@@ -244,6 +244,81 @@ export function generateTimelineData(timeline, filterTags) {
     const events = dayEvents[dayKey]
     return events.length > max ? events.length : max
   }, 0)
+
+  yearKeys = yearKeys.reduce((newYearKeys, yearKey) => {
+    if (newYearKeys.length === 0) {
+      newYearKeys.push(yearKey)
+    } else {
+      const preYearKey = newYearKeys[newYearKeys.length - 1]
+      const year = yearKey.slice(0, 4)
+      // const month = yearKey.slice(4)
+      const d = new Date(year)
+      const preYear = preYearKey.slice(0, 4)
+      // const preMonth = previousYearKey.slice(4)
+      const preD = new Date(preYear)
+      d.setFullYear(d.getFullYear() - 1)
+      if (d.getFullYear() !== preD.getFullYear()) {
+        console.log(
+          `newYearKey ${yearKey} not continue to preYearKey ${preYearKey}`
+        )
+        newYearKeys.push('empty')
+      }
+      newYearKeys.push(yearKey)
+    }
+    return newYearKeys
+  }, [])
+  monthKeys = monthKeys.reduce((newMonthKeys, monthKey) => {
+    if (newMonthKeys.length === 0) {
+      newMonthKeys.push(monthKey)
+    } else {
+      const preMonthKey = newMonthKeys[newMonthKeys.length - 1]
+      const year = monthKey.slice(0, 4)
+      const month = monthKey.slice(4)
+      const d = new Date(year, month - 1)
+      const preYear = preMonthKey.slice(0, 4)
+      const preMonth = preMonthKey.slice(4)
+      const preD = new Date(preYear, preMonth - 1)
+      d.setMonth(d.getMonth() - 1)
+      if (
+        d.getFullYear() + '' + (d.getMonth() + 1) !==
+        preD.getFullYear() + '' + (preD.getMonth() + 1)
+      ) {
+        console.log(
+          `newMonthKey ${monthKey} not continue to preMonthKey ${preMonthKey}`
+        )
+        newMonthKeys.push('empty')
+      }
+      newMonthKeys.push(monthKey)
+    }
+    return newMonthKeys
+  }, [])
+  dayKeys = dayKeys.reduce((newDayKeys, dayKey) => {
+    if (newDayKeys.length === 0) {
+      newDayKeys.push(dayKey)
+    } else {
+      const preDayKey = newDayKeys[newDayKeys.length - 1]
+      const year = dayKey.slice(0, 4)
+      const month = dayKey.slice(4, 6)
+      const day = dayKey.slice(6)
+      const d = new Date(year, month - 1, day)
+      const preYear = preDayKey.slice(0, 4)
+      const preMonth = preDayKey.slice(4, 6)
+      const preDay = preDayKey.slice(6)
+      const preD = new Date(preYear, preMonth - 1, preDay)
+      d.setDate(d.getDate() - 1)
+      if (
+        '' + d.getFullYear() + (d.getMonth() + 1) + d.getDate() !==
+        '' + preD.getFullYear() + (preD.getMonth() + 1) + preD.getDate()
+      ) {
+        console.log(
+          `newDayKey ${dayKey} not continue to preDayKey ${preDayKey}`
+        )
+        newDayKeys.push('empty')
+      }
+      newDayKeys.push(dayKey)
+    }
+    return newDayKeys
+  }, [])
 
   return {
     timeEvents: {

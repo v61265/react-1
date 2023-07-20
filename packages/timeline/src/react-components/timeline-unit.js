@@ -5,12 +5,11 @@ const Wrapper = styled.div`
   height: ${({ height }) => (height ? `${height}px` : '100px')};
   width: 320px;
   margin: 0 auto;
-  // border: 1px solid black;
+  background-color: #efefef;
 `
 const LeftPanel = styled.div`
   position: relative;
   width: 94px;
-  background-color: #efefef;
 `
 const DateLabel = styled.label`
   display: block;
@@ -22,7 +21,6 @@ const DateLabel = styled.label`
 
 const RightPanel = styled.div`
   width: 223px;
-  background-color: #efefef;
 `
 
 const TimelineWrapper = styled.div`
@@ -83,8 +81,10 @@ export default function TimelineUnit({
   onBubbleClick,
   onSingleTimelineNodeSelect,
 }) {
+  if (date === 'empty') {
+    return <TimelineUnitEmpty timelineNodeHeight={timelineNodeHeight} />
+  }
   const isSingleEvent = eventsCount === 1
-
   const bubbleSize = bubbleSizeLevels[bubbleSizeLevel]
 
   return (
@@ -101,6 +101,48 @@ export default function TimelineUnit({
           </TimelineNode>
         )}
       </TimelineWrapper>
+      <RightPanel />
+    </Wrapper>
+  )
+}
+
+const DashLine = styled.div`
+  position: relative;
+  width: 3px;
+  --s: 14px; /* control the space between dashes */
+  background: radial-gradient(circle closest-side, #000 98%, #0000) 0 0/100%
+      var(--s),
+    linear-gradient(transparent 13px, #000 15px) 0 calc(var(--s) / 2) / 100%
+      calc(2 * var(--s));
+`
+const Top = styled.div`
+  width: 15px;
+  position: absolute;
+  top: 0;
+  left: calc(50% - 15px / 2);
+  height: 3px;
+  background: #000;
+  border-radius: 3px;
+`
+
+const Bottom = styled.div`
+  width: 15px;
+  position: absolute;
+  bottom: 0;
+  left: calc(50% - 15px / 2);
+  height: 3px;
+  background: #000;
+  border-radius: 3px;
+`
+
+function TimelineUnitEmpty({ timelineNodeHeight }) {
+  return (
+    <Wrapper height={timelineNodeHeight}>
+      <LeftPanel />
+      <DashLine>
+        <Top />
+        <Bottom />
+      </DashLine>
       <RightPanel />
     </Wrapper>
   )

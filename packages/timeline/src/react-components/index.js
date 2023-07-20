@@ -137,8 +137,12 @@ export default function Timeline({
         }
       }
       const index = getIndexOfTheTopMostItemV2(containerTop, containerDiv)
-      const focusNode = containerDiv.children[index]
-      const focusUnitKey = focusNode.id.split('-')[1]
+      let focusNode = containerDiv.children[index]
+      let focusUnitKey = focusNode.id.split('-')[1]
+      if (focusUnitKey === 'empty') {
+        focusNode = focusNode.previousElementSibling
+        focusUnitKey = focusNode.id.split('-')[1]
+      }
       setFocusUnitKey(focusUnitKey)
     }
     window.addEventListener('scroll', onScroll)
@@ -219,14 +223,14 @@ export default function Timeline({
 
   let timelineJsx =
     measure !== 'event'
-      ? timeUnitKeys.map((timeUnitKey) => {
+      ? timeUnitKeys.map((timeUnitKey, i) => {
           const events = timeUnitEvents[timeUnitKey]
           return (
             <TimelineUnit
               eventsCount={events.length}
               bubbleSizeLevel={getBubbleLevel(timeUnitMax, events.length)}
               date={timeUnitKey}
-              key={timeUnitKey}
+              key={timeUnitKey + i}
               onBubbleClick={() => {
                 updateLevel(level - 1, timeUnitKey)
               }}
