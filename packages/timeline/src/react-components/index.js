@@ -16,6 +16,7 @@ import { TagsContext, initialTags } from './useTags'
 const GlobalStyles = createGlobalStyle`
   * {
     box-sizing: border-box;
+    font-family: Noto Sans CJK TC;
   }
 
   button {
@@ -195,11 +196,20 @@ export default function Timeline({
   }, [])
 
   const addTag = (newTag, timeUnitKey) => {
+    if (tags.length === 3) {
+      // in mobile only support 3 tag filter
+      return
+    }
     if (!tags.includes(newTag.name)) {
       setTags((oldTags) => oldTags.concat(newTag.name))
       setFocusUnitKey(timeUnitKey)
       shouldScroIntoView.current = true
     }
+  }
+
+  const removeTag = (tagToBeRemoved) => {
+    setTags((oldTags) => oldTags.filter((tag) => tag !== tagToBeRemoved))
+    shouldScroIntoView.current = true
   }
 
   const focusEvent =
@@ -240,7 +250,7 @@ export default function Timeline({
         })
 
   return (
-    <TagsContext.Provider value={{ tags, addTag }}>
+    <TagsContext.Provider value={{ tags, addTag, removeTag }}>
       <Wrapper>
         <div id="top" ref={topRef} />
         <GlobalStyles />
@@ -252,6 +262,7 @@ export default function Timeline({
           level={level}
           updateLevel={updateLevel}
           stickyStrategy={stickyStrategy}
+          tags={tags}
         />
         {measure !== 'event' && (
           <TimelineEventPanel

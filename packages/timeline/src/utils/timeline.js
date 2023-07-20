@@ -181,13 +181,14 @@ export function generateTimelineData(timeline, filterTags) {
       skip = true
     } else if (filterTags.length !== 0) {
       // conditionally skip
-      skip = event.tags.reduce((isFilterOut, tag) => {
-        if (isFilterOut) {
-          return isFilterOut
+      const keep = event.tags.reduce((keep, tag) => {
+        if (keep) {
+          return keep
         } else {
-          return !filterTags.includes(tag.name)
+          return filterTags.includes(tag.name)
         }
       }, false)
+      skip = !keep
     }
     if (skip) {
       continue
