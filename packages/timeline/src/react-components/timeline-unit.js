@@ -2,10 +2,9 @@ import styled from 'styled-components'
 
 const Wrapper = styled.div`
   display: flex;
-  height: ${({ height }) => (height ? `${height}px` : '100px')};
+  height: calc((100vh - 70px) / 7);
   width: 320px;
   margin: 0 auto;
-  background-color: #efefef;
 `
 const LeftPanel = styled.div`
   position: relative;
@@ -13,10 +12,14 @@ const LeftPanel = styled.div`
 `
 const DateLabel = styled.label`
   display: block;
-  margin: 7px 12px 0 0;
   font-size: 16px;
   font-weight: 900;
   text-align: right;
+  height: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin-left: 8px;
 `
 
 const RightPanel = styled.div`
@@ -65,8 +68,8 @@ const SingleTimelineNode = styled.div`
   cursor: pointer;
 `
 
-const timelineNodeHeight = 140
-const bubbleSizeLevels = [12, 20, 36, 60, 72, 92]
+const bubbleSizeLevels = [23, 28, 36, 48, 60] // 7等分
+// const bubbleSizeLevels = [23, 36, 48, 60, 76] // 5等分
 
 /**
  * @param {Object} props
@@ -80,15 +83,16 @@ export default function TimelineUnit({
   date,
   onBubbleClick,
   onSingleTimelineNodeSelect,
+  emptyId,
 }) {
   if (date === 'empty') {
-    return <TimelineUnitEmpty timelineNodeHeight={timelineNodeHeight} />
+    return <TimelineUnitEmpty emptyId={emptyId} />
   }
   const isSingleEvent = eventsCount === 1
   const bubbleSize = bubbleSizeLevels[bubbleSizeLevel]
 
   return (
-    <Wrapper id={'node-' + date} height={timelineNodeHeight}>
+    <Wrapper id={'node-' + date}>
       <LeftPanel>
         <DateLabel>{date}</DateLabel>
       </LeftPanel>
@@ -118,7 +122,7 @@ const DashLine = styled.div`
 const Top = styled.div`
   width: 15px;
   position: absolute;
-  top: 0;
+  top: -1.5px;
   left: calc(50% - 15px / 2);
   height: 3px;
   background: #000;
@@ -128,16 +132,16 @@ const Top = styled.div`
 const Bottom = styled.div`
   width: 15px;
   position: absolute;
-  bottom: 0;
+  bottom: -1.5px;
   left: calc(50% - 15px / 2);
   height: 3px;
   background: #000;
   border-radius: 3px;
 `
 
-function TimelineUnitEmpty({ timelineNodeHeight }) {
+function TimelineUnitEmpty({ emptyId }) {
   return (
-    <Wrapper height={timelineNodeHeight}>
+    <Wrapper id={'node-' + emptyId}>
       <LeftPanel />
       <DashLine>
         <Top />

@@ -52,6 +52,7 @@ const Wrapper = styled.div`
   position: relative;
   width: 320px;
   margin: 0 auto;
+  background-color: #efefef;
 `
 
 const TimelineWrapper = styled.div`
@@ -65,7 +66,7 @@ const EventWrapper = styled.div`
 
 function getBubbleLevel(max, count) {
   const levelSize = max / 5
-  return Math.ceil(count / levelSize)
+  return Math.ceil(count / levelSize) - 1
 }
 
 export default function Timeline({
@@ -118,16 +119,15 @@ export default function Timeline({
       /** @type {HTMLDivElement} */
       const containerDiv = containerRef.current
       const containerTop = containerDiv.getBoundingClientRect().top
-
       function getIndexOfTheTopMostItemV2(top, parentDom) {
-        if (top >= 0) {
+        if (top >= 70) {
           return 0
         } else {
           let topSum = top
           for (let i = 0; i < parentDom.children.length; i++) {
             let node = parentDom.children[i]
             topSum += node.getBoundingClientRect().height
-            if (topSum >= 0) {
+            if (topSum >= 70) {
               return i
             }
             if (i === parentDom.children.length - 1) {
@@ -161,7 +161,10 @@ export default function Timeline({
         // add 1 px to prevent focusIndex count on scroll mistaken
         window.scrollTo(
           0,
-          window.scrollY + focusTimelineUnitEle.getBoundingClientRect().top + 1
+          window.scrollY +
+            focusTimelineUnitEle.getBoundingClientRect().top +
+            1 -
+            70
         )
       }
       shouldScroIntoView.current = false
@@ -170,25 +173,31 @@ export default function Timeline({
 
   useEffect(() => {
     if (topRef.current && bottomRef.current) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(({ boundingClientRect }) => {
-          if (!boundingClientRect.width || !containerRef.current) {
-            return
-          }
-
-          const bounding = containerRef.current.getBoundingClientRect()
-
-          if (bounding.height) {
-            if (bounding.y > 0) {
-              setStickStrategy('absolute-top')
-            } else if (bounding.y + bounding.height > window.innerHeight) {
-              setStickStrategy('fixed')
-            } else {
-              setStickStrategy('absolute-bottom')
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(({ boundingClientRect }) => {
+            if (!boundingClientRect.width || !containerRef.current) {
+              return
             }
-          }
-        })
-      })
+
+            const bounding = containerRef.current.getBoundingClientRect()
+            if (bounding.height < window.innerHeight) {
+              setStickStrategy('absolute')
+              return
+            }
+            if (bounding.height) {
+              if (bounding.y >= 70) {
+                setStickStrategy('absolute-top')
+              } else if (bounding.y + bounding.height > window.innerHeight) {
+                setStickStrategy('fixed')
+              } else {
+                setStickStrategy('absolute-bottom')
+              }
+            }
+          })
+        },
+        { rootMargin: '-70px 0px 0px 0px' }
+      )
 
       observer.observe(topRef.current)
       observer.observe(bottomRef.current)
@@ -230,6 +239,7 @@ export default function Timeline({
               eventsCount={events.length}
               bubbleSizeLevel={getBubbleLevel(timeUnitMax, events.length)}
               date={timeUnitKey}
+              emptyId={timeUnitKey + '-' + i}
               key={timeUnitKey + i}
               onBubbleClick={() => {
                 updateLevel(level - 1, timeUnitKey)

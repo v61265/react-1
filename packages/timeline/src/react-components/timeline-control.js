@@ -10,6 +10,11 @@ const Wrapper = styled.div`
   flex-direction: column;
   ${({ stickyStrategy }) => {
     switch (stickyStrategy) {
+      case 'absolute':
+        return `
+          position: absolute;
+          bottom: 0;
+        `
       case 'fixed':
         return `
           position: fixed;
@@ -18,7 +23,7 @@ const Wrapper = styled.div`
       case 'absolute-top':
         return `
           position: absolute;
-          top: calc(100vh - 20px - 84px);
+          top: calc(100vh - 70px - 20px - 84px);
         `
       case 'absolute-bottom':
       default:

@@ -14,6 +14,11 @@ const Wrapper = styled.div`
 
   ${({ stickyStrategy }) => {
     switch (stickyStrategy) {
+      case 'absolute':
+        return `
+        position: absolute;
+        top: calc(130px - 70px);
+        `
       case 'fixed':
         return `
           position: fixed;
@@ -28,7 +33,7 @@ const Wrapper = styled.div`
       default:
         return `
           position: absolute;
-          top: 130px;
+          top: calc(130px - 70px);
         `
     }
   }}

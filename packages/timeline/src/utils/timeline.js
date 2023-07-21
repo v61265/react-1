@@ -258,9 +258,9 @@ export function generateTimelineData(timeline, filterTags) {
       const preD = new Date(preYear)
       d.setFullYear(d.getFullYear() - 1)
       if (d.getFullYear() !== preD.getFullYear()) {
-        console.log(
-          `newYearKey ${yearKey} not continue to preYearKey ${preYearKey}`
-        )
+        // console.log(
+        //   `newYearKey ${yearKey} not continue to preYearKey ${preYearKey}`
+        // )
         newYearKeys.push('empty')
       }
       newYearKeys.push(yearKey)
@@ -283,9 +283,9 @@ export function generateTimelineData(timeline, filterTags) {
         d.getFullYear() + '' + (d.getMonth() + 1) !==
         preD.getFullYear() + '' + (preD.getMonth() + 1)
       ) {
-        console.log(
-          `newMonthKey ${monthKey} not continue to preMonthKey ${preMonthKey}`
-        )
+        // console.log(
+        //   `newMonthKey ${monthKey} not continue to preMonthKey ${preMonthKey}`
+        // )
         newMonthKeys.push('empty')
       }
       newMonthKeys.push(monthKey)
@@ -310,9 +310,9 @@ export function generateTimelineData(timeline, filterTags) {
         '' + d.getFullYear() + (d.getMonth() + 1) + d.getDate() !==
         '' + preD.getFullYear() + (preD.getMonth() + 1) + preD.getDate()
       ) {
-        console.log(
-          `newDayKey ${dayKey} not continue to preDayKey ${preDayKey}`
-        )
+        // console.log(
+        //   `newDayKey ${dayKey} not continue to preDayKey ${preDayKey}`
+        // )
         newDayKeys.push('empty')
       }
       newDayKeys.push(dayKey)
