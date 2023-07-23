@@ -2,13 +2,21 @@ import styled from 'styled-components'
 
 const Wrapper = styled.div`
   display: flex;
-  height: calc((100vh - 70px) / 7);
+  ${({ headerHeight }) => `
+    height: calc((100vh - ${headerHeight}px) / 5);
+  `}
   width: 320px;
   margin: 0 auto;
+  @media (min-width: 768px) {
+    width: unset;
+  }
 `
 const LeftPanel = styled.div`
   position: relative;
   width: 94px;
+  @media (min-width: 768px) {
+    width: 300px;
+  }
 `
 const DateLabel = styled.label`
   display: block;
@@ -24,6 +32,9 @@ const DateLabel = styled.label`
 
 const RightPanel = styled.div`
   width: 223px;
+  @media (min-width: 768px) {
+    width: calc(100% - 300px - 3px);
+  }
 `
 
 const TimelineWrapper = styled.div`
@@ -45,31 +56,47 @@ const TimelineNode = styled.div`
   border-radius: 50%;
   border: 2px solid #000;
   background: white;
-  &:hover {
-    background: lightgray;
-  }
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
+  @media (hover: hover) {
+    &:hover {
+      background: #efefef;
+    }
+  }
 `
 
 const SingleTimelineNode = styled.div`
   position: absolute;
-  top: calc(50% - 6px);
-  left: calc(50% - 6px);
-  width: 12px;
-  height: 12px;
+  top: calc(50% - var(--d) / 2);
+  left: calc(50% - var(--d) / 2);
+  --d: 12px;
+  width: var(--d);
+  height: var(--d);
   border-radius: 50%;
   background: #000;
-  &:hover {
+  @media (hover: hover) {
+    &:hover {
+      --d: 16px;
+    }
+  }
+  &:active {
+    --d: 16px;
     background: #ec5656;
   }
+
   cursor: pointer;
+  ${({ isFocus }) =>
+    isFocus &&
+    `
+    --d: 16px;
+    background: #ec5656;
+  `}
 `
 
-const bubbleSizeLevels = [23, 28, 36, 48, 60] // 7等分
-// const bubbleSizeLevels = [23, 36, 48, 60, 76] // 5等分
+// const bubbleSizeLevels = [23, 28, 36, 48, 60] // 7等分
+const bubbleSizeLevels = [23, 36, 48, 60, 76] // 5等分
 
 /**
  * @param {Object} props
@@ -84,6 +111,8 @@ export default function TimelineUnit({
   onBubbleClick,
   onSingleTimelineNodeSelect,
   emptyId,
+  isFocus,
+  headerHeight,
 }) {
   if (date === 'empty') {
     return <TimelineUnitEmpty emptyId={emptyId} />
@@ -92,13 +121,16 @@ export default function TimelineUnit({
   const bubbleSize = bubbleSizeLevels[bubbleSizeLevel]
 
   return (
-    <Wrapper id={'node-' + date}>
+    <Wrapper id={'node-' + date} headerHeight={headerHeight}>
       <LeftPanel>
         <DateLabel>{date}</DateLabel>
       </LeftPanel>
       <TimelineWrapper>
         {isSingleEvent ? (
-          <SingleTimelineNode onClick={onSingleTimelineNodeSelect} />
+          <SingleTimelineNode
+            isFocus={isFocus}
+            onClick={onSingleTimelineNodeSelect}
+          />
         ) : (
           <TimelineNode bubbleSize={bubbleSize} onClick={onBubbleClick}>
             {eventsCount}
@@ -119,34 +151,12 @@ const DashLine = styled.div`
     linear-gradient(transparent 13px, #000 15px) 0 calc(var(--s) / 2) / 100%
       calc(2 * var(--s));
 `
-const Top = styled.div`
-  width: 15px;
-  position: absolute;
-  top: -1.5px;
-  left: calc(50% - 15px / 2);
-  height: 3px;
-  background: #000;
-  border-radius: 3px;
-`
-
-const Bottom = styled.div`
-  width: 15px;
-  position: absolute;
-  bottom: -1.5px;
-  left: calc(50% - 15px / 2);
-  height: 3px;
-  background: #000;
-  border-radius: 3px;
-`
 
 function TimelineUnitEmpty({ emptyId }) {
   return (
     <Wrapper id={'node-' + emptyId}>
       <LeftPanel />
-      <DashLine>
-        <Top />
-        <Bottom />
-      </DashLine>
+      <DashLine />
       <RightPanel />
     </Wrapper>
   )

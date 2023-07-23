@@ -13,7 +13,7 @@ const Title = styled.div`
   font-size: 24px;
   font-weight: 700;
   line-height: 34.75px;
-  padding: 0 116px;
+  padding: 0;
 
   @media (max-width: 768px) {
     font-size: 18px;
@@ -37,7 +37,7 @@ const DraftEditorWrapper = styled.div`
   margin-top: 20px;
   font-size: 16px;
   line-height: 1.5;
-  padding: 0 116px;
+  padding: 0;
 
   @media (max-width: 768px) {
     font-size: 14px;

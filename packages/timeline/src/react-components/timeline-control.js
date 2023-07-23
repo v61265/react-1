@@ -8,7 +8,7 @@ const Wrapper = styled.div`
   padding-bottom: 4px;
   display: flex;
   flex-direction: column;
-  ${({ stickyStrategy }) => {
+  ${({ stickyStrategy, headerHeight }) => {
     switch (stickyStrategy) {
       case 'absolute':
         return `
@@ -23,7 +23,7 @@ const Wrapper = styled.div`
       case 'absolute-top':
         return `
           position: absolute;
-          top: calc(100vh - 70px - 20px - 84px);
+          top: calc(100vh - ${headerHeight}px - 20px - 84px);
         `
       case 'absolute-bottom':
       default:
@@ -34,7 +34,17 @@ const Wrapper = styled.div`
       `
     }
   }}
-  z-index: 1000;
+  z-index: 10;
+
+  @media (min-width: 768px) {
+    left: 200px;
+  }
+  @media (min-width: 1200px) {
+      ${({ stickyStrategy }) =>
+        stickyStrategy === 'fixed' &&
+        `
+        left: calc((100vw - 1200px)/2 + 200px);
+      `}
 `
 
 const LevelControl = styled.div`
@@ -45,6 +55,9 @@ const LevelControl = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  @media (min-width: 768px) {
+    margin: 0;
+  }
 `
 
 const LevelControlTopButton = styled.button`
@@ -52,7 +65,6 @@ const LevelControlTopButton = styled.button`
   width: 36px;
   height: 36px;
   top: 0;
-  z-index: 100;
 `
 
 const LevelControlBottomButton = styled.button`
@@ -60,7 +72,6 @@ const LevelControlBottomButton = styled.button`
   width: 36px;
   height: 36px;
   bottom: 0;
-  z-index: 100;
 `
 
 const TagsControl = styled.div`
@@ -105,10 +116,11 @@ export default function TimelineControl({
   updateLevel,
   stickyStrategy,
   tags,
+  headerHeight,
 }) {
   const { removeTag } = useContext(TagsContext)
   return (
-    <Wrapper stickyStrategy={stickyStrategy}>
+    <Wrapper stickyStrategy={stickyStrategy} headerHeight={headerHeight}>
       <LevelControl>
         <LevelControlTopButton
           onClick={() => {

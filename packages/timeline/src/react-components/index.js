@@ -49,13 +49,23 @@ const GlobalStyles = createGlobalStyle`
 `
 
 const Wrapper = styled.div`
-  position: relative;
-  width: 320px;
-  margin: 0 auto;
   background-color: #efefef;
+  overflow: hidden;
 `
 
 const TimelineWrapper = styled.div`
+  position: relative;
+  width: 320px;
+  margin: 0 auto;
+  @media (min-width: 768px) {
+    width: unset;
+  }
+  @media (min-width: 1200px) {
+    width: 1200px;
+  }
+`
+
+const TimelineNodesWrapper = styled.div`
   ${({ eventMode }) => eventMode && `padding: 0 36px 12px;`}
 `
 
@@ -72,6 +82,7 @@ function getBubbleLevel(max, count) {
 export default function Timeline({
   liveblog,
   fetchImageBaseUrl = 'https://editools-gcs-dev.readr.tw',
+  headerHeight = 66,
 }) {
   const timeline = useMemo(() => getSortedTimelineFromLiveblog(liveblog), [
     liveblog,
@@ -120,14 +131,14 @@ export default function Timeline({
       const containerDiv = containerRef.current
       const containerTop = containerDiv.getBoundingClientRect().top
       function getIndexOfTheTopMostItemV2(top, parentDom) {
-        if (top >= 70) {
+        if (top >= headerHeight) {
           return 0
         } else {
           let topSum = top
           for (let i = 0; i < parentDom.children.length; i++) {
             let node = parentDom.children[i]
             topSum += node.getBoundingClientRect().height
-            if (topSum >= 70) {
+            if (topSum >= headerHeight) {
               return i
             }
             if (i === parentDom.children.length - 1) {
@@ -164,7 +175,7 @@ export default function Timeline({
           window.scrollY +
             focusTimelineUnitEle.getBoundingClientRect().top +
             1 -
-            70
+            headerHeight
         )
       }
       shouldScroIntoView.current = false
@@ -186,7 +197,7 @@ export default function Timeline({
               return
             }
             if (bounding.height) {
-              if (bounding.y >= 70) {
+              if (bounding.y >= headerHeight) {
                 setStickStrategy('absolute-top')
               } else if (bounding.y + bounding.height > window.innerHeight) {
                 setStickStrategy('fixed')
@@ -196,7 +207,7 @@ export default function Timeline({
             }
           })
         },
-        { rootMargin: '-70px 0px 0px 0px' }
+        { rootMargin: `-${headerHeight}px 0px 0px 0px` }
       )
 
       observer.observe(topRef.current)
@@ -230,7 +241,7 @@ export default function Timeline({
       ? timeUnitEvents[focusUnitKey][0]
       : null
 
-  let timelineJsx =
+  let timelineNodesJsx =
     measure !== 'event'
       ? timeUnitKeys.map((timeUnitKey, i) => {
           const events = timeUnitEvents[timeUnitKey]
@@ -247,6 +258,8 @@ export default function Timeline({
               onSingleTimelineNodeSelect={() => {
                 setFocusUnitKey(timeUnitKey)
               }}
+              isFocus={timeUnitKey === focusUnitKey}
+              headerHeight={headerHeight}
             />
           )
         })
@@ -266,27 +279,34 @@ export default function Timeline({
   return (
     <TagsContext.Provider value={{ tags, addTag, removeTag }}>
       <Wrapper>
-        <div id="top" ref={topRef} />
-        <GlobalStyles />
-        <TimelineWrapper ref={containerRef} eventMode={measure === 'event'}>
-          {timelineJsx}
-        </TimelineWrapper>
-        <TimelineControl
-          maxLevel={maxLevel}
-          level={level}
-          updateLevel={updateLevel}
-          stickyStrategy={stickyStrategy}
-          tags={tags}
-        />
-        {measure !== 'event' && (
-          <TimelineEventPanel
-            event={focusEvent}
-            fetchImageBaseUrl={fetchImageBaseUrl}
+        <TimelineWrapper>
+          <div id="top" ref={topRef} />
+          <GlobalStyles />
+          <TimelineNodesWrapper
+            ref={containerRef}
+            eventMode={measure === 'event'}
+          >
+            {timelineNodesJsx}
+          </TimelineNodesWrapper>
+          <TimelineControl
+            maxLevel={maxLevel}
+            level={level}
+            updateLevel={updateLevel}
             stickyStrategy={stickyStrategy}
-            timeUnitKey={focusUnitKey}
+            tags={tags}
+            headerHeight={headerHeight}
           />
-        )}
-        <div id="bottom" ref={bottomRef} />
+          {measure !== 'event' && (
+            <TimelineEventPanel
+              event={focusEvent}
+              fetchImageBaseUrl={fetchImageBaseUrl}
+              stickyStrategy={stickyStrategy}
+              timeUnitKey={focusUnitKey}
+              headerHeight={headerHeight}
+            />
+          )}
+          <div id="bottom" ref={bottomRef} />
+        </TimelineWrapper>
       </Wrapper>
     </TagsContext.Provider>
   )

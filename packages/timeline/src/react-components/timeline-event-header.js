@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { customFormatTime } from '../utils/date'
 
 const CategoryWrapper = styled.div`
-  padding: 0 116px;
+  padding: 0;
   cursor: pointer;
   @media (max-width: 768px) {
     padding: 0;
@@ -22,12 +22,11 @@ const Category = styled.span`
 const PublishInfoWrapper = styled.div`
   margin-top: 6px;
   display: flex;
-  align-items: center;
+  align-items: start;
   justify-content: space-between;
-  padding: 0 116px;
+  padding: 0;
 
   @media (max-width: 768px) {
-    align-items: start;
     flex-direction: column;
     padding: 0;
   }
@@ -36,13 +35,14 @@ const PublishInfoWrapper = styled.div`
 const PublishDate = styled.div`
   font-size: 12px;
   transform: scale(calc(10 / 12));
+  left: calc(-100% / 12);
+  width: 100%;
+
   font-weight: 900;
   line-height: 14px;
+  position: relative;
 
   @media (max-width: 768px) {
-    position: relative;
-    left: calc(-100% / 12);
-    width: 100%;
     margin-top: 4px;
   }
 `
