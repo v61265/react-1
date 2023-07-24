@@ -3,7 +3,7 @@ import styled from 'styled-components'
 const Wrapper = styled.div`
   display: flex;
   ${({ headerHeight }) => `
-    height: calc((100vh - ${headerHeight}px) / 5);
+    height: calc((100vh - ${headerHeight}px) / 6);
   `}
   width: 320px;
   margin: 0 auto;
@@ -20,14 +20,31 @@ const LeftPanel = styled.div`
 `
 const DateLabel = styled.label`
   display: block;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 900;
   text-align: right;
   height: 100%;
   display: flex;
-  justify-content: start;
+  justify-content: end;
   align-items: center;
-  margin-left: 8px;
+  ${({ measure }) => {
+    switch (measure) {
+      case 'year':
+        return `
+          margin-right: 48px;
+        `
+      case 'month':
+        return `
+          margin-right: 40px;        
+        `
+      case 'day':
+        return `
+          margin-right: 40px;        
+        `
+      default:
+        return
+    }
+  }}
 `
 
 const RightPanel = styled.div`
@@ -96,7 +113,8 @@ const SingleTimelineNode = styled.div`
 `
 
 // const bubbleSizeLevels = [23, 28, 36, 48, 60] // 7等分
-const bubbleSizeLevels = [23, 36, 48, 60, 76] // 5等分
+const bubbleSizeLevels = [23, 36, 48, 60, 66] // 6等分
+// const bubbleSizeLevels = [23, 36, 48, 60, 76] // 5等分
 
 /**
  * @param {Object} props
@@ -113,17 +131,19 @@ export default function TimelineUnit({
   emptyId,
   isFocus,
   headerHeight,
+  measure,
+  timeUnitKey,
 }) {
   if (date === 'empty') {
-    return <TimelineUnitEmpty emptyId={emptyId} />
+    return <TimelineUnitEmpty emptyId={emptyId} headerHeight={headerHeight} />
   }
   const isSingleEvent = eventsCount === 1
   const bubbleSize = bubbleSizeLevels[bubbleSizeLevel]
 
   return (
-    <Wrapper id={'node-' + date} headerHeight={headerHeight}>
+    <Wrapper id={'node-' + timeUnitKey} headerHeight={headerHeight}>
       <LeftPanel>
-        <DateLabel>{date}</DateLabel>
+        <DateLabel measure={measure}>{date}</DateLabel>
       </LeftPanel>
       <TimelineWrapper>
         {isSingleEvent ? (
@@ -152,9 +172,9 @@ const DashLine = styled.div`
       calc(2 * var(--s));
 `
 
-function TimelineUnitEmpty({ emptyId }) {
+function TimelineUnitEmpty({ emptyId, headerHeight }) {
   return (
-    <Wrapper id={'node-' + emptyId}>
+    <Wrapper id={'node-' + emptyId} headerHeight={headerHeight}>
       <LeftPanel />
       <DashLine />
       <RightPanel />

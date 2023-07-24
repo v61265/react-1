@@ -24,6 +24,7 @@ const Wrapper = styled.div`
       left: 0;
       overflow-y: scroll;
       background: rgba(0, 0, 0, 0.75);
+      z-index: 10;
       `
     }
   }}

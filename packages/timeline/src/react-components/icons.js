@@ -53,6 +53,61 @@ function Minus() {
   )
 }
 
+function MinusDisabled() {
+  return (
+    <svg
+      width="36"
+      height="36"
+      viewBox="0 0 36 36"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g filter="url(#filter0_d_40_3181)">
+        <circle cx="18" cy="16" r="16" fill="#E2E2E2" />
+        <circle cx="18" cy="16" r="15.5" stroke="#D1D1D1" />
+      </g>
+      <path d="M12.9445 17.16V14.6H23.1045V17.16H12.9445Z" fill="#C1C1C1" />
+      <defs>
+        <filter
+          id="filter0_d_40_3181"
+          x="0"
+          y="0"
+          width="36"
+          height="36"
+          filterUnits="userSpaceOnUse"
+          colorInterpolationFilters="sRGB"
+        >
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset dy="2" />
+          <feGaussianBlur stdDeviation="1" />
+          <feComposite in2="hardAlpha" operator="out" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_40_3181"
+          />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect1_dropShadow_40_3181"
+            result="shape"
+          />
+        </filter>
+      </defs>
+    </svg>
+  )
+}
+
 function Plus() {
   return (
     <svg
@@ -107,6 +162,24 @@ function Plus() {
           />
         </filter>
       </defs>
+    </svg>
+  )
+}
+
+function PlusDisabled() {
+  return (
+    <svg
+      width="32"
+      height="32"
+      viewBox="0 0 32 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle cx="16" cy="16" r="15.5" fill="#E2E2E2" stroke="#D1D1D1" />
+      <path
+        d="M14.848 22.384V17.2H10V15.184H14.848V10H16.984V15.184H21.856V17.2H16.984V22.384H14.848Z"
+        fill="#C1C1C1"
+      />
     </svg>
   )
 }
@@ -219,7 +292,9 @@ function PinStar({ className = '' }) {
 
 export default {
   Minus,
+  MinusDisabled,
   Plus,
+  PlusDisabled,
   Close,
   CopyLink,
   Expand,

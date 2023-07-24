@@ -74,15 +74,57 @@ const LevelControlBottomButton = styled.button`
   bottom: 0;
 `
 
-const TagsControl = styled.div`
+const MobileTagsControl = styled.div`
   pointer-events: auto;
   padding-left: 8px;
   padding: 0 0 8px 8px;
   display: flex;
+  @media (min-width: 768px) {
+    display: none;
+  }
+`
+
+const PcTagsControl = styled.div`
+  display: none;
+  @media (min-width: 768px) {
+    pointer-events: none;
+    display: block;
+    margin: 20px 0 0 24px;
+    ${({ stickyStrategy, headerHeight }) => {
+      switch (stickyStrategy) {
+        case 'absolute':
+          return `
+            position: absolute;
+            top: 0px;
+            height: calc(100vh - ${headerHeight}px);
+          `
+        case 'fixed':
+          return `
+            position: fixed;
+            top: ${headerHeight}px;
+            height: calc(100vh - ${headerHeight}px);
+          `
+        case 'absolute-top':
+          return `
+            position: absolute;
+            top: 0;
+            height: calc(100vh - ${headerHeight}px);
+          `
+        case 'absolute-bottom':
+        default:
+          return `
+          position: absolute;
+          bottom: 0;
+          height: calc(100vh - ${headerHeight}px);
+
+        `
+      }
+    }}
+  }
 `
 
 const Tag = styled.div`
-  background: #000;
+  pointer-events: auto;
   border-radius: 4px;
   max-width: 96px;
   height: 20px;
@@ -91,6 +133,18 @@ const Tag = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media (min-width: 768px) {
+    max-width: fit-content;
+    margin-bottom: 4px;
+  }
+  ${({ selected }) =>
+    selected
+      ? `
+      background: #000;
+    `
+      : `
+      background: #fff;
+    `}
 `
 const TagButton = styled.button`
   height: 16px;
@@ -108,6 +162,21 @@ const TagName = styled.span`
   overflow: hidden;
   text-overflow: ellipsis;
   margin-left: 4px;
+  @media (min-width: 768px) {
+    max-width: unset;
+  }
+  ${({ selected }) =>
+    selected
+      ? `
+    color: #fff;
+  `
+      : `
+    color: #000;
+  `}
+`
+
+const TagPrefix = styled.span`
+  color: #000;
 `
 
 export default function TimelineControl({
@@ -115,50 +184,79 @@ export default function TimelineControl({
   level,
   updateLevel,
   stickyStrategy,
-  tags,
+  selectedTags,
   headerHeight,
+  allTags,
 }) {
   const { removeTag } = useContext(TagsContext)
+  const disableNarrowDown = level === 1
+  const disableScaleUp = level === maxLevel
   return (
-    <Wrapper stickyStrategy={stickyStrategy} headerHeight={headerHeight}>
-      <LevelControl>
-        <LevelControlTopButton
-          onClick={() => {
-            if (level === 1) {
-              return
-            }
-            updateLevel(level - 1)
-          }}
-        >
-          <icons.Plus />
-        </LevelControlTopButton>
-        <LevelControlBottomButton
-          onClick={() => {
-            if (level === maxLevel) {
-              return
-            }
-            updateLevel(level + 1)
-          }}
-        >
-          <icons.Minus />
-        </LevelControlBottomButton>
-      </LevelControl>
-      {tags?.length > 0 && (
-        <TagsControl>
-          {tags.map((tag) => (
-            <Tag key={tag}>
-              <TagButton
-                onClick={() => {
-                  removeTag(tag)
-                }}
-              >
-                <icons.Close />
-              </TagButton>
-              <TagName>{tag.slice(0, 4)}</TagName>
+    <>
+      <Wrapper stickyStrategy={stickyStrategy} headerHeight={headerHeight}>
+        <LevelControl>
+          <LevelControlTopButton
+            onClick={() => {
+              if (disableNarrowDown) {
+                return
+              }
+              updateLevel(level - 1)
+            }}
+          >
+            {disableNarrowDown ? <icons.PlusDisabled /> : <icons.Plus />}
+          </LevelControlTopButton>
+          <LevelControlBottomButton
+            onClick={() => {
+              if (disableScaleUp) {
+                return
+              }
+              updateLevel(level + 1)
+            }}
+          >
+            {disableScaleUp ? <icons.MinusDisabled /> : <icons.Minus />}
+          </LevelControlBottomButton>
+        </LevelControl>
+        {selectedTags?.length > 0 && (
+          <MobileTagsControl selected={true}>
+            {selectedTags.map((tag) => (
+              <Tag key={tag} selected={true}>
+                <TagButton
+                  onClick={() => {
+                    removeTag(tag)
+                  }}
+                >
+                  <icons.Close />
+                </TagButton>
+                <TagName selected={true}>{tag.slice(0, 4)}</TagName>
+              </Tag>
+            ))}
+          </MobileTagsControl>
+        )}
+      </Wrapper>
+      <PcTagsControl
+        stickyStrategy={stickyStrategy}
+        headerHeight={headerHeight}
+      >
+        {allTags.map((tag) => {
+          const selected = selectedTags.includes(tag)
+          return (
+            <Tag key={tag} selected={selected}>
+              {selected ? (
+                <TagButton
+                  onClick={() => {
+                    removeTag(tag)
+                  }}
+                >
+                  <icons.Close />
+                </TagButton>
+              ) : (
+                <TagPrefix>#</TagPrefix>
+              )}
+              <TagName selected={selected}>{tag}</TagName>
             </Tag>
-          ))}
-        </TagsControl>
-      )}
-    </Wrapper>
+          )
+        })}
+      </PcTagsControl>
+    </>
   )
 }

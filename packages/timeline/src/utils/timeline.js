@@ -174,8 +174,10 @@ export function generateTimelineData(timeline, filterTags) {
   let dayKeys = new Set()
   const events = {}
   let eventKeys = new Set()
+  let allTags = new Set()
 
   for (let event of timelineEvents) {
+    event.tags.forEach((tag) => allTags.add(tag.name))
     let skip = false
     if (filterTags.length !== 0 && event.tags.length === 0) {
       skip = true
@@ -231,6 +233,7 @@ export function generateTimelineData(timeline, filterTags) {
   monthKeys = Array.from(monthKeys)
   dayKeys = Array.from(dayKeys)
   eventKeys = Array.from(eventKeys)
+  allTags = Array.from(allTags)
 
   const yearMax = yearKeys.reduce((max, yearKey) => {
     const events = yearEvents[yearKey]
@@ -333,7 +336,8 @@ export function generateTimelineData(timeline, filterTags) {
       day: dayKeys,
       event: eventKeys,
     },
-    timeMax: { year: yearMax, month: monthMax, day: dayMax, event: 0 },
+    timeMax: Math.max(yearMax, monthMax, dayMax),
+    allTags,
   }
 }
 
@@ -360,4 +364,21 @@ export function calcNextLevelUnitKey(oldTimeUnitKey, newTimeUnitKeys, zoomIn) {
     )
   }
   return newUnitKey
+}
+
+export function generateDateString(timeUnitKey, measure) {
+  if (timeUnitKey === 'empty') {
+    return timeUnitKey
+  }
+  switch (measure) {
+    case 'day':
+      return timeUnitKey.slice(4, 8)
+
+    case 'month':
+      return timeUnitKey.slice(4, 6) - 0 + '月'
+
+    case 'year':
+    default:
+      return timeUnitKey.slice(0, 4)
+  }
 }

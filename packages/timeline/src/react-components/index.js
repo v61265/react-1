@@ -2,6 +2,7 @@ import styled, { createGlobalStyle } from 'styled-components'
 import TimelineUnit from './timeline-unit'
 import {
   calcNextLevelUnitKey,
+  generateDateString,
   generateTimeLevel,
   generateTimelineData,
   getMeasureFromLevel,
@@ -17,6 +18,8 @@ const GlobalStyles = createGlobalStyle`
   * {
     box-sizing: border-box;
     font-family: Noto Sans CJK TC;
+    -webkit-tap-highlight-color: transparent;
+
   }
 
   button {
@@ -72,6 +75,11 @@ const TimelineNodesWrapper = styled.div`
 const EventWrapper = styled.div`
   margin-top: 12px;
   border: 2px solid #000;
+
+  @media (min-width: 768px) {
+    width: 360px;
+    margin: 12px auto 0;
+  }
 `
 
 function getBubbleLevel(max, count) {
@@ -91,7 +99,7 @@ export default function Timeline({
   const [stickyStrategy, setStickStrategy] = useState('absolute-top')
   const [focusUnitKey, setFocusUnitKey] = useState(0)
 
-  const { timeEvents, timeKeys, timeMax } = useMemo(
+  const { timeEvents, timeKeys, timeMax, allTags } = useMemo(
     () => generateTimelineData(timeline, tags),
     [timeline, tags]
   )
@@ -103,7 +111,6 @@ export default function Timeline({
   const measure = getMeasureFromLevel(level)
   const timeUnitEvents = timeEvents[measure]
   const timeUnitKeys = timeKeys[measure]
-  const timeUnitMax = timeMax[measure]
   /** @type {React.RefObject<HTMLDivElement>} */
   const containerRef = useRef(null)
 
@@ -154,7 +161,7 @@ export default function Timeline({
         focusNode = focusNode.previousElementSibling
         focusUnitKey = focusNode.id.split('-')[1]
       }
-      setFocusUnitKey(focusUnitKey)
+      setFocusUnitKey(focusUnitKey, focusNode)
     }
     window.addEventListener('scroll', onScroll)
 
@@ -220,7 +227,7 @@ export default function Timeline({
   }, [])
 
   const addTag = (newTag, timeUnitKey) => {
-    if (tags.length === 3) {
+    if (window.screen.width < 768 && tags.length === 3) {
       // in mobile only support 3 tag filter
       return
     }
@@ -248,18 +255,21 @@ export default function Timeline({
           return (
             <TimelineUnit
               eventsCount={events.length}
-              bubbleSizeLevel={getBubbleLevel(timeUnitMax, events.length)}
-              date={timeUnitKey}
+              bubbleSizeLevel={getBubbleLevel(timeMax, events.length)}
+              date={generateDateString(timeUnitKey, measure)}
               emptyId={timeUnitKey + '-' + i}
               key={timeUnitKey + i}
               onBubbleClick={() => {
                 updateLevel(level - 1, timeUnitKey)
               }}
               onSingleTimelineNodeSelect={() => {
+                console.log(timeUnitKey, shouldScroIntoView.current)
                 setFocusUnitKey(timeUnitKey)
               }}
               isFocus={timeUnitKey === focusUnitKey}
               headerHeight={headerHeight}
+              measure={measure}
+              timeUnitKey={timeUnitKey}
             />
           )
         })
@@ -293,7 +303,8 @@ export default function Timeline({
             level={level}
             updateLevel={updateLevel}
             stickyStrategy={stickyStrategy}
-            tags={tags}
+            selectedTags={tags}
+            allTags={allTags}
             headerHeight={headerHeight}
           />
           {measure !== 'event' && (
