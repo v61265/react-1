@@ -425,13 +425,68 @@ export function generateDateString(timeUnitKey, measure) {
   }
   switch (measure) {
     case 'day':
-      return timeUnitKey.slice(0, 8)
+      return timeUnitKey.slice(4, 8)
 
     case 'month':
-      return timeUnitKey.slice(0, 6) - 0 + '月'
+      return Number(timeUnitKey.slice(4, 6)) + '月'
 
     case 'year':
     default:
       return timeUnitKey.slice(0, 4)
   }
+}
+
+/**
+ * @param {Date} date
+ * @returns {boolean}
+ */
+function isLastDayOfYear(date) {
+  const nextDay = new Date(date)
+  nextDay.setDate(nextDay.getDate() + 1)
+  return nextDay.getFullYear() !== date.getFullYear()
+}
+
+/**
+ * @param {Date} date
+ * @returns {boolean}
+ */
+function isFirstDayOfYear(date) {
+  const lastDay = new Date(date)
+  lastDay.setDate(lastDay.getDate() - 1)
+  return lastDay.getFullYear() !== date.getFullYear()
+}
+
+/**
+ * @param {Date} date
+ * @returns {boolean}
+ */
+function isFirstMonthOfYear(date) {
+  const lastMonth = new Date(date)
+  lastMonth.setMonth(lastMonth.getMonth() - 1)
+  return lastMonth.getFullYear() !== date.getFullYear()
+}
+
+/**
+ * @param {Date} date
+ * @returns {boolean}
+ */
+function isLastMonthOfYear(date) {
+  const nextMonth = new Date(date)
+  nextMonth.setMonth(nextMonth.getMonth() + 1)
+  return nextMonth.getFullYear() !== nextMonth.getFullYear()
+}
+
+/**
+ * Chcek if the unit (month or day) is the first or last of the year
+ * @param {string} timeUnitKey
+ * @param {'month'|'day'} measure
+ */
+export function isEdgeUnit(timeUnitKey, measure) {
+  const date = convertTimeKeyToDate(timeUnitKey, measure)
+  if (measure === 'month') {
+    return isFirstMonthOfYear(date) || isLastMonthOfYear(date)
+  } else if (measure === 'day') {
+    return isFirstDayOfYear(date) || isLastDayOfYear(date)
+  }
+  console.error('function isEdgeUnit receive invalid measure', measure)
 }

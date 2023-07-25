@@ -2,7 +2,6 @@ import styled, { createGlobalStyle } from 'styled-components'
 import TimelineUnit from './timeline-unit'
 import {
   calcNextLevelUnitKey,
-  generateDateString,
   generateTimeLevel,
   generateTimelineData,
   getMeasureFromLevel,
@@ -114,6 +113,8 @@ export default function Timeline({
   const measure = getMeasureFromLevel(level)
   const timeUnitEvents = timeEvents[measure]
   const timeUnitKeys = timeKeys[measure]
+  const firstTimeUnitKey = timeUnitKeys[0]
+  const lastTimeeUnitKey = timeUnitKeys[timeUnitKeys.length - 1]
   const timeUnitKeysToRender = timeKeysToRender[measure]
   /** @type {React.RefObject<HTMLDivElement>} */
   const containerRef = useRef(null)
@@ -256,7 +257,6 @@ export default function Timeline({
             <TimelineUnit
               eventsCount={events.length}
               bubbleSizeLevel={getBubbleLevel(timeMax, events.length)}
-              date={generateDateString(timeUnitKey, measure)}
               key={timeUnitKey + i}
               onBubbleClick={() => {
                 updateLevel(level - 1, timeUnitKey)
@@ -268,6 +268,10 @@ export default function Timeline({
               headerHeight={headerHeight}
               measure={measure}
               timeUnitKey={timeUnitKey}
+              isTheFirstOrLastUnit={
+                timeUnitKey === firstTimeUnitKey ||
+                timeUnitKey === lastTimeeUnitKey
+              }
             />
           )
         })

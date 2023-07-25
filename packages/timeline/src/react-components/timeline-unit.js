@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { generateDateString, isEdgeUnit } from '../utils/timeline'
 
 const Wrapper = styled.div`
   display: flex;
@@ -18,6 +19,39 @@ const LeftPanel = styled.div`
     width: 300px;
   }
 `
+
+const YearLabel = styled.label`
+  position: absolute;
+  padding-bottom: 34px;
+  top: 0;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 900;
+  text-align: right;
+  color: rgb(138, 138, 138);
+  ${({ measure }) => {
+    switch (measure) {
+      case 'year':
+        return `
+        right: 48px;
+      `
+      case 'month':
+        return `
+        right: 40px;        
+      `
+      case 'day':
+        return `
+        right: 40px;        
+      `
+      default:
+        return
+    }
+  }}
+`
+
 const DateLabel = styled.label`
   display: block;
   font-size: 12px;
@@ -125,15 +159,21 @@ const bubbleSizeLevels = [23, 36, 48, 60, 66] // 6等分
 export default function TimelineUnit({
   eventsCount,
   bubbleSizeLevel,
-  date,
   onBubbleClick,
   onSingleTimelineNodeSelect,
   isFocus,
   headerHeight,
   measure,
   timeUnitKey,
+  isTheFirstOrLastUnit,
 }) {
   const bubbleSize = bubbleSizeLevels[bubbleSizeLevel]
+  const date = generateDateString(timeUnitKey, measure)
+  let showYear = false
+  if (measure === 'month' || measure === 'day') {
+    showYear = isEdgeUnit(timeUnitKey, measure) || isTheFirstOrLastUnit
+  }
+  // showYear = false
 
   let nodeJsx
   if (eventsCount === 0) {
@@ -156,6 +196,9 @@ export default function TimelineUnit({
   return (
     <Wrapper id={'node-' + timeUnitKey} headerHeight={headerHeight}>
       <LeftPanel>
+        {showYear && (
+          <YearLabel measure={measure}>{timeUnitKey.slice(0, 4)}</YearLabel>
+        )}
         <DateLabel measure={measure}>{date}</DateLabel>
       </LeftPanel>
       <TimelineWrapper>{nodeJsx}</TimelineWrapper>
