@@ -125,6 +125,7 @@ const PcTagsControl = styled.div`
 
 const Tag = styled.div`
   pointer-events: auto;
+  cursor: pointer;
   border-radius: 4px;
   max-width: 96px;
   height: 20px;
@@ -188,7 +189,7 @@ export default function TimelineControl({
   headerHeight,
   allTags,
 }) {
-  const { removeTag } = useContext(TagsContext)
+  const { addTag, removeTag } = useContext(TagsContext)
   const disableNarrowDown = level === 1
   const disableScaleUp = level === maxLevel
   return (
@@ -240,13 +241,19 @@ export default function TimelineControl({
         {allTags.map((tag) => {
           const selected = selectedTags.includes(tag)
           return (
-            <Tag key={tag} selected={selected}>
+            <Tag
+              key={tag}
+              selected={selected}
+              onClick={() => {
+                if (selected) {
+                  removeTag(tag)
+                } else {
+                  addTag(tag)
+                }
+              }}
+            >
               {selected ? (
-                <TagButton
-                  onClick={() => {
-                    removeTag(tag)
-                  }}
-                >
+                <TagButton>
                   <icons.Close />
                 </TagButton>
               ) : (

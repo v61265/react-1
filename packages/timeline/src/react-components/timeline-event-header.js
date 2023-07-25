@@ -60,7 +60,7 @@ export default function TimelineEventHeader({ event, timeUnitKey }) {
                   key={index}
                   onClick={(event) => {
                     event.stopPropagation()
-                    addTag(tag, timeUnitKey)
+                    addTag(tag.name, timeUnitKey)
                   }}
                 >
                   {tag?.name}

@@ -188,7 +188,7 @@ export default function Timeline({
       }
       shouldScroIntoView.current = false
     }
-  }, [focusUnitKey])
+  })
 
   useEffect(() => {
     if (topRef.current && bottomRef.current) {
@@ -232,9 +232,10 @@ export default function Timeline({
       // in mobile only support 3 tag filter
       return
     }
-    if (!tags.includes(newTag.name)) {
-      setTags((oldTags) => oldTags.concat(newTag.name))
-      setFocusUnitKey(timeUnitKey)
+    if (!tags.includes(newTag)) {
+      setTags((oldTags) => oldTags.concat(newTag))
+      const newFocusUnitKey = timeUnitKey || focusUnitKey
+      setFocusUnitKey(newFocusUnitKey)
       shouldScroIntoView.current = true
     }
   }
