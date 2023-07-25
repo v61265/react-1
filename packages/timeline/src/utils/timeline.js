@@ -408,6 +408,13 @@ export function calcNextLevelUnitKey(oldTimeUnitKey, newTimeUnitKeys, zoomIn) {
     newUnitKey = newTimeUnitKeys.find((timeUnitKey) =>
       timeUnitKey.startsWith(oldTimeUnitKey)
     )
+    if (!newUnitKey) {
+      newUnitKey = newTimeUnitKeys.find(
+        (timeUnitKey) =>
+          Number(timeUnitKey.slice(0, oldTimeUnitKey.length)) >
+          Number(oldTimeUnitKey)
+      )
+    }
   } else {
     // handle scale up level change ex: 202301 -> 2023
     const newTimeUnitKeyLength = newTimeUnitKeys[0].length

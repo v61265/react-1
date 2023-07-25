@@ -162,7 +162,7 @@ export default function Timeline({
       const index = getIndexOfTheTopMostItemV2(containerTop, containerDiv)
       let focusNode = containerDiv.children[index]
       let focusUnitKey = focusNode.id.split('-')[1]
-      setFocusUnitKey(focusUnitKey, focusNode)
+      setFocusUnitKey(focusUnitKey)
     }
     window.addEventListener('scroll', onScroll)
 
@@ -225,7 +225,7 @@ export default function Timeline({
         observer.disconnect()
       }
     }
-  }, [])
+  }, [level])
 
   const addTag = (newTag, timeUnitKey) => {
     if (window.screen.width < 768 && tags.length === 3) {
