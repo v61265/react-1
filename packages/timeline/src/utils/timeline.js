@@ -153,6 +153,49 @@ function getTimelineKeys(timestamp) {
   return { yearKey, monthKey, dayKey, eventKey }
 }
 
+/**
+ * @param {Date} date
+ * @param {'year' | 'month' | 'day'} measure
+ * @returns
+ */
+function convertDateToTimeKey(date, measure) {
+  switch (measure) {
+    case 'year':
+      return date.getFullYear().toString()
+    case 'month':
+      return (
+        date.getFullYear().toString() +
+        (date.getMonth() + 1).toString().padStart(2, 0)
+      )
+    case 'day':
+    default:
+      return (
+        date.getFullYear().toString() +
+        (date.getMonth() + 1).toString().padStart(2, 0) +
+        date
+          .getDate()
+          .toString()
+          .padStart(2, 0)
+      )
+  }
+}
+
+function convertTimeKeyToDate(timeKey, measure) {
+  switch (measure) {
+    case 'day':
+      return new Date(
+        timeKey.slice(0, 4),
+        timeKey.slice(4, 6) - 1,
+        timeKey.slice(6)
+      )
+    case 'month':
+      return new Date(timeKey.slice(0, 4), timeKey.slice(4) - 1)
+    case 'year':
+    default:
+      return new Date(timeKey.slice(0, 4))
+  }
+}
+
 export function sortTimelineEvents(events, isAsc) {
   return events.sort((eventA, eventB) => {
     if (eventA.publishTime === eventB.publishTime) {
@@ -248,76 +291,80 @@ export function generateTimelineData(timeline, filterTags) {
     return events.length > max ? events.length : max
   }, 0)
 
-  yearKeys = yearKeys.reduce((newYearKeys, yearKey) => {
+  let yearKeysToRender = [...yearKeys]
+  yearKeysToRender = yearKeysToRender.reduce((newYearKeys, yearKey) => {
     if (newYearKeys.length === 0) {
       newYearKeys.push(yearKey)
     } else {
+      const d = convertTimeKeyToDate(yearKey, 'year')
       const preYearKey = newYearKeys[newYearKeys.length - 1]
-      const year = yearKey.slice(0, 4)
-      // const month = yearKey.slice(4)
-      const d = new Date(year)
-      const preYear = preYearKey.slice(0, 4)
-      // const preMonth = previousYearKey.slice(4)
-      const preD = new Date(preYear)
-      d.setFullYear(d.getFullYear() - 1)
-      if (d.getFullYear() !== preD.getFullYear()) {
-        // console.log(
-        //   `newYearKey ${yearKey} not continue to preYearKey ${preYearKey}`
-        // )
-        newYearKeys.push('empty')
+      const preD = convertTimeKeyToDate(preYearKey, 'year')
+      const continuousD = new Date(preD)
+      continuousD.setFullYear(continuousD.getFullYear() + 1)
+
+      let safeThreshold = 0
+      while (
+        convertDateToTimeKey(continuousD, 'year') !==
+        convertDateToTimeKey(d, 'year')
+      ) {
+        newYearKeys.push(convertDateToTimeKey(continuousD, 'year'))
+        continuousD.setFullYear(continuousD.getFullYear() + 1)
+        safeThreshold++
+        if (safeThreshold >= 5) break
       }
+
       newYearKeys.push(yearKey)
     }
     return newYearKeys
   }, [])
-  monthKeys = monthKeys.reduce((newMonthKeys, monthKey) => {
+  let monthKeysToRender = [...monthKeys]
+  monthKeysToRender = monthKeysToRender.reduce((newMonthKeys, monthKey) => {
     if (newMonthKeys.length === 0) {
       newMonthKeys.push(monthKey)
     } else {
+      const d = convertTimeKeyToDate(monthKey, 'month')
       const preMonthKey = newMonthKeys[newMonthKeys.length - 1]
-      const year = monthKey.slice(0, 4)
-      const month = monthKey.slice(4)
-      const d = new Date(year, month - 1)
-      const preYear = preMonthKey.slice(0, 4)
-      const preMonth = preMonthKey.slice(4)
-      const preD = new Date(preYear, preMonth - 1)
-      d.setMonth(d.getMonth() - 1)
-      if (
-        d.getFullYear() + '' + (d.getMonth() + 1) !==
-        preD.getFullYear() + '' + (preD.getMonth() + 1)
+      const preD = convertTimeKeyToDate(preMonthKey, 'month')
+      const continuousD = new Date(preD)
+      continuousD.setMonth(continuousD.getMonth() + 1)
+
+      let safeThreshold = 0
+      while (
+        convertDateToTimeKey(continuousD, 'month') !==
+        convertDateToTimeKey(d, 'month')
       ) {
-        // console.log(
-        //   `newMonthKey ${monthKey} not continue to preMonthKey ${preMonthKey}`
-        // )
-        newMonthKeys.push('empty')
+        newMonthKeys.push(convertDateToTimeKey(continuousD, 'month'))
+        continuousD.setMonth(continuousD.getMonth() + 1)
+        safeThreshold++
+        if (safeThreshold >= 100) break
       }
+
       newMonthKeys.push(monthKey)
     }
     return newMonthKeys
   }, [])
-  dayKeys = dayKeys.reduce((newDayKeys, dayKey) => {
+  let dayKeysToRender = [...dayKeys]
+  dayKeysToRender = dayKeysToRender.reduce((newDayKeys, dayKey) => {
     if (newDayKeys.length === 0) {
       newDayKeys.push(dayKey)
     } else {
+      const d = convertTimeKeyToDate(dayKey, 'day')
       const preDayKey = newDayKeys[newDayKeys.length - 1]
-      const year = dayKey.slice(0, 4)
-      const month = dayKey.slice(4, 6)
-      const day = dayKey.slice(6)
-      const d = new Date(year, month - 1, day)
-      const preYear = preDayKey.slice(0, 4)
-      const preMonth = preDayKey.slice(4, 6)
-      const preDay = preDayKey.slice(6)
-      const preD = new Date(preYear, preMonth - 1, preDay)
-      d.setDate(d.getDate() - 1)
-      if (
-        '' + d.getFullYear() + (d.getMonth() + 1) + d.getDate() !==
-        '' + preD.getFullYear() + (preD.getMonth() + 1) + preD.getDate()
+      const preD = convertTimeKeyToDate(preDayKey, 'day')
+      const continuousD = new Date(preD)
+      continuousD.setDate(continuousD.getDate() + 1)
+
+      let safeThreshold = 0
+      while (
+        convertDateToTimeKey(continuousD, 'day') !==
+        convertDateToTimeKey(d, 'day')
       ) {
-        // console.log(
-        //   `newDayKey ${dayKey} not continue to preDayKey ${preDayKey}`
-        // )
-        newDayKeys.push('empty')
+        newDayKeys.push(convertDateToTimeKey(continuousD, 'day'))
+        continuousD.setDate(continuousD.getDate() + 1)
+        safeThreshold++
+        if (safeThreshold >= 1000) break
       }
+
       newDayKeys.push(dayKey)
     }
     return newDayKeys
@@ -334,6 +381,12 @@ export function generateTimelineData(timeline, filterTags) {
       year: yearKeys,
       month: monthKeys,
       day: dayKeys,
+      event: eventKeys,
+    },
+    timeKeysToRender: {
+      year: yearKeysToRender,
+      month: monthKeysToRender,
+      day: dayKeysToRender,
       event: eventKeys,
     },
     timeMax: Math.max(yearMax, monthMax, dayMax),
@@ -372,10 +425,10 @@ export function generateDateString(timeUnitKey, measure) {
   }
   switch (measure) {
     case 'day':
-      return timeUnitKey.slice(4, 8)
+      return timeUnitKey.slice(0, 8)
 
     case 'month':
-      return timeUnitKey.slice(4, 6) - 0 + '月'
+      return timeUnitKey.slice(0, 6) - 0 + '月'
 
     case 'year':
     default:

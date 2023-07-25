@@ -128,55 +128,37 @@ export default function TimelineUnit({
   date,
   onBubbleClick,
   onSingleTimelineNodeSelect,
-  emptyId,
   isFocus,
   headerHeight,
   measure,
   timeUnitKey,
 }) {
-  if (date === 'empty') {
-    return <TimelineUnitEmpty emptyId={emptyId} headerHeight={headerHeight} />
-  }
-  const isSingleEvent = eventsCount === 1
   const bubbleSize = bubbleSizeLevels[bubbleSizeLevel]
+
+  let nodeJsx
+  if (eventsCount === 0) {
+    nodeJsx = null
+  } else if (eventsCount === 1) {
+    nodeJsx = (
+      <SingleTimelineNode
+        isFocus={isFocus}
+        onClick={onSingleTimelineNodeSelect}
+      />
+    )
+  } else {
+    nodeJsx = (
+      <TimelineNode bubbleSize={bubbleSize} onClick={onBubbleClick}>
+        {eventsCount}
+      </TimelineNode>
+    )
+  }
 
   return (
     <Wrapper id={'node-' + timeUnitKey} headerHeight={headerHeight}>
       <LeftPanel>
         <DateLabel measure={measure}>{date}</DateLabel>
       </LeftPanel>
-      <TimelineWrapper>
-        {isSingleEvent ? (
-          <SingleTimelineNode
-            isFocus={isFocus}
-            onClick={onSingleTimelineNodeSelect}
-          />
-        ) : (
-          <TimelineNode bubbleSize={bubbleSize} onClick={onBubbleClick}>
-            {eventsCount}
-          </TimelineNode>
-        )}
-      </TimelineWrapper>
-      <RightPanel />
-    </Wrapper>
-  )
-}
-
-const DashLine = styled.div`
-  position: relative;
-  width: 3px;
-  --s: 14px; /* control the space between dashes */
-  background: radial-gradient(circle closest-side, #000 98%, #0000) 0 0/100%
-      var(--s),
-    linear-gradient(transparent 13px, #000 15px) 0 calc(var(--s) / 2) / 100%
-      calc(2 * var(--s));
-`
-
-function TimelineUnitEmpty({ emptyId, headerHeight }) {
-  return (
-    <Wrapper id={'node-' + emptyId} headerHeight={headerHeight}>
-      <LeftPanel />
-      <DashLine />
+      <TimelineWrapper>{nodeJsx}</TimelineWrapper>
       <RightPanel />
     </Wrapper>
   )

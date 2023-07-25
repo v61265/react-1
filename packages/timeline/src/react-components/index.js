@@ -97,12 +97,15 @@ export default function Timeline({
   ])
   const [tags, setTags] = useState(initialTags)
   const [stickyStrategy, setStickStrategy] = useState('absolute-top')
-  const [focusUnitKey, setFocusUnitKey] = useState(0)
+  const [focusUnitKey, setFocusUnitKey] = useState('')
 
-  const { timeEvents, timeKeys, timeMax, allTags } = useMemo(
-    () => generateTimelineData(timeline, tags),
-    [timeline, tags]
-  )
+  const {
+    timeEvents,
+    timeKeys,
+    timeKeysToRender,
+    timeMax,
+    allTags,
+  } = useMemo(() => generateTimelineData(timeline, tags), [timeline, tags])
   const { initialLevel, maxLevel } = useMemo(
     () => generateTimeLevel(timeline),
     [timeline]
@@ -111,6 +114,7 @@ export default function Timeline({
   const measure = getMeasureFromLevel(level)
   const timeUnitEvents = timeEvents[measure]
   const timeUnitKeys = timeKeys[measure]
+  const timeUnitKeysToRender = timeKeysToRender[measure]
   /** @type {React.RefObject<HTMLDivElement>} */
   const containerRef = useRef(null)
 
@@ -157,10 +161,6 @@ export default function Timeline({
       const index = getIndexOfTheTopMostItemV2(containerTop, containerDiv)
       let focusNode = containerDiv.children[index]
       let focusUnitKey = focusNode.id.split('-')[1]
-      if (focusUnitKey === 'empty') {
-        focusNode = focusNode.previousElementSibling
-        focusUnitKey = focusNode.id.split('-')[1]
-      }
       setFocusUnitKey(focusUnitKey, focusNode)
     }
     window.addEventListener('scroll', onScroll)
@@ -168,7 +168,7 @@ export default function Timeline({
     return () => {
       window.removeEventListener('scroll', onScroll)
     }
-  }, [timeUnitKeys])
+  }, [headerHeight])
 
   useEffect(() => {
     if (containerRef.current && shouldScroIntoView.current) {
@@ -187,7 +187,7 @@ export default function Timeline({
       }
       shouldScroIntoView.current = false
     }
-  }, [level, timeUnitKeys, focusUnitKey])
+  }, [focusUnitKey])
 
   useEffect(() => {
     if (topRef.current && bottomRef.current) {
@@ -250,20 +250,18 @@ export default function Timeline({
 
   let timelineNodesJsx =
     measure !== 'event'
-      ? timeUnitKeys.map((timeUnitKey, i) => {
-          const events = timeUnitEvents[timeUnitKey]
+      ? timeUnitKeysToRender.map((timeUnitKey, i) => {
+          const events = timeUnitEvents[timeUnitKey] || []
           return (
             <TimelineUnit
               eventsCount={events.length}
               bubbleSizeLevel={getBubbleLevel(timeMax, events.length)}
               date={generateDateString(timeUnitKey, measure)}
-              emptyId={timeUnitKey + '-' + i}
               key={timeUnitKey + i}
               onBubbleClick={() => {
                 updateLevel(level - 1, timeUnitKey)
               }}
               onSingleTimelineNodeSelect={() => {
-                console.log(timeUnitKey, shouldScroIntoView.current)
                 setFocusUnitKey(timeUnitKey)
               }}
               isFocus={timeUnitKey === focusUnitKey}
@@ -273,7 +271,7 @@ export default function Timeline({
             />
           )
         })
-      : timeUnitKeys.map((timeUnitKey) => {
+      : timeUnitKeysToRender.map((timeUnitKey) => {
           const event = timeUnitEvents[timeUnitKey]
           return (
             <EventWrapper key={timeUnitKey} id={`node-${timeUnitKey}`}>
@@ -285,7 +283,6 @@ export default function Timeline({
             </EventWrapper>
           )
         })
-
   return (
     <TagsContext.Provider value={{ tags, addTag, removeTag }}>
       <Wrapper>
@@ -314,6 +311,11 @@ export default function Timeline({
               stickyStrategy={stickyStrategy}
               timeUnitKey={focusUnitKey}
               headerHeight={headerHeight}
+              timeUnitKeys={timeUnitKeys}
+              changeFocusUnitKey={(newFocusUnitKey) => {
+                setFocusUnitKey(newFocusUnitKey)
+                shouldScroIntoView.current = true
+              }}
             />
           )}
           <div id="bottom" ref={bottomRef} />
