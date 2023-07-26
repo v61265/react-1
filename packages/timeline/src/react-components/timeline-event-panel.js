@@ -184,7 +184,9 @@ export default function TimelineEventPanel({
           ) : (
             <Icons.LastArrow />
           )}
-          <EventSwitchControlButtonLabel>上一個</EventSwitchControlButtonLabel>
+          <EventSwitchControlButtonLabel>
+            上個日期
+          </EventSwitchControlButtonLabel>
         </EventSwitchControlButton>
         <EventSwitchControlButton
           disabled={nextEventDisabled}
@@ -193,7 +195,9 @@ export default function TimelineEventPanel({
             changeFocusUnitKey(timeUnitKeys[nextKeyIndex])
           }}
         >
-          <EventSwitchControlButtonLabel>下一個</EventSwitchControlButtonLabel>
+          <EventSwitchControlButtonLabel>
+            下個日期
+          </EventSwitchControlButtonLabel>
           {nextEventDisabled ? (
             <Icons.NextArrowDisabled />
           ) : (

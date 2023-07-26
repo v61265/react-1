@@ -119,7 +119,8 @@ export default function Timeline({
   /** @type {React.RefObject<HTMLDivElement>} */
   const containerRef = useRef(null)
 
-  const shouldScroIntoView = useRef(false)
+  const scroIntoViewType = useRef('')
+  const isSmoothScrolling = useRef(false)
   /** @type {React.RefObject<HTMLDivElement>} */
   const topRef = useRef(null)
   /** @type {React.RefObject<HTMLDivElement>} */
@@ -132,7 +133,7 @@ export default function Timeline({
       timeKeys[getMeasureFromLevel(newLevel)],
       level - newLevel > 0
     )
-    shouldScroIntoView.current = true
+    scroIntoViewType.current = 'immediate'
     setFocusUnitKey(newFocusUnitKey)
     setLevel(newLevel)
   }
@@ -142,6 +143,9 @@ export default function Timeline({
       /** @type {HTMLDivElement} */
       const containerDiv = containerRef.current
       const containerTop = containerDiv.getBoundingClientRect().top
+      if (isSmoothScrolling.current) {
+        return
+      }
       function getIndexOfTheTopMostItemV2(top, parentDom) {
         if (top >= headerHeight) {
           return 0
@@ -172,21 +176,63 @@ export default function Timeline({
   }, [headerHeight])
 
   useEffect(() => {
-    if (containerRef.current && shouldScroIntoView.current) {
+    if (containerRef.current && scroIntoViewType.current) {
       const focusTimelineUnitEle = containerRef.current.querySelector(
         `#node-${focusUnitKey}`
       )
-      if (focusTimelineUnitEle) {
-        // add 1 px to prevent focusIndex count on scroll mistaken
-        window.scrollTo(
-          0,
-          window.scrollY +
-            focusTimelineUnitEle.getBoundingClientRect().top +
-            1 -
-            headerHeight
-        )
+      function smoothScrollTo(targetPosition, speedFactor) {
+        const startPosition = window.scrollY
+        const distance = Math.abs(targetPosition - startPosition)
+        const speed = speedFactor || 0.3 // Adjust this value for different scrolling speed
+
+        const duration = Math.min(2000, Math.max(300, distance / speed)) // Set a maximum duration to avoid extremely long scrolls
+        console.log(duration)
+
+        const startTime = performance.now()
+
+        function scrollStep(timestamp) {
+          const currentTime = timestamp - startTime
+          const scrollFraction = currentTime / duration
+
+          if (currentTime >= duration) {
+            window.scrollTo(0, targetPosition)
+          } else {
+            const easeValue = scrollFraction ** 2 // You can adjust the easing function here
+            const scrollValue =
+              startPosition +
+              (targetPosition > startPosition ? 1 : -1) * distance * easeValue
+            window.scrollTo(0, scrollValue)
+            window.requestAnimationFrame(scrollStep)
+            return
+          }
+          isSmoothScrolling.current = false
+        }
+
+        window.requestAnimationFrame(scrollStep)
       }
-      shouldScroIntoView.current = false
+      if (focusTimelineUnitEle) {
+        // add 2 px to prevent focusIndex count on scroll mistaken
+        if (scroIntoViewType.current === 'immediate') {
+          window.scrollTo(
+            0,
+            window.scrollY +
+              focusTimelineUnitEle.getBoundingClientRect().top +
+              2 -
+              headerHeight
+          )
+        } else if (scroIntoViewType.current === 'smooth') {
+          isSmoothScrolling.current = true
+          // add 2 px to prevent focusIndex count on scroll mistaken
+          smoothScrollTo(
+            window.scrollY +
+              focusTimelineUnitEle.getBoundingClientRect().top +
+              2 -
+              headerHeight,
+            20
+          )
+        }
+      }
+      scroIntoViewType.current = ''
     }
   })
 
@@ -236,13 +282,13 @@ export default function Timeline({
       setTags((oldTags) => oldTags.concat(newTag))
       const newFocusUnitKey = timeUnitKey || focusUnitKey
       setFocusUnitKey(newFocusUnitKey)
-      shouldScroIntoView.current = true
+      scroIntoViewType.current = 'immediate'
     }
   }
 
   const removeTag = (tagToBeRemoved) => {
     setTags((oldTags) => oldTags.filter((tag) => tag !== tagToBeRemoved))
-    shouldScroIntoView.current = true
+    scroIntoViewType.current = 'immediate'
   }
 
   const focusEvent =
@@ -319,7 +365,7 @@ export default function Timeline({
               timeUnitKeys={timeUnitKeys}
               changeFocusUnitKey={(newFocusUnitKey) => {
                 setFocusUnitKey(newFocusUnitKey)
-                shouldScroIntoView.current = true
+                scroIntoViewType.current = 'smooth'
               }}
             />
           )}
