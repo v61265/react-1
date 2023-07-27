@@ -1,10 +1,11 @@
 import styled from 'styled-components'
 import { generateDateString, isEdgeUnit } from '../utils/timeline'
+import { useState, useEffect } from 'react'
 
 const Wrapper = styled.div`
   display: flex;
-  ${({ headerHeight }) => `
-    height: calc((100vh - ${headerHeight}px) / 6);
+  ${({ headerHeight, divider }) => `
+    height: calc((100vh - ${headerHeight}px) / ${divider});
   `}
   width: 320px;
   margin: 0 auto;
@@ -146,10 +147,6 @@ const SingleTimelineNode = styled.div`
   `}
 `
 
-// const bubbleSizeLevels = [23, 28, 36, 48, 60] // 7等分
-const bubbleSizeLevels = [23, 36, 48, 60, 66] // 6等分
-// const bubbleSizeLevels = [23, 36, 48, 60, 76] // 5等分
-
 /**
  * @param {Object} props
  * @param {boolean} props.eventsCount - event count
@@ -166,14 +163,24 @@ export default function TimelineUnit({
   measure,
   timeUnitKey,
   isTheFirstOrLastUnit,
+  dividerConfig,
 }) {
-  const bubbleSize = bubbleSizeLevels[bubbleSizeLevel]
+  const { rwd, bubbleLevelSizesInDivider } = dividerConfig
+  const [device, setDevice] = useState('mobile')
+  const divider = rwd[device][measure]
+  const bubbleLevelSizes = bubbleLevelSizesInDivider[divider]
+  const bubbleSize = bubbleLevelSizes[bubbleSizeLevel]
   const date = generateDateString(timeUnitKey, measure)
   let showYear = false
   if (measure === 'month' || measure === 'day') {
     showYear = isEdgeUnit(timeUnitKey, measure) || isTheFirstOrLastUnit
   }
-  // showYear = false
+
+  useEffect(() => {
+    if (window.screen.width >= 768) {
+      setDevice('pc')
+    }
+  }, [rwd])
 
   let nodeJsx
   if (eventsCount === 0) {
@@ -194,7 +201,11 @@ export default function TimelineUnit({
   }
 
   return (
-    <Wrapper id={'node-' + timeUnitKey} headerHeight={headerHeight}>
+    <Wrapper
+      id={'node-' + timeUnitKey}
+      headerHeight={headerHeight}
+      divider={divider}
+    >
       <LeftPanel>
         {showYear && (
           <YearLabel measure={measure}>{timeUnitKey.slice(0, 4)}</YearLabel>

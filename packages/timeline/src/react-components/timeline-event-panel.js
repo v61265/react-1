@@ -123,6 +123,10 @@ const EventSwitchControlButton = styled.button`
   }
 `
 
+const EmptyEventWrapper = styled.div`
+  text-align: center;
+`
+
 export default function TimelineEventPanel({
   event,
   fetchImageBaseUrl,
@@ -131,6 +135,7 @@ export default function TimelineEventPanel({
   headerHeight,
   timeUnitKeys,
   changeFocusUnitKey,
+  noEventContent,
 }) {
   const indexOfFocusKey = timeUnitKeys.findIndex((key) => key === timeUnitKey)
   let lastKeyIndex, nextKeyIndex
@@ -154,18 +159,11 @@ export default function TimelineEventPanel({
       timeUnitKey={timeUnitKey}
     />
   ) : (
-    <span
-      style={{
-        textAlign: 'center',
-        fontSize: '14px',
-        lineHeight: '1.5',
-        color: '#989898',
+    <EmptyEventWrapper
+      dangerouslySetInnerHTML={{
+        __html: noEventContent,
       }}
-    >
-      點擊泡泡
-      <br />
-      或往下滑動
-    </span>
+    />
   )
 
   return (

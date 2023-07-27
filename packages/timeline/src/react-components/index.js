@@ -86,10 +86,55 @@ function getBubbleLevel(max, count) {
   return Math.ceil(count / levelSize) - 1
 }
 
+const defaultConifg = {
+  dividerConfig: {
+    rwd: {
+      mobile: {
+        year: 5,
+        month: 6,
+        day: 7,
+      },
+      pc: {
+        year: 5,
+        month: 6,
+        day: 7,
+      },
+    },
+    bubbleLevelSizesInDivider: {
+      5: [23, 36, 48, 60, 76],
+      6: [23, 36, 48, 60, 66],
+      7: [23, 28, 36, 48, 60],
+    },
+  },
+  headerHeightConfig: {
+    rwd: {
+      mobile: 66,
+      pc: 80,
+    },
+    rwdBreakpoints: [
+      { minWidth: 0, name: 'mobile' },
+      { minWidth: 568, name: 'pc' },
+    ],
+  },
+  noEventContent: `
+    <span
+      style="
+        text-align: center;
+        font-size: 14px;
+        line-height: 1.5;
+        color: #989898;
+      "
+    >
+      點擊泡泡
+      <br />
+      或往下滑動
+    </span>
+  `,
+}
+
 export default function Timeline({
   liveblog,
   fetchImageBaseUrl = 'https://editools-gcs-dev.readr.tw',
-  headerHeight = 66,
 }) {
   const timeline = useMemo(() => getSortedTimelineFromLiveblog(liveblog), [
     liveblog,
@@ -97,6 +142,18 @@ export default function Timeline({
   const [tags, setTags] = useState(initialTags)
   const [stickyStrategy, setStickStrategy] = useState('absolute-top')
   const [focusUnitKey, setFocusUnitKey] = useState('')
+  const { dividerConfig, headerHeightConfig, noEventContent } =
+    timeline.conifg || defaultConifg
+  const { rwd, rwdBreakpoints } = headerHeightConfig
+  const [headerHeight, setHeaderHeight] = useState(rwd.mobile)
+
+  useEffect(() => {
+    const windowWidth = window.screen.width
+    const rwdBreakpoint = rwdBreakpoints.reverse().find((rwdBreakpoint) => {
+      return windowWidth >= rwdBreakpoint.minWidth
+    })
+    setHeaderHeight(rwd[rwdBreakpoint.name])
+  }, [])
 
   const {
     timeEvents,
@@ -183,11 +240,9 @@ export default function Timeline({
       function smoothScrollTo(targetPosition, speedFactor) {
         const startPosition = window.scrollY
         const distance = Math.abs(targetPosition - startPosition)
-        const speed = speedFactor || 0.3 // Adjust this value for different scrolling speed
+        const speed = speedFactor
 
-        const duration = Math.min(2000, Math.max(300, distance / speed)) // Set a maximum duration to avoid extremely long scrolls
-        console.log(duration)
-
+        const duration = Math.min(2000, Math.max(300, distance / speed)) // Set a maximum and minimum duration to avoid extremely long or short scrolls
         const startTime = performance.now()
 
         function scrollStep(timestamp) {
@@ -304,6 +359,7 @@ export default function Timeline({
             <TimelineUnit
               eventsCount={events.length}
               bubbleSizeLevel={getBubbleLevel(timeMax, events.length)}
+              dividerConfig={dividerConfig}
               key={timeUnitKey + i}
               onBubbleClick={() => {
                 updateLevel(level - 1, timeUnitKey)
@@ -363,6 +419,7 @@ export default function Timeline({
               timeUnitKey={focusUnitKey}
               headerHeight={headerHeight}
               timeUnitKeys={timeUnitKeys}
+              noEventContent={noEventContent}
               changeFocusUnitKey={(newFocusUnitKey) => {
                 setFocusUnitKey(newFocusUnitKey)
                 scroIntoViewType.current = 'smooth'
