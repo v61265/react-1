@@ -3,11 +3,11 @@ import { types } from '@theatre/core'
 export const FONT = {
   position: types.compound({
     x: types.number(40, {
-      range: [0, 100],
+      range: [-100, 100],
       nudgeMultiplier: 0.5,
     }),
     y: types.number(40, {
-      range: [0, 100],
+      range: [-100, 100],
       nudgeMultiplier: 0.5,
     }),
   }),
@@ -32,7 +32,7 @@ export const FONT = {
       nudgeMultiplier: 1,
     }),
   }),
-  content: types.string(''),
+  content: types.string('請輸入文字'),
   opacity: types.number(1, {
     range: [0, 1],
     nudgeMultiplier: 0.05,
