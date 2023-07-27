@@ -146,6 +146,7 @@ const SingleTimelineNode = styled.div`
     background: #ec5656;
   `}
 `
+const defaultBubbleLevelSizes = [23, 28, 36, 48, 60]
 
 /**
  * @param {Object} props
@@ -168,7 +169,8 @@ export default function TimelineUnit({
   const { rwd, bubbleLevelSizesInDivider } = dividerConfig
   const [device, setDevice] = useState('mobile')
   const divider = rwd[device][measure]
-  const bubbleLevelSizes = bubbleLevelSizesInDivider[divider]
+  const bubbleLevelSizes =
+    bubbleLevelSizesInDivider[divider] || defaultBubbleLevelSizes
   const bubbleSize = bubbleLevelSizes[bubbleSizeLevel]
   const date = generateDateString(timeUnitKey, measure)
   let showYear = false
