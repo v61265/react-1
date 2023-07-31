@@ -37,7 +37,7 @@ const Wrapper = styled.div`
   z-index: 10;
 
   @media (min-width: 768px) {
-    left: 200px;
+    left: 170px;
   }
   @media (min-width: 1200px) {
       ${({ stickyStrategy }) =>
