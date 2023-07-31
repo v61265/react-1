@@ -147,14 +147,6 @@ export default function Timeline({
   const { rwd, rwdBreakpoints } = headerHeightConfig
   const [headerHeight, setHeaderHeight] = useState(rwd.mobile)
 
-  useEffect(() => {
-    const windowWidth = window.screen.width
-    const rwdBreakpoint = rwdBreakpoints.reverse().find((rwdBreakpoint) => {
-      return windowWidth >= rwdBreakpoint.minWidth
-    })
-    setHeaderHeight(rwd[rwdBreakpoint.name])
-  }, [])
-
   const {
     timeEvents,
     timeKeys,
@@ -196,6 +188,14 @@ export default function Timeline({
   }
 
   useEffect(() => {
+    const windowWidth = window.screen.width
+    const rwdBreakpoint = rwdBreakpoints.reverse().find((rwdBreakpoint) => {
+      return windowWidth >= rwdBreakpoint.minWidth
+    })
+    setHeaderHeight(rwd[rwdBreakpoint.name])
+  }, [])
+
+  useEffect(() => {
     const onScroll = () => {
       /** @type {HTMLDivElement} */
       const containerDiv = containerRef.current
@@ -203,7 +203,7 @@ export default function Timeline({
       if (isSmoothScrolling.current) {
         return
       }
-      function getIndexOfTheTopMostItemV2(top, parentDom) {
+      function getIndexOfTheTopMostItem(top, parentDom) {
         if (top >= headerHeight) {
           return 0
         } else {
@@ -220,7 +220,7 @@ export default function Timeline({
           }
         }
       }
-      const index = getIndexOfTheTopMostItemV2(containerTop, containerDiv)
+      const index = getIndexOfTheTopMostItem(containerTop, containerDiv)
       let focusNode = containerDiv.children[index]
       let focusUnitKey = focusNode.id.split('-')[1]
       setFocusUnitKey(focusUnitKey)
