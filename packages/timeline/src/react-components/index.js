@@ -53,6 +53,9 @@ const GlobalStyles = createGlobalStyle`
 const Wrapper = styled.div`
   background-color: #efefef;
   overflow: hidden;
+  width: 100vw;
+  position: relative;
+  left: calc(50% - 50vw);
 `
 
 const TimelineWrapper = styled.div`
