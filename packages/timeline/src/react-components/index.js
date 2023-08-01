@@ -142,7 +142,7 @@ export default function Timeline({
   const isTimeSortedAsc = liveblog.sort === 'asc' // default to 'desc'
   const timeline = useMemo(
     () => getSortedTimelineFromLiveblog(liveblog, isTimeSortedAsc),
-    [liveblog]
+    [liveblog, isTimeSortedAsc]
   )
   const [tags, setTags] = useState(initialTags)
   const [stickyStrategy, setStickStrategy] = useState('absolute-top')
@@ -158,7 +158,11 @@ export default function Timeline({
     timeKeysToRender,
     timeMax,
     allTags,
-  } = useMemo(() => generateTimelineData(timeline, tags), [timeline, tags])
+  } = useMemo(() => generateTimelineData(timeline, tags, isTimeSortedAsc), [
+    timeline,
+    tags,
+    isTimeSortedAsc,
+  ])
   const { initialLevel, maxLevel } = useMemo(
     () => generateTimeLevel(timeline),
     [timeline]
@@ -182,20 +186,12 @@ export default function Timeline({
 
   const updateLevel = (newLevel, spFocusUnitKey) => {
     const oldFocusUnitKey = spFocusUnitKey || focusUnitKey
-    console.log(
-      'oldFocusUnitKey',
-      oldFocusUnitKey,
-      typeof oldFocusUnitKey,
-      timeKeys[getMeasureFromLevel(newLevel)],
-      level - newLevel > 0
-    )
     const newFocusUnitKey = calcNextLevelUnitKey(
       oldFocusUnitKey,
       timeKeys[getMeasureFromLevel(newLevel)],
       level - newLevel > 0,
       isTimeSortedAsc
     )
-    console.log('newKey', newFocusUnitKey)
     scroIntoViewType.current = 'immediate'
     setFocusUnitKey(newFocusUnitKey)
     setLevel(newLevel)
@@ -434,6 +430,7 @@ export default function Timeline({
               headerHeight={headerHeight}
               timeUnitKeys={timeUnitKeys}
               noEventContent={noEventContent}
+              sortedAsc={isTimeSortedAsc}
               changeFocusUnitKey={(newFocusUnitKey) => {
                 setFocusUnitKey(newFocusUnitKey)
                 scroIntoViewType.current = 'smooth'

@@ -136,18 +136,34 @@ export default function TimelineEventPanel({
   timeUnitKeys,
   changeFocusUnitKey,
   noEventContent,
+  sortedAsc,
 }) {
   const indexOfFocusKey = timeUnitKeys.findIndex((key) => key === timeUnitKey)
   let lastKeyIndex, nextKeyIndex
-  if (indexOfFocusKey === -1) {
-    nextKeyIndex = timeUnitKeys.findIndex(
-      (key) => Number(key) > Number(timeUnitKey)
-    )
-    lastKeyIndex = nextKeyIndex - 1
+  if (sortedAsc) {
+    if (indexOfFocusKey === -1) {
+      // the timeUnitKey is not inside timeUnitKeys, it's an empty event node
+      nextKeyIndex = timeUnitKeys.findIndex(
+        (key) => Number(key) > Number(timeUnitKey)
+      )
+      lastKeyIndex = nextKeyIndex - 1
+    } else {
+      lastKeyIndex = indexOfFocusKey - 1 >= 0 ? indexOfFocusKey - 1 : -1
+      nextKeyIndex =
+        indexOfFocusKey + 1 < timeUnitKeys.length ? indexOfFocusKey + 1 : -1
+    }
   } else {
-    lastKeyIndex = indexOfFocusKey - 1 >= 0 ? indexOfFocusKey - 1 : -1
-    nextKeyIndex =
-      indexOfFocusKey + 1 < timeUnitKeys.length ? indexOfFocusKey + 1 : -1
+    if (indexOfFocusKey === -1) {
+      // the timeUnitKey is not inside timeUnitKeys, it's an empty event node
+      nextKeyIndex = timeUnitKeys.findIndex(
+        (key) => Number(key) < Number(timeUnitKey)
+      )
+      lastKeyIndex = nextKeyIndex - 1
+    } else {
+      lastKeyIndex = indexOfFocusKey - 1 >= 0 ? indexOfFocusKey - 1 : -1
+      nextKeyIndex =
+        indexOfFocusKey + 1 < timeUnitKeys.length ? indexOfFocusKey + 1 : -1
+    }
   }
   const lastEventDisabled = lastKeyIndex === -1
   const nextEventDisabled = nextKeyIndex === -1

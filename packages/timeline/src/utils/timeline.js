@@ -226,7 +226,7 @@ export function sortTimelineEvents(events, isAsc) {
   })
 }
 
-export function generateTimelineData(timeline, filterTags) {
+export function generateTimelineData(timeline, filterTags, isAsc) {
   const timelineEvents = timeline.timelineEvents
   const yearEvents = { empty: [] }
   let yearKeys = new Set()
@@ -310,6 +310,7 @@ export function generateTimelineData(timeline, filterTags) {
     return events.length > max ? events.length : max
   }, 0)
 
+  const countingNext = isAsc ? 1 : -1
   let yearKeysToRender = [...yearKeys]
   yearKeysToRender = yearKeysToRender.reduce((newYearKeys, yearKey) => {
     if (newYearKeys.length === 0) {
@@ -319,7 +320,7 @@ export function generateTimelineData(timeline, filterTags) {
       const preYearKey = newYearKeys[newYearKeys.length - 1]
       const preD = convertTimeKeyToDate(preYearKey, 'year')
       const continuousD = new Date(preD)
-      continuousD.setFullYear(continuousD.getFullYear() + 1)
+      continuousD.setFullYear(continuousD.getFullYear() + countingNext)
 
       let safeThreshold = 0
       while (
@@ -327,7 +328,7 @@ export function generateTimelineData(timeline, filterTags) {
         convertDateToTimeKey(d, 'year')
       ) {
         newYearKeys.push(convertDateToTimeKey(continuousD, 'year'))
-        continuousD.setFullYear(continuousD.getFullYear() + 1)
+        continuousD.setFullYear(continuousD.getFullYear() + countingNext)
         safeThreshold++
         if (safeThreshold >= 5) break
       }
@@ -345,7 +346,7 @@ export function generateTimelineData(timeline, filterTags) {
       const preMonthKey = newMonthKeys[newMonthKeys.length - 1]
       const preD = convertTimeKeyToDate(preMonthKey, 'month')
       const continuousD = new Date(preD)
-      continuousD.setMonth(continuousD.getMonth() + 1)
+      continuousD.setMonth(continuousD.getMonth() + countingNext)
 
       let safeThreshold = 0
       while (
@@ -353,7 +354,7 @@ export function generateTimelineData(timeline, filterTags) {
         convertDateToTimeKey(d, 'month')
       ) {
         newMonthKeys.push(convertDateToTimeKey(continuousD, 'month'))
-        continuousD.setMonth(continuousD.getMonth() + 1)
+        continuousD.setMonth(continuousD.getMonth() + countingNext)
         safeThreshold++
         if (safeThreshold >= 100) break
       }
@@ -371,7 +372,7 @@ export function generateTimelineData(timeline, filterTags) {
       const preDayKey = newDayKeys[newDayKeys.length - 1]
       const preD = convertTimeKeyToDate(preDayKey, 'day')
       const continuousD = new Date(preD)
-      continuousD.setDate(continuousD.getDate() + 1)
+      continuousD.setDate(continuousD.getDate() + countingNext)
 
       let safeThreshold = 0
       while (
@@ -379,7 +380,7 @@ export function generateTimelineData(timeline, filterTags) {
         convertDateToTimeKey(d, 'day')
       ) {
         newDayKeys.push(convertDateToTimeKey(continuousD, 'day'))
-        continuousD.setDate(continuousD.getDate() + 1)
+        continuousD.setDate(continuousD.getDate() + countingNext)
         safeThreshold++
         if (safeThreshold >= 1000) break
       }
@@ -511,7 +512,7 @@ function isFirstMonthOfYear(date) {
 function isLastMonthOfYear(date) {
   const nextMonth = new Date(date)
   nextMonth.setMonth(nextMonth.getMonth() + 1)
-  return nextMonth.getFullYear() !== nextMonth.getFullYear()
+  return nextMonth.getFullYear() !== date.getFullYear()
 }
 
 /**
