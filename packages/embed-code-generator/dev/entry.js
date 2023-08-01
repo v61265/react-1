@@ -78,6 +78,11 @@ const pkgOptions = [
     value: 'react-live-blog',
   },
   {
+    id: 'react-timeline',
+    name: 'Timeline',
+    value: 'react-timeline',
+  },
+  {
     id: 'react-election-widgets-votes-comparison',
     name: 'Election Widgets: Votes Comparison',
     value: 'react-election-widgets-votes-comparison',
