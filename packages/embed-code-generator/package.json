@@ -1,6 +1,6 @@
 {
   "name": "@readr-media/react-embed-code-generator",
-  "version": "2.4.0-alpha.5",
+  "version": "2.4.0-alpha.8",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -40,7 +40,7 @@
     "@readr-media/react-random-text-selector": "^1.0.2",
     "@readr-media/react-theatre": "^0.2.0-alpha.2",
     "@readr-media/react-three-story-points": "1.0.2",
-    "@readr-media/react-timeline": "^1.0.0-alpha.4",
+    "@readr-media/react-timeline": "^1.0.0-alpha.5",
     "lodash": "^4.17.21",
     "serialize-javascript": "^6.0.0"
   },
@@ -50,7 +50,7 @@
     "@babel/eslint-parser": "^7.11.4",
     "@babel/preset-env": "^7.17.12",
     "@babel/preset-react": "^7.17.12",
-    "@readr-media/react-embed-code-generator": "^2.4.0-alpha.5",
+    "@readr-media/react-embed-code-generator": "^2.4.0-alpha.8",
     "@svgr/webpack": "^6.2.1",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.5",
