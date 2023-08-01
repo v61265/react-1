@@ -40,6 +40,7 @@
     "@readr-media/react-random-text-selector": "^1.0.2",
     "@readr-media/react-theatre": "^0.2.0-alpha.2",
     "@readr-media/react-three-story-points": "1.0.2",
+    "@readr-media/react-timeline": "^1.0.0-alpha.4",
     "lodash": "^4.17.21",
     "serialize-javascript": "^6.0.0"
   },

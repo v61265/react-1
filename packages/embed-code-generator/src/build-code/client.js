@@ -75,6 +75,18 @@ if (window?.[namespace][`react-live-blog${pkgVersion}`]) {
   })
 }
 
+if (window?.[namespace][`react-timeline${pkgVersion}`]) {
+  import(
+    /* webpackChunkName: "react-timeline" */ '@readr-media/react-timeline'
+  ).then(({ default: tl }) => {
+    hydrate(
+      namespace,
+      `react-timeline${pkgVersion}`,
+      tl.ReactComponent.Timeline
+    )
+  })
+}
+
 if (window?.[namespace][`react-election-widgets-seat-chart${pkgVersion}`]) {
   import(
     /* webpackChunkName: "react-election-widgets" */ '@readr-media/react-election-widgets'

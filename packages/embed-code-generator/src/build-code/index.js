@@ -15,6 +15,7 @@ import serialize from 'serialize-javascript'
 import Video from '@readr-media/react-full-screen-video'
 import RandomTextSelector from '@readr-media/react-random-text-selector'
 import Theatre from '@readr-media/react-theatre'
+import rtl from '@readr-media/react-timeline'
 import { ServerStyleSheet } from 'styled-components'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -112,6 +113,9 @@ export function buildEmbeddedCode(pkgName, data, webpackAssets) {
       break
     case 'react-live-blog':
       Component = rlb.ReactComponent.LiveBlog
+      break
+    case 'react-timeline':
+      Component = rtl.ReactComponent.Timeline
       break
     case 'react-election-widgets-seat-chart':
       Component = ew.SeatChart.ReactComponent

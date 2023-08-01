@@ -1,6 +1,6 @@
 import 'regenerator-runtime/runtime'
 import React from 'react' // eslint-disable-line
-import lb from '../src'
+import tl from '../src'
 import { createRoot } from 'react-dom/client'
 import styled from 'styled-components'
 
@@ -40,7 +40,7 @@ const ContentBelow = styled.div`
 `
 
 async function main() {
-  const ldr = new lb.DataLoader()
+  const ldr = new tl.DataLoader()
   const data = await ldr.loadData(
     'https://storage.googleapis.com/editools-gcs-dev.readr.tw/files/liveblogs/deepfakeDev.json'
   )
@@ -48,7 +48,7 @@ async function main() {
     <>
       <Header>Readr Header</Header>
       <ContentAbove>Timeline 之前的段落</ContentAbove>
-      <lb.ReactComponent.Timeline liveblog={data} />
+      <tl.ReactComponent.Timeline liveblog={data} />
       <ContentBelow>Timeline 之後的段落</ContentBelow>
     </>
   )
