@@ -186,12 +186,20 @@ export default function Timeline({
 
   const updateLevel = (newLevel, spFocusUnitKey) => {
     const oldFocusUnitKey = spFocusUnitKey || focusUnitKey
+    console.log(
+      'oldFocusUnitKey',
+      oldFocusUnitKey,
+      typeof oldFocusUnitKey,
+      timeKeys[getMeasureFromLevel(newLevel)],
+      level - newLevel > 0
+    )
     const newFocusUnitKey = calcNextLevelUnitKey(
       oldFocusUnitKey,
       timeKeys[getMeasureFromLevel(newLevel)],
       level - newLevel > 0,
       isTimeSortedAsc
     )
+    console.log('newKey', newFocusUnitKey)
     scroIntoViewType.current = 'immediate'
     setFocusUnitKey(newFocusUnitKey)
     setLevel(newLevel)
