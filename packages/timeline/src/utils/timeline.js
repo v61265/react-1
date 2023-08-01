@@ -66,6 +66,8 @@
  * @property {string} title
  * @property {string} type
  * @property {string} updatedAt
+ *
+ * @typedef {'year' | 'month' | 'day' | 'event'} Measures
  */
 
 /**
@@ -99,13 +101,25 @@ export function transformLiveblogToTimeline(liveblog) {
   }
 }
 
-export function getSortedTimelineFromLiveblog(liveblog) {
+/**
+ *
+ * @param {Liveblog} liveblog
+ * @param {boolean} sortedAsc
+ * @returns {Timeline}
+ */
+export function getSortedTimelineFromLiveblog(liveblog, sortedAsc) {
   const timeline = transformLiveblogToTimeline(liveblog)
-  const isAsc = timeline.sort === 'asc' // default to 'desc'
-  timeline.timelineEvents = sortTimelineEvents(timeline.timelineEvents, isAsc)
+  timeline.timelineEvents = sortTimelineEvents(
+    timeline.timelineEvents,
+    sortedAsc
+  )
   return timeline
 }
 
+/**
+ * @param {Measures} measures - time measures
+ * @returns {Number}
+ */
 function getLevelFromMeasure(measures) {
   switch (measures) {
     case 'year':
@@ -121,6 +135,10 @@ function getLevelFromMeasure(measures) {
   }
 }
 
+/**
+ * @param {Number} level - time level
+ * @returns {Measures}
+ */
 export function getMeasureFromLevel(level) {
   switch (level) {
     case 4:
@@ -402,26 +420,38 @@ export function generateTimeLevel(timeline) {
   return { initialLevel, maxLevel }
 }
 
-export function calcNextLevelUnitKey(oldTimeUnitKey, newTimeUnitKeys, zoomIn) {
+/**
+ * @param {string} oldTimeUnitKey - last level timeUnitKey
+ * @param {string[]} newTimeUnitKeys - new level timeUnitKeys
+ * @param {boolean} zoomIn - true: narrow down tiemUnit ; false scale up timeUnit
+ * @param {boolean} sortedAsc - timeline sorted with Asc order
+ * @returns {string}
+ */
+export function calcNextLevelUnitKey(
+  oldTimeUnitKey,
+  newTimeUnitKeys,
+  zoomIn,
+  sortedAsc
+) {
   let newUnitKey
   if (zoomIn) {
     // handle narrow down level change ex: 2023 -> 202301
     newUnitKey = newTimeUnitKeys.find((timeUnitKey) =>
-      timeUnitKey.startsWith(oldTimeUnitKey)
-    )
-    if (!newUnitKey) {
-      newUnitKey = newTimeUnitKeys.find(
-        (timeUnitKey) =>
-          Number(timeUnitKey.slice(0, oldTimeUnitKey.length)) >
+      sortedAsc
+        ? Number(timeUnitKey.slice(0, oldTimeUnitKey.length)) >=
           Number(oldTimeUnitKey)
-      )
-    }
+        : Number(timeUnitKey.slice(0, oldTimeUnitKey.length)) <=
+          Number(oldTimeUnitKey)
+    )
   } else {
     // handle scale up level change ex: 202301 -> 2023
     const newTimeUnitKeyLength = newTimeUnitKeys[0].length
-    newUnitKey = newTimeUnitKeys.find(
-      (timeUnitKey) =>
-        timeUnitKey === oldTimeUnitKey.slice(0, newTimeUnitKeyLength)
+    newUnitKey = newTimeUnitKeys.find((timeUnitKey) =>
+      sortedAsc
+        ? Number(timeUnitKey) >=
+          Number(oldTimeUnitKey.slice(0, newTimeUnitKeyLength))
+        : Number(timeUnitKey) <=
+          Number(oldTimeUnitKey.slice(0, newTimeUnitKeyLength))
     )
   }
   return newUnitKey

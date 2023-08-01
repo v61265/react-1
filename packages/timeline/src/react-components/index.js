@@ -139,9 +139,11 @@ export default function Timeline({
   liveblog,
   fetchImageBaseUrl = 'https://editools-gcs-dev.readr.tw',
 }) {
-  const timeline = useMemo(() => getSortedTimelineFromLiveblog(liveblog), [
-    liveblog,
-  ])
+  const isTimeSortedAsc = liveblog.sort === 'asc' // default to 'desc'
+  const timeline = useMemo(
+    () => getSortedTimelineFromLiveblog(liveblog, isTimeSortedAsc),
+    [liveblog]
+  )
   const [tags, setTags] = useState(initialTags)
   const [stickyStrategy, setStickStrategy] = useState('absolute-top')
   const [focusUnitKey, setFocusUnitKey] = useState('')
@@ -180,11 +182,20 @@ export default function Timeline({
 
   const updateLevel = (newLevel, spFocusUnitKey) => {
     const oldFocusUnitKey = spFocusUnitKey || focusUnitKey
-    const newFocusUnitKey = calcNextLevelUnitKey(
+    console.log(
+      'oldFocusUnitKey',
       oldFocusUnitKey,
+      typeof oldFocusUnitKey,
       timeKeys[getMeasureFromLevel(newLevel)],
       level - newLevel > 0
     )
+    const newFocusUnitKey = calcNextLevelUnitKey(
+      oldFocusUnitKey,
+      timeKeys[getMeasureFromLevel(newLevel)],
+      level - newLevel > 0,
+      isTimeSortedAsc
+    )
+    console.log('newKey', newFocusUnitKey)
     scroIntoViewType.current = 'immediate'
     setFocusUnitKey(newFocusUnitKey)
     setLevel(newLevel)
