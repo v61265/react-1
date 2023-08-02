@@ -1,6 +1,6 @@
 {
   "name": "@readr-media/react-theatre",
-  "version": "0.2.0-alpha.2",
+  "version": "0.2.0-alpha.3",
   "description": "",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "@theatre/core": "0.6.1",
+    "react-transition-group": "^4.4.5",
     "url": "^0.11.1",
     "uuid": "^9.0.0"
   },
