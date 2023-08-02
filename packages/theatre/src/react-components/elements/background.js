@@ -18,14 +18,16 @@ const BgWrapper = styled.div`
   }
 `
 
-export default function BackgroundElement({ id, sheet }) {
+export default function BackgroundElement({ id, sheet, onLoad, onError }) {
   const object = sheet.object(id, {
     ...initialConfig.BACKGROUND,
   })
 
   // Style setting ----------------------
   const [style, setStyle] = useState({})
-  const [imageUrl, setImageUrl] = useState('')
+  const [imageUrl, setImageUrl] = useState(
+    'https://unpkg.com/@readr-media/react-theatre/assets/default-image.png'
+  )
 
   useEffect(() => {
     object.onValuesChange((newValue) => {
@@ -48,7 +50,7 @@ export default function BackgroundElement({ id, sheet }) {
 
   return (
     <BgWrapper style={style}>
-      <img src={imageUrl} alt={id} />
+      <img src={imageUrl} alt={id} onLoad={onLoad} onError={onError} />
     </BgWrapper>
   )
 }
