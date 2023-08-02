@@ -2,8 +2,9 @@ import { val, getProject } from '@theatre/core'
 import { useState, useEffect, useRef } from 'react' // eslint-disable-line
 import styled from '../../styled-components.js'
 import Stage from './stage.js'
+import Dimmer from './dimmer-with-message.js'
 
-const ViewBox = styled.div`
+const ScrollSizer = styled.div`
   position: relative;
   width: 100vw;
   min-width: 100vw;
@@ -12,7 +13,7 @@ const ViewBox = styled.div`
   background: #ffffff;
 `
 
-const StageWrapper = styled.div`
+const StickyBox = styled.div`
   width: 100%;
   height: 100vh;
   position: sticky;
@@ -41,7 +42,6 @@ export default function DemoScroll({
   project.ready.then(() => sheet.sequence.pause())
 
   // --------------------------
-  // TODO: 增加條件，減少 event-listener 偵測時間
 
   const [scrollPosition, setScrollPosition] = useState(0)
 
@@ -51,12 +51,12 @@ export default function DemoScroll({
   useEffect(() => {
     const handleScroll = () => {
       const stage = stageRef.current
-      const viewbox = stage.closest('.theatre-scroll-viewbox')
+      const sizer = stage.closest('.theatre-scroll-sizer')
 
       const stageRect = stage.getBoundingClientRect()
-      const viewboxRect = viewbox.getBoundingClientRect()
+      const sizerRect = sizer.getBoundingClientRect()
 
-      const distance = stageRect.top - viewboxRect.top
+      const distance = stageRect.top - sizerRect.top
       setScrollPosition(distance)
     }
 
@@ -73,14 +73,54 @@ export default function DemoScroll({
     sheet.sequence.position = newPosition
   }, [scrollPosition])
 
+  // ----------------------------------------
+
+  const [hasMediaError, setHasMediaError] = useState(false) // image & background && video onError
+  const [loadedMedias, setLoadedMedias] = useState(0) // image & background && video onload
+  const [isLoading, setIsLoading] = useState(true)
+
+  const totalMedias = objectJson.filter(
+    (data) =>
+      data.type === 'IMAGE' ||
+      data.type === 'BACKGROUND' ||
+      data.type === 'VIDEO'
+  ).length
+
+  useEffect(() => {
+    if (loadedMedias === totalMedias) {
+      setIsLoading(false)
+    }
+  }, [loadedMedias, totalMedias])
+
+  const sizerHeight =
+    hasMediaError || isLoading
+      ? '100vh'
+      : `${sequenceLength * defaultScrollScale}px`
+
   return (
-    <ViewBox
-      className="theatre-scroll-viewbox"
-      style={{ height: `${sequenceLength * defaultScrollScale}px` }}
+    <ScrollSizer
+      className="theatre-scroll-sizer"
+      style={{ height: sizerHeight }}
     >
-      <StageWrapper ref={stageRef}>
-        <Stage objectJson={objectJson} sheet={sheet} />
-      </StageWrapper>
-    </ViewBox>
+      <StickyBox ref={stageRef}>
+        <Dimmer
+          show={isLoading && !hasMediaError}
+          message={'載入中'}
+          shining={true}
+        />
+
+        <Dimmer
+          show={hasMediaError}
+          message={'載入失敗。請檢查您的網路連線，並重新整理瀏覽器。'}
+        />
+
+        <Stage
+          objectJson={objectJson}
+          sheet={sheet}
+          setHasMediaError={setHasMediaError}
+          setLoadedMedias={setLoadedMedias}
+        />
+      </StickyBox>
+    </ScrollSizer>
   )
 }
