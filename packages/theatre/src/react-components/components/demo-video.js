@@ -2,6 +2,13 @@ import { getProject } from '@theatre/core'
 import Stage from './stage.js'
 import Dimmer from './dimmer-with-message.js'
 import { useState, useEffect } from 'react' // eslint-disable-line
+import styled from '../../styled-components.js'
+
+const VideoWrapper = styled.div`
+  position: relative;
+  left: calc(50% - 50vw);
+  width: 100vw;
+`
 
 /**
  *  @param {Object} props
@@ -41,7 +48,7 @@ export default function DemoVideo({
   }, [loadedMedias, totalMedias])
 
   return (
-    <>
+    <VideoWrapper>
       <Dimmer
         show={isLoading && !hasMediaError}
         message={'載入中'}
@@ -58,6 +65,6 @@ export default function DemoVideo({
         setHasMediaError={setHasMediaError}
         setLoadedMedias={setLoadedMedias}
       />
-    </>
+    </VideoWrapper>
   )
 }
