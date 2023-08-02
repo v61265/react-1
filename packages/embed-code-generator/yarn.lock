@@ -1178,10 +1178,10 @@
     "@twreporter/errors" "^1.1.1"
     axios "^0.27.2"
 
-"@readr-media/react-embed-code-generator@^2.4.0-alpha.8":
-  version "2.4.0-alpha.8"
-  resolved "https://registry.yarnpkg.com/@readr-media/react-embed-code-generator/-/react-embed-code-generator-2.4.0-alpha.8.tgz#f4cd1abfe34ceacf6481c80f41246685b160c6f7"
-  integrity sha512-duWRdE2bzWPwEfwcwdPIiYvScvi0M99c4GeWZ+YV1MrrQ10By4bOwkVTbOQR7on7CSYtO4htmyY3pBUbE1uBdg==
+"@readr-media/react-embed-code-generator@^2.4.0-alpha.14":
+  version "2.4.0-alpha.14"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-embed-code-generator/-/react-embed-code-generator-2.4.0-alpha.14.tgz#63dceea37baffef796fdece0827a14d03932b592"
+  integrity sha512-+TeP3smvtTx6MvODBIiBqz/JEwNJE3AxlYztjjuAX7h1aNvH+9nvLCHiJHjQ3kCLHrmuuiZktrnYu0AZIWMo+g==
   dependencies:
     "@readr-media/react-dropping-text" "1.0.5"
     "@readr-media/react-dual-slides" "1.0.1"
@@ -1195,7 +1195,7 @@
     "@readr-media/react-random-text-selector" "^1.0.2"
     "@readr-media/react-theatre" "^0.2.0-alpha.2"
     "@readr-media/react-three-story-points" "1.0.2"
-    "@readr-media/react-timeline" "^1.0.0-alpha.5"
+    "@readr-media/react-timeline" "^1.0.0-alpha.11"
     lodash "^4.17.21"
     serialize-javascript "^6.0.0"
 
@@ -1296,10 +1296,10 @@
     three "^0.150.1"
     three-story-controls "^1.0.6"
 
-"@readr-media/react-timeline@^1.0.0-alpha.5":
-  version "1.0.0-alpha.5"
-  resolved "https://registry.yarnpkg.com/@readr-media/react-timeline/-/react-timeline-1.0.0-alpha.5.tgz#75c562831b1258744cc5dc4fec7bdcb728b1779e"
-  integrity sha512-F2w+uxEXZyyTdThRhmVnKGzRSiGj4oTIsnKUxUysFpSYseJx3BEAyifeJhrlqZDxRCz1djyWgaS/TsSWRKu8sQ==
+"@readr-media/react-timeline@^1.0.0-alpha.11":
+  version "1.0.0-alpha.11"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-timeline/-/react-timeline-1.0.0-alpha.11.tgz#f0be9b7fe4eb4ab554a8082d5d5d499692ec8e01"
+  integrity sha512-DDlZvNFlyUSy+Iusnma6le9Fwp6hO/TQNGuzhAkO09qSLFiXrlfy1w73ukKppW11gSRrjCXckpr0S+vOgfvWQA==
   dependencies:
     axios "^0.27.2"
     draft-js "^0.11.7"
