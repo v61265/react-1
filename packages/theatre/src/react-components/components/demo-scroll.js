@@ -6,6 +6,7 @@ import Dimmer from './dimmer-with-message.js'
 
 const ScrollSizer = styled.div`
   position: relative;
+  left: calc(50% - 50vw);
   width: 100vw;
   min-width: 100vw;
   max-width: 100vw;
