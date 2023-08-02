@@ -4,176 +4,167 @@ export default {
       Scene: {
         staticOverrides: {
           byObject: {
-            'font-001': {
-              content: '桌機版測試',
-              bgColor: {
-                r: 0.3215686274509804,
-                g: 0.6549019607843137,
-                b: 0.7450980392156863,
-                a: 1,
-              },
-              size: { width: 266 },
-              border: { size: 4 },
+            'video-001': {
+              position: { x: 23.16901408450704, y: 33.050847457627114 },
+              size: { width: 235.5, height: 358.5 },
+              visible: true,
+              isPlaying: true,
+              scale: 1,
+              zIndex: '10',
+            },
+            'video-002': {
+              position: { x: 47.67605633802817, y: 38.27683615819209 },
+              size: { width: 300, height: 200 },
+              visible: true,
+              isPlaying: true,
+              scale: 1,
+              zIndex: '10',
+            },
+            'video-003': {
+              position: { x: 41.40845070422535, y: 44.77401129943503 },
+              size: { width: 300, height: 200 },
+              visible: true,
+              isPlaying: true,
+              scale: 1,
+              zIndex: '10',
+            },
+            'img-005': {
+              position: { x: 28.943661971830988, y: 18.36158192090395 },
+              size: { width: 300 },
+              border: { size: 0, color: { r: 0, g: 0, b: 0, a: 1 }, radius: 0 },
+              url: '/default-image.png',
+              opacity: 1,
+              visible: true,
+              scale: 1,
+              zIndex: '10',
+            },
+            'img-004': {
+              position: { x: 17.464788732394368, y: 43.079096045197744 },
+              size: { width: 300 },
+              border: { size: 0, color: { r: 0, g: 0, b: 0, a: 1 }, radius: 0 },
+              url: '/default-image.png',
+              opacity: 1,
+              visible: true,
+              scale: 1,
+              zIndex: '10',
+            },
+            'img-003': {
+              position: { x: 32.605633802816904, y: 54.943502824858754 },
+              size: { width: 300 },
+              border: { size: 0, color: { r: 0, g: 0, b: 0, a: 1 }, radius: 0 },
+              url: '/default-image.png',
+              opacity: 1,
+              visible: true,
+              scale: 1,
+              zIndex: '10',
+            },
+            'bg-001': {
+              url:
+                'https://storage.googleapis.com/statics-readr-tw-dev/images/955e7a43-b895-4f4e-ab1b-60de852dbcf7.png',
+            },
+            'img-002': {
+              position: { x: 50, y: 50.1219512195122 },
+              size: { width: 300 },
+              border: { size: 0, color: { r: 0, g: 0, b: 0, a: 1 }, radius: 0 },
+              url: '/default-image.png',
+              opacity: 1,
+              visible: true,
+              scale: 1,
+              zIndex: '10',
             },
           },
         },
         sequence: {
           subUnitsPerUnit: 30,
-          length: 3.2,
+          length: 10,
           type: 'PositionalSequence',
           tracksByObject: {
-            'font-001': {
+            'video-001': {
               trackData: {
-                xESeviLY8n: {
+                '2njw7D1D3j': {
                   type: 'BasicKeyframedTrack',
-                  __debugName: 'font-001:["position","x"]',
+                  __debugName: 'video-001:["position","x"]',
                   keyframes: [
                     {
-                      id: 'zz9L7Fcr9H',
+                      id: 'juTvtjQzyx',
                       position: 0,
                       connectedRight: true,
                       handles: [0.5, 1, 0.5, 0],
                       type: 'bezier',
-                      value: 19,
+                      value: 23.16901408450704,
                     },
                     {
-                      id: 'o_p_SgkgsK',
-                      position: 2.6,
+                      id: '0pT1l50zxo',
+                      position: 1.733,
                       connectedRight: true,
                       handles: [0.5, 1, 0.5, 0],
                       type: 'bezier',
-                      value: 40,
+                      value: 71.66901408450704,
                     },
                   ],
                 },
-                '55YLqMG0YQ': {
+                kE4ADLGDxy: {
                   type: 'BasicKeyframedTrack',
-                  __debugName: 'font-001:["position","y"]',
+                  __debugName: 'video-001:["position","y"]',
+                  keyframes: [],
+                },
+                hmKBepCPAS: {
+                  type: 'BasicKeyframedTrack',
+                  __debugName: 'video-001:["size","width"]',
+                  keyframes: [],
+                },
+                'uBkMVa-k4O': {
+                  type: 'BasicKeyframedTrack',
+                  __debugName: 'video-001:["size","height"]',
+                  keyframes: [],
+                },
+                NhOwXGsx_n: {
+                  type: 'BasicKeyframedTrack',
+                  __debugName: 'video-001:["visible"]',
+                  keyframes: [],
+                },
+                '3W_n5jP6YB': {
+                  type: 'BasicKeyframedTrack',
+                  __debugName: 'video-001:["isPlaying"]',
                   keyframes: [
                     {
-                      id: 'OBgMRBnju-',
+                      id: 'k_2V0oeIue',
                       position: 0,
                       connectedRight: true,
                       handles: [0.5, 1, 0.5, 0],
                       type: 'bezier',
-                      value: 40,
+                      value: false,
                     },
                     {
-                      id: 'ptAcF6Zuw8',
-                      position: 2.6,
+                      id: 'LUX_FGJYhv',
+                      position: 1.733,
                       connectedRight: true,
                       handles: [0.5, 1, 0.5, 0],
                       type: 'bezier',
-                      value: 12,
+                      value: true,
                     },
                   ],
                 },
-                I1owiamQpF: {
+                FWcO1KTEVh: {
                   type: 'BasicKeyframedTrack',
-                  __debugName: 'font-001:["size","width"]',
+                  __debugName: 'video-001:["scale"]',
                   keyframes: [],
                 },
-                WT6cGzQiUM: {
+                hyX56yucXW: {
                   type: 'BasicKeyframedTrack',
-                  __debugName: 'font-001:["bgColor"]',
-                  keyframes: [],
-                },
-                'Lkcv-KZhTM': {
-                  type: 'BasicKeyframedTrack',
-                  __debugName: 'font-001:["font","size"]',
-                  keyframes: [],
-                },
-                gSoSSiSjy4: {
-                  type: 'BasicKeyframedTrack',
-                  __debugName: 'font-001:["font","color"]',
-                  keyframes: [],
-                },
-                '85ydHOpmR8': {
-                  type: 'BasicKeyframedTrack',
-                  __debugName: 'font-001:["font","weight"]',
-                  keyframes: [],
-                },
-                '0WIYod-a5q': {
-                  type: 'BasicKeyframedTrack',
-                  __debugName: 'font-001:["font","spacing"]',
-                  keyframes: [],
-                },
-                '713BhDkiXK': {
-                  type: 'BasicKeyframedTrack',
-                  __debugName: 'font-001:["border","size"]',
-                  keyframes: [],
-                },
-                '0ZnPmtZMuE': {
-                  type: 'BasicKeyframedTrack',
-                  __debugName: 'font-001:["border","color"]',
-                  keyframes: [],
-                },
-                tsjuQdrNpD: {
-                  type: 'BasicKeyframedTrack',
-                  __debugName: 'font-001:["border","radius"]',
-                  keyframes: [],
-                },
-                Wj0dk6UHn7: {
-                  type: 'BasicKeyframedTrack',
-                  __debugName: 'font-001:["content"]',
-                  keyframes: [],
-                },
-                hWs70cXoSV: {
-                  type: 'BasicKeyframedTrack',
-                  __debugName: 'font-001:["opacity"]',
-                  keyframes: [],
-                },
-                bz7_oyi9Zt: {
-                  type: 'BasicKeyframedTrack',
-                  __debugName: 'font-001:["padding"]',
-                  keyframes: [],
-                },
-                HRB_nb1dJc: {
-                  type: 'BasicKeyframedTrack',
-                  __debugName: 'font-001:["visible"]',
-                  keyframes: [],
-                },
-                chc5Nylrfm: {
-                  type: 'BasicKeyframedTrack',
-                  __debugName: 'font-001:["zIndex"]',
-                  keyframes: [],
-                },
-                zasf8KpnPb: {
-                  type: 'BasicKeyframedTrack',
-                  __debugName: 'font-001:["lineHeight"]',
-                  keyframes: [],
-                },
-                eG_ATRw8Xt: {
-                  type: 'BasicKeyframedTrack',
-                  __debugName: 'font-001:["textAlign"]',
-                  keyframes: [],
-                },
-                eM4lxnpYLQ: {
-                  type: 'BasicKeyframedTrack',
-                  __debugName: 'font-001:["scale"]',
+                  __debugName: 'video-001:["zIndex"]',
                   keyframes: [],
                 },
               },
               trackIdByPropPath: {
-                '["position","x"]': 'xESeviLY8n',
-                '["position","y"]': '55YLqMG0YQ',
-                '["size","width"]': 'I1owiamQpF',
-                '["bgColor"]': 'WT6cGzQiUM',
-                '["font","size"]': 'Lkcv-KZhTM',
-                '["font","color"]': 'gSoSSiSjy4',
-                '["font","weight"]': '85ydHOpmR8',
-                '["font","spacing"]': '0WIYod-a5q',
-                '["border","size"]': '713BhDkiXK',
-                '["border","color"]': '0ZnPmtZMuE',
-                '["border","radius"]': 'tsjuQdrNpD',
-                '["content"]': 'Wj0dk6UHn7',
-                '["opacity"]': 'hWs70cXoSV',
-                '["padding"]': 'bz7_oyi9Zt',
-                '["visible"]': 'HRB_nb1dJc',
-                '["zIndex"]': 'chc5Nylrfm',
-                '["lineHeight"]': 'zasf8KpnPb',
-                '["textAlign"]': 'eG_ATRw8Xt',
-                '["scale"]': 'eM4lxnpYLQ',
+                '["position","x"]': '2njw7D1D3j',
+                '["position","y"]': 'kE4ADLGDxy',
+                '["size","width"]': 'hmKBepCPAS',
+                '["size","height"]': 'uBkMVa-k4O',
+                '["visible"]': 'NhOwXGsx_n',
+                '["isPlaying"]': '3W_n5jP6YB',
+                '["scale"]': 'FWcO1KTEVh',
+                '["zIndex"]': 'hyX56yucXW',
               },
             },
           },
@@ -183,7 +174,22 @@ export default {
     definitionVersion: '0.4.0',
     revisionHistory: [],
   },
-  objectJson: [{ id: 'font-001', type: 'FONT' }],
+
+  objectJson: [
+    {
+      id: 'video-001',
+      type: 'VIDEO',
+      src:
+        'https://storage.googleapis.com/statics-readr-tw-dev/files/2022-bird-a-new720-TSyc3bqmDSaVsk5sql.mp4',
+    },
+    {
+      id: 'video-002',
+      type: 'VIDEO',
+      src:
+        'https://storage.googleapis.com/statics-readr-tw-dev/files/test-e0u6aXKDeeLbFrNXXCi.mp4',
+    },
+    { id: 'bg-001', type: 'BACKGROUND' },
+  ],
   mobileAnimateJson: {
     sheetsById: {
       Scene: {
