@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react' // eslint-disable-line
+import { useState, useEffect } from 'react'
 
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window
@@ -24,7 +24,10 @@ export default function useWindowDimensions() {
 
     // Call handler right away so state gets updated with initial window size
     handleResize()
-    return () => window.removeEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
   }, [])
 
   return windowDimensions
