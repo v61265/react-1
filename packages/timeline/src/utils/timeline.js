@@ -66,6 +66,8 @@
  * @property {string} title
  * @property {string} type
  * @property {string} updatedAt
+ *
+ * @typedef {'year' | 'month' | 'day' | 'event'} Measures
  */
 
 /**
@@ -99,13 +101,25 @@ export function transformLiveblogToTimeline(liveblog) {
   }
 }
 
-export function getSortedTimelineFromLiveblog(liveblog) {
+/**
+ *
+ * @param {Liveblog} liveblog
+ * @param {boolean} sortedAsc
+ * @returns {Timeline}
+ */
+export function getSortedTimelineFromLiveblog(liveblog, sortedAsc) {
   const timeline = transformLiveblogToTimeline(liveblog)
-  const isAsc = timeline.sort === 'asc' // default to 'desc'
-  timeline.timelineEvents = sortTimelineEvents(timeline.timelineEvents, isAsc)
+  timeline.timelineEvents = sortTimelineEvents(
+    timeline.timelineEvents,
+    sortedAsc
+  )
   return timeline
 }
 
+/**
+ * @param {Measures} measures - time measures
+ * @returns {Number}
+ */
 function getLevelFromMeasure(measures) {
   switch (measures) {
     case 'year':
@@ -121,6 +135,10 @@ function getLevelFromMeasure(measures) {
   }
 }
 
+/**
+ * @param {Number} level - time level
+ * @returns {Measures}
+ */
 export function getMeasureFromLevel(level) {
   switch (level) {
     case 4:
@@ -208,7 +226,7 @@ export function sortTimelineEvents(events, isAsc) {
   })
 }
 
-export function generateTimelineData(timeline, filterTags) {
+export function generateTimelineData(timeline, filterTags, isAsc) {
   const timelineEvents = timeline.timelineEvents
   const yearEvents = { empty: [] }
   let yearKeys = new Set()
@@ -292,6 +310,7 @@ export function generateTimelineData(timeline, filterTags) {
     return events.length > max ? events.length : max
   }, 0)
 
+  const countingNext = isAsc ? 1 : -1
   let yearKeysToRender = [...yearKeys]
   yearKeysToRender = yearKeysToRender.reduce((newYearKeys, yearKey) => {
     if (newYearKeys.length === 0) {
@@ -301,7 +320,7 @@ export function generateTimelineData(timeline, filterTags) {
       const preYearKey = newYearKeys[newYearKeys.length - 1]
       const preD = convertTimeKeyToDate(preYearKey, 'year')
       const continuousD = new Date(preD)
-      continuousD.setFullYear(continuousD.getFullYear() + 1)
+      continuousD.setFullYear(continuousD.getFullYear() + countingNext)
 
       let safeThreshold = 0
       while (
@@ -309,7 +328,7 @@ export function generateTimelineData(timeline, filterTags) {
         convertDateToTimeKey(d, 'year')
       ) {
         newYearKeys.push(convertDateToTimeKey(continuousD, 'year'))
-        continuousD.setFullYear(continuousD.getFullYear() + 1)
+        continuousD.setFullYear(continuousD.getFullYear() + countingNext)
         safeThreshold++
         if (safeThreshold >= 5) break
       }
@@ -327,7 +346,7 @@ export function generateTimelineData(timeline, filterTags) {
       const preMonthKey = newMonthKeys[newMonthKeys.length - 1]
       const preD = convertTimeKeyToDate(preMonthKey, 'month')
       const continuousD = new Date(preD)
-      continuousD.setMonth(continuousD.getMonth() + 1)
+      continuousD.setMonth(continuousD.getMonth() + countingNext)
 
       let safeThreshold = 0
       while (
@@ -335,7 +354,7 @@ export function generateTimelineData(timeline, filterTags) {
         convertDateToTimeKey(d, 'month')
       ) {
         newMonthKeys.push(convertDateToTimeKey(continuousD, 'month'))
-        continuousD.setMonth(continuousD.getMonth() + 1)
+        continuousD.setMonth(continuousD.getMonth() + countingNext)
         safeThreshold++
         if (safeThreshold >= 100) break
       }
@@ -353,7 +372,7 @@ export function generateTimelineData(timeline, filterTags) {
       const preDayKey = newDayKeys[newDayKeys.length - 1]
       const preD = convertTimeKeyToDate(preDayKey, 'day')
       const continuousD = new Date(preD)
-      continuousD.setDate(continuousD.getDate() + 1)
+      continuousD.setDate(continuousD.getDate() + countingNext)
 
       let safeThreshold = 0
       while (
@@ -361,7 +380,7 @@ export function generateTimelineData(timeline, filterTags) {
         convertDateToTimeKey(d, 'day')
       ) {
         newDayKeys.push(convertDateToTimeKey(continuousD, 'day'))
-        continuousD.setDate(continuousD.getDate() + 1)
+        continuousD.setDate(continuousD.getDate() + countingNext)
         safeThreshold++
         if (safeThreshold >= 1000) break
       }
@@ -402,26 +421,38 @@ export function generateTimeLevel(timeline) {
   return { initialLevel, maxLevel }
 }
 
-export function calcNextLevelUnitKey(oldTimeUnitKey, newTimeUnitKeys, zoomIn) {
+/**
+ * @param {string} oldTimeUnitKey - last level timeUnitKey
+ * @param {string[]} newTimeUnitKeys - new level timeUnitKeys
+ * @param {boolean} zoomIn - true: narrow down tiemUnit ; false scale up timeUnit
+ * @param {boolean} sortedAsc - timeline sorted with Asc order
+ * @returns {string}
+ */
+export function calcNextLevelUnitKey(
+  oldTimeUnitKey,
+  newTimeUnitKeys,
+  zoomIn,
+  sortedAsc
+) {
   let newUnitKey
   if (zoomIn) {
     // handle narrow down level change ex: 2023 -> 202301
     newUnitKey = newTimeUnitKeys.find((timeUnitKey) =>
-      timeUnitKey.startsWith(oldTimeUnitKey)
-    )
-    if (!newUnitKey) {
-      newUnitKey = newTimeUnitKeys.find(
-        (timeUnitKey) =>
-          Number(timeUnitKey.slice(0, oldTimeUnitKey.length)) >
+      sortedAsc
+        ? Number(timeUnitKey.slice(0, oldTimeUnitKey.length)) >=
           Number(oldTimeUnitKey)
-      )
-    }
+        : Number(timeUnitKey.slice(0, oldTimeUnitKey.length)) <=
+          Number(oldTimeUnitKey)
+    )
   } else {
     // handle scale up level change ex: 202301 -> 2023
     const newTimeUnitKeyLength = newTimeUnitKeys[0].length
-    newUnitKey = newTimeUnitKeys.find(
-      (timeUnitKey) =>
-        timeUnitKey === oldTimeUnitKey.slice(0, newTimeUnitKeyLength)
+    newUnitKey = newTimeUnitKeys.find((timeUnitKey) =>
+      sortedAsc
+        ? Number(timeUnitKey) >=
+          Number(oldTimeUnitKey.slice(0, newTimeUnitKeyLength))
+        : Number(timeUnitKey) <=
+          Number(oldTimeUnitKey.slice(0, newTimeUnitKeyLength))
     )
   }
   return newUnitKey
@@ -481,7 +512,7 @@ function isFirstMonthOfYear(date) {
 function isLastMonthOfYear(date) {
   const nextMonth = new Date(date)
   nextMonth.setMonth(nextMonth.getMonth() + 1)
-  return nextMonth.getFullYear() !== nextMonth.getFullYear()
+  return nextMonth.getFullYear() !== date.getFullYear()
 }
 
 /**

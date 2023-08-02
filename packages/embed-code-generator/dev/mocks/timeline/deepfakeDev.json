@@ -1,0 +1,769 @@
+{
+  "id": "9",
+  "name": "deepfaketimelineee",
+  "slug": "deepfakeDev",
+  "desc": "",
+  "heroImage": null,
+  "active": true,
+  "liveblog_itemsCount": 14,
+  "tags": null,
+  "publisher": null,
+  "createdAt": "2023-07-18T10:08:01.736Z",
+  "updatedAt": "2023-07-26T13:37:16.421Z",
+  "displayType": "timeline",
+  "maxMeasures": "year",
+  "defaultMeasures": "year",
+  "sort": "asc",
+  "hint": {
+    "dividerConfig": {
+      "rwd": {
+        "pc": {
+          "day": 7,
+          "year": 5,
+          "month": 6
+        },
+        "mobile": {
+          "day": 7,
+          "year": 5,
+          "month": 6
+        }
+      },
+      "bubbleLevelSizesInDivider": {
+        "5": [23, 36, 48, 60, 76],
+        "6": [23, 36, 48, 60, 66],
+        "7": [23, 28, 36, 48, 60]
+      }
+    },
+    "noEventContent": "<span style=\"text-align: center; font-size: 14px; line-height: 1.5; color: #989898;\">點擊泡泡<br />或往下滑動</span>",
+    "headerHeightConfig": {
+      "rwd": {
+        "pc": 80,
+        "mobile": 66
+      },
+      "rwdBreakpoints": [
+        {
+          "name": "mobile",
+          "minWidth": 0
+        },
+        {
+          "name": "pc",
+          "minWidth": 568
+        }
+      ]
+    }
+  },
+  "liveblog_items": [
+    {
+      "id": "30",
+      "title": "澤連斯基要求士兵投降",
+      "status": "published",
+      "publishTime": "2022-03-15T16:00:00.000Z",
+      "heroImage": null,
+      "imageCaption": "",
+      "author": "",
+      "name": {
+        "blocks": [
+          {
+            "key": "44ncj",
+            "data": {},
+            "text": "一段影片中，烏克蘭總統澤連斯基（Volodymyr Zelensky）呼籲烏克蘭軍隊放下武器",
+            "type": "unstyled",
+            "depth": 0,
+            "entityRanges": [],
+            "inlineStyleRanges": []
+          }
+        ],
+        "entityMap": {}
+      },
+      "boost": false,
+      "createdAt": "2023-07-18T10:19:45.445Z",
+      "updatedAt": "2023-07-18T10:19:47.941Z",
+      "tags": [
+        {
+          "name": "烏克蘭"
+        }
+      ],
+      "type": "article",
+      "external": "",
+      "externalCoverPhoto": "",
+      "displayDateString": "day"
+    },
+    {
+      "id": "33",
+      "title": "法國反養老金改革示威中，防暴警察在示威期間擁抱婦女",
+      "status": "published",
+      "publishTime": "2023-02-07T16:00:00.000Z",
+      "heroImage": null,
+      "imageCaption": "",
+      "author": "",
+      "name": {
+        "blocks": [
+          {
+            "key": "44ncj",
+            "data": {},
+            "text": "在法國舉行反對養老金改革示威的日子裡，社交網絡上流傳著一些據稱是防暴警察在示威期間擁抱婦女的照片。然而，這些圖像不是真實的：它們是人工智能(AI) 生成的三幅圖像。傳播它們的用戶說，他們這樣做是為了“提高對這種技術的不利影響的認識”。",
+            "type": "unstyled",
+            "depth": 0,
+            "entityRanges": [],
+            "inlineStyleRanges": []
+          }
+        ],
+        "entityMap": {}
+      },
+      "boost": false,
+      "createdAt": "2023-07-18T10:21:20.861Z",
+      "updatedAt": "2023-07-18T10:21:27.220Z",
+      "tags": [
+        {
+          "name": "戰爭"
+        }
+      ],
+      "type": "article",
+      "external": "",
+      "externalCoverPhoto": "",
+      "displayDateString": "day"
+    },
+    {
+      "id": "28",
+      "title": "湯姆克魯斯在打高爾夫球",
+      "status": "published",
+      "publishTime": "2021-03-13T16:00:00.000Z",
+      "heroImage": null,
+      "imageCaption": "",
+      "author": "",
+      "name": {
+        "blocks": [
+          {
+            "key": "44ncj",
+            "data": {},
+            "text": "",
+            "type": "unstyled",
+            "depth": 0,
+            "entityRanges": [],
+            "inlineStyleRanges": []
+          },
+          {
+            "key": "ep8et",
+            "data": {},
+            "text": " ",
+            "type": "atomic",
+            "depth": 0,
+            "entityRanges": [
+              {
+                "key": 0,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": []
+          },
+          {
+            "key": "bitvo",
+            "data": {},
+            "text": "",
+            "type": "unstyled",
+            "depth": 0,
+            "entityRanges": [],
+            "inlineStyleRanges": []
+          },
+          {
+            "key": "1h5h8",
+            "data": {},
+            "text": "",
+            "type": "unstyled",
+            "depth": 0,
+            "entityRanges": [],
+            "inlineStyleRanges": []
+          },
+          {
+            "key": "9naf0",
+            "data": {},
+            "text": "這些視頻非常逼真，以至於數百萬社交媒體用戶都很難相信他們沒有在屏幕上看到好萊塢演員本人。許多人想知道當視頻首次出現在網上時湯姆克魯斯是否加入了 TikTok",
+            "type": "unstyled",
+            "depth": 0,
+            "entityRanges": [],
+            "inlineStyleRanges": []
+          }
+        ],
+        "entityMap": {
+          "0": {
+            "data": {
+              "id": "73",
+              "desc": "",
+              "name": "deepfaketimeline03",
+              "resized": {
+                "w480": "https://editools-gcs-dev.readr.tw/images/e0d72017-6450-4862-ab2e-9e1055d7c75f-w480.png",
+                "w800": "https://editools-gcs-dev.readr.tw/images/e0d72017-6450-4862-ab2e-9e1055d7c75f-w800.png",
+                "w1200": "",
+                "w1600": "https://editools-gcs-dev.readr.tw/images/e0d72017-6450-4862-ab2e-9e1055d7c75f-w1600.png",
+                "w2400": "https://editools-gcs-dev.readr.tw/images/e0d72017-6450-4862-ab2e-9e1055d7c75f-w2400.png",
+                "original": "https://editools-gcs-dev.readr.tw/images/e0d72017-6450-4862-ab2e-9e1055d7c75f.png",
+                "__typename": "ResizedImages"
+              },
+              "imageFile": {
+                "url": "/images/e0d72017-6450-4862-ab2e-9e1055d7c75f.png",
+                "__typename": "ImageFieldOutput"
+              },
+              "__typename": "Photo"
+            },
+            "type": "image",
+            "mutability": "IMMUTABLE"
+          }
+        }
+      },
+      "boost": false,
+      "createdAt": "2023-07-18T10:18:17.613Z",
+      "updatedAt": "2023-07-20T11:19:56.013Z",
+      "tags": [
+        {
+          "name": "時間軸一"
+        },
+        {
+          "name": "烏克蘭"
+        }
+      ],
+      "type": "article",
+      "external": "",
+      "externalCoverPhoto": "",
+      "displayDateString": "day"
+    },
+    {
+      "id": "31",
+      "title": "普丁宣佈結束戰爭",
+      "status": "published",
+      "publishTime": "2022-03-16T16:00:00.000Z",
+      "heroImage": null,
+      "imageCaption": "",
+      "author": "",
+      "name": {
+        "blocks": [
+          {
+            "key": "44ncj",
+            "data": {},
+            "text": "在一段時長一分半鐘的視頻中，俄羅斯總統傳達了他的國家對自 2 月 24 日以來一直持續的衝突的屈服。“俄羅斯聯邦總統宣布俄羅斯 投降。俄羅斯士兵，放下武器，活著回家吧！”《EURO NEWS》報導，該影片疑似是烏克蘭方的報復，在推特上有超過5萬次的觀看數。",
+            "type": "unstyled",
+            "depth": 0,
+            "entityRanges": [],
+            "inlineStyleRanges": []
+          }
+        ],
+        "entityMap": {}
+      },
+      "boost": false,
+      "createdAt": "2023-07-18T10:20:26.207Z",
+      "updatedAt": "2023-07-20T11:20:09.908Z",
+      "tags": [
+        {
+          "name": "戰爭"
+        },
+        {
+          "name": "時間軸三"
+        },
+        {
+          "name": "時間軸二"
+        }
+      ],
+      "type": "article",
+      "external": "",
+      "externalCoverPhoto": "",
+      "displayDateString": "day"
+    },
+    {
+      "id": "32",
+      "title": "奈及利亞總統跟法國總統對談",
+      "status": "published",
+      "publishTime": "2022-08-10T16:00:00.000Z",
+      "heroImage": null,
+      "imageCaption": "",
+      "author": "",
+      "name": {
+        "blocks": [
+          {
+            "key": "44ncj",
+            "data": {},
+            "text": "奈及利亞總統穆罕默德·巴祖姆（Mohamed Bazoum）給法國總統埃馬紐埃爾·馬克龍（Emmanuel Macron）上了一堂地緣政治課 。",
+            "type": "unstyled",
+            "depth": 0,
+            "entityRanges": [],
+            "inlineStyleRanges": []
+          }
+        ],
+        "entityMap": {}
+      },
+      "boost": false,
+      "createdAt": "2023-07-18T10:20:52.827Z",
+      "updatedAt": null,
+      "tags": [
+        {
+          "name": "烏克蘭"
+        }
+      ],
+      "type": "article",
+      "external": "",
+      "externalCoverPhoto": "",
+      "displayDateString": "day"
+    },
+    {
+      "id": "34",
+      "title": "川普被捕的照片",
+      "status": "published",
+      "publishTime": "2023-03-23T16:00:00.000Z",
+      "heroImage": null,
+      "imageCaption": "",
+      "author": "",
+      "name": {
+        "blocks": [
+          {
+            "key": "44ncj",
+            "data": {},
+            "text": "最近幾天，超過 500 萬 Twitter 用戶看到了唐納德特朗普在紐約被捕的假照片——但目的不是欺騙，而是譴責“深度偽造”照片和視頻的風險。這些場景的作者是英國記者 Eliot Higgins，他是屢獲殊榮的新聞調查網站 Bellingcat 的創始人之一。",
+            "type": "unstyled",
+            "depth": 0,
+            "entityRanges": [],
+            "inlineStyleRanges": []
+          }
+        ],
+        "entityMap": {}
+      },
+      "boost": false,
+      "createdAt": "2023-07-18T10:21:54.872Z",
+      "updatedAt": "2023-07-18T10:22:52.582Z",
+      "tags": [
+        {
+          "name": "戰爭"
+        }
+      ],
+      "type": "article",
+      "external": "",
+      "externalCoverPhoto": "",
+      "displayDateString": "day"
+    },
+    {
+      "id": "23",
+      "title": "比利時社會民主黨製作了川普的假影片",
+      "status": "published",
+      "publishTime": "2018-05-20T16:00:00.000Z",
+      "heroImage": null,
+      "imageCaption": "",
+      "author": "",
+      "name": {
+        "blocks": [
+          {
+            "key": "44ncj",
+            "data": {},
+            "text": "在視頻快結束時，特朗普說，“我們都知道氣候變化是假的，就像這段視頻一樣，”但這句話沒有翻譯成荷蘭語字幕。週日發布該視頻的比利時社會民主黨表示，它希望“開始一場公開辯論”以“引起人們對採取行動應對氣候變化的必要性的關注”",
+            "type": "unstyled",
+            "depth": 0,
+            "entityRanges": [],
+            "inlineStyleRanges": []
+          }
+        ],
+        "entityMap": {}
+      },
+      "boost": false,
+      "createdAt": "2023-07-18T10:14:32.610Z",
+      "updatedAt": "2023-07-20T11:19:30.283Z",
+      "tags": [
+        {
+          "name": "時間軸三"
+        },
+        {
+          "name": "時間軸二"
+        },
+        {
+          "name": "烏克蘭"
+        }
+      ],
+      "type": "article",
+      "external": "",
+      "externalCoverPhoto": "",
+      "displayDateString": "day"
+    },
+    {
+      "id": "27",
+      "title": "川普在辦公室裸露噴助曬劑",
+      "status": "published",
+      "publishTime": "2020-06-10T16:00:00.000Z",
+      "heroImage": null,
+      "imageCaption": "",
+      "author": "",
+      "name": {
+        "blocks": [
+          {
+            "key": "44ncj",
+            "data": {},
+            "text": "一張男子曬黑噴霧的裸照，謊稱這是美國總統唐納德特朗普。",
+            "type": "unstyled",
+            "depth": 0,
+            "entityRanges": [],
+            "inlineStyleRanges": []
+          }
+        ],
+        "entityMap": {}
+      },
+      "boost": false,
+      "createdAt": "2023-07-18T10:17:21.730Z",
+      "updatedAt": "2023-07-18T10:17:31.175Z",
+      "tags": [
+        {
+          "name": "烏克蘭"
+        }
+      ],
+      "type": "article",
+      "external": "",
+      "externalCoverPhoto": "",
+      "displayDateString": "day"
+    },
+    {
+      "id": "24",
+      "title": "懷疑加彭政府使用 deepfake 影片證實總統的健康 2019",
+      "status": "published",
+      "publishTime": "2020-03-14T16:00:00.000Z",
+      "heroImage": null,
+      "imageCaption": "",
+      "author": "",
+      "name": {
+        "blocks": [
+          {
+            "key": "44ncj",
+            "data": {},
+            "text": "懷疑加彭政府使用 deepfake 影片證實總統的健康（無法證實影片到底是不是假的）",
+            "type": "unstyled",
+            "depth": 0,
+            "entityRanges": [],
+            "inlineStyleRanges": []
+          }
+        ],
+        "entityMap": {}
+      },
+      "boost": false,
+      "createdAt": "2023-07-18T10:15:18.731Z",
+      "updatedAt": "2023-07-20T14:20:01.438Z",
+      "tags": [
+        {
+          "name": "戰爭"
+        }
+      ],
+      "type": "article",
+      "external": "",
+      "externalCoverPhoto": "",
+      "displayDateString": "day"
+    },
+    {
+      "id": "22",
+      "title": "歐巴馬罵川普是笨蛋",
+      "status": "published",
+      "publishTime": "2018-05-20T16:00:00.000Z",
+      "heroImage": null,
+      "imageCaption": "",
+      "author": "",
+      "name": {
+        "blocks": [
+          {
+            "key": "44ncj",
+            "data": {},
+            "text": "",
+            "type": "unstyled",
+            "depth": 0,
+            "entityRanges": [],
+            "inlineStyleRanges": []
+          },
+          {
+            "key": "6rm9k",
+            "data": {},
+            "text": " ",
+            "type": "atomic",
+            "depth": 0,
+            "entityRanges": [
+              {
+                "key": 0,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": []
+          },
+          {
+            "key": "b6q0e",
+            "data": {},
+            "text": "",
+            "type": "unstyled",
+            "depth": 0,
+            "entityRanges": [],
+            "inlineStyleRanges": []
+          },
+          {
+            "key": "cojcb",
+            "data": {},
+            "text": "美國媒體《Buzzfeed》2018年與知名影星喬登．皮爾（Jordan Peele）合作，目的在提醒社會大眾，透過AI技術製作、幾乎能以假亂真的「深偽影片」，可能會成為操縱輿論的利器。",
+            "type": "unstyled",
+            "depth": 0,
+            "entityRanges": [],
+            "inlineStyleRanges": []
+          }
+        ],
+        "entityMap": {
+          "0": {
+            "data": {
+              "id": "71",
+              "desc": "",
+              "name": "deepfaketimeline01",
+              "resized": {
+                "w480": "https://editools-gcs-dev.readr.tw/images/c6690eff-6ee7-4c7e-8f2f-fbd45b394504-w480.png",
+                "w800": "https://editools-gcs-dev.readr.tw/images/c6690eff-6ee7-4c7e-8f2f-fbd45b394504-w800.png",
+                "w1200": "",
+                "w1600": "https://editools-gcs-dev.readr.tw/images/c6690eff-6ee7-4c7e-8f2f-fbd45b394504-w1600.png",
+                "w2400": "https://editools-gcs-dev.readr.tw/images/c6690eff-6ee7-4c7e-8f2f-fbd45b394504-w2400.png",
+                "original": "https://editools-gcs-dev.readr.tw/images/c6690eff-6ee7-4c7e-8f2f-fbd45b394504.png",
+                "__typename": "ResizedImages"
+              },
+              "imageFile": {
+                "url": "/images/c6690eff-6ee7-4c7e-8f2f-fbd45b394504.png",
+                "__typename": "ImageFieldOutput"
+              },
+              "__typename": "Photo"
+            },
+            "type": "image",
+            "mutability": "IMMUTABLE"
+          }
+        }
+      },
+      "boost": false,
+      "createdAt": "2023-07-18T10:12:33.700Z",
+      "updatedAt": "2023-07-24T08:06:25.393Z",
+      "tags": [
+        {
+          "name": "時間軸三"
+        },
+        {
+          "name": "時間軸一"
+        },
+        {
+          "name": "烏克蘭"
+        },
+        {
+          "name": "麥當勞"
+        }
+      ],
+      "type": "article",
+      "external": "",
+      "externalCoverPhoto": "",
+      "displayDateString": "year"
+    },
+    {
+      "id": "29",
+      "title": "波羅的海國會議員們與冒充人士對話",
+      "status": "published",
+      "publishTime": "2021-04-22T16:00:00.000Z",
+      "heroImage": null,
+      "imageCaption": "",
+      "author": "",
+      "name": {
+        "blocks": [
+          {
+            "key": "44ncj",
+            "data": {},
+            "text": "",
+            "type": "unstyled",
+            "depth": 0,
+            "entityRanges": [],
+            "inlineStyleRanges": []
+          },
+          {
+            "key": "b67h2",
+            "data": {},
+            "text": " ",
+            "type": "atomic",
+            "depth": 0,
+            "entityRanges": [
+              {
+                "key": 0,
+                "length": 1,
+                "offset": 0
+              }
+            ],
+            "inlineStyleRanges": []
+          },
+          {
+            "key": "ahl7a",
+            "data": {},
+            "text": "",
+            "type": "unstyled",
+            "depth": 0,
+            "entityRanges": [],
+            "inlineStyleRanges": []
+          },
+          {
+            "key": "9me9c",
+            "data": {},
+            "text": "立陶宛議會外交事務委員會主席齊吉曼塔斯·波維維尼斯說，有人冒充列昂尼德·沃爾科夫（俄羅斯反對黨政治家）接近他。雖然 Pavilionis 發現情況可疑，但來自拉脫維亞、愛沙尼亞和烏克蘭的議員似乎被騙了。",
+            "type": "unstyled",
+            "depth": 0,
+            "entityRanges": [],
+            "inlineStyleRanges": []
+          }
+        ],
+        "entityMap": {
+          "0": {
+            "data": {
+              "id": "74",
+              "desc": "",
+              "name": "deepfaketimeline04",
+              "resized": {
+                "w480": "https://editools-gcs-dev.readr.tw/images/edf53a53-dfce-41eb-8dff-704a3badc928-w480.jpg",
+                "w800": "https://editools-gcs-dev.readr.tw/images/edf53a53-dfce-41eb-8dff-704a3badc928-w800.jpg",
+                "w1200": "https://editools-gcs-dev.readr.tw/images/edf53a53-dfce-41eb-8dff-704a3badc928-w1200.jpg",
+                "w1600": "https://editools-gcs-dev.readr.tw/images/edf53a53-dfce-41eb-8dff-704a3badc928-w1600.jpg",
+                "w2400": "",
+                "original": "https://editools-gcs-dev.readr.tw/images/edf53a53-dfce-41eb-8dff-704a3badc928.jpg",
+                "__typename": "ResizedImages"
+              },
+              "imageFile": {
+                "url": "/images/edf53a53-dfce-41eb-8dff-704a3badc928.jpg",
+                "__typename": "ImageFieldOutput"
+              },
+              "__typename": "Photo"
+            },
+            "type": "image",
+            "mutability": "IMMUTABLE"
+          }
+        }
+      },
+      "boost": false,
+      "createdAt": "2023-07-18T10:19:09.884Z",
+      "updatedAt": "2023-07-20T11:20:01.615Z",
+      "tags": [
+        {
+          "name": "戰爭"
+        },
+        {
+          "name": "時間軸二"
+        }
+      ],
+      "type": "article",
+      "external": "",
+      "externalCoverPhoto": "",
+      "displayDateString": "day"
+    },
+    {
+      "id": "35",
+      "title": "Elon Musk 談論一位厭女的網紅",
+      "status": "published",
+      "publishTime": "2023-03-09T16:00:00.000Z",
+      "heroImage": null,
+      "imageCaption": "",
+      "author": "",
+      "name": {
+        "blocks": [
+          {
+            "key": "44ncj",
+            "data": {},
+            "text": "泰特 (Tate) 是一名職業跆拳道運動員和社交媒體人物，以經常發表厭惡女性的評論而聞名，他在 2017 年被禁止使用 Twitter，當時他發帖稱，遭受性侵犯的女性“要承擔一些責任”。當馬斯克於 2022 年 11 月接管該平台時，他恢復了包括泰特在內的以前被禁止的人的賬戶。",
+            "type": "unstyled",
+            "depth": 0,
+            "entityRanges": [],
+            "inlineStyleRanges": []
+          }
+        ],
+        "entityMap": {}
+      },
+      "boost": false,
+      "createdAt": "2023-07-18T10:22:35.795Z",
+      "updatedAt": "2023-07-20T11:19:12.169Z",
+      "tags": [
+        {
+          "name": "時間軸三"
+        },
+        {
+          "name": "時間軸一"
+        },
+        {
+          "name": "烏克蘭"
+        }
+      ],
+      "type": "article",
+      "external": "",
+      "externalCoverPhoto": "",
+      "displayDateString": "day"
+    },
+    {
+      "id": "26",
+      "title": "印度候選人用 deepfake 製作多語影片跟選民溝通",
+      "status": "published",
+      "publishTime": "2020-02-17T16:00:00.000Z",
+      "heroImage": null,
+      "imageCaption": "",
+      "author": "",
+      "name": {
+        "blocks": [
+          {
+            "key": "44ncj",
+            "data": {},
+            "text": "印度候選人用 deepfake 製作多語影片跟選民溝通印度候選人用 deepfake 製作多語影片跟選民溝通印度候選人用 deepfake 製作多語影片跟選民溝通印度候選人用 deepfake 製作多語影片跟選民溝通印度候選人用 deepfake 製作多語影片跟選民溝通印度候選人用 deepfake 製作多語影片跟選民溝通印度候選人用 deepfake 製作多語影片跟選民溝通印度候選人用 deepfake 製作多語影片跟選民溝通印度候選人用 deepfake 製作多語影片跟選民溝通印度候選人用 deepfake 製作多語影片跟選民溝通",
+            "type": "unstyled",
+            "depth": 0,
+            "entityRanges": [],
+            "inlineStyleRanges": []
+          }
+        ],
+        "entityMap": {}
+      },
+      "boost": false,
+      "createdAt": "2023-07-18T10:16:48.961Z",
+      "updatedAt": "2023-07-20T11:19:48.814Z",
+      "tags": [
+        {
+          "name": "戰爭"
+        },
+        {
+          "name": "時間軸二"
+        },
+        {
+          "name": "時間軸一"
+        }
+      ],
+      "type": "article",
+      "external": "",
+      "externalCoverPhoto": "",
+      "displayDateString": "day"
+    },
+    {
+      "id": "25",
+      "title": "祖伯格的邪惡演講 2019",
+      "status": "published",
+      "publishTime": "2020-06-10T16:00:00.000Z",
+      "heroImage": {
+        "name": "deepfaketimeline02",
+        "imageFile": {
+          "url": "/images/3ad0c3fe-2458-49ef-bb58-647e4bfcfe49.png",
+          "width": 660,
+          "height": 738
+        }
+      },
+      "imageCaption": "",
+      "author": "",
+      "name": {
+        "blocks": [
+          {
+            "key": "44ncj",
+            "data": {},
+            "text": "一家公司想要展示 deepfake 影片有多容易做，在 ig 上發布了馬克祖伯格（Mark Zuckerberg）講述臉書就是拿來控制人們相關內容的演講",
+            "type": "unstyled",
+            "depth": 0,
+            "entityRanges": [],
+            "inlineStyleRanges": []
+          }
+        ],
+        "entityMap": {}
+      },
+      "boost": false,
+      "createdAt": "2023-07-18T10:16:02.398Z",
+      "updatedAt": "2023-07-20T14:19:39.309Z",
+      "tags": [],
+      "type": "article",
+      "external": "",
+      "externalCoverPhoto": "",
+      "displayDateString": "day"
+    }
+  ]
+}
