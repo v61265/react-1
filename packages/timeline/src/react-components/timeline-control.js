@@ -37,14 +37,15 @@ const Wrapper = styled.div`
   z-index: 10;
 
   @media (min-width: 768px) {
-    left: 200px;
+    left: 170px;
   }
   @media (min-width: 1200px) {
-      ${({ stickyStrategy }) =>
-        stickyStrategy === 'fixed' &&
-        `
-        left: calc((100vw - 1200px)/2 + 200px);
+    ${({ stickyStrategy }) =>
+      stickyStrategy === 'fixed' &&
+      `
+        left: calc((100vw - 1200px)/2 + 170px);
       `}
+  }
 `
 
 const LevelControl = styled.div`
