@@ -62,7 +62,7 @@ const Header = styled.div`
   justify-content: space-between;
 `
 
-const Time = styled.span`
+const Time = styled.time`
   font-size: 14px;
   line-height: 21px;
   color: rgba(0, 9, 40, 30%);
@@ -124,17 +124,18 @@ export default function CommentItem({ comment, shouldShowControl }) {
   }, [])
 
   return (
-    <Wrapper>
-      <Header>
+    <Wrapper className="comment-wrapper">
+      <Header className="comment-header">
         <Time>{comment.date}</Time>
         {shouldShowControl && (
-          <Control>
+          <Control className="comment-control">
             <CommentStrongSvg className="strong" />
             <CommentSvg className="normal" />
           </Control>
         )}
       </Header>
       <Content
+        className="comment-content"
         contentTooLong={contentTooLong}
         contentExpand={contentExpand}
         ref={contentRef}
@@ -142,7 +143,10 @@ export default function CommentItem({ comment, shouldShowControl }) {
         {comment.content}
       </Content>
       {contentTooLong && !contentExpand && (
-        <ContentExpander onMouseUp={() => setContentExpand(true)}>
+        <ContentExpander
+          className="content-expander"
+          onMouseUp={() => setContentExpand(true)}
+        >
           展開全部
         </ContentExpander>
       )}

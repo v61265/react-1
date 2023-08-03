@@ -37,7 +37,7 @@ const FieldWrapper = styled.div`
  */
 export default function CustomForm({ form, verified }) {
   return (
-    <FormWrapper>
+    <FormWrapper className="form-feedback">
       {form.fields.map((field) => {
         switch (field.type) {
           case 'text':

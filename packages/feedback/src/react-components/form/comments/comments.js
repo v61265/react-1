@@ -72,7 +72,7 @@ export default function Comments({
   }
 
   return (
-    <Wrapper>
+    <Wrapper className="list-container">
       {listTitle && <Title>{listTitle}</Title>}
 
       {comments.map((comment) => (
@@ -83,7 +83,7 @@ export default function Comments({
         />
       ))}
       {!noMoreComment && (
-        <ButtonWrapper>
+        <ButtonWrapper className="list-control">
           <Button onClick={clickHandler}>展開更多</Button>
         </ButtonWrapper>
       )}

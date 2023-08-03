@@ -85,7 +85,7 @@ export default function CommentField({ formId, field, verified }) {
   }
 
   return (
-    <Wrapper>
+    <Wrapper className="field-comment">
       {verified && (
         <>
           <Textarea
@@ -93,7 +93,7 @@ export default function CommentField({ formId, field, verified }) {
             textAreaValue={textareaValue}
             onChange={textareaChangedHandler}
           />
-          <ButtonWrapper>
+          <ButtonWrapper className="input-control">
             <Button disabled={!enableSumbit} onClick={submitHandler}>
               送出
             </Button>
