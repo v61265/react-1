@@ -68,7 +68,7 @@ export default function TimelineEventContent({ event, fetchImageBaseUrl }) {
   let heroImage
   if (event?.heroImage) {
     heroImage = {
-      caption: event.imageCaption || event.heroImage.name,
+      caption: event.imageCaption,
       url: fetchImageBaseUrl + event.heroImage.imageFile.url,
       width: event.heroImage.imageFile.width,
       height: event.heroImage.imageFile.height,
@@ -88,7 +88,7 @@ export default function TimelineEventContent({ event, fetchImageBaseUrl }) {
               h={heroImage?.height}
             />
             {heroImage?.caption && (
-              <ImgCaption>圖說：{heroImage?.caption}</ImgCaption>
+              <ImgCaption>{heroImage?.caption}</ImgCaption>
             )}
           </>
         )}
