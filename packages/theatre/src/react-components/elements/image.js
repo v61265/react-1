@@ -40,7 +40,6 @@ export default function ImageElement({ id, sheet, onLoad, onError }) {
         background: `${newValue.bgColor}`,
         opacity: `${newValue.opacity}`,
         display: `${newValue.visible ? 'block' : 'none'}`,
-        backgroundImage: `url(${newValue.url})`,
         transform: `scale(${newValue.scale})`,
         zIndex: `${newValue.zIndex}`,
       })
