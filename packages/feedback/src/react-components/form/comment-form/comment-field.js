@@ -104,6 +104,7 @@ export default function CommentField({ formId, field, verified }) {
         comments={comments}
         onExpand={loadMoreComments}
         noMoreComment={noMoreComment}
+        listTitle={field.commentListTitle}
       />
     </Wrapper>
   )

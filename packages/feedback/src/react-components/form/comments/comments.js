@@ -55,9 +55,15 @@ const Button = styled.button`
  * @param {Comment[]}   props.comments
  * @param {ExpandFunc}  props.onExpand
  * @param {boolean}     props.noMoreComment
+ * @param {string}      [props.listTitle='網友回饋']
  * @return {JSX.Element}
  */
-export default function Comments({ comments, onExpand, noMoreComment }) {
+export default function Comments({
+  comments,
+  onExpand,
+  noMoreComment,
+  listTitle = '網友回饋',
+}) {
   const clickHandler = (e) => {
     e.preventDefault()
     onExpand()
@@ -65,7 +71,8 @@ export default function Comments({ comments, onExpand, noMoreComment }) {
 
   return (
     <Wrapper>
-      <Title>網友回饋</Title>
+      {listTitle && <Title>{listTitle}</Title>}
+
       {comments.map((comment) => (
         <CommentItem key={comment.id} comment={comment} />
       ))}
