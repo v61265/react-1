@@ -39,6 +39,7 @@ const Button = styled.button`
   }
   &:disabled {
     background-color: #e0e0e0;
+    cursor: not-allowed;
   }
 
   @media (max-width: 768px) {

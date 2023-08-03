@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import CommentItem from './comment-item'
 
 const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   margin: 80px 0 60px 0;
   width: 100%;
 
