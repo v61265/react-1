@@ -8,19 +8,25 @@ const namespace = '@readr-media'
 
 function hydrate(namespace, pkgName, Component) {
   const dataArr = window[namespace][pkgName]
-  const data = Array.isArray(dataArr) ? dataArr.shift() : {}
-  const { uuid, ...dataOfComponent } = data
-  const container = document.getElementById(uuid)
-  hydrateRoot(container, <Component {...dataOfComponent} />)
+  if (Array.isArray(dataArr)) {
+    dataArr.forEach((data) => {
+      const { uuid, ...dataOfComponent } = data
+      const container = document.getElementById(uuid)
+      hydrateRoot(container, <Component {...dataOfComponent} />)
+    })
+  }
 }
 
 function render(namespace, pkgName, Component) {
   const dataArr = window[namespace][pkgName]
-  const data = Array.isArray(dataArr) ? dataArr.shift() : {}
-  const { uuid, ...dataOfComponent } = data
-  const container = document.getElementById(uuid)
-  const root = createRoot(container)
-  root.render(<Component {...dataOfComponent} />)
+  if (Array.isArray(dataArr)) {
+    dataArr.forEach((data) => {
+      const { uuid, ...dataOfComponent } = data
+      const container = document.getElementById(uuid)
+      const root = createRoot(container)
+      root.render(<Component {...dataOfComponent} />)
+    })
+  }
 }
 
 if (window?.[namespace][`react-qa-list${pkgVersion}`]) {
