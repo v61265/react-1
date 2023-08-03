@@ -74,7 +74,7 @@ export default function LiveBlogItemContent({
   let heroImage
   if (article?.heroImage) {
     heroImage = {
-      caption: article.imageCaption || article.heroImage.name,
+      caption: article.imageCaption,
       url: fetchImageBaseUrl + article.heroImage.imageFile.url,
       width: article.heroImage.imageFile.width,
       height: article.heroImage.imageFile.height,
@@ -107,7 +107,7 @@ export default function LiveBlogItemContent({
               h={heroImage?.height}
             />
             {heroImage?.caption && (
-              <ImgCaption>圖說：{heroImage?.caption}</ImgCaption>
+              <ImgCaption>{heroImage?.caption}</ImgCaption>
             )}
           </>
         )}
