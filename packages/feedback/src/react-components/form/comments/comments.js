@@ -56,6 +56,7 @@ const Button = styled.button`
  * @param {ExpandFunc}  props.onExpand
  * @param {boolean}     props.noMoreComment
  * @param {string}      [props.listTitle='網友回饋']
+ * @param {boolean}     [props.shouldShowControl=true]
  * @return {JSX.Element}
  */
 export default function Comments({
@@ -63,6 +64,7 @@ export default function Comments({
   onExpand,
   noMoreComment,
   listTitle = '網友回饋',
+  shouldShowControl = true,
 }) {
   const clickHandler = (e) => {
     e.preventDefault()
@@ -74,7 +76,11 @@ export default function Comments({
       {listTitle && <Title>{listTitle}</Title>}
 
       {comments.map((comment) => (
-        <CommentItem key={comment.id} comment={comment} />
+        <CommentItem
+          key={comment.id}
+          comment={comment}
+          shouldShowControl={shouldShowControl}
+        />
       ))}
       {!noMoreComment && (
         <ButtonWrapper>

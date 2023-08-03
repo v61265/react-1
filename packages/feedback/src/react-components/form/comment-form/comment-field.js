@@ -105,6 +105,7 @@ export default function CommentField({ formId, field, verified }) {
         onExpand={loadMoreComments}
         noMoreComment={noMoreComment}
         listTitle={field.commentListTitle}
+        shouldShowControl={field.shouldShowItemControl}
       />
     </Wrapper>
   )

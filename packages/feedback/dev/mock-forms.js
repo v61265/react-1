@@ -32,6 +32,7 @@ export const formsData = {
           status: 'published',
           sortOrder: null,
           commentListTitle: '',
+          shouldShowItemControl: false,
         },
       ],
     },

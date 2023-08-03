@@ -21,6 +21,7 @@ export default {}
  * @typedef {Object}    TextOnly
  * @property {'text'}   type
  * @property {string}   [commentListTitle]
+ * @property {boolean}  [shouldShowItemControl]
  */
 
 /**

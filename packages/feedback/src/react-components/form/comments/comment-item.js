@@ -104,9 +104,10 @@ const ContentExpander = styled.button`
  *
  * @param {Object}  props
  * @param {Comment} props.comment
+ * @param {boolean} [props.shouldShowControl]
  * @return {JSX.Element}
  */
-export default function CommentItem({ comment }) {
+export default function CommentItem({ comment, shouldShowControl }) {
   const [contentExpand, setContentExpand] = useState(false)
   const [contentTooLong, setContentTooLong] = useState(false)
   const contentRef = useRef()
@@ -126,10 +127,12 @@ export default function CommentItem({ comment }) {
     <Wrapper>
       <Header>
         <Time>{comment.date}</Time>
-        <Control>
-          <CommentStrongSvg className="strong" />
-          <CommentSvg className="normal" />
-        </Control>
+        {shouldShowControl && (
+          <Control>
+            <CommentStrongSvg className="strong" />
+            <CommentSvg className="normal" />
+          </Control>
+        )}
       </Header>
       <Content
         contentTooLong={contentTooLong}
