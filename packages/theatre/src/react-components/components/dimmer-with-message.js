@@ -19,7 +19,6 @@ const textAnimation = keyframes`
 const Dimmer = styled.div`
   width: 100%;
   height: 100%;
-  opacity: 0.8;
   background: #000;
   position: absolute;
   top: 0;
