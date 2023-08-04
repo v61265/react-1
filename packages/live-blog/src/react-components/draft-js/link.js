@@ -35,7 +35,7 @@ export const linkDecorator = {
 function Link(props) {
   const { url } = props.contentState.getEntity(props.entityKey).getData()
   return (
-    <a href={url} style={styles.link}>
+    <a href={url} style={styles.link} target="_blank">
       {props.children}
     </a>
   )
