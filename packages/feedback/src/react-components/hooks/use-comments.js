@@ -13,9 +13,10 @@ const moreCommentCount = 10
  *
  * @param {string} formId
  * @param {string} fieldId
+ * @param {string}  [identifier]
  * @return {CommentManager}
  */
-export default function useComments(formId, fieldId) {
+export default function useComments(formId, fieldId, identifier) {
   const [showingComments, setShowingComments] = useState([])
   const [noMoreComment, setNoMoreComment] = useState(false)
   const hidingCommentsRef = useRef([])
@@ -39,6 +40,7 @@ export default function useComments(formId, fieldId) {
         const result = await getFeedbacks({
           form: formId,
           field: fieldId,
+          identifier: identifier,
           take: takeRef.current,
           skip: skipRef.current,
         })
@@ -121,6 +123,7 @@ export default function useComments(formId, fieldId) {
       const result = await postFeedback({ // eslint-disable-line
         name: userId,
         form: formId,
+        identifier: identifier,
         responseTime: date,
         field: fieldId,
         userFeedback: textareaValue,

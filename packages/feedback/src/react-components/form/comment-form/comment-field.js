@@ -64,7 +64,7 @@ export default function CommentField({ formId, field, verified }) {
     noMoreComment,
     loadMoreComments,
     postComment,
-  } = useComments(formId, field.id)
+  } = useComments(formId, field.id, field.identifier)
 
   const textareaChangedHandler = (e) => {
     const value = e.target.value

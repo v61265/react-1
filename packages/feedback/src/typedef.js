@@ -7,6 +7,7 @@ export default {}
  * @property {string}   status
  * @property {'single' | 'text'}  type
  * @property {number | null}      sortOrder
+ * @property {string}   [identifier]
  */
 
 /**
@@ -14,7 +15,6 @@ export default {}
  * @property {'single'} type
  * @property {string}   [thumbUpLabel]
  * @property {string}   [thumbDownLabel]
- * @property {string}   [identifier]
  */
 
 /**
