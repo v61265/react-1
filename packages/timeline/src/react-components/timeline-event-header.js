@@ -6,6 +6,8 @@ import { customFormatTime } from '../utils/date'
 const CategoryWrapper = styled.div`
   padding: 0;
   cursor: pointer;
+  display: flex;
+  flex-wrap: wrap;
   @media (max-width: 768px) {
     padding: 0;
   }
