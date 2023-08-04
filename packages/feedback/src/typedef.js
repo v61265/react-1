@@ -4,9 +4,9 @@ export default {}
  * @typedef {Object}    Field
  * @property {string}   id
  * @property {string}   name
- * @property {string}   status
+ * @property {string}   [status]
  * @property {string}  type
- * @property {number | null}      sortOrder
+ * @property {number | null}      [sortOrder]
  * @property {string}   [identifier]
  */
 
@@ -33,10 +33,10 @@ export default {}
 /**
  * @typedef {Object}    Form
  * @property {string}   id
- * @property {string}   name
- * @property {string}   type
- * @property {boolean}  active
- * @property {number}   fieldsCount
+ * @property {string}   [name]
+ * @property {string}   [type]
+ * @property {boolean}  [active]
+ * @property {number}   [fieldsCount]
  * @property {(SingleField|TextField)[]} fields
  */
 
