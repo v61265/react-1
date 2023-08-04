@@ -229,7 +229,15 @@ export function sortTimelineEvents(events, isAsc) {
   })
 }
 
-export function generateTimelineData(timeline, filterTags, isAsc) {
+/**
+ *
+ * @param {Timeline} timeline
+ * @param {string[]} filterTags
+ * @param {boolean} isAsc
+ * @param {import('../const/config').Dividers} dividers
+ * @returns
+ */
+export function generateTimelineData(timeline, filterTags, isAsc, dividers) {
   const timelineEvents = timeline.timelineEvents
   const yearEvents = { empty: [] }
   let yearKeys = new Set()
@@ -333,13 +341,24 @@ export function generateTimelineData(timeline, filterTags, isAsc) {
         newYearKeys.push(convertDateToTimeKey(continuousD, 'year'))
         continuousD.setFullYear(continuousD.getFullYear() + countingNext)
         safeThreshold++
-        if (safeThreshold >= 5) break
+        if (safeThreshold >= 30) break
       }
 
       newYearKeys.push(yearKey)
     }
     return newYearKeys
   }, [])
+  const yearDivider = dividers?.year
+  const lastYearKeyToRender = yearKeysToRender[yearKeysToRender.length - 1]
+  let lastD = convertTimeKeyToDate(lastYearKeyToRender, 'year')
+  // add year divider -1  empty node for the end
+  for (let i = 1; i < yearDivider; i++) {
+    const d = new Date(lastD)
+    d.setFullYear(d.getFullYear() + (isAsc ? i : -i))
+    const newYearKeyToRender = convertDateToTimeKey(d, 'year')
+    yearKeysToRender.push(newYearKeyToRender)
+  }
+
   let monthKeysToRender = [...monthKeys]
   monthKeysToRender = monthKeysToRender.reduce((newMonthKeys, monthKey) => {
     if (newMonthKeys.length === 0) {
@@ -359,13 +378,24 @@ export function generateTimelineData(timeline, filterTags, isAsc) {
         newMonthKeys.push(convertDateToTimeKey(continuousD, 'month'))
         continuousD.setMonth(continuousD.getMonth() + countingNext)
         safeThreshold++
-        if (safeThreshold >= 100) break
+        if (safeThreshold >= 30 * 12) break
       }
 
       newMonthKeys.push(monthKey)
     }
     return newMonthKeys
   }, [])
+  const monthDivider = dividers?.month
+  const lastMonthKeyToRender = monthKeysToRender[monthKeysToRender.length - 1]
+  lastD = convertTimeKeyToDate(lastMonthKeyToRender, 'month')
+  // add month divider -1  empty node for the end
+  for (let i = 1; i < monthDivider; i++) {
+    const d = new Date(lastD)
+    d.setMonth(d.getMonth() + (isAsc ? i : -i))
+    const newMonthKeyToRender = convertDateToTimeKey(d, 'month')
+    monthKeysToRender.push(newMonthKeyToRender)
+  }
+
   let dayKeysToRender = [...dayKeys]
   dayKeysToRender = dayKeysToRender.reduce((newDayKeys, dayKey) => {
     if (newDayKeys.length === 0) {
@@ -385,13 +415,24 @@ export function generateTimelineData(timeline, filterTags, isAsc) {
         newDayKeys.push(convertDateToTimeKey(continuousD, 'day'))
         continuousD.setDate(continuousD.getDate() + countingNext)
         safeThreshold++
-        if (safeThreshold >= 1000) break
+        if (safeThreshold >= 30 * 365) break
       }
 
       newDayKeys.push(dayKey)
     }
     return newDayKeys
   }, [])
+
+  const dayDivider = dividers?.day
+  const lastDayKeyToRender = dayKeysToRender[dayKeysToRender.length - 1]
+  lastD = convertTimeKeyToDate(lastDayKeyToRender, 'day')
+  // add day divider -1  empty node for the end
+  for (let i = 1; i < dayDivider; i++) {
+    const d = new Date(lastD)
+    d.setDate(d.getDate() + (isAsc ? i : -i))
+    const newDayKeyToRender = convertDateToTimeKey(d, 'day')
+    dayKeysToRender.push(newDayKeyToRender)
+  }
 
   return {
     timeEvents: {

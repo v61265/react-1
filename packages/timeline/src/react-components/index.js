@@ -124,11 +124,10 @@ export default function Timeline({
     timeKeysToRender,
     timeMax,
     allTags,
-  } = useMemo(() => generateTimelineData(timeline, tags, isTimeSortedAsc), [
-    timeline,
-    tags,
-    isTimeSortedAsc,
-  ])
+  } = useMemo(
+    () => generateTimelineData(timeline, tags, isTimeSortedAsc, dividers),
+    [timeline, tags, isTimeSortedAsc]
+  )
   const { initialLevel, maxLevel } = useMemo(
     () => generateTimeLevel(timeline),
     [timeline]
