@@ -5,21 +5,19 @@ export default {}
  * @property {string}   id
  * @property {string}   name
  * @property {string}   status
- * @property {'single' | 'text'}  type
+ * @property {string}  type
  * @property {number | null}      sortOrder
  * @property {string}   [identifier]
  */
 
 /**
  * @typedef {Object}    SingleOnly
- * @property {'single'} type
  * @property {string}   [thumbUpLabel]
  * @property {string}   [thumbDownLabel]
  */
 
 /**
  * @typedef {Object}    TextOnly
- * @property {'text'}   type
  * @property {string}   [commentListTitle]
  * @property {boolean}  [shouldShowItemControl]
  */
