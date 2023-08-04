@@ -1,5 +1,30 @@
 # @readr-media/react-feedback Changelog
 
+## 2023-08-04, Version 3.4.0
+- feat: add shouldShowItemControl option to comment field
+- feat: add commentListTitle option to comment field
+- feat: add identifier option to comment field
+- fix: style issues
+- fix: issues in typedef
+- chore: add type file generation process
+- chore: add font loading to devServer
+- chore: add DS_store to gitignore
+
+
+### Commits
+* \[[`2ea8118ee4`](https://github.com/readr-media/react-feedback/commit/2ea8118ee4)] - chore(feedback): bump version to 3.4.0
+* \[[`a3b1dab104`](https://github.com/readr-media/react-feedback/commit/a3b1dab104)] - refactor(feedback): update typedef
+* \[[`cc770acf07`](https://github.com/readr-media/react-feedback/commit/cc770acf07)] - chore(feedback): add type file generation process
+* \[[`9d7a08427d`](https://github.com/readr-media/react-feedback/commit/9d7a08427d)] - fix(feedback): issues in typedef
+* \[[`bd08b33be8`](https://github.com/readr-media/react-feedback/commit/bd08b33be8)] - chore(feedback): add DS\_store to gitignore
+* \[[`b222a268fe`](https://github.com/readr-media/react-feedback/commit/b222a268fe)] - feat(feedback): add identifier option to comment field
+* \[[`8fc8e01204`](https://github.com/readr-media/react-feedback/commit/8fc8e01204)] - feat(feedback): add classnames to comment components (Tsuki Akiba)
+* \[[`8c6c443bdd`](https://github.com/readr-media/react-feedback/commit/8c6c443bdd)] - feat(feedback): add shouldShowItemControl option to text field (Tsuki Akiba)
+* \[[`ec47830cad`](https://github.com/readr-media/react-feedback/commit/ec47830cad)] - feat(feedback): add commentListTitle option to text field (Tsuki Akiba)
+* \[[`9d15946c0a`](https://github.com/readr-media/react-feedback/commit/9d15946c0a)] - fix(feedback): style issues (Tsuki Akiba)
+* \[[`8c50404f24`](https://github.com/readr-media/react-feedback/commit/8c50404f24)] - chore(feedback): add font loading to devServer (Tsuki Akiba)
+* \[[`88ca8f0d16`](https://github.com/readr-media/react-feedback/commit/88ca8f0d16)] - docs(feedback): update CHANGELOG (Tsuki Akiba)
+
 ## 2022-11-11, Version 3.3.0
 
 ### Notable Changes
