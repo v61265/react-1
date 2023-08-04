@@ -39,6 +39,7 @@ const Button = styled.button`
   }
   &:disabled {
     background-color: #e0e0e0;
+    cursor: not-allowed;
   }
 
   @media (max-width: 768px) {
@@ -63,7 +64,7 @@ export default function CommentField({ formId, field, verified }) {
     noMoreComment,
     loadMoreComments,
     postComment,
-  } = useComments(formId, field.id)
+  } = useComments(formId, field.id, field.identifier)
 
   const textareaChangedHandler = (e) => {
     const value = e.target.value
@@ -84,7 +85,7 @@ export default function CommentField({ formId, field, verified }) {
   }
 
   return (
-    <Wrapper>
+    <Wrapper className="field-comment">
       {verified && (
         <>
           <Textarea
@@ -92,7 +93,7 @@ export default function CommentField({ formId, field, verified }) {
             textAreaValue={textareaValue}
             onChange={textareaChangedHandler}
           />
-          <ButtonWrapper>
+          <ButtonWrapper className="input-control">
             <Button disabled={!enableSumbit} onClick={submitHandler}>
               送出
             </Button>
@@ -103,6 +104,8 @@ export default function CommentField({ formId, field, verified }) {
         comments={comments}
         onExpand={loadMoreComments}
         noMoreComment={noMoreComment}
+        listTitle={field.commentListTitle}
+        shouldShowControl={field.shouldShowItemControl}
       />
     </Wrapper>
   )
