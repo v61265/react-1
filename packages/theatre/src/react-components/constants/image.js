@@ -3,17 +3,14 @@ import { types } from '@theatre/core'
 export const IMAGE = {
   position: types.compound({
     x: types.number(50, {
-      range: [-100, 100],
       nudgeMultiplier: 0.5,
     }),
     y: types.number(50, {
-      range: [-100, 100],
       nudgeMultiplier: 0.5,
     }),
   }),
   size: types.compound({
     width: types.number(300, {
-      range: [0, 1200],
       nudgeMultiplier: 0.5,
     }),
   }),
@@ -31,7 +28,7 @@ export const IMAGE = {
     nudgeMultiplier: 0.05,
   }),
   visible: types.boolean(true),
-  scale: types.number(1, { range: [0, 100], nudgeMultiplier: 0.1 }),
+  scale: types.number(1, { nudgeMultiplier: 0.1 }),
   zIndex: types.stringLiteral('10', {
     bottom: '-10',
     0: '0',
