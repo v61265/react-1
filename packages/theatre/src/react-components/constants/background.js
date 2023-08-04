@@ -3,25 +3,21 @@ import { types } from '@theatre/core'
 export const BACKGROUND = {
   position: types.compound({
     x: types.number(0, {
-      range: [-500, 500],
       nudgeMultiplier: 0.5,
     }),
     y: types.number(0, {
-      range: [-500, 500],
       nudgeMultiplier: 0.5,
     }),
   }),
   size: types.compound({
     width: types.number(100, {
-      range: [0, 300],
       nudgeMultiplier: 0.5,
     }),
     height: types.number(100, {
-      range: [0, 300],
       nudgeMultiplier: 0.5,
     }),
   }),
-  scale: types.number(1, { range: [0, 100], nudgeMultiplier: 0.1 }),
+  scale: types.number(1, { nudgeMultiplier: 0.1 }),
   border: types.compound({
     size: types.number(0),
     color: types.rgba({ r: 0, g: 0, b: 0, a: 1 }),
