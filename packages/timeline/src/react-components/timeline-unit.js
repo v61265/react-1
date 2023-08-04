@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import { generateDateString, isEdgeUnit } from '../utils/timeline'
-import { useState, useEffect } from 'react'
 
 const Wrapper = styled.div`
   display: flex;
@@ -164,11 +163,10 @@ export default function TimelineUnit({
   measure,
   timeUnitKey,
   isTheFirstOrLastUnit,
-  dividerConfig,
+  dividers,
+  bubbleLevelSizesInDivider,
 }) {
-  const { rwd, bubbleLevelSizesInDivider } = dividerConfig
-  const [device, setDevice] = useState('mobile')
-  const divider = rwd[device][measure]
+  const divider = dividers[measure]
   const bubbleLevelSizes =
     bubbleLevelSizesInDivider[divider] || defaultBubbleLevelSizes
   const bubbleSize = bubbleLevelSizes[bubbleSizeLevel]
@@ -177,12 +175,6 @@ export default function TimelineUnit({
   if (measure === 'month' || measure === 'day') {
     showYear = isEdgeUnit(timeUnitKey, measure) || isTheFirstOrLastUnit
   }
-
-  useEffect(() => {
-    if (window.screen.width >= 768) {
-      setDevice('pc')
-    }
-  }, [rwd])
 
   let nodeJsx
   if (eventsCount === 0) {

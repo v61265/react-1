@@ -1,4 +1,5 @@
 /**
+ *
  * @typedef {Object} Liveblog
  * @property {string} id
  * @property {boolean} active
@@ -15,6 +16,7 @@
  * @property {string} sort
  * @property {string[]} tags
  * @property {string} updatedAt
+ * @property {import('../const/config').TimelineConfig} hint
  * @property {LiveblogItem[]} liveblog_items
  *
  * @typedef {Object} LiveblogItem
@@ -47,6 +49,7 @@
  * @property {string} sort
  * @property {string[]} tags
  * @property {string} updatedAt
+ * @property {import('../const/config').TimelineConfig} config
  * @property {TimelineEvent[]} timelineEvents
  *
  * @typedef {Object} TimelineEvent

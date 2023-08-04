@@ -12,6 +12,8 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import TimelineEventPanel from './timeline-event-panel'
 import TimelineEvent from './timeline-event'
 import { TagsContext, initialTags } from './useTags'
+import { defaultConifg } from '../const/config'
+import { useTimelineConfig } from './hook/useTimelineConfig'
 
 const GlobalStyles = createGlobalStyle`
   * {
@@ -89,52 +91,12 @@ function getBubbleLevel(max, count) {
   return Math.ceil(count / levelSize) - 1
 }
 
-const defaultConifg = {
-  dividerConfig: {
-    rwd: {
-      mobile: {
-        year: 5,
-        month: 6,
-        day: 7,
-      },
-      pc: {
-        year: 5,
-        month: 6,
-        day: 7,
-      },
-    },
-    bubbleLevelSizesInDivider: {
-      5: [23, 36, 48, 60, 76],
-      6: [23, 36, 48, 60, 66],
-      7: [23, 28, 36, 48, 60],
-    },
-  },
-  headerHeightConfig: {
-    rwd: {
-      mobile: 66,
-      pc: 80,
-    },
-    rwdBreakpoints: [
-      { minWidth: 0, name: 'mobile' },
-      { minWidth: 568, name: 'pc' },
-    ],
-  },
-  noEventContent: `
-    <span
-      style="
-        text-align: center;
-        font-size: 14px;
-        line-height: 1.5;
-        color: #989898;
-      "
-    >
-      點擊泡泡
-      <br />
-      或往下滑動
-    </span>
-  `,
-}
-
+/**
+ * @param {Object} props
+ * @param {import('../utils/timeline').Liveblog} props.liveblog - liveblog containing timeline data
+ * @param {string} props.fetchImageBaseUrl - base url for fetching image from CMS
+ * @returns
+ */
 export default function Timeline({
   liveblog,
   fetchImageBaseUrl = 'https://editools-gcs-dev.readr.tw',
@@ -147,10 +109,14 @@ export default function Timeline({
   const [tags, setTags] = useState(initialTags)
   const [stickyStrategy, setStickStrategy] = useState('absolute-top')
   const [focusUnitKey, setFocusUnitKey] = useState('')
-  const { dividerConfig, headerHeightConfig, noEventContent } =
-    timeline.conifg || defaultConifg
-  const { rwd, rwdBreakpoints } = headerHeightConfig
-  const [headerHeight, setHeaderHeight] = useState(rwd.mobile)
+
+  const timelineConfig = timeline.config || defaultConifg
+  const {
+    headerHeight,
+    dividers,
+    bubbleLevelSizesInDivider,
+    noEventContent,
+  } = useTimelineConfig(timelineConfig)
 
   const {
     timeEvents,
@@ -204,14 +170,6 @@ export default function Timeline({
     setFocusUnitKey(newFocusUnitKey)
     setLevel(newLevel)
   }
-
-  useEffect(() => {
-    const windowWidth = window.screen.width
-    const rwdBreakpoint = rwdBreakpoints.reverse().find((rwdBreakpoint) => {
-      return windowWidth >= rwdBreakpoint.minWidth
-    })
-    setHeaderHeight(rwd[rwdBreakpoint.name])
-  }, [])
 
   useEffect(() => {
     const onScroll = () => {
@@ -377,7 +335,8 @@ export default function Timeline({
             <TimelineUnit
               eventsCount={events.length}
               bubbleSizeLevel={getBubbleLevel(timeMax, events.length)}
-              dividerConfig={dividerConfig}
+              dividers={dividers}
+              bubbleLevelSizesInDivider={bubbleLevelSizesInDivider}
               key={timeUnitKey + i}
               onBubbleClick={() => {
                 updateLevel(level - 1, timeUnitKey)
