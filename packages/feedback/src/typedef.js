@@ -1,6 +1,12 @@
 export default {}
 
 /**
+ * @typedef {Object}        NotifyObject
+ * @property {string|null}  selectedOption
+ * @property {Object.<string, number>}  optionSummary
+ */
+
+/**
  * @typedef {Object}    Field
  * @property {string}   id
  * @property {string}   name
@@ -15,6 +21,8 @@ export default {}
  * @property {string}   [thumbUpLabel]
  * @property {string}   [thumbDownLabel]
  * @property {Option[]} [options]
+ * @property {string}   [selectedItem]
+ * @property {(data: NotifyObject) => void} [notifyUpstream]
  */
 
 /**

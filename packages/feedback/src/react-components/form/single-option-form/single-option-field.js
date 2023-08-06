@@ -38,27 +38,15 @@ const OptionGroupWrapper = styled.div`
 `
 
 /**
- * @typedef {Object}        NotifyObject
- * @property {string|null}  selectedOption
- * @property {Object.<string, number>}  optionSummary
- *
- *
  * @typedef {import('../../../typedef').SingleField} SingleField
  *
  * @param {Object}      props
  * @param {string}      props.formId
  * @param {SingleField} props.field
- * @param {string}      [props.selectedItem]
- * @param {(data: NotifyObject) => void} [props.notifyUpstream]
  * @return {JSX.Element}
  */
-export default function SingleOptionField({
-  formId,
-  field,
-  selectedItem,
-  notifyUpstream,
-}) {
-  const [selectedOption, setSelectedOption] = useState(selectedItem)
+export default function SingleOptionField({ formId, field }) {
+  const [selectedOption, setSelectedOption] = useState(field.selectedItem)
 
   const { optionSummary, giveOptions } = useOptions(
     formId,
@@ -70,7 +58,7 @@ export default function SingleOptionField({
     if (optionSummary && value in optionSummary) {
       if (value === selectedOption) {
         // cancel selection
-        setSelectedOption(null)
+        setSelectedOption(undefined)
         giveOptions([])
       } else {
         // select option
@@ -80,9 +68,9 @@ export default function SingleOptionField({
     }
   }
 
-  if (typeof notifyUpstream === 'function') {
+  if (typeof field.notifyUpstream === 'function') {
     useEffect(() => {
-      notifyUpstream({
+      field.notifyUpstream({
         selectedOption,
         optionSummary,
       })
