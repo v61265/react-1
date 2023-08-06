@@ -1,5 +1,5 @@
 import { val, getProject } from '@theatre/core'
-import { useState, useEffect, useRef } from 'react' // eslint-disable-line
+import React, { useState, useEffect, useRef } from 'react' // eslint-disable-line
 import styled from '../../styled-components.js'
 import Stage from './stage.js'
 import Dimmer from './dimmer-with-message.js'
@@ -34,6 +34,7 @@ export default function DemoScroll({
   animateJson = {},
   objectJson = [],
   projectId = '',
+  isMobile = false,
 }) {
   const projectState =
     Object.keys(animateJson).length > 0 ? { state: animateJson } : {}
@@ -77,26 +78,30 @@ export default function DemoScroll({
   // ----------------------------------------
 
   const [hasMediaError, setHasMediaError] = useState(false) // image & background && video onError
-  const [loadedMedias, setLoadedMedias] = useState(0) // image & background && video onload
+  const [loadedMedias, setLoadedMedias] = useState(0) // image & background onload
   const [isLoading, setIsLoading] = useState(true)
 
   const totalMedias = objectJson.filter(
-    (data) =>
-      data.type === 'IMAGE' ||
-      data.type === 'BACKGROUND' ||
-      data.type === 'VIDEO'
+    (data) => data.type === 'IMAGE' || data.type === 'BACKGROUND'
   ).length
 
   useEffect(() => {
     if (loadedMedias === totalMedias) {
       setIsLoading(false)
     }
-  }, [loadedMedias, totalMedias])
+  }, [loadedMedias, totalMedias, isMobile])
 
   const sizerHeight =
     hasMediaError || isLoading
       ? '100vh'
       : `${sequenceLength * defaultScrollScale}px`
+
+  // ----------------------------------------
+
+  useEffect(() => {
+    setHasMediaError(false)
+    setLoadedMedias(0)
+  }, [isMobile, animateJson, objectJson])
 
   return (
     <ScrollSizer
@@ -105,14 +110,14 @@ export default function DemoScroll({
     >
       <StickyBox ref={stageRef}>
         <Dimmer
-          show={isLoading && !hasMediaError}
-          message={'載入中'}
-          shining={true}
+          show={hasMediaError}
+          message={'載入失敗。請檢查您的網路連線，並重新整理瀏覽器。'}
         />
 
         <Dimmer
-          show={hasMediaError}
-          message={'載入失敗。請檢查您的網路連線，並重新整理瀏覽器。'}
+          show={isLoading && !hasMediaError}
+          message={'載入中'}
+          shining={true}
         />
 
         <Stage

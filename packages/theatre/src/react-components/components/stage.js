@@ -78,7 +78,6 @@ export default function Stage({
           id={data.id}
           source={data.src}
           sheet={sheet}
-          onLoad={handleOnLoad}
           onError={handleOnError}
         />
       )
