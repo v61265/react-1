@@ -24,7 +24,6 @@ const Dimmer = styled.div`
   top: 0;
   left: 0;
   backdrop-filter: blur(5px);
-  opacity: 0.8;
 `
 
 const Container = styled.div`
