@@ -19,6 +19,7 @@ export const VIDEO = {
   }),
   visible: types.boolean(true),
   isPlaying: types.boolean(true),
+  isLoop: types.boolean(false),
   scale: types.number(1, { nudgeMultiplier: 0.1 }),
   zIndex: types.stringLiteral('10', {
     bottom: '-10',
