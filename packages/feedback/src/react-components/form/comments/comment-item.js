@@ -4,12 +4,16 @@ import styled from 'styled-components'
 import CommentSvg from '../../../static/icon-comment.svg'
 import CommentStrongSvg from '../../../static/icon-comment-strong.svg'
 
-const SVGWrapper = styled.div`
+const Control = styled.button`
   width: 20px;
   height: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
 
   .normal {
     display: none;
@@ -24,7 +28,8 @@ const SVGWrapper = styled.div`
   }
 `
 
-const Wrapper = styled.button`
+const Wrapper = styled.div`
+  box-sizing: border-box;
   background-color: #fff;
   border: none;
   border-radius: 6px;
@@ -33,7 +38,6 @@ const Wrapper = styled.button`
   outline: inherit;
   width: 100%;
   text-align: left;
-  cursor: pointer;
 
   &:hover {
     @media (min-width: 1201px) {
@@ -58,7 +62,7 @@ const Header = styled.div`
   justify-content: space-between;
 `
 
-const Time = styled.span`
+const Time = styled.time`
   font-size: 14px;
   line-height: 21px;
   color: rgba(0, 9, 40, 30%);
@@ -85,10 +89,14 @@ const Content = styled.div`
       : ''}
 `
 
-const Hint = styled.div`
+const ContentExpander = styled.button`
+  background-color: transparent;
   color: rgba(0, 9, 40, 30%);
   font-size: 18px;
   line-height: 36px;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
 `
 
 /**
@@ -96,12 +104,11 @@ const Hint = styled.div`
  *
  * @param {Object}  props
  * @param {Comment} props.comment
+ * @param {boolean} [props.shouldShowControl]
  * @return {JSX.Element}
  */
-export default function CommentItem({ comment }) {
+export default function CommentItem({ comment, shouldShowControl }) {
   const [contentExpand, setContentExpand] = useState(false)
-  // const [isHovering, setIsHovering] = useState(false)
-  // const [isPressing, setIsPressing] = useState(false)
   const [contentTooLong, setContentTooLong] = useState(false)
   const contentRef = useRef()
 
@@ -116,44 +123,33 @@ export default function CommentItem({ comment }) {
     }
   }, [])
 
-  const feedbackClickedHandler = (e) => {
-    setIsPressing(false)
-    e.target.blur()
-
-    if (contentTooLong) {
-      setContentExpand((contentExpand) => !contentExpand)
-    }
-  }
-
   return (
-    <Wrapper
-      contentExpand={contentExpand}
-      onMouseOver={() => {
-        setIsHovering(true)
-      }}
-      onMouseOut={() => {
-        setIsHovering(false)
-      }}
-      onMouseDown={() => {
-        setIsPressing(true)
-      }}
-      onMouseUp={feedbackClickedHandler}
-    >
-      <Header>
+    <Wrapper className="comment-wrapper">
+      <Header className="comment-header">
         <Time>{comment.date}</Time>
-        <SVGWrapper>
-          <CommentStrongSvg className="strong" />
-          <CommentSvg className="normal" />
-        </SVGWrapper>
+        {shouldShowControl && (
+          <Control className="comment-control">
+            <CommentStrongSvg className="strong" />
+            <CommentSvg className="normal" />
+          </Control>
+        )}
       </Header>
       <Content
+        className="comment-content"
         contentTooLong={contentTooLong}
         contentExpand={contentExpand}
         ref={contentRef}
       >
         {comment.content}
       </Content>
-      {contentTooLong && !contentExpand && <Hint>展開全部</Hint>}
+      {contentTooLong && !contentExpand && (
+        <ContentExpander
+          className="content-expander"
+          onMouseUp={() => setContentExpand(true)}
+        >
+          展開全部
+        </ContentExpander>
+      )}
     </Wrapper>
   )
 }

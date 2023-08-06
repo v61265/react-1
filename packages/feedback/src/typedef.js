@@ -4,22 +4,22 @@ export default {}
  * @typedef {Object}    Field
  * @property {string}   id
  * @property {string}   name
- * @property {string}   status
- * @property {'single' | 'text'}  type
- * @property {number | null}      sortOrder
- */
-
-/**
- * @typedef {Object}    SingleOnly
- * @property {'single'} type
- * @property {string}   [thumbUpLabel]
- * @property {string}   [thumbDownLabel]
+ * @property {string}   [status]
+ * @property {string}  type
+ * @property {number | null}      [sortOrder]
  * @property {string}   [identifier]
  */
 
 /**
- * @typedef {Object}  TextOnly
- * @property {'text'} type
+ * @typedef {Object}    SingleOnly
+ * @property {string}   [thumbUpLabel]
+ * @property {string}   [thumbDownLabel]
+ */
+
+/**
+ * @typedef {Object}    TextOnly
+ * @property {string}   [commentListTitle]
+ * @property {boolean}  [shouldShowItemControl]
  */
 
 /**
@@ -33,10 +33,10 @@ export default {}
 /**
  * @typedef {Object}    Form
  * @property {string}   id
- * @property {string}   name
- * @property {string}   type
- * @property {boolean}  active
- * @property {number}   fieldsCount
+ * @property {string}   [name]
+ * @property {string}   [type]
+ * @property {boolean}  [active]
+ * @property {number}   [fieldsCount]
  * @property {(SingleField|TextField)[]} fields
  */
 

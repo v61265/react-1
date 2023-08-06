@@ -12,6 +12,8 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import TimelineEventPanel from './timeline-event-panel'
 import TimelineEvent from './timeline-event'
 import { TagsContext, initialTags } from './useTags'
+import { defaultConifg } from '../const/config'
+import { useTimelineConfig } from './hook/useTimelineConfig'
 
 const GlobalStyles = createGlobalStyle`
   * {
@@ -89,52 +91,12 @@ function getBubbleLevel(max, count) {
   return Math.ceil(count / levelSize) - 1
 }
 
-const defaultConifg = {
-  dividerConfig: {
-    rwd: {
-      mobile: {
-        year: 5,
-        month: 6,
-        day: 7,
-      },
-      pc: {
-        year: 5,
-        month: 6,
-        day: 7,
-      },
-    },
-    bubbleLevelSizesInDivider: {
-      5: [23, 36, 48, 60, 76],
-      6: [23, 36, 48, 60, 66],
-      7: [23, 28, 36, 48, 60],
-    },
-  },
-  headerHeightConfig: {
-    rwd: {
-      mobile: 66,
-      pc: 80,
-    },
-    rwdBreakpoints: [
-      { minWidth: 0, name: 'mobile' },
-      { minWidth: 568, name: 'pc' },
-    ],
-  },
-  noEventContent: `
-    <span
-      style="
-        text-align: center;
-        font-size: 14px;
-        line-height: 1.5;
-        color: #989898;
-      "
-    >
-      點擊泡泡
-      <br />
-      或往下滑動
-    </span>
-  `,
-}
-
+/**
+ * @param {Object} props
+ * @param {import('../utils/timeline').Liveblog} props.liveblog - liveblog containing timeline data
+ * @param {string} props.fetchImageBaseUrl - base url for fetching image from CMS
+ * @returns
+ */
 export default function Timeline({
   liveblog,
   fetchImageBaseUrl = 'https://editools-gcs-dev.readr.tw',
@@ -147,10 +109,14 @@ export default function Timeline({
   const [tags, setTags] = useState(initialTags)
   const [stickyStrategy, setStickStrategy] = useState('absolute-top')
   const [focusUnitKey, setFocusUnitKey] = useState('')
-  const { dividerConfig, headerHeightConfig, noEventContent } =
-    timeline.conifg || defaultConifg
-  const { rwd, rwdBreakpoints } = headerHeightConfig
-  const [headerHeight, setHeaderHeight] = useState(rwd.mobile)
+
+  const timelineConfig = timeline.config || defaultConifg
+  const {
+    headerHeight,
+    dividers,
+    bubbleLevelSizesInDivider,
+    noEventContent,
+  } = useTimelineConfig(timelineConfig)
 
   const {
     timeEvents,
@@ -158,11 +124,10 @@ export default function Timeline({
     timeKeysToRender,
     timeMax,
     allTags,
-  } = useMemo(() => generateTimelineData(timeline, tags, isTimeSortedAsc), [
-    timeline,
-    tags,
-    isTimeSortedAsc,
-  ])
+  } = useMemo(
+    () => generateTimelineData(timeline, tags, isTimeSortedAsc, dividers),
+    [timeline, tags, isTimeSortedAsc]
+  )
   const { initialLevel, maxLevel } = useMemo(
     () => generateTimeLevel(timeline),
     [timeline]
@@ -178,7 +143,7 @@ export default function Timeline({
   const containerRef = useRef(null)
 
   const scroIntoViewType = useRef('')
-  const isSmoothScrolling = useRef(false)
+  const blockOnScrollEvent = useRef(false)
   /** @type {React.RefObject<HTMLDivElement>} */
   const topRef = useRef(null)
   /** @type {React.RefObject<HTMLDivElement>} */
@@ -186,39 +151,23 @@ export default function Timeline({
 
   const updateLevel = (newLevel, spFocusUnitKey) => {
     const oldFocusUnitKey = spFocusUnitKey || focusUnitKey
-    console.log(
-      'oldFocusUnitKey',
-      oldFocusUnitKey,
-      typeof oldFocusUnitKey,
-      timeKeys[getMeasureFromLevel(newLevel)],
-      level - newLevel > 0
-    )
     const newFocusUnitKey = calcNextLevelUnitKey(
       oldFocusUnitKey,
       timeKeys[getMeasureFromLevel(newLevel)],
       level - newLevel > 0,
       isTimeSortedAsc
     )
-    console.log('newKey', newFocusUnitKey)
     scroIntoViewType.current = 'immediate'
     setFocusUnitKey(newFocusUnitKey)
     setLevel(newLevel)
   }
 
   useEffect(() => {
-    const windowWidth = window.screen.width
-    const rwdBreakpoint = rwdBreakpoints.reverse().find((rwdBreakpoint) => {
-      return windowWidth >= rwdBreakpoint.minWidth
-    })
-    setHeaderHeight(rwd[rwdBreakpoint.name])
-  }, [])
-
-  useEffect(() => {
     const onScroll = () => {
       /** @type {HTMLDivElement} */
       const containerDiv = containerRef.current
       const containerTop = containerDiv.getBoundingClientRect().top
-      if (isSmoothScrolling.current) {
+      if (blockOnScrollEvent.current) {
         return
       }
       function getIndexOfTheTopMostItem(top, parentDom) {
@@ -278,7 +227,7 @@ export default function Timeline({
             window.requestAnimationFrame(scrollStep)
             return
           }
-          isSmoothScrolling.current = false
+          blockOnScrollEvent.current = false
         }
 
         window.requestAnimationFrame(scrollStep)
@@ -286,6 +235,7 @@ export default function Timeline({
       if (focusTimelineUnitEle) {
         // add 2 px to prevent focusIndex count on scroll mistaken
         if (scroIntoViewType.current === 'immediate') {
+          blockOnScrollEvent.current = false
           window.scrollTo(
             0,
             window.scrollY +
@@ -294,7 +244,7 @@ export default function Timeline({
               headerHeight
           )
         } else if (scroIntoViewType.current === 'smooth') {
-          isSmoothScrolling.current = true
+          blockOnScrollEvent.current = true
           // add 2 px to prevent focusIndex count on scroll mistaken
           smoothScrollTo(
             window.scrollY +
@@ -304,8 +254,20 @@ export default function Timeline({
             20
           )
         }
+        scroIntoViewType.current = ''
+      } else {
+        // since focusKey can't map to a html node (may be filtered out)
+        // find another valid key to trigger scroll again
+        const newFocusUnitKey = timeUnitKeys
+          .reverse()
+          .find((timeUnitKey) =>
+            isTimeSortedAsc
+              ? Number(focusUnitKey) > Number(timeUnitKey)
+              : Number(focusUnitKey) < Number(timeUnitKey)
+          )
+        setFocusUnitKey(newFocusUnitKey)
+        blockOnScrollEvent.current = true
       }
-      scroIntoViewType.current = ''
     }
   })
 
@@ -354,6 +316,11 @@ export default function Timeline({
     if (!tags.includes(newTag)) {
       setTags((oldTags) => oldTags.concat(newTag))
       const newFocusUnitKey = timeUnitKey || focusUnitKey
+      /*
+       * since after filter there could be two condition:
+       * 1. newFocusUnitKey still exist -> stay in the window
+       * 2. newFocusUnitKey got filtered -> find the cloest last oen to scroll
+       */
       setFocusUnitKey(newFocusUnitKey)
       scroIntoViewType.current = 'immediate'
     }
@@ -377,7 +344,8 @@ export default function Timeline({
             <TimelineUnit
               eventsCount={events.length}
               bubbleSizeLevel={getBubbleLevel(timeMax, events.length)}
-              dividerConfig={dividerConfig}
+              dividers={dividers}
+              bubbleLevelSizesInDivider={bubbleLevelSizesInDivider}
               key={timeUnitKey + i}
               onBubbleClick={() => {
                 updateLevel(level - 1, timeUnitKey)

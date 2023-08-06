@@ -8,6 +8,12 @@ const FormWrapper = styled.form`
   margin: 0 20px;
   font-family: 'Noto Sans TC', sans-serif;
 
+  input,
+  textarea,
+  button {
+    font-family: 'Noto Sans TC', sans-serif;
+  }
+
   @media ${({ theme }) => theme.breakpoint.tablet} {
     margin: 0 auto;
     width: 600px;
@@ -31,7 +37,7 @@ const FieldWrapper = styled.div`
  */
 export default function CustomForm({ form, verified }) {
   return (
-    <FormWrapper>
+    <FormWrapper className="form-feedback">
       {form.fields.map((field) => {
         switch (field.type) {
           case 'text':
