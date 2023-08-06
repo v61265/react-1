@@ -29,7 +29,7 @@ export const FONT = {
       nudgeMultiplier: 1,
     }),
   }),
-  content: types.string('請輸入文字'),
+  content: types.string(''),
   opacity: types.number(1, {
     range: [0, 1],
     nudgeMultiplier: 0.05,
