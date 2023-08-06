@@ -1,5 +1,13 @@
 # @readr-media/react-feedback Changelog
 
+## 2023-08-06, Version 3.5.1
+- fix: collaboration issues
+
+### Commits
+* \[[`a11e17b802`](https://github.com/readr-media/react-feedback/commit/a11e17b802)] - chore(feedback): bump version to 3.5.1 (Tsuki Akiba)
+* \[[`b25ff1879e`](https://github.com/readr-media/react-feedback/commit/b25ff1879e)] - fix(feedback): collaboration issues (Tsuki Akiba)
+* \[[`3adb94f782`](https://github.com/readr-media/react-feedback/commit/3adb94f782)] - docs(feedback): update CHANGELOG (Tsuki Akiba)
+
 ## 2023-08-06, Version 3.5.0
 - feat: add SingleOptionField
 - refactor: update mock data
