@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react' // eslint-disable-line
+import React, { useState, useEffect } from 'react' // eslint-disable-line
 import styled from '../../styled-components.js'
 import { initialConfig } from '../constants/index.js'
 
@@ -7,10 +7,9 @@ const Video = styled.video`
   display: block;
   height: auto;
   box-sizing: border-box;
-  background: black;
 `
 
-export default function VideoElement({ id, sheet, source, onLoad, onError }) {
+export default function VideoElement({ id, sheet, source, onError }) {
   const object = sheet.object(id, {
     ...initialConfig.VIDEO,
   })
@@ -20,6 +19,7 @@ export default function VideoElement({ id, sheet, source, onLoad, onError }) {
 
   // Video play/pause ----------------------
   const [isPlaying, setIsPlaying] = useState(false)
+  const [isLoop, setIsLoop] = useState(false)
 
   useEffect(() => {
     if (divRef && isPlaying) {
@@ -35,6 +35,7 @@ export default function VideoElement({ id, sheet, source, onLoad, onError }) {
   useEffect(() => {
     object.onValuesChange((newValue) => {
       setIsPlaying(newValue.isPlaying)
+      setIsLoop(newValue.isLoop)
       setStyle({
         left: `${newValue.position.x}%`,
         top: `${newValue.position.y}%`,
@@ -50,6 +51,7 @@ export default function VideoElement({ id, sheet, source, onLoad, onError }) {
   return (
     <Video
       muted
+      loop={isLoop}
       autoPlay={isPlaying}
       ref={setDivRef}
       style={style}
@@ -57,7 +59,6 @@ export default function VideoElement({ id, sheet, source, onLoad, onError }) {
       onEnded={() => {
         setIsPlaying(false)
       }}
-      onLoadedData={onLoad}
       onError={onError}
     >
       <source src={source} />

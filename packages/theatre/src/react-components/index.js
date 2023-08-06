@@ -46,13 +46,10 @@ export default function Theatre({
     )
   }
 
-  // -------------------------------
+  // ------------------------------
 
   const { width } = useWindowDimensions()
   const isMobile = width < mobileSize
-
-  const [object_Json, setObjectJson] = useState(objectJson)
-  const [animate_Json, setAnimateJson] = useState(animateJson)
 
   const mobileObjData =
     mobileObjectJson && mobileObjectJson.length ? mobileObjectJson : objectJson
@@ -61,6 +58,9 @@ export default function Theatre({
     mobileAnimateJson && Object.keys(mobileAnimateJson).length
       ? mobileAnimateJson
       : animateJson
+
+  const [object_Json, setObjectJson] = useState(mobileObjData)
+  const [animate_Json, setAnimateJson] = useState(mobileAniData)
 
   useEffect(() => {
     setObjectJson(isMobile ? mobileObjData : objectJson)
@@ -124,6 +124,5 @@ export default function Theatre({
       )
       break
   }
-
   return <>{component}</>
 }

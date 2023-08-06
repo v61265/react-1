@@ -20,6 +20,7 @@ export default function DemoVideo({
   animateJson = {},
   objectJson = [],
   projectId = '',
+  isMobile = false,
 }) {
   const projectState =
     Object.keys(animateJson).length > 0 ? { state: animateJson } : {}
@@ -31,21 +32,25 @@ export default function DemoVideo({
   // --------------------------
 
   const [hasMediaError, setHasMediaError] = useState(false) // image & background && video onError
-  const [loadedMedias, setLoadedMedias] = useState(0) // image & background && video onload
+  const [loadedMedias, setLoadedMedias] = useState(0) // image & background onload
   const [isLoading, setIsLoading] = useState(true)
 
   const totalMedias = objectJson.filter(
-    (data) =>
-      data.type === 'IMAGE' ||
-      data.type === 'BACKGROUND' ||
-      data.type === 'VIDEO'
+    (data) => data.type === 'IMAGE' || data.type === 'BACKGROUND'
   ).length
 
   useEffect(() => {
     if (loadedMedias === totalMedias) {
       setIsLoading(false)
     }
-  }, [loadedMedias, totalMedias])
+  }, [loadedMedias, totalMedias, isMobile])
+
+  // ----------------------------------------
+
+  useEffect(() => {
+    setHasMediaError(false)
+    setLoadedMedias(0)
+  }, [isMobile, animateJson, objectJson])
 
   return (
     <VideoWrapper>
