@@ -1286,6 +1286,16 @@
     url "^0.11.1"
     uuid "^9.0.0"
 
+"@readr-media/react-theatre@^1.0.0-alpha.1":
+  version "1.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-theatre/-/react-theatre-1.0.0-alpha.1.tgz#becdef914b48412cb09502f368b76ec61744abe0"
+  integrity sha512-DGEkVukMBofhJd0h1yPHX8Lm/SVvOBIH6zhLrLxsZTUkzOqlEZFQ9tPIoraCABi0//mGaW52CpmHN/B3uXdUsQ==
+  dependencies:
+    "@theatre/core" "0.6.1"
+    react-transition-group "^4.4.5"
+    url "^0.11.1"
+    uuid "^9.0.0"
+
 "@readr-media/react-three-story-points@1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@readr-media/react-three-story-points/-/react-three-story-points-1.0.2.tgz#7a24cdc13cea2fda1ac83df1f610bdd943f0fef6"
