@@ -1,5 +1,14 @@
 # @readr-media/react-feedback Changelog
 
+## 2023-08-07, Version 3.5.2
+- fix: error in notify handle
+
+### Commits
+* \[[`449bf1c359`](https://github.com/readr-media/react-feedback/commit/449bf1c359)] - chore(feedback): bump version to 3.5.2 (Tsuki Akiba)
+* \[[`d26828f987`](https://github.com/readr-media/react-feedback/commit/d26828f987)] - fix(feedback): error in notify handle (Tsuki Akiba)
+* \[[`adaeb35d7f`](https://github.com/readr-media/react-feedback/commit/adaeb35d7f)] - fix(feedback): collaboration issues (Tsuki Akiba)
+* \[[`99927ff22c`](https://github.com/readr-media/react-feedback/commit/99927ff22c)] - docs(feedback): update CHNAGELOG (Tsuki Akiba)
+
 ## 2023-08-06, Version 3.5.1
 - fix: collaboration issues
 
