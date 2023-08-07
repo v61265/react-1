@@ -17,3 +17,6 @@ export const getLikes = (params) => feedbackRequest.get('/api/like', { params })
 export const giveLikes = (data) => feedbackRequest.put('/api/like', data)
 export const verifyRecaptcha = (data) =>
   feedbackRequest.post('/api/verification', data)
+export const getOptionSummary = (params) =>
+  feedbackRequest.get('/api/option', { params })
+export const giveOptions = (data) => feedbackRequest.put('/api/option', data)
