@@ -42,7 +42,7 @@ export default function FontElement({ id, sheet }) {
         lineHeight: `{newValue.lineHeight}px`,
         textAlign: `${newValue.textAlign}`,
         zIndex: `${newValue.zIndex}`,
-        transform: `scale(${newValue.scale})`,
+        transform: `scale(${newValue.scale}) translate(-50%, -50%)`,
       })
     })
   }, [object])

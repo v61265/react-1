@@ -43,7 +43,7 @@ export default function VideoElement({ id, sheet, source, onError }) {
         width: `${newValue.size.width}px`,
         height: `${newValue.size.height}px`,
         zIndex: `${newValue.zIndex}`,
-        transform: `scale(${newValue.scale})`,
+        transform: `scale(${newValue.scale}) translate(-50%, -50%)`,
       })
     })
   }, [object])
