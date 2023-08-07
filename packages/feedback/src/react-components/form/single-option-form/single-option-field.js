@@ -74,7 +74,7 @@ export default function SingleOptionField({ formId, field }) {
         selectedOption,
         optionSummary,
       })
-    }, [optionSummary])
+    }, [selectedOption])
   }
 
   return (
