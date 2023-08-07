@@ -1,184 +1,39 @@
 function Minus() {
   return (
-    <svg
-      width="36"
-      height="36"
-      viewBox="0 0 36 36"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <g filter="url(#filter0_d_18_2085)">
-        <circle cx="18" cy="16" r="16" fill="white" />
-        <circle cx="18" cy="16" r="15.5" stroke="#D1D1D1" />
-      </g>
-      <path d="M12.9443 17.16V14.6H23.1043V17.16H12.9443Z" fill="black" />
-      <defs>
-        <filter
-          id="filter0_d_18_2085"
-          x="0"
-          y="0"
-          width="36"
-          height="36"
-          filterUnits="userSpaceOnUse"
-          colorInterpolationFilters="sRGB"
-        >
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feOffset dy="2" />
-          <feGaussianBlur stdDeviation="1" />
-          <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_18_2085"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_18_2085"
-            result="shape"
-          />
-        </filter>
-      </defs>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+      <circle fill="#fff" cx="16" cy="16.03" r="16" />
+      <circle fill="none" stroke="#d1d1d1" cx="16" cy="16.03" r="15.5" />
+      <path d="m10.94,17.19v-2.56h10.16v2.56h-10.16Z" />
     </svg>
   )
 }
 
 function MinusDisabled() {
   return (
-    <svg
-      width="36"
-      height="36"
-      viewBox="0 0 36 36"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <g filter="url(#filter0_d_40_3181)">
-        <circle cx="18" cy="16" r="16" fill="#E2E2E2" />
-        <circle cx="18" cy="16" r="15.5" stroke="#D1D1D1" />
-      </g>
-      <path d="M12.9445 17.16V14.6H23.1045V17.16H12.9445Z" fill="#C1C1C1" />
-      <defs>
-        <filter
-          id="filter0_d_40_3181"
-          x="0"
-          y="0"
-          width="36"
-          height="36"
-          filterUnits="userSpaceOnUse"
-          colorInterpolationFilters="sRGB"
-        >
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feOffset dy="2" />
-          <feGaussianBlur stdDeviation="1" />
-          <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_40_3181"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_40_3181"
-            result="shape"
-          />
-        </filter>
-      </defs>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+      <circle fill="#e2e2e2" stroke="#d1d1d1" cx="16" cy="16" r="15.5" />
+      <path fill="#c1c1c1" d="m10.94,17.16v-2.56h10.16v2.56h-10.16Z" />
     </svg>
   )
 }
 
 function Plus() {
   return (
-    <svg
-      width="36"
-      height="36"
-      viewBox="0 0 36 36"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <g filter="url(#filter0_d_18_2082)">
-        <circle cx="18" cy="16" r="16" fill="white" />
-        <circle cx="18" cy="16" r="15.5" stroke="#D1D1D1" />
-      </g>
-      <path
-        d="M16.848 22.384V17.2H12V15.184H16.848V10H18.984V15.184H23.856V17.2H18.984V22.384H16.848Z"
-        fill="black"
-      />
-      <defs>
-        <filter
-          id="filter0_d_18_2082"
-          x="0"
-          y="0"
-          width="36"
-          height="36"
-          filterUnits="userSpaceOnUse"
-          colorInterpolationFilters="sRGB"
-        >
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feOffset dy="2" />
-          <feGaussianBlur stdDeviation="1" />
-          <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_18_2082"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_18_2082"
-            result="shape"
-          />
-        </filter>
-      </defs>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+      <circle fill="#fff" cx="16" cy="16.03" r="16" />
+      <circle fill="none" stroke="#d1d1d1" cx="16" cy="16.03" r="15.5" />
+      <path d="m14.85,22.41v-5.18h-4.85v-2.02h4.85v-5.18h2.14v5.18h4.87v2.02h-4.87v5.18h-2.14Z" />
     </svg>
   )
 }
 
 function PlusDisabled() {
   return (
-    <svg
-      width="32"
-      height="32"
-      viewBox="0 0 32 32"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <circle cx="16" cy="16" r="15.5" fill="#E2E2E2" stroke="#D1D1D1" />
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+      <circle fill="#e2e2e2" stroke="#d1d1d1" cx="16" cy="16.01" r="15.5" />
       <path
-        d="M14.848 22.384V17.2H10V15.184H14.848V10H16.984V15.184H21.856V17.2H16.984V22.384H14.848Z"
-        fill="#C1C1C1"
+        fill="#c1c1c1"
+        d="m14.85,22.39v-5.18h-4.85v-2.02h4.85v-5.18h2.14v5.18h4.87v2.02h-4.87v5.18h-2.14Z"
       />
     </svg>
   )
