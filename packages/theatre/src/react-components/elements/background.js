@@ -42,7 +42,7 @@ export default function BackgroundElement({ id, sheet, onLoad, onError }) {
         background: `${newValue.bgColor}`,
         opacity: `${newValue.opacity}`,
         display: `${newValue.visible ? 'block' : 'none'}`,
-        transform: `scale(${newValue.scale})`,
+        transform: `scale(${newValue.scale}) translate(-50%, -50%)`,
         zIndex: `${newValue.zIndex}`,
       })
     })
