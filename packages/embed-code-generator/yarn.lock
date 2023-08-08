@@ -1286,10 +1286,10 @@
     url "^0.11.1"
     uuid "^9.0.0"
 
-"@readr-media/react-theatre@^1.0.0-alpha.1":
-  version "1.0.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/@readr-media/react-theatre/-/react-theatre-1.0.0-alpha.1.tgz#becdef914b48412cb09502f368b76ec61744abe0"
-  integrity sha512-DGEkVukMBofhJd0h1yPHX8Lm/SVvOBIH6zhLrLxsZTUkzOqlEZFQ9tPIoraCABi0//mGaW52CpmHN/B3uXdUsQ==
+"@readr-media/react-theatre@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-theatre/-/react-theatre-1.1.0.tgz#18a8e099f8d22439585403709f67ab5c0301fcbd"
+  integrity sha512-PnFJr81c5h1/TD0C3PjkHCxfXMAQ3xSTqf90HE478pDxjQbuH+RlM0dMCR6jVpQ1m/Z2+i2rTREMyi6CuN2zzA==
   dependencies:
     "@theatre/core" "0.6.1"
     react-transition-group "^4.4.5"
