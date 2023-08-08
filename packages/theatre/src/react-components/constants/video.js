@@ -2,10 +2,10 @@ import { types } from '@theatre/core'
 
 export const VIDEO = {
   position: types.compound({
-    x: types.number(0, {
+    x: types.number(50, {
       nudgeMultiplier: 0.5,
     }),
-    y: types.number(0, {
+    y: types.number(50, {
       nudgeMultiplier: 0.5,
     }),
   }),

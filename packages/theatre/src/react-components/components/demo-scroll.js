@@ -101,6 +101,7 @@ export default function DemoScroll({
   useEffect(() => {
     setHasMediaError(false)
     setLoadedMedias(0)
+    setIsLoading(true)
   }, [isMobile, animateJson, objectJson])
 
   return (

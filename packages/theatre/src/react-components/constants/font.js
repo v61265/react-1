@@ -2,10 +2,10 @@ import { types } from '@theatre/core'
 
 export const FONT = {
   position: types.compound({
-    x: types.number(40, {
+    x: types.number(50, {
       nudgeMultiplier: 0.5,
     }),
-    y: types.number(40, {
+    y: types.number(50, {
       nudgeMultiplier: 0.5,
     }),
   }),
