@@ -19,6 +19,10 @@ const Category = styled.span`
   line-height: 14px;
   margin-right: 8px;
   color: #999;
+  pointer-events: none;
+  @media (min-width: 768px) {
+    pointer-events: auto;
+  }
 `
 
 const PublishInfoWrapper = styled.div`
