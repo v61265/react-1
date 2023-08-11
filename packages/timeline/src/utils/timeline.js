@@ -100,7 +100,7 @@ export function transformLiveblogToTimeline(liveblog) {
     tags: Array.from(tagsSet),
     updatedAt: liveblog.updatedAt,
     timelineEvents: liveblog.liveblog_items,
-    conifg: liveblog.hint,
+    config: liveblog.hint,
   }
 }
 
