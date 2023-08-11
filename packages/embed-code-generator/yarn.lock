@@ -1178,10 +1178,10 @@
     "@twreporter/errors" "^1.1.1"
     axios "^0.27.2"
 
-"@readr-media/react-embed-code-generator@^2.4.0-alpha.27":
-  version "2.4.0-alpha.27"
-  resolved "https://registry.yarnpkg.com/@readr-media/react-embed-code-generator/-/react-embed-code-generator-2.4.0-alpha.27.tgz#50ccf751908ea5b36132ac97c9809715a7c9e293"
-  integrity sha512-qtNjOwK5WEc55a53xrIRNEU8J9WeC6TRGn2qQJeRwdoJ/YrxSRkVcI6y/P3P6lw8Q3Sml34ilREHFi2PjxtjVQ==
+"@readr-media/react-embed-code-generator@^2.4.0-alpha.28":
+  version "2.4.0-alpha.21-6"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-embed-code-generator/-/react-embed-code-generator-2.4.0-alpha.21-6.tgz#c2ac71fd34f634b452e322ad077c9b368226d7cd"
+  integrity sha512-g+BzgjE0x9vK2y76oK7j+wFsNoDxBALzEEdlkGIQ5xk5tF2/IK3fXfVO5kvUrvflq914Astef4FJYSn6URXYcw==
   dependencies:
     "@readr-media/react-dropping-text" "1.0.6"
     "@readr-media/react-dual-slides" "1.0.1"
@@ -1193,9 +1193,9 @@
     "@readr-media/react-qa-list" "2.0.1"
     "@readr-media/react-questionnaire" "2.0.0"
     "@readr-media/react-random-text-selector" "^1.0.2"
-    "@readr-media/react-theatre" "^1.1.0"
+    "@readr-media/react-theatre" "^0.2.0-alpha.8-9"
     "@readr-media/react-three-story-points" "1.0.2"
-    "@readr-media/react-timeline" "^1.0.0-alpha.15"
+    "@readr-media/react-timeline" "^1.0.0-alpha.13"
     lodash "^4.17.21"
     serialize-javascript "^6.0.0"
 
@@ -1276,6 +1276,16 @@
   dependencies:
     axios "^1.3.5"
 
+"@readr-media/react-theatre@^0.2.0-alpha.8-9":
+  version "0.2.0-alpha.8-9"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-theatre/-/react-theatre-0.2.0-alpha.8-9.tgz#824ecdbe347a7c341e3e1be908c2585aadc3596f"
+  integrity sha512-TnSbs6U+9dUrnPMA/D2wC6uPQkeTZJAj8O+65DFiisJiGuZmzOnxlYkbz1tp5XzD2BobCrnJaMMvqVdrvNtUJQ==
+  dependencies:
+    "@theatre/core" "0.6.1"
+    react-transition-group "^4.4.5"
+    url "^0.11.1"
+    uuid "^9.0.0"
+
 "@readr-media/react-theatre@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@readr-media/react-theatre/-/react-theatre-1.1.0.tgz#18a8e099f8d22439585403709f67ab5c0301fcbd"
@@ -1297,10 +1307,10 @@
     three "^0.150.1"
     three-story-controls "^1.0.6"
 
-"@readr-media/react-timeline@^1.0.0-alpha.15":
-  version "1.0.0-alpha.15"
-  resolved "https://registry.yarnpkg.com/@readr-media/react-timeline/-/react-timeline-1.0.0-alpha.15.tgz#d44ee20c569448bf770da2ef81f4e265fcdb4b5d"
-  integrity sha512-P1vHjQVBi2e0FrYGL1J83NwRJiakvx2zM06FEpb0VBkDDUgvbTHBTxyRbkEe95NfqNZHqNNhhRkIUJQXbALjKw==
+"@readr-media/react-timeline@^1.0.0-alpha.13", "@readr-media/react-timeline@^1.0.0-alpha.16":
+  version "1.0.0-alpha.16"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-timeline/-/react-timeline-1.0.0-alpha.16.tgz#8cc40c2968bd0956c6df79bc839b9e4f748ebecc"
+  integrity sha512-UIEyXUMCFbeesdsuKqNT4PdgzJZgbKYUjrWD3yC7WrE09qOdwGSw7AbnxjeDI/gn+bV1/YgLJuNtjA3egOGC9Q==
   dependencies:
     axios "^0.27.2"
     draft-js "^0.11.7"
