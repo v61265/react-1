@@ -144,10 +144,6 @@ export default function Timeline({
 
   const scroIntoViewType = useRef('')
   const blockOnScrollEvent = useRef(false)
-  /** @type {React.RefObject<HTMLDivElement>} */
-  const topRef = useRef(null)
-  /** @type {React.RefObject<HTMLDivElement>} */
-  const bottomRef = useRef(null)
 
   const updateLevel = (newLevel, spFocusUnitKey) => {
     const oldFocusUnitKey = spFocusUnitKey || focusUnitKey
@@ -189,8 +185,28 @@ export default function Timeline({
       }
       const index = getIndexOfTheTopMostItem(containerTop, containerDiv)
       let focusNode = containerDiv.children[index]
-      let focusUnitKey = focusNode.id.split('-')[1]
-      setFocusUnitKey(focusUnitKey)
+      let newFocusUnitKey = focusNode.id.split('-')[1]
+      setFocusUnitKey(newFocusUnitKey)
+
+      // count sticky policy together with onscroll
+      const bounding = containerRef.current.getBoundingClientRect()
+      if (bounding.height < window.innerHeight) {
+        // console.log(`setStickStrategy('absolute')`)
+        setStickStrategy('absolute')
+        return
+      }
+      if (bounding.height) {
+        if (bounding.y >= headerHeight) {
+          console.log(`setStickStrategy('absolute-top')`)
+          setStickStrategy('absolute-top')
+        } else if (bounding.y + bounding.height > window.innerHeight) {
+          console.log(`setStickStrategy('fixed')`)
+          setStickStrategy('fixed')
+        } else {
+          console.log(`setStickStrategy('absolute-bottom')`)
+          setStickStrategy('absolute-bottom')
+        }
+      }
     }
     window.addEventListener('scroll', onScroll)
 
@@ -271,43 +287,6 @@ export default function Timeline({
     }
   })
 
-  useEffect(() => {
-    if (topRef.current && bottomRef.current) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach(({ boundingClientRect }) => {
-            if (!boundingClientRect.width || !containerRef.current) {
-              return
-            }
-
-            const bounding = containerRef.current.getBoundingClientRect()
-            if (bounding.height < window.innerHeight) {
-              setStickStrategy('absolute')
-              return
-            }
-            if (bounding.height) {
-              if (bounding.y >= headerHeight) {
-                setStickStrategy('absolute-top')
-              } else if (bounding.y + bounding.height > window.innerHeight) {
-                setStickStrategy('fixed')
-              } else {
-                setStickStrategy('absolute-bottom')
-              }
-            }
-          })
-        },
-        { rootMargin: `-${headerHeight}px 0px 0px 0px` }
-      )
-
-      observer.observe(topRef.current)
-      observer.observe(bottomRef.current)
-
-      return () => {
-        observer.disconnect()
-      }
-    }
-  }, [level])
-
   const addTag = (newTag, timeUnitKey) => {
     if (window.screen.width < 768 && tags.length === 3) {
       // in mobile only support 3 tag filter
@@ -380,7 +359,7 @@ export default function Timeline({
     <TagsContext.Provider value={{ tags, addTag, removeTag }}>
       <Wrapper>
         <TimelineWrapper>
-          <div id="top" ref={topRef} />
+          <div id="top" />
           <GlobalStyles />
           <TimelineNodesWrapper
             ref={containerRef}
@@ -413,7 +392,7 @@ export default function Timeline({
               }}
             />
           )}
-          <div id="bottom" ref={bottomRef} />
+          <div id="bottom" />
         </TimelineWrapper>
       </Wrapper>
     </TagsContext.Provider>
