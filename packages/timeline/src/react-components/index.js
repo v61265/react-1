@@ -136,8 +136,8 @@ export default function Timeline({
   const measure = getMeasureFromLevel(level)
   const timeUnitEvents = timeEvents[measure]
   const timeUnitKeys = timeKeys[measure]
-  const firstTimeUnitKey = timeUnitKeys[0]
-  const lastTimeeUnitKey = timeUnitKeys[timeUnitKeys.length - 1]
+  const firstTimeUnitKey = timeKeysToRender[0]
+  const lastTimeeUnitKey = timeKeysToRender[timeKeysToRender.length - 1]
   const timeUnitKeysToRender = timeKeysToRender[measure]
   /** @type {React.RefObject<HTMLDivElement>} */
   const containerRef = useRef(null)
@@ -191,19 +191,15 @@ export default function Timeline({
       // count sticky policy together with onscroll
       const bounding = containerRef.current.getBoundingClientRect()
       if (bounding.height < window.innerHeight) {
-        // console.log(`setStickStrategy('absolute')`)
         setStickStrategy('absolute')
         return
       }
       if (bounding.height) {
         if (bounding.y >= headerHeight) {
-          console.log(`setStickStrategy('absolute-top')`)
           setStickStrategy('absolute-top')
         } else if (bounding.y + bounding.height > window.innerHeight) {
-          console.log(`setStickStrategy('fixed')`)
           setStickStrategy('fixed')
         } else {
-          console.log(`setStickStrategy('absolute-bottom')`)
           setStickStrategy('absolute-bottom')
         }
       }
@@ -256,7 +252,7 @@ export default function Timeline({
             0,
             window.scrollY +
               focusTimelineUnitEle.getBoundingClientRect().top +
-              2 -
+              5 -
               headerHeight
           )
         } else if (scroIntoViewType.current === 'smooth') {
@@ -265,7 +261,7 @@ export default function Timeline({
           smoothScrollTo(
             window.scrollY +
               focusTimelineUnitEle.getBoundingClientRect().top +
-              2 -
+              5 -
               headerHeight,
             20
           )
@@ -273,14 +269,8 @@ export default function Timeline({
         scroIntoViewType.current = ''
       } else {
         // since focusKey can't map to a html node (may be filtered out)
-        // find another valid key to trigger scroll again
-        const newFocusUnitKey = timeUnitKeys
-          .reverse()
-          .find((timeUnitKey) =>
-            isTimeSortedAsc
-              ? Number(focusUnitKey) > Number(timeUnitKey)
-              : Number(focusUnitKey) < Number(timeUnitKey)
-          )
+        // scroll to the first node
+        const newFocusUnitKey = timeUnitKeys[0]
         setFocusUnitKey(newFocusUnitKey)
         blockOnScrollEvent.current = true
       }
@@ -298,7 +288,7 @@ export default function Timeline({
       /*
        * since after filter there could be two condition:
        * 1. newFocusUnitKey still exist -> stay in the window
-       * 2. newFocusUnitKey got filtered -> find the cloest last oen to scroll
+       * 2. newFocusUnitKey got filtered -> scroll to the first one
        */
       setFocusUnitKey(newFocusUnitKey)
       scroIntoViewType.current = 'immediate'
