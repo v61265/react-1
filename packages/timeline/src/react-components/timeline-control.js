@@ -193,16 +193,7 @@ export default function TimelineControl({
   const { addTag, removeTag } = useContext(TagsContext)
   const disableNarrowDown = level === 1
   const disableScaleUp = level === maxLevel
-  console.log(
-    'level',
-    level,
-    'disableNarrowDown',
-    disableNarrowDown,
-    'disableScaleUp',
-    disableScaleUp,
-    'maxLevel',
-    maxLevel
-  )
+
   return (
     <>
       <Wrapper stickyStrategy={stickyStrategy} headerHeight={headerHeight}>
