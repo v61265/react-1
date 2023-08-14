@@ -42,13 +42,16 @@ const ContentBelow = styled.div`
 async function main() {
   const ldr = new tl.DataLoader()
   const data = await ldr.loadData(
-    'https://storage.googleapis.com/editools-gcs-dev.readr.tw/files/liveblogs/deepfakeDev.json'
+    'https://storage.googleapis.com/editools-gcs.readr.tw/files/liveblogs/deepfake.json'
   )
   root.render(
     <>
       <Header>Readr Header</Header>
       <ContentAbove>Timeline 之前的段落</ContentAbove>
-      <tl.ReactComponent.Timeline liveblog={data} />
+      <tl.ReactComponent.Timeline
+        liveblog={data}
+        fetchImageBaseUrl="https://editools-gcs.readr.tw"
+      />
       <ContentBelow>Timeline 之後的段落</ContentBelow>
     </>
   )
