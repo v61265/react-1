@@ -1,5 +1,4 @@
 import styled, { createGlobalStyle } from 'styled-components'
-import TimelineUnit from './timeline-unit'
 import {
   calcNextLevelUnitKey,
   generateTimeLevel,
@@ -14,6 +13,7 @@ import TimelineEvent from './timeline-event'
 import { TagsContext, initialTags } from './useTags'
 import { defaultConifg } from '../const/config'
 import { useTimelineConfig } from './hook/useTimelineConfig'
+import TimelineList from './timeline-list'
 
 const GlobalStyles = createGlobalStyle`
   * {
@@ -85,11 +85,6 @@ const EventWrapper = styled.div`
     margin: 12px auto 0;
   }
 `
-
-function getBubbleLevel(max, count) {
-  const levelSize = max / 5
-  return Math.ceil(count / levelSize) - 1
-}
 
 /**
  * @param {Object} props
@@ -306,45 +301,39 @@ export default function Timeline({
       : null
 
   let timelineNodesJsx =
-    measure !== 'event'
-      ? timeUnitKeysToRender.map((timeUnitKey, i) => {
-          const events = timeUnitEvents[timeUnitKey] || []
-          return (
-            <TimelineUnit
-              eventsCount={events.length}
-              bubbleSizeLevel={getBubbleLevel(timeMax, events.length)}
-              dividers={dividers}
-              bubbleLevelSizesInDivider={bubbleLevelSizesInDivider}
-              key={timeUnitKey + i}
-              onBubbleClick={() => {
-                updateLevel(level - 1, timeUnitKey)
-              }}
-              onSingleTimelineNodeSelect={() => {
-                setFocusUnitKey(timeUnitKey)
-              }}
-              isFocus={timeUnitKey === focusUnitKey}
-              headerHeight={headerHeight}
-              measure={measure}
+    measure !== 'event' ? (
+      <TimelineList
+        timeUnitKeys={timeUnitKeysToRender}
+        timeUnitEvents={timeUnitEvents}
+        timeMax={timeMax}
+        dividers={dividers}
+        bubbleLevelSizesInDivider={bubbleLevelSizesInDivider}
+        onBubbleClick={(timeUnitKey) => {
+          updateLevel(level - 1, timeUnitKey)
+        }}
+        onSingleTimelineNodeSelect={(timeUnitKey) => {
+          setFocusUnitKey(timeUnitKey)
+        }}
+        focusUnitKey={focusUnitKey}
+        headerHeight={headerHeight}
+        measure={measure}
+        firstTimeUnitKey={firstTimeUnitKey}
+        lastTimeeUnitKey={lastTimeeUnitKey}
+      />
+    ) : (
+      timeUnitKeysToRender.map((timeUnitKey) => {
+        const event = timeUnitEvents[timeUnitKey]
+        return (
+          <EventWrapper key={timeUnitKey} id={`node-${timeUnitKey}`}>
+            <TimelineEvent
+              event={event}
+              fetchImageBaseUrl={fetchImageBaseUrl}
               timeUnitKey={timeUnitKey}
-              isTheFirstOrLastUnit={
-                timeUnitKey === firstTimeUnitKey ||
-                timeUnitKey === lastTimeeUnitKey
-              }
             />
-          )
-        })
-      : timeUnitKeysToRender.map((timeUnitKey) => {
-          const event = timeUnitEvents[timeUnitKey]
-          return (
-            <EventWrapper key={timeUnitKey} id={`node-${timeUnitKey}`}>
-              <TimelineEvent
-                event={event}
-                fetchImageBaseUrl={fetchImageBaseUrl}
-                timeUnitKey={timeUnitKey}
-              />
-            </EventWrapper>
-          )
-        })
+          </EventWrapper>
+        )
+      })
+    )
   return (
     <TagsContext.Provider value={{ tags, addTag, removeTag }}>
       <Wrapper>
