@@ -102,7 +102,6 @@ export default function Timeline({
     [liveblog, isTimeSortedAsc]
   )
   const [tags, setTags] = useState(initialTags)
-  const [stickyStrategy, setStickStrategy] = useState('absolute-top')
   const [focusUnitKey, setFocusUnitKey] = useState('')
 
   const timelineConfig = timeline.config || defaultConifg
@@ -182,22 +181,6 @@ export default function Timeline({
       let focusNode = containerDiv.children[index]
       let newFocusUnitKey = focusNode.id.split('-')[1]
       setFocusUnitKey(newFocusUnitKey)
-
-      // count sticky policy together with onscroll
-      const bounding = containerRef.current.getBoundingClientRect()
-      if (bounding.height < window.innerHeight) {
-        setStickStrategy('absolute')
-        return
-      }
-      if (bounding.height) {
-        if (bounding.y >= headerHeight) {
-          setStickStrategy('absolute-top')
-        } else if (bounding.y + bounding.height > window.innerHeight) {
-          setStickStrategy('fixed')
-        } else {
-          setStickStrategy('absolute-bottom')
-        }
-      }
     }
     window.addEventListener('scroll', onScroll)
 
@@ -350,7 +333,6 @@ export default function Timeline({
             maxLevel={maxLevel}
             level={level}
             updateLevel={updateLevel}
-            stickyStrategy={stickyStrategy}
             selectedTags={tags}
             allTags={allTags}
             headerHeight={headerHeight}
@@ -359,7 +341,6 @@ export default function Timeline({
             <TimelineEventPanel
               event={focusEvent}
               fetchImageBaseUrl={fetchImageBaseUrl}
-              stickyStrategy={stickyStrategy}
               timeUnitKey={focusUnitKey}
               headerHeight={headerHeight}
               timeUnitKeys={timeUnitKeys}

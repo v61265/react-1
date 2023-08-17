@@ -17,33 +17,11 @@ const Wrapper = styled.div`
   align-items: center;
   z-index: 10;
   border-radius: 4px;
-
-  ${({ stickyStrategy, headerHeight }) => {
-    switch (stickyStrategy) {
-      case 'absolute':
-        return `
-        position: absolute;
-        top: calc(var(--mobile-top) - ${headerHeight}px);
-        `
-      case 'fixed':
-        return `
-          position: fixed;
-          top: var(--mobile-top);
-          right: calc((100vw - 320px) / 2 + 12px);
-        `
-      case 'absolute-bottom':
-        return `
-          position: absolute;
-          bottom: calc(100vh - var(--mobile-top) - var(--mobile-height));
-        `
-      case 'absolute-top':
-      default:
-        return `
-          position: absolute;
-          top: calc(var(--mobile-top) - ${headerHeight}px);
-        `
-    }
-  }}
+  position: absolute;
+  top: calc(
+    var(--mobile-top) -
+      ${({ headerHeight }) => (headerHeight ? headerHeight : 0)}px
+  );
 
   @media (min-width: 768px) {
     --pc-height: 527px;
@@ -52,39 +30,10 @@ const Wrapper = styled.div`
     left: 387px;
     width: 360px;
     height: var(--pc-height);
-    ${({ stickyStrategy, headerHeight }) => {
-      switch (stickyStrategy) {
-        case 'absolute':
-          return `
-          position: absolute;
-          top: calc(var(--pc-top) - ${headerHeight}px);
-          `
-        case 'fixed':
-          return `
-            position: fixed;
-            top: var(--pc-top);
-            right: calc((100vw - 320px) / 2 + 12px);
-          `
-        case 'absolute-bottom':
-          return `
-            position: absolute;
-            bottom: calc(100vh - var(--pc-top) - var(--pc-height));
-          `
-        case 'absolute-top':
-        default:
-          return `
-            position: absolute;
-            top: calc(var(--pc-top) - ${headerHeight}px);
-          `
-      }
-    }}
-  }
-  @media (min-width: 1200px) {
-    ${({ stickyStrategy }) =>
-      stickyStrategy === 'fixed' &&
-      `
-      left: calc((100vw - 1200px)/2 + 387px);
-    `}
+    top: calc(
+      var(--pc-top) -
+        ${({ headerHeight }) => (headerHeight ? headerHeight : 0)}px
+    );
   }
 `
 
@@ -130,7 +79,6 @@ const EmptyEventWrapper = styled.div`
 export default function TimelineEventPanel({
   event,
   fetchImageBaseUrl,
-  stickyStrategy,
   timeUnitKey,
   headerHeight,
   timeUnitKeys,
@@ -183,7 +131,7 @@ export default function TimelineEventPanel({
   )
 
   return (
-    <Wrapper stickyStrategy={stickyStrategy} headerHeight={headerHeight}>
+    <Wrapper headerHeight={headerHeight}>
       {panelContentJsx}
       <EventSwitchControl>
         <EventSwitchControlButton
