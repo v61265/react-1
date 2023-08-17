@@ -56,6 +56,9 @@ const Wrapper = styled.div`
   background-color: #efefef;
   overflow: hidden;
   width: 100vw;
+  height: calc(
+    100vh - ${({ headerHeight }) => (headerHeight ? headerHeight : '0px')}
+  );
   position: relative;
   left: calc(50% - 50vw);
 `
@@ -319,7 +322,7 @@ export default function Timeline({
     )
   return (
     <TagsContext.Provider value={{ tags, addTag, removeTag }}>
-      <Wrapper>
+      <Wrapper headerHeight={headerHeight}>
         <TimelineWrapper>
           <div id="top" />
           <GlobalStyles />
