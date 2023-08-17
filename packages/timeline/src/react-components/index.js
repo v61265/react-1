@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from 'styled-components'
+import styled from 'styled-components'
 import {
   calcNextLevelUnitKey,
   generateTimeLevel,
@@ -15,12 +15,21 @@ import { defaultConifg } from '../const/config'
 import { useTimelineConfig } from './hook/useTimelineConfig'
 import TimelineList from './timeline-list'
 
-const GlobalStyles = createGlobalStyle`
+const Wrapper = styled.div`
+  background-color: #efefef;
+  overflow: hidden;
+  width: 100vw;
+  height: calc(
+    100vh - ${({ headerHeight }) => (headerHeight ? headerHeight : '0px')}
+  );
+  position: relative;
+  left: calc(50% - 50vw);
+
+  // reset for Timeline only
   * {
     box-sizing: border-box;
     font-family: Noto Sans CJK TC;
     -webkit-tap-highlight-color: transparent;
-
   }
 
   button {
@@ -50,17 +59,6 @@ const GlobalStyles = createGlobalStyle`
   figure {
     margin: 0;
   }
-`
-
-const Wrapper = styled.div`
-  background-color: #efefef;
-  overflow: hidden;
-  width: 100vw;
-  height: calc(
-    100vh - ${({ headerHeight }) => (headerHeight ? headerHeight : '0px')}
-  );
-  position: relative;
-  left: calc(50% - 50vw);
 `
 
 const TimelineWrapper = styled.div`
@@ -324,8 +322,6 @@ export default function Timeline({
     <TagsContext.Provider value={{ tags, addTag, removeTag }}>
       <Wrapper headerHeight={headerHeight}>
         <TimelineWrapper>
-          <div id="top" />
-          <GlobalStyles />
           <TimelineNodesWrapper
             ref={containerRef}
             eventMode={measure === 'event'}
@@ -355,7 +351,6 @@ export default function Timeline({
               }}
             />
           )}
-          <div id="bottom" />
         </TimelineWrapper>
       </Wrapper>
     </TagsContext.Provider>
