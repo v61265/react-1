@@ -74,6 +74,15 @@ const TimelineWrapper = styled.div`
 `
 
 const TimelineNodesWrapper = styled.div`
+  // hide react-virtualized List scrollbar
+  & > div {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    &::-webkit-scrollbar {
+      display: none; /* for Chrome, Safari and Opera */
+    }
+  }
+
   ${({ eventMode }) => eventMode && `padding: 0 36px 12px;`}
 `
 
