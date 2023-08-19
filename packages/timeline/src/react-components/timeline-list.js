@@ -1,6 +1,6 @@
 import { List } from 'react-virtualized'
 import TimelineUnit from './timeline-unit'
-import { forwardRef } from 'react'
+import { forwardRef, useEffect, useState } from 'react'
 
 function getBubbleLevel(max, count) {
   const levelSize = max / 5
@@ -27,6 +27,17 @@ export default forwardRef(function TimelineList(
   },
   ref
 ) {
+  const [listWidth, setListWidth] = useState(320)
+
+  useEffect(() => {
+    const windowWidth = window.innerWidth
+    if (windowWidth >= 1200) {
+      setListWidth(1200)
+    } else if (windowWidth >= 768) {
+      setListWidth(windowWidth)
+    }
+  }, [])
+
   const rowRenderer = ({ index, key, style }) => {
     const timeUnitKey = timeUnitKeys[index]
     const events = timeUnitEvents[timeUnitKey] || []
@@ -60,7 +71,7 @@ export default forwardRef(function TimelineList(
   return (
     <List
       ref={ref}
-      width={1200}
+      width={listWidth}
       height={listHeight}
       rowHeight={listItemHeight}
       rowCount={timeUnitKeys.length}
