@@ -175,14 +175,94 @@ export default function Timeline({
     setListHeight(window.innerHeight - headerHeight)
   }, [headerHeight])
 
+  // handle event mode updating focusUnitKey when user scrolling
+  useEffect(() => {
+    if (level !== 1) {
+      // only event mode needs onScroll event to update focusUnitKey
+      return
+    }
+    console.log('onscroll in event mdoe')
+
+    if (containerRef.current) {
+      const onScroll = () => {
+        const containerDiv = containerRef.current
+        // block update focusUnitKey when programmatically scrolling
+        if (blockOnScrollEvent.current) {
+          return
+        }
+        let newFocusNode
+        for (const node of containerDiv.children) {
+          const rect = node.getBoundingClientRect()
+          if (rect.top - headerHeight + rect.height > 0) {
+            newFocusNode = node
+            break
+          }
+        }
+        let newFocusUnitKey = newFocusNode.id.split('-')[1]
+        setFocusUnitKey(newFocusUnitKey)
+      }
+
+      containerRef.current.addEventListener('scroll', onScroll)
+
+      return () => {
+        containerRef.current.removeEventListener('scroll', onScroll)
+      }
+    }
+  }, [level, headerHeight])
+
+  // handle timeline mode updating focusUnitKey when user scrolling
+  const onTimelineListScroll = () => {
+    if (containerRef.current) {
+      /** @type {HTMLDivElement} */
+      const containerDiv = containerRef.current
+      const containerTop = containerDiv.getBoundingClientRect().top
+      if (blockOnScrollEvent.current) {
+        return
+      }
+      const timeNodes = containerDiv.querySelectorAll('.timeline-list-item')
+      let firstVisibleIndex
+      for (let index = 0; index < timeNodes.length; index++) {
+        const node = timeNodes[index]
+        const distanceToTop =
+          node.getBoundingClientRect().top -
+          containerTop +
+          node.getBoundingClientRect().height -
+          10
+        if (distanceToTop > 0) {
+          firstVisibleIndex = index
+          break
+        }
+      }
+      let focusNode = timeNodes[firstVisibleIndex]
+      if (focusNode) {
+        let newFocusUnitKey = focusNode.firstChild.id.split('-')[1]
+        setFocusUnitKey(newFocusUnitKey)
+        console.log('onTimelineListScroll setFocusUnitKey', newFocusUnitKey)
+      } else {
+        // Use cmd up or down to control timeline could cause lost track of focus
+        // ignore it for now.
+        console.warn('onTimelineListScroll focusNode undefined', focusNode)
+      }
+    }
+  }
+
+  // handle scroll timeline (List, Events) to right position
   useEffect(() => {
     //debug
+    console.log('debug, set timelineListRef.current to list')
     window.list = timelineListRef.current
-    const focusIndex = timeUnitKeysToRender.findIndex(
-      (unitKey) => unitKey === focusUnitKey
-    )
+
+    // block no scrollType
+    if (!scroIntoViewType.current) {
+      return
+    }
 
     if (timelineListRef.current) {
+      // handle scrolling on react.virtualized List
+      const focusIndex = timeUnitKeysToRender.findIndex(
+        (unitKey) => unitKey === focusUnitKey
+      )
+
       if (focusIndex !== -1) {
         if (scroIntoViewType.current === 'immediate') {
           // since scrollToRow can guarantee to scroll the focusItem to the topmost, use scrollToPosition instead
@@ -236,66 +316,33 @@ export default function Timeline({
         // scroll to the first node
         const newFocusUnitKey = timeUnitKeys[0]
         setFocusUnitKey(newFocusUnitKey)
+        blockOnScrollEvent.current = true
         console.log('filter out focusKey set first one', newFocusUnitKey)
       }
-    }
-  })
+    } else if (containerRef.current) {
+      // handle scrolling on event mode
 
-  useEffect(() => {
-    if (containerRef.current && scroIntoViewType.current) {
       const focusTimelineUnitEle = containerRef.current.querySelector(
         `#node-${focusUnitKey}`
       )
-      function smoothScrollTo(targetPosition, speedFactor) {
-        const startPosition = window.scrollY
-        const distance = Math.abs(targetPosition - startPosition)
-        const speed = speedFactor
 
-        const duration = Math.min(2000, Math.max(300, distance / speed)) // Set a maximum and minimum duration to avoid extremely long or short scrolls
-        const startTime = performance.now()
-
-        function scrollStep(timestamp) {
-          const currentTime = timestamp - startTime
-          const scrollFraction = currentTime / duration
-
-          if (currentTime >= duration) {
-            window.scrollTo(0, targetPosition)
-          } else {
-            const easeValue = scrollFraction ** 2 // You can adjust the easing function here
-            const scrollValue =
-              startPosition +
-              (targetPosition > startPosition ? 1 : -1) * distance * easeValue
-            window.scrollTo(0, scrollValue)
-            window.requestAnimationFrame(scrollStep)
-            return
-          }
-          blockOnScrollEvent.current = false
-        }
-
-        window.requestAnimationFrame(scrollStep)
-      }
-
-      return
       if (focusTimelineUnitEle) {
         // add 2 px to prevent focusIndex count on scroll mistaken
         if (scroIntoViewType.current === 'immediate') {
           blockOnScrollEvent.current = false
-          window.scrollTo(
-            0,
-            window.scrollY +
+          console.log(
+            'scrollTo ',
+            containerRef.current.scrollTop +
               focusTimelineUnitEle.getBoundingClientRect().top +
               5 -
               headerHeight
           )
-        } else if (scroIntoViewType.current === 'smooth') {
-          blockOnScrollEvent.current = true
-          // add 2 px to prevent focusIndex count on scroll mistaken
-          smoothScrollTo(
-            window.scrollY +
+          containerRef.current.scrollTo(
+            0,
+            containerRef.current.scrollTop +
               focusTimelineUnitEle.getBoundingClientRect().top +
               5 -
-              headerHeight,
-            20
+              headerHeight
           )
         }
         scroIntoViewType.current = ''
@@ -305,6 +352,7 @@ export default function Timeline({
         const newFocusUnitKey = timeUnitKeys[0]
         setFocusUnitKey(newFocusUnitKey)
         blockOnScrollEvent.current = true
+        console.log('filter out focusKey set first one', newFocusUnitKey)
       }
     }
   })
@@ -331,41 +379,6 @@ export default function Timeline({
   const removeTag = (tagToBeRemoved) => {
     setTags((oldTags) => oldTags.filter((tag) => tag !== tagToBeRemoved))
     scroIntoViewType.current = 'immediate'
-  }
-
-  const onTimelineListScroll = () => {
-    if (containerRef.current) {
-      /** @type {HTMLDivElement} */
-      const containerDiv = containerRef.current
-      const containerTop = containerDiv.getBoundingClientRect().top
-      if (blockOnScrollEvent.current) {
-        return
-      }
-      const timeNodes = containerDiv.querySelectorAll('.timeline-list-item')
-      let firstVisibleIndex
-      for (let index = 0; index < timeNodes.length; index++) {
-        const node = timeNodes[index]
-        const distanceToTop =
-          node.getBoundingClientRect().top -
-          containerTop +
-          node.getBoundingClientRect().height -
-          10
-        if (distanceToTop > 0) {
-          firstVisibleIndex = index
-          break
-        }
-      }
-      let focusNode = timeNodes[firstVisibleIndex]
-      if (focusNode) {
-        let newFocusUnitKey = focusNode.firstChild.id.split('-')[1]
-        setFocusUnitKey(newFocusUnitKey)
-        console.log('onTimelineListScroll setFocusUnitKey', newFocusUnitKey)
-      } else {
-        // Use cmd up or down to control timeline could cause lost track of focus
-        // ignore it for now.
-        console.warn('onTimelineListScroll focusNode undefined', focusNode)
-      }
-    }
   }
 
   const focusEvent =
