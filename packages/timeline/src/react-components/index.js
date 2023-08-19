@@ -75,6 +75,7 @@ const TimelineWrapper = styled.div`
 
 const TimelineNodesWrapper = styled.div`
   // hide react-virtualized List scrollbar
+  &,
   & > div {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
@@ -82,7 +83,8 @@ const TimelineNodesWrapper = styled.div`
       display: none; /* for Chrome, Safari and Opera */
     }
   }
-
+  overflow: hidden auto;
+  ${({ height }) => height && `height: ${height}px;`}
   ${({ eventMode }) => eventMode && `padding: 0 36px 12px;`}
 `
 
@@ -180,58 +182,62 @@ export default function Timeline({
       (unitKey) => unitKey === focusUnitKey
     )
 
-    if (focusIndex !== -1) {
-      if (scroIntoViewType.current === 'immediate') {
-        // since scrollToRow can guarantee to scroll the focusItem to the topmost, use scrollToPosition instead
-        console.log(
-          'scrollToPosition immediate',
-          focusIndex * listItemHeight + 5,
-          focusUnitKey
-        )
-        timelineListRef.current.scrollToPosition(
-          focusIndex * listItemHeight + 5
-        )
-      } else if (scroIntoViewType.current === 'smooth') {
-        function smoothScrollTo(targetPosition, speedFactor) {
-          const startPosition =
-            timelineListRef.current.Grid._scrollingContainer.scrollTop
-          const distance = Math.abs(targetPosition - startPosition)
-          const speed = speedFactor
+    if (timelineListRef.current) {
+      if (focusIndex !== -1) {
+        if (scroIntoViewType.current === 'immediate') {
+          // since scrollToRow can guarantee to scroll the focusItem to the topmost, use scrollToPosition instead
+          console.log(
+            'scrollToPosition immediate',
+            focusIndex * listItemHeight + 5,
+            focusUnitKey
+          )
+          timelineListRef.current.scrollToPosition(
+            focusIndex * listItemHeight + 5
+          )
+        } else if (scroIntoViewType.current === 'smooth') {
+          function smoothScrollTo(targetPosition, speedFactor) {
+            const startPosition =
+              timelineListRef.current.Grid._scrollingContainer.scrollTop
+            const distance = Math.abs(targetPosition - startPosition)
+            const speed = speedFactor
 
-          const duration = Math.min(2000, Math.max(300, distance / speed)) // Set a maximum and minimum duration to avoid extremely long or short scrolls
-          const startTime = performance.now()
+            const duration = Math.min(2000, Math.max(300, distance / speed)) // Set a maximum and minimum duration to avoid extremely long or short scrolls
+            const startTime = performance.now()
 
-          function scrollStep(timestamp) {
-            const currentTime = timestamp - startTime
-            const scrollFraction = currentTime / duration
+            function scrollStep(timestamp) {
+              const currentTime = timestamp - startTime
+              const scrollFraction = currentTime / duration
 
-            if (currentTime >= duration) {
-              timelineListRef.current.scrollToPosition(targetPosition)
-              blockOnScrollEvent.current = false
-            } else {
-              const easeValue = scrollFraction ** 2 // You can adjust the easing function here
-              const scrollValue =
-                startPosition +
-                (targetPosition > startPosition ? 1 : -1) * distance * easeValue
-              timelineListRef.current.scrollToPosition(scrollValue)
-              window.requestAnimationFrame(scrollStep)
-              return
+              if (currentTime >= duration) {
+                timelineListRef.current.scrollToPosition(targetPosition)
+                blockOnScrollEvent.current = false
+              } else {
+                const easeValue = scrollFraction ** 2 // You can adjust the easing function here
+                const scrollValue =
+                  startPosition +
+                  (targetPosition > startPosition ? 1 : -1) *
+                    distance *
+                    easeValue
+                timelineListRef.current.scrollToPosition(scrollValue)
+                window.requestAnimationFrame(scrollStep)
+                return
+              }
             }
+
+            window.requestAnimationFrame(scrollStep)
           }
 
-          window.requestAnimationFrame(scrollStep)
+          blockOnScrollEvent.current = true
+          smoothScrollTo(focusIndex * listItemHeight + 5, 20)
         }
-
-        blockOnScrollEvent.current = true
-        smoothScrollTo(focusIndex * listItemHeight + 5, 20)
+        scroIntoViewType.current = ''
+      } else {
+        // since focusKey can't map to a html node (may be filtered out)
+        // scroll to the first node
+        const newFocusUnitKey = timeUnitKeys[0]
+        setFocusUnitKey(newFocusUnitKey)
+        console.log('filter out focusKey set first one', newFocusUnitKey)
       }
-      scroIntoViewType.current = ''
-    } else {
-      // since focusKey can't map to a html node (may be filtered out)
-      // scroll to the first node
-      const newFocusUnitKey = timeUnitKeys[0]
-      setFocusUnitKey(newFocusUnitKey)
-      console.log('filter out focusKey set first one', newFocusUnitKey)
     }
   })
 
@@ -414,6 +420,7 @@ export default function Timeline({
             id="containerRef"
             ref={containerRef}
             eventMode={measure === 'event'}
+            height={listHeight}
           >
             {timelineNodesJsx}
           </TimelineNodesWrapper>
