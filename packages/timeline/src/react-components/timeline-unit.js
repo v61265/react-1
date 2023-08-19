@@ -163,10 +163,9 @@ export default function TimelineUnit({
   measure,
   timeUnitKey,
   isTheFirstOrLastUnit,
-  dividers,
+  divider,
   bubbleLevelSizesInDivider,
 }) {
-  const divider = dividers[measure]
   const bubbleLevelSizes =
     bubbleLevelSizesInDivider[divider] || defaultBubbleLevelSizes
   const bubbleSize = bubbleLevelSizes[bubbleSizeLevel]

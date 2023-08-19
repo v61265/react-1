@@ -1,46 +1,44 @@
-import { FixedSizeList } from 'react-window'
+import { List } from 'react-virtualized'
 import TimelineUnit from './timeline-unit'
-import { useEffect, useRef, useState } from 'react'
+import { forwardRef } from 'react'
 
 function getBubbleLevel(max, count) {
   const levelSize = max / 5
   return Math.ceil(count / levelSize) - 1
 }
 
-export default function TimelineList({
-  timeUnitKeys,
-  timeUnitEvents,
-  timeMax,
-  dividers,
-  bubbleLevelSizesInDivider,
-  onBubbleClick,
-  onSingleTimelineNodeSelect,
-  focusUnitKey,
-  headerHeight,
-  measure,
-  firstTimeUnitKey,
-  lastTimeeUnitKey,
-}) {
-  const [listHeight, setListHeight] = useState(800)
-  const divider = dividers[measure]
-  const listItemHeight = listHeight / divider
-  const listRef = useRef(null)
-
-  useEffect(() => {
-    setListHeight(window.innerHeight - headerHeight)
-  }, [headerHeight])
-
-  const Row = ({ index, style }) => {
-    const timeUnitKey = timeUnitKeys[index]
+export default forwardRef(function TimelineList(
+  {
+    timeUnitKeysToRender,
+    timeUnitEvents,
+    timeMax,
+    divider,
+    bubbleLevelSizesInDivider,
+    onBubbleClick,
+    onSingleTimelineNodeSelect,
+    focusUnitKey,
+    headerHeight,
+    measure,
+    firstTimeUnitKeyToRender,
+    lastTimeUnitKeyToRender,
+    lastTimeUnitKey,
+    updateFocusKey,
+    listHeight,
+    listItemHeight,
+  },
+  ref
+) {
+  const rowRenderer = ({ index, key, style }) => {
+    const timeUnitKey = timeUnitKeysToRender[index]
     const events = timeUnitEvents[timeUnitKey] || []
     const i = index
 
     return (
-      <div style={style}>
+      <div key={key} style={style}>
         <TimelineUnit
           eventsCount={events.length}
           bubbleSizeLevel={getBubbleLevel(timeMax, events.length)}
-          dividers={dividers}
+          divider={divider}
           bubbleLevelSizesInDivider={bubbleLevelSizesInDivider}
           key={timeUnitKey + i}
           onBubbleClick={onBubbleClick.bind(null, timeUnitKey)}
@@ -53,7 +51,8 @@ export default function TimelineList({
           measure={measure}
           timeUnitKey={timeUnitKey}
           isTheFirstOrLastUnit={
-            timeUnitKey === firstTimeUnitKey || timeUnitKey === lastTimeeUnitKey
+            timeUnitKey === firstTimeUnitKeyToRender ||
+            timeUnitKey === lastTimeUnitKeyToRender
           }
         />
       </div>
@@ -61,14 +60,30 @@ export default function TimelineList({
   }
 
   return (
-    <FixedSizeList
-      ref={listRef}
-      width={'100vw'}
+    <List
+      id="123"
+      ref={ref}
+      width={1200}
       height={listHeight}
-      itemSize={listItemHeight}
-      itemCount={timeUnitKeys.length}
-    >
-      {Row}
-    </FixedSizeList>
+      rowHeight={listItemHeight}
+      rowCount={timeUnitKeysToRender.length}
+      rowRenderer={rowRenderer}
+      onScroll={() => {
+        if (ref.current) {
+          const container = ref.current.Grid._scrollingContainer // Access the actual scrolling container
+          if (container) {
+            const isAtBottom =
+              container.scrollHeight - container.scrollTop ===
+              container.clientHeight
+            if (isAtBottom) {
+              updateFocusKey(lastTimeUnitKey)
+            }
+          }
+        }
+      }}
+      onRowsRendered={({ startIndex }) => {
+        updateFocusKey(timeUnitKeysToRender[startIndex])
+      }}
+    ></List>
   )
-}
+})

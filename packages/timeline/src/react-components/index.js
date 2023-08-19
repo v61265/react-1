@@ -131,14 +131,20 @@ export default function Timeline({
   const measure = getMeasureFromLevel(level)
   const timeUnitEvents = timeEvents[measure]
   const timeUnitKeys = timeKeys[measure]
-  const firstTimeUnitKey = timeKeysToRender[0]
-  const lastTimeeUnitKey = timeKeysToRender[timeKeysToRender.length - 1]
+  const firstTimeUnitKeyToRender = timeKeysToRender[0]
+  const lastTimeUnitKeyToRender = timeKeysToRender[timeKeysToRender.length - 1]
+  const lastTimeUnitKey = timeUnitKeys[timeUnitKeys.length - 1]
   const timeUnitKeysToRender = timeKeysToRender[measure]
+  const divider = dividers[measure]
+  const [listHeight, setListHeight] = useState(800)
+  const listItemHeight = listHeight / divider
+
   /** @type {React.RefObject<HTMLDivElement>} */
   const containerRef = useRef(null)
 
   const scroIntoViewType = useRef('')
   const blockOnScrollEvent = useRef(false)
+  const timelineListRef = useRef(null)
 
   const updateLevel = (newLevel, spFocusUnitKey) => {
     const oldFocusUnitKey = spFocusUnitKey || focusUnitKey
@@ -154,41 +160,63 @@ export default function Timeline({
   }
 
   useEffect(() => {
-    const onScroll = () => {
-      /** @type {HTMLDivElement} */
-      const containerDiv = containerRef.current
-      const containerTop = containerDiv.getBoundingClientRect().top
-      if (blockOnScrollEvent.current) {
-        return
-      }
-      function getIndexOfTheTopMostItem(top, parentDom) {
-        if (top >= headerHeight) {
-          return 0
-        } else {
-          let topSum = top
-          for (let i = 0; i < parentDom.children.length; i++) {
-            let node = parentDom.children[i]
-            topSum += node.getBoundingClientRect().height
-            if (topSum >= headerHeight) {
-              return i
-            }
-            if (i === parentDom.children.length - 1) {
-              return parentDom.children.length - 1
+    setListHeight(window.innerHeight - headerHeight)
+  }, [headerHeight])
+
+  useEffect(() => {
+    //debug
+    window.list = timelineListRef.current
+    const focusIndex = timeUnitKeysToRender.findIndex(
+      (unitKey) => unitKey === focusUnitKey
+    )
+
+    if (focusIndex !== -1) {
+      if (scroIntoViewType.current === 'immediate') {
+        // since scrollToRow can guarantee to scroll the focusItem to the topmost, use scrollToPosition instead
+        timelineListRef.current.scrollToPosition(
+          focusIndex * listItemHeight + 5
+        )
+      } else if (scroIntoViewType.current === 'smooth') {
+        function smoothScrollTo(targetPosition, speedFactor) {
+          const startPosition =
+            timelineListRef.current.Grid._scrollingContainer.scrollTop
+          const distance = Math.abs(targetPosition - startPosition)
+          const speed = speedFactor
+
+          const duration = Math.min(2000, Math.max(300, distance / speed)) // Set a maximum and minimum duration to avoid extremely long or short scrolls
+          const startTime = performance.now()
+
+          function scrollStep(timestamp) {
+            const currentTime = timestamp - startTime
+            const scrollFraction = currentTime / duration
+
+            if (currentTime >= duration) {
+              timelineListRef.current.scrollToPosition(targetPosition)
+              blockOnScrollEvent.current = false
+            } else {
+              const easeValue = scrollFraction ** 2 // You can adjust the easing function here
+              const scrollValue =
+                startPosition +
+                (targetPosition > startPosition ? 1 : -1) * distance * easeValue
+              timelineListRef.current.scrollToPosition(scrollValue)
+              window.requestAnimationFrame(scrollStep)
+              return
             }
           }
-        }
-      }
-      const index = getIndexOfTheTopMostItem(containerTop, containerDiv)
-      let focusNode = containerDiv.children[index]
-      let newFocusUnitKey = focusNode.id.split('-')[1]
-      setFocusUnitKey(newFocusUnitKey)
-    }
-    window.addEventListener('scroll', onScroll)
 
-    return () => {
-      window.removeEventListener('scroll', onScroll)
+          window.requestAnimationFrame(scrollStep)
+        }
+
+        blockOnScrollEvent.current = true
+        smoothScrollTo(focusIndex * listItemHeight + 5, 20)
+      }
+      scroIntoViewType.current = ''
+    } else {
+      // const newFocusUnitKey = timeUnitKeys[0]
+      // setFocusUnitKey(newFocusUnitKey)
+      console.error(`can't find focusIndex`)
     }
-  }, [headerHeight])
+  })
 
   useEffect(() => {
     if (containerRef.current && scroIntoViewType.current) {
@@ -223,6 +251,8 @@ export default function Timeline({
 
         window.requestAnimationFrame(scrollStep)
       }
+
+      return
       if (focusTimelineUnitEle) {
         // add 2 px to prevent focusIndex count on scroll mistaken
         if (scroIntoViewType.current === 'immediate') {
@@ -287,10 +317,11 @@ export default function Timeline({
   let timelineNodesJsx =
     measure !== 'event' ? (
       <TimelineList
-        timeUnitKeys={timeUnitKeysToRender}
+        ref={timelineListRef}
+        timeUnitKeysToRender={timeUnitKeysToRender}
         timeUnitEvents={timeUnitEvents}
         timeMax={timeMax}
-        dividers={dividers}
+        divider={divider}
         bubbleLevelSizesInDivider={bubbleLevelSizesInDivider}
         onBubbleClick={(timeUnitKey) => {
           updateLevel(level - 1, timeUnitKey)
@@ -301,8 +332,16 @@ export default function Timeline({
         focusUnitKey={focusUnitKey}
         headerHeight={headerHeight}
         measure={measure}
-        firstTimeUnitKey={firstTimeUnitKey}
-        lastTimeeUnitKey={lastTimeeUnitKey}
+        firstTimeUnitKeyToRender={firstTimeUnitKeyToRender}
+        lastTimeUnitKeyToRender={lastTimeUnitKeyToRender}
+        lastTimeUnitKey={lastTimeUnitKey}
+        updateFocusKey={(timeUnitKey) => {
+          if (!blockOnScrollEvent.current) {
+            setFocusUnitKey(timeUnitKey)
+          }
+        }}
+        listHeight={listHeight}
+        listItemHeight={listItemHeight}
       />
     ) : (
       timeUnitKeysToRender.map((timeUnitKey) => {
