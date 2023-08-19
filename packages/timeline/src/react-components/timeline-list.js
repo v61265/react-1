@@ -9,7 +9,7 @@ function getBubbleLevel(max, count) {
 
 export default forwardRef(function TimelineList(
   {
-    timeUnitKeysToRender,
+    timeUnitKeys,
     timeUnitEvents,
     timeMax,
     divider,
@@ -19,22 +19,21 @@ export default forwardRef(function TimelineList(
     focusUnitKey,
     headerHeight,
     measure,
-    firstTimeUnitKeyToRender,
-    lastTimeUnitKeyToRender,
+    firstTimeUnitKey,
     lastTimeUnitKey,
-    updateFocusKey,
     listHeight,
     listItemHeight,
+    onTimelineListScroll,
   },
   ref
 ) {
   const rowRenderer = ({ index, key, style }) => {
-    const timeUnitKey = timeUnitKeysToRender[index]
+    const timeUnitKey = timeUnitKeys[index]
     const events = timeUnitEvents[timeUnitKey] || []
     const i = index
 
     return (
-      <div key={key} style={style}>
+      <div className="timeline-list-item" key={key} style={style}>
         <TimelineUnit
           eventsCount={events.length}
           bubbleSizeLevel={getBubbleLevel(timeMax, events.length)}
@@ -51,8 +50,7 @@ export default forwardRef(function TimelineList(
           measure={measure}
           timeUnitKey={timeUnitKey}
           isTheFirstOrLastUnit={
-            timeUnitKey === firstTimeUnitKeyToRender ||
-            timeUnitKey === lastTimeUnitKeyToRender
+            timeUnitKey === firstTimeUnitKey || timeUnitKey === lastTimeUnitKey
           }
         />
       </div>
@@ -61,29 +59,13 @@ export default forwardRef(function TimelineList(
 
   return (
     <List
-      id="123"
       ref={ref}
       width={1200}
       height={listHeight}
       rowHeight={listItemHeight}
-      rowCount={timeUnitKeysToRender.length}
+      rowCount={timeUnitKeys.length}
       rowRenderer={rowRenderer}
-      onScroll={() => {
-        if (ref.current) {
-          const container = ref.current.Grid._scrollingContainer // Access the actual scrolling container
-          if (container) {
-            const isAtBottom =
-              container.scrollHeight - container.scrollTop ===
-              container.clientHeight
-            if (isAtBottom) {
-              updateFocusKey(lastTimeUnitKey)
-            }
-          }
-        }
-      }}
-      onRowsRendered={({ startIndex }) => {
-        updateFocusKey(timeUnitKeysToRender[startIndex])
-      }}
+      onScroll={onTimelineListScroll}
     ></List>
   )
 })

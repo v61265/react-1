@@ -133,7 +133,6 @@ export default function Timeline({
   const timeUnitKeys = timeKeys[measure]
   const firstTimeUnitKeyToRender = timeKeysToRender[0]
   const lastTimeUnitKeyToRender = timeKeysToRender[timeKeysToRender.length - 1]
-  const lastTimeUnitKey = timeUnitKeys[timeUnitKeys.length - 1]
   const timeUnitKeysToRender = timeKeysToRender[measure]
   const divider = dividers[measure]
   const [listHeight, setListHeight] = useState(800)
@@ -145,6 +144,7 @@ export default function Timeline({
   const scroIntoViewType = useRef('')
   const blockOnScrollEvent = useRef(false)
   const timelineListRef = useRef(null)
+  console.log('focusUnitKey', focusUnitKey)
 
   const updateLevel = (newLevel, spFocusUnitKey) => {
     const oldFocusUnitKey = spFocusUnitKey || focusUnitKey
@@ -156,6 +156,7 @@ export default function Timeline({
     )
     scroIntoViewType.current = 'immediate'
     setFocusUnitKey(newFocusUnitKey)
+    console.log('updateLevel setFocusUnitKey', newFocusUnitKey)
     setLevel(newLevel)
   }
 
@@ -173,6 +174,11 @@ export default function Timeline({
     if (focusIndex !== -1) {
       if (scroIntoViewType.current === 'immediate') {
         // since scrollToRow can guarantee to scroll the focusItem to the topmost, use scrollToPosition instead
+        console.log(
+          'scrollToPosition immediate',
+          focusIndex * listItemHeight + 5,
+          focusUnitKey
+        )
         timelineListRef.current.scrollToPosition(
           focusIndex * listItemHeight + 5
         )
@@ -212,9 +218,11 @@ export default function Timeline({
       }
       scroIntoViewType.current = ''
     } else {
-      // const newFocusUnitKey = timeUnitKeys[0]
-      // setFocusUnitKey(newFocusUnitKey)
-      console.error(`can't find focusIndex`)
+      // since focusKey can't map to a html node (may be filtered out)
+      // scroll to the first node
+      const newFocusUnitKey = timeUnitKeys[0]
+      setFocusUnitKey(newFocusUnitKey)
+      console.log('filter out focusKey set first one', newFocusUnitKey)
     }
   })
 
@@ -300,6 +308,7 @@ export default function Timeline({
        * 2. newFocusUnitKey got filtered -> scroll to the first one
        */
       setFocusUnitKey(newFocusUnitKey)
+      console.log('addTag', newFocusUnitKey)
       scroIntoViewType.current = 'immediate'
     }
   }
@@ -307,6 +316,41 @@ export default function Timeline({
   const removeTag = (tagToBeRemoved) => {
     setTags((oldTags) => oldTags.filter((tag) => tag !== tagToBeRemoved))
     scroIntoViewType.current = 'immediate'
+  }
+
+  const onTimelineListScroll = () => {
+    if (containerRef.current) {
+      /** @type {HTMLDivElement} */
+      const containerDiv = containerRef.current
+      const containerTop = containerDiv.getBoundingClientRect().top
+      if (blockOnScrollEvent.current) {
+        return
+      }
+      const timeNodes = containerDiv.querySelectorAll('.timeline-list-item')
+      let firstVisibleIndex
+      for (let index = 0; index < timeNodes.length; index++) {
+        const node = timeNodes[index]
+        const distanceToTop =
+          node.getBoundingClientRect().top -
+          containerTop +
+          node.getBoundingClientRect().height -
+          10
+        if (distanceToTop > 0) {
+          firstVisibleIndex = index
+          break
+        }
+      }
+      let focusNode = timeNodes[firstVisibleIndex]
+      if (focusNode) {
+        let newFocusUnitKey = focusNode.firstChild.id.split('-')[1]
+        setFocusUnitKey(newFocusUnitKey)
+        console.log('onTimelineListScroll setFocusUnitKey', newFocusUnitKey)
+      } else {
+        // Use cmd up or down to control timeline could cause lost track of focus
+        // ignore it for now.
+        console.warn('onTimelineListScroll focusNode undefined', focusNode)
+      }
+    }
   }
 
   const focusEvent =
@@ -318,7 +362,7 @@ export default function Timeline({
     measure !== 'event' ? (
       <TimelineList
         ref={timelineListRef}
-        timeUnitKeysToRender={timeUnitKeysToRender}
+        timeUnitKeys={timeUnitKeysToRender}
         timeUnitEvents={timeUnitEvents}
         timeMax={timeMax}
         divider={divider}
@@ -328,20 +372,16 @@ export default function Timeline({
         }}
         onSingleTimelineNodeSelect={(timeUnitKey) => {
           setFocusUnitKey(timeUnitKey)
+          console.log('onSingleTimelineNodeSelect setFocusUnitKey', timeUnitKey)
         }}
         focusUnitKey={focusUnitKey}
         headerHeight={headerHeight}
         measure={measure}
-        firstTimeUnitKeyToRender={firstTimeUnitKeyToRender}
-        lastTimeUnitKeyToRender={lastTimeUnitKeyToRender}
-        lastTimeUnitKey={lastTimeUnitKey}
-        updateFocusKey={(timeUnitKey) => {
-          if (!blockOnScrollEvent.current) {
-            setFocusUnitKey(timeUnitKey)
-          }
-        }}
+        firstTimeUnitKey={firstTimeUnitKeyToRender}
+        lastTimeUnitKey={lastTimeUnitKeyToRender}
         listHeight={listHeight}
         listItemHeight={listItemHeight}
+        onTimelineListScroll={onTimelineListScroll}
       />
     ) : (
       timeUnitKeysToRender.map((timeUnitKey) => {
@@ -362,6 +402,7 @@ export default function Timeline({
       <Wrapper headerHeight={headerHeight}>
         <TimelineWrapper>
           <TimelineNodesWrapper
+            id="containerRef"
             ref={containerRef}
             eventMode={measure === 'event'}
           >
@@ -386,6 +427,10 @@ export default function Timeline({
               sortedAsc={isTimeSortedAsc}
               changeFocusUnitKey={(newFocusUnitKey) => {
                 setFocusUnitKey(newFocusUnitKey)
+                console.log(
+                  'changeFocusUnitKey setFocusUnitKey',
+                  newFocusUnitKey
+                )
                 scroIntoViewType.current = 'smooth'
               }}
             />
