@@ -142,9 +142,10 @@ export default function Timeline({
   const measure = getMeasureFromLevel(level)
   const timeUnitEvents = timeEvents[measure]
   const timeUnitKeys = timeKeys[measure]
-  const firstTimeUnitKeyToRender = timeKeysToRender[0]
-  const lastTimeUnitKeyToRender = timeKeysToRender[timeKeysToRender.length - 1]
   const timeUnitKeysToRender = timeKeysToRender[measure]
+  const firstTimeUnitKeyToRender = timeUnitKeysToRender[0]
+  const lastTimeUnitKeyToRender =
+    timeUnitKeysToRender[timeUnitKeysToRender.length - 1]
   const divider = dividers[measure]
   const [listHeight, setListHeight] = useState(800)
   const listItemHeight = listHeight / divider
