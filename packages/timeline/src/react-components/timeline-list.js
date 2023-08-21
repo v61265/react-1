@@ -1,11 +1,17 @@
 import { List } from 'react-virtualized'
 import TimelineUnit from './timeline-unit'
-import { forwardRef, useEffect, useState } from 'react'
+import { forwardRef } from 'react'
+import styled from 'styled-components'
 
 function getBubbleLevel(max, count) {
   const levelSize = max / 5
   return Math.ceil(count / levelSize) - 1
 }
+
+const RowWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`
 
 export default forwardRef(function TimelineList(
   {
@@ -21,22 +27,13 @@ export default forwardRef(function TimelineList(
     measure,
     firstTimeUnitKey,
     lastTimeUnitKey,
-    listHeight,
+    listDimemsion,
     listItemHeight,
     onTimelineListScroll,
   },
   ref
 ) {
-  const [listWidth, setListWidth] = useState(320)
-
-  useEffect(() => {
-    const windowWidth = window.innerWidth
-    if (windowWidth >= 1200) {
-      setListWidth(1200)
-    } else if (windowWidth >= 768) {
-      setListWidth(windowWidth)
-    }
-  }, [])
+  const { width, height } = listDimemsion
 
   const rowRenderer = ({ index, key, style }) => {
     const timeUnitKey = timeUnitKeys[index]
@@ -44,7 +41,7 @@ export default forwardRef(function TimelineList(
     const i = index
 
     return (
-      <div className="timeline-list-item" key={key} style={style}>
+      <RowWrapper className="timeline-list-item" key={key} style={style}>
         <TimelineUnit
           eventsCount={events.length}
           bubbleSizeLevel={getBubbleLevel(timeMax, events.length)}
@@ -64,15 +61,15 @@ export default forwardRef(function TimelineList(
             timeUnitKey === firstTimeUnitKey || timeUnitKey === lastTimeUnitKey
           }
         />
-      </div>
+      </RowWrapper>
     )
   }
 
   return (
     <List
       ref={ref}
-      width={listWidth}
-      height={listHeight}
+      width={width}
+      height={height}
       rowHeight={listItemHeight}
       rowCount={timeUnitKeys.length}
       rowRenderer={rowRenderer}

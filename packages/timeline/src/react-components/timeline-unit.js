@@ -9,7 +9,10 @@ const Wrapper = styled.div`
   width: 320px;
   margin: 0 auto;
   @media (min-width: 768px) {
-    width: unset;
+    width: 100%;
+  }
+  @media (min-width: 1200px) {
+    width: 1200px;
   }
 `
 const LeftPanel = styled.div`

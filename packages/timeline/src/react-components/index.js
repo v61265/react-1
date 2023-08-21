@@ -84,6 +84,9 @@ const TimelineNodesWrapper = styled.div`
     }
   }
   overflow: hidden auto;
+  position: relative;
+  width: 100vw;
+  left: calc(50% - 50vw);
   ${({ height }) => height && `height: ${height}px;`}
   ${({ eventMode }) => eventMode && `padding: 0 36px 12px;`}
 `
@@ -147,8 +150,11 @@ export default function Timeline({
   const lastTimeUnitKeyToRender =
     timeUnitKeysToRender[timeUnitKeysToRender.length - 1]
   const divider = dividers[measure]
-  const [listHeight, setListHeight] = useState(800)
-  const listItemHeight = listHeight / divider
+  const [listDimemsion, setListDimemsion] = useState({
+    width: 320,
+    height: 800,
+  })
+  const listItemHeight = listDimemsion.height / divider
 
   /** @type {React.RefObject<HTMLDivElement>} */
   const containerRef = useRef(null)
@@ -173,7 +179,17 @@ export default function Timeline({
   }
 
   useEffect(() => {
-    setListHeight(window.innerHeight - headerHeight)
+    const resizeHandler = () => {
+      setListDimemsion({
+        width: window.innerWidth,
+        height: window.innerHeight - headerHeight,
+      })
+    }
+    window.addEventListener('resize', resizeHandler)
+    resizeHandler()
+    return () => {
+      window.removeEventListener('resize', resizeHandler)
+    }
   }, [headerHeight])
 
   // handle event mode updating focusUnitKey when user scrolling
@@ -408,7 +424,7 @@ export default function Timeline({
         measure={measure}
         firstTimeUnitKey={firstTimeUnitKeyToRender}
         lastTimeUnitKey={lastTimeUnitKeyToRender}
-        listHeight={listHeight}
+        listDimemsion={listDimemsion}
         listItemHeight={listItemHeight}
         onTimelineListScroll={onTimelineListScroll}
       />
@@ -434,7 +450,7 @@ export default function Timeline({
             id="containerRef"
             ref={containerRef}
             eventMode={measure === 'event'}
-            height={listHeight}
+            height={listDimemsion.height}
           >
             {timelineNodesJsx}
           </TimelineNodesWrapper>
