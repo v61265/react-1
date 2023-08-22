@@ -27,13 +27,13 @@ export default forwardRef(function TimelineList(
     measure,
     firstTimeUnitKey,
     lastTimeUnitKey,
-    listDimemsion,
+    listDimension,
     listItemHeight,
     onTimelineListScroll,
   },
   ref
 ) {
-  const { width, height } = listDimemsion
+  const { width, height } = listDimension
 
   const rowRenderer = ({ index, key, style }) => {
     const timeUnitKey = timeUnitKeys[index]

@@ -151,11 +151,11 @@ export default function Timeline({
   const lastTimeUnitKeyToRender =
     timeUnitKeysToRender[timeUnitKeysToRender.length - 1]
   const divider = dividers[measure]
-  const [listDimemsion, setListDimemsion] = useState({
-    width: 320,
-    height: 800,
+  const [listDimension, setListDimension] = useState({
+    width: 0,
+    height: 0,
   })
-  const listItemHeight = listDimemsion.height / divider
+  const listItemHeight = listDimension.height / divider
 
   /** @type {React.RefObject<HTMLDivElement>} */
   const containerRef = useRef(null)
@@ -181,7 +181,7 @@ export default function Timeline({
 
   useEffect(() => {
     const resizeHandler = () => {
-      setListDimemsion({
+      setListDimension({
         width: window.innerWidth,
         height: window.innerHeight - headerHeight,
       })
@@ -425,7 +425,7 @@ export default function Timeline({
         measure={measure}
         firstTimeUnitKey={firstTimeUnitKeyToRender}
         lastTimeUnitKey={lastTimeUnitKeyToRender}
-        listDimemsion={listDimemsion}
+        listDimension={listDimension}
         listItemHeight={listItemHeight}
         onTimelineListScroll={onTimelineListScroll}
       />
@@ -451,7 +451,7 @@ export default function Timeline({
             id="containerRef"
             ref={containerRef}
             eventMode={measure === 'event'}
-            height={listDimemsion.height}
+            height={listDimension.height}
           >
             {timelineNodesJsx}
           </TimelineNodesWrapper>
