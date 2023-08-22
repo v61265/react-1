@@ -34,7 +34,7 @@ export default function useBlockPageScroll(headerHeight, scrollContainer) {
 
   useEffect(() => {
     if (wrapperRef.current) {
-      lastScrollPositionRef.current = window.scrollY
+      lastScrollPositionRef.current = Math.round(window.scrollY)
 
       const onScroll = () => {
         const rect = wrapperRef.current.getBoundingClientRect()
@@ -86,12 +86,13 @@ export default function useBlockPageScroll(headerHeight, scrollContainer) {
               0,
               window.scrollY +
                 wrapperRef.current.getBoundingClientRect().top -
-                80
+                headerHeight
             )
+            lastScrollPositionRef.current = window.scrollY
           }, 0)
         } else if (
-          scrollContainer.scrollTop +
-            scrollContainer.getBoundingClientRect().height ===
+          Math.round(scrollContainer.scrollTop) +
+            scrollContainer.getBoundingClientRect().height >=
           scrollContainer.scrollHeight
         ) {
           setIsFixedMode(false)
@@ -103,8 +104,9 @@ export default function useBlockPageScroll(headerHeight, scrollContainer) {
               0,
               window.scrollY +
                 wrapperRef.current.getBoundingClientRect().top -
-                80
+                headerHeight
             )
+            lastScrollPositionRef.current = window.scrollY
           }, 0)
         }
       }
