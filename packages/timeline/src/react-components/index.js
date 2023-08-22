@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 import {
   calcNextLevelUnitKey,
   generateTimeLevel,
@@ -14,16 +14,31 @@ import { TagsContext, initialTags } from './useTags'
 import { defaultConifg } from '../const/config'
 import { useTimelineConfig } from './hook/useTimelineConfig'
 import TimelineList from './timeline-list'
+import useBlockPageScroll from './hook/useBlockPageScroll'
+
+const BlockBodyScrollGlobalStyle = createGlobalStyle`
+  body {
+    overflow: hidden;
+  }
+`
 
 const Wrapper = styled.div`
   background-color: #efefef;
   overflow: hidden;
   width: 100vw;
   height: calc(
-    100vh - ${({ headerHeight }) => (headerHeight ? headerHeight : '0px')}
+    100vh -
+      ${({ headerHeight }) => (headerHeight ? `${headerHeight}px` : '0px')}
   );
   position: relative;
   left: calc(50% - 50vw);
+
+  ${({ isFixedMode, headerHeight }) =>
+    isFixedMode &&
+    `
+    position: fixed;
+    top: ${headerHeight}px;
+  `}
 
   // reset for Timeline only
   * {
@@ -89,6 +104,7 @@ const TimelineNodesWrapper = styled.div`
   left: calc(50% - 50vw);
   ${({ height }) => height && `height: ${height}px;`}
   ${({ eventMode }) => eventMode && `padding: 0 36px 12px;`}
+  ${({ isFixedMode }) => !isFixedMode && `overflow: hidden !important;`}
 `
 
 const EventWrapper = styled.div`
@@ -150,11 +166,11 @@ export default function Timeline({
   const lastTimeUnitKeyToRender =
     timeUnitKeysToRender[timeUnitKeysToRender.length - 1]
   const divider = dividers[measure]
-  const [listDimemsion, setListDimemsion] = useState({
-    width: 320,
-    height: 800,
+  const [listDimension, setListDimension] = useState({
+    width: 0,
+    height: 0,
   })
-  const listItemHeight = listDimemsion.height / divider
+  const listItemHeight = listDimension.height / divider
 
   /** @type {React.RefObject<HTMLDivElement>} */
   const containerRef = useRef(null)
@@ -162,7 +178,13 @@ export default function Timeline({
   const scroIntoViewType = useRef('')
   const blockOnScrollEvent = useRef(false)
   const timelineListRef = useRef(null)
-  console.log('focusUnitKey', focusUnitKey)
+
+  const { wrapperRef, isFixedMode } = useBlockPageScroll(
+    headerHeight,
+    measure !== 'event'
+      ? timelineListRef.current?.Grid._scrollingContainer
+      : containerRef.current
+  )
 
   const updateLevel = (newLevel, spFocusUnitKey) => {
     const oldFocusUnitKey = spFocusUnitKey || focusUnitKey
@@ -174,13 +196,12 @@ export default function Timeline({
     )
     scroIntoViewType.current = 'immediate'
     setFocusUnitKey(newFocusUnitKey)
-    console.log('updateLevel setFocusUnitKey', newFocusUnitKey)
     setLevel(newLevel)
   }
 
   useEffect(() => {
     const resizeHandler = () => {
-      setListDimemsion({
+      setListDimension({
         width: window.innerWidth,
         height: window.innerHeight - headerHeight,
       })
@@ -198,7 +219,6 @@ export default function Timeline({
       // only event mode needs onScroll event to update focusUnitKey
       return
     }
-    console.log('onscroll in event mdoe')
 
     if (containerRef.current) {
       const onScroll = () => {
@@ -254,7 +274,6 @@ export default function Timeline({
       if (focusNode) {
         let newFocusUnitKey = focusNode.firstChild.id.split('-')[1]
         setFocusUnitKey(newFocusUnitKey)
-        console.log('onTimelineListScroll setFocusUnitKey', newFocusUnitKey)
       } else {
         // Use cmd up or down to control timeline could cause lost track of focus
         // ignore it for now.
@@ -265,10 +284,6 @@ export default function Timeline({
 
   // handle scroll timeline (List, Events) to right position
   useEffect(() => {
-    //debug
-    console.log('debug, set timelineListRef.current to list')
-    window.list = timelineListRef.current
-
     // block no scrollType
     if (!scroIntoViewType.current) {
       return
@@ -283,11 +298,6 @@ export default function Timeline({
       if (focusIndex !== -1) {
         if (scroIntoViewType.current === 'immediate') {
           // since scrollToRow can guarantee to scroll the focusItem to the topmost, use scrollToPosition instead
-          console.log(
-            'scrollToPosition immediate',
-            focusIndex * listItemHeight + 5,
-            focusUnitKey
-          )
           timelineListRef.current.scrollToPosition(
             focusIndex * listItemHeight + 5
           )
@@ -334,7 +344,6 @@ export default function Timeline({
         const newFocusUnitKey = timeUnitKeys[0]
         setFocusUnitKey(newFocusUnitKey)
         blockOnScrollEvent.current = true
-        console.log('filter out focusKey set first one', newFocusUnitKey)
       }
     } else if (containerRef.current) {
       // handle scrolling on event mode
@@ -347,13 +356,6 @@ export default function Timeline({
         // add 2 px to prevent focusIndex count on scroll mistaken
         if (scroIntoViewType.current === 'immediate') {
           blockOnScrollEvent.current = false
-          console.log(
-            'scrollTo ',
-            containerRef.current.scrollTop +
-              focusTimelineUnitEle.getBoundingClientRect().top +
-              5 -
-              headerHeight
-          )
           containerRef.current.scrollTo(
             0,
             containerRef.current.scrollTop +
@@ -369,7 +371,6 @@ export default function Timeline({
         const newFocusUnitKey = timeUnitKeys[0]
         setFocusUnitKey(newFocusUnitKey)
         blockOnScrollEvent.current = true
-        console.log('filter out focusKey set first one', newFocusUnitKey)
       }
     }
   })
@@ -388,7 +389,6 @@ export default function Timeline({
        * 2. newFocusUnitKey got filtered -> scroll to the first one
        */
       setFocusUnitKey(newFocusUnitKey)
-      console.log('addTag', newFocusUnitKey)
       scroIntoViewType.current = 'immediate'
     }
   }
@@ -417,16 +417,16 @@ export default function Timeline({
         }}
         onSingleTimelineNodeSelect={(timeUnitKey) => {
           setFocusUnitKey(timeUnitKey)
-          console.log('onSingleTimelineNodeSelect setFocusUnitKey', timeUnitKey)
         }}
         focusUnitKey={focusUnitKey}
         headerHeight={headerHeight}
         measure={measure}
         firstTimeUnitKey={firstTimeUnitKeyToRender}
         lastTimeUnitKey={lastTimeUnitKeyToRender}
-        listDimemsion={listDimemsion}
+        listDimension={listDimension}
         listItemHeight={listItemHeight}
         onTimelineListScroll={onTimelineListScroll}
+        isFixedMode={isFixedMode}
       />
     ) : (
       timeUnitKeysToRender.map((timeUnitKey) => {
@@ -444,13 +444,19 @@ export default function Timeline({
     )
   return (
     <TagsContext.Provider value={{ tags, addTag, removeTag }}>
-      <Wrapper headerHeight={headerHeight}>
+      {isFixedMode && <BlockBodyScrollGlobalStyle />}
+      <Wrapper
+        ref={wrapperRef}
+        headerHeight={headerHeight}
+        isFixedMode={isFixedMode}
+      >
         <TimelineWrapper>
           <TimelineNodesWrapper
             id="containerRef"
             ref={containerRef}
             eventMode={measure === 'event'}
-            height={listDimemsion.height}
+            height={listDimension.height}
+            isFixedMode={isFixedMode}
           >
             {timelineNodesJsx}
           </TimelineNodesWrapper>
@@ -473,10 +479,6 @@ export default function Timeline({
               sortedAsc={isTimeSortedAsc}
               changeFocusUnitKey={(newFocusUnitKey) => {
                 setFocusUnitKey(newFocusUnitKey)
-                console.log(
-                  'changeFocusUnitKey setFocusUnitKey',
-                  newFocusUnitKey
-                )
                 scroIntoViewType.current = 'smooth'
               }}
             />
