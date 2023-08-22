@@ -20,7 +20,8 @@ const Wrapper = styled.div`
   overflow: hidden;
   width: 100vw;
   height: calc(
-    100vh - ${({ headerHeight }) => (headerHeight ? headerHeight : '0px')}
+    100vh -
+      ${({ headerHeight }) => (headerHeight ? `${headerHeight}px` : '0px')}
   );
   position: relative;
   left: calc(50% - 50vw);
