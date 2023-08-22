@@ -178,7 +178,6 @@ export default function Timeline({
   const scroIntoViewType = useRef('')
   const blockOnScrollEvent = useRef(false)
   const timelineListRef = useRef(null)
-  console.log('focusUnitKey', focusUnitKey)
 
   const { wrapperRef, isFixedMode } = useBlockPageScroll(
     headerHeight,
@@ -197,7 +196,6 @@ export default function Timeline({
     )
     scroIntoViewType.current = 'immediate'
     setFocusUnitKey(newFocusUnitKey)
-    console.log('updateLevel setFocusUnitKey', newFocusUnitKey)
     setLevel(newLevel)
   }
 
@@ -221,7 +219,6 @@ export default function Timeline({
       // only event mode needs onScroll event to update focusUnitKey
       return
     }
-    console.log('onscroll in event mdoe')
 
     if (containerRef.current) {
       const onScroll = () => {
@@ -277,7 +274,6 @@ export default function Timeline({
       if (focusNode) {
         let newFocusUnitKey = focusNode.firstChild.id.split('-')[1]
         setFocusUnitKey(newFocusUnitKey)
-        console.log('onTimelineListScroll setFocusUnitKey', newFocusUnitKey)
       } else {
         // Use cmd up or down to control timeline could cause lost track of focus
         // ignore it for now.
@@ -288,10 +284,6 @@ export default function Timeline({
 
   // handle scroll timeline (List, Events) to right position
   useEffect(() => {
-    //debug
-    console.log('debug, set timelineListRef.current to list')
-    window.list = timelineListRef.current
-
     // block no scrollType
     if (!scroIntoViewType.current) {
       return
@@ -306,11 +298,6 @@ export default function Timeline({
       if (focusIndex !== -1) {
         if (scroIntoViewType.current === 'immediate') {
           // since scrollToRow can guarantee to scroll the focusItem to the topmost, use scrollToPosition instead
-          console.log(
-            'scrollToPosition immediate',
-            focusIndex * listItemHeight + 5,
-            focusUnitKey
-          )
           timelineListRef.current.scrollToPosition(
             focusIndex * listItemHeight + 5
           )
@@ -357,7 +344,6 @@ export default function Timeline({
         const newFocusUnitKey = timeUnitKeys[0]
         setFocusUnitKey(newFocusUnitKey)
         blockOnScrollEvent.current = true
-        console.log('filter out focusKey set first one', newFocusUnitKey)
       }
     } else if (containerRef.current) {
       // handle scrolling on event mode
@@ -370,13 +356,6 @@ export default function Timeline({
         // add 2 px to prevent focusIndex count on scroll mistaken
         if (scroIntoViewType.current === 'immediate') {
           blockOnScrollEvent.current = false
-          console.log(
-            'scrollTo ',
-            containerRef.current.scrollTop +
-              focusTimelineUnitEle.getBoundingClientRect().top +
-              5 -
-              headerHeight
-          )
           containerRef.current.scrollTo(
             0,
             containerRef.current.scrollTop +
@@ -392,7 +371,6 @@ export default function Timeline({
         const newFocusUnitKey = timeUnitKeys[0]
         setFocusUnitKey(newFocusUnitKey)
         blockOnScrollEvent.current = true
-        console.log('filter out focusKey set first one', newFocusUnitKey)
       }
     }
   })
@@ -411,7 +389,6 @@ export default function Timeline({
        * 2. newFocusUnitKey got filtered -> scroll to the first one
        */
       setFocusUnitKey(newFocusUnitKey)
-      console.log('addTag', newFocusUnitKey)
       scroIntoViewType.current = 'immediate'
     }
   }
@@ -440,7 +417,6 @@ export default function Timeline({
         }}
         onSingleTimelineNodeSelect={(timeUnitKey) => {
           setFocusUnitKey(timeUnitKey)
-          console.log('onSingleTimelineNodeSelect setFocusUnitKey', timeUnitKey)
         }}
         focusUnitKey={focusUnitKey}
         headerHeight={headerHeight}
@@ -503,10 +479,6 @@ export default function Timeline({
               sortedAsc={isTimeSortedAsc}
               changeFocusUnitKey={(newFocusUnitKey) => {
                 setFocusUnitKey(newFocusUnitKey)
-                console.log(
-                  'changeFocusUnitKey setFocusUnitKey',
-                  newFocusUnitKey
-                )
                 scroIntoViewType.current = 'smooth'
               }}
             />
