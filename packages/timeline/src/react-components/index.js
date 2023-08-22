@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 import {
   calcNextLevelUnitKey,
   generateTimeLevel,
@@ -14,6 +14,13 @@ import { TagsContext, initialTags } from './useTags'
 import { defaultConifg } from '../const/config'
 import { useTimelineConfig } from './hook/useTimelineConfig'
 import TimelineList from './timeline-list'
+import useBlockPageScroll from './hook/useBlockPageScroll'
+
+const BlockBodyScrollGlobalStyle = createGlobalStyle`
+  body {
+    overflow: hidden;
+  }
+`
 
 const Wrapper = styled.div`
   background-color: #efefef;
@@ -25,6 +32,13 @@ const Wrapper = styled.div`
   );
   position: relative;
   left: calc(50% - 50vw);
+
+  ${({ isFixedMode, headerHeight }) =>
+    isFixedMode &&
+    `
+    position: fixed;
+    top: ${headerHeight}px;
+  `}
 
   // reset for Timeline only
   * {
@@ -90,6 +104,7 @@ const TimelineNodesWrapper = styled.div`
   left: calc(50% - 50vw);
   ${({ height }) => height && `height: ${height}px;`}
   ${({ eventMode }) => eventMode && `padding: 0 36px 12px;`}
+  ${({ isFixedMode }) => !isFixedMode && `overflow: hidden !important;`}
 `
 
 const EventWrapper = styled.div`
@@ -164,6 +179,13 @@ export default function Timeline({
   const blockOnScrollEvent = useRef(false)
   const timelineListRef = useRef(null)
   console.log('focusUnitKey', focusUnitKey)
+
+  const { wrapperRef, isFixedMode } = useBlockPageScroll(
+    headerHeight,
+    measure !== 'event'
+      ? timelineListRef.current?.Grid._scrollingContainer
+      : containerRef.current
+  )
 
   const updateLevel = (newLevel, spFocusUnitKey) => {
     const oldFocusUnitKey = spFocusUnitKey || focusUnitKey
@@ -428,6 +450,7 @@ export default function Timeline({
         listDimension={listDimension}
         listItemHeight={listItemHeight}
         onTimelineListScroll={onTimelineListScroll}
+        isFixedMode={isFixedMode}
       />
     ) : (
       timeUnitKeysToRender.map((timeUnitKey) => {
@@ -445,13 +468,19 @@ export default function Timeline({
     )
   return (
     <TagsContext.Provider value={{ tags, addTag, removeTag }}>
-      <Wrapper headerHeight={headerHeight}>
+      {isFixedMode && <BlockBodyScrollGlobalStyle />}
+      <Wrapper
+        ref={wrapperRef}
+        headerHeight={headerHeight}
+        isFixedMode={isFixedMode}
+      >
         <TimelineWrapper>
           <TimelineNodesWrapper
             id="containerRef"
             ref={containerRef}
             eventMode={measure === 'event'}
             height={listDimension.height}
+            isFixedMode={isFixedMode}
           >
             {timelineNodesJsx}
           </TimelineNodesWrapper>

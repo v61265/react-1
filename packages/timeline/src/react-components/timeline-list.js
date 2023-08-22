@@ -13,6 +13,10 @@ const RowWrapper = styled.div`
   justify-content: center;
 `
 
+const StyledList = styled(List)`
+  ${({ isFixedMode }) => !isFixedMode && `overflow: hidden !important;`}
+`
+
 export default forwardRef(function TimelineList(
   {
     timeUnitKeys,
@@ -30,6 +34,7 @@ export default forwardRef(function TimelineList(
     listDimension,
     listItemHeight,
     onTimelineListScroll,
+    isFixedMode,
   },
   ref
 ) {
@@ -66,7 +71,7 @@ export default forwardRef(function TimelineList(
   }
 
   return (
-    <List
+    <StyledList
       ref={ref}
       width={width}
       height={height}
@@ -74,6 +79,7 @@ export default forwardRef(function TimelineList(
       rowCount={timeUnitKeys.length}
       rowRenderer={rowRenderer}
       onScroll={onTimelineListScroll}
-    ></List>
+      isFixedMode={isFixedMode}
+    />
   )
 })
