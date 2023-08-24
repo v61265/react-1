@@ -1177,6 +1177,14 @@
     react-intersection-observer "^9.3.5"
     react-transition-group "^4.4.5"
 
+"@readr-media/react-dual-slides@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-dual-slides/-/react-dual-slides-1.1.0.tgz#89fff82f38e9bf0aa777b4ccc80aadf173dba1ea"
+  integrity sha512-wHSseX7OkU61MWdXrgzehLzSBnQVNXOfU5Gcvx0dbz57CMXQgAFYE+tpChEU0S1HFhm64d/DG7iebqUVxU/3Mg==
+  dependencies:
+    react-intersection-observer "^9.3.5"
+    react-transition-group "^4.4.5"
+
 "@readr-media/react-election-widgets@1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@readr-media/react-election-widgets/-/react-election-widgets-1.0.2.tgz#47683c89b32f1f03cc52b4a0bb38ca99ca513bcb"
@@ -1303,6 +1311,15 @@
     react-intersection-observer "^9.3.5"
     three "^0.150.1"
     three-story-controls "^1.0.6"
+
+"@readr-media/react-timeline@1.1.0-alpha.1":
+  version "1.1.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-timeline/-/react-timeline-1.1.0-alpha.1.tgz#9b8d16b202dfedbcd08a2cda0c145586a6a58527"
+  integrity sha512-3yNI+DZuJmEAs7mIZJXt4qCHTE8KQqSD01XV1y099BhIpiyzhnN14qGMsMYBHlRd2Zx2a7S62uh2bKwH3ZyVUg==
+  dependencies:
+    axios "^0.27.2"
+    draft-js "^0.11.7"
+    react-virtualized "^9.22.4"
 
 "@readr-media/react-timeline@1.1.1-beta.9":
   version "1.1.1-beta.9"
