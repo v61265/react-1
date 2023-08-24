@@ -135,7 +135,7 @@ export default function DroppingText({
   }, [])
 
   useEffect(() => {
-    const droppingTextNodes = document.querySelectorAll(
+    const droppingTextNodes = blockRef.current?.querySelectorAll(
       '[data-dropping-text=true]'
     )
 

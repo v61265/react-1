@@ -27,7 +27,7 @@ const Textarea = styled.textarea`
  */
 export default function CustomTextarea(props) {
   return (
-    <Wrapper>
+    <Wrapper className="input-wrapper">
       <Textarea
         placeholder={props.placeholder}
         name="feedback-post"

@@ -1,5 +1,58 @@
 # @readr-media/react-feedback Changelog
 
+## 2023-08-07, Version 3.5.2
+- fix: error in notify handle
+
+### Commits
+* \[[`449bf1c359`](https://github.com/readr-media/react-feedback/commit/449bf1c359)] - chore(feedback): bump version to 3.5.2 (Tsuki Akiba)
+* \[[`d26828f987`](https://github.com/readr-media/react-feedback/commit/d26828f987)] - fix(feedback): error in notify handle (Tsuki Akiba)
+* \[[`adaeb35d7f`](https://github.com/readr-media/react-feedback/commit/adaeb35d7f)] - fix(feedback): collaboration issues (Tsuki Akiba)
+* \[[`99927ff22c`](https://github.com/readr-media/react-feedback/commit/99927ff22c)] - docs(feedback): update CHNAGELOG (Tsuki Akiba)
+
+## 2023-08-06, Version 3.5.1
+- fix: collaboration issues
+
+### Commits
+* \[[`a11e17b802`](https://github.com/readr-media/react-feedback/commit/a11e17b802)] - chore(feedback): bump version to 3.5.1 (Tsuki Akiba)
+* \[[`b25ff1879e`](https://github.com/readr-media/react-feedback/commit/b25ff1879e)] - fix(feedback): collaboration issues (Tsuki Akiba)
+* \[[`3adb94f782`](https://github.com/readr-media/react-feedback/commit/3adb94f782)] - docs(feedback): update CHANGELOG (Tsuki Akiba)
+
+## 2023-08-06, Version 3.5.0
+- feat: add SingleOptionField
+- refactor: update mock data
+
+### Commits
+* \[[`b87b8cbba3`](https://github.com/readr-media/react-feedback/commit/b87b8cbba3)] - chore(feedback): bump version to 3.5.0 (Tsuki Akiba)
+* \[[`2ec4d1efb6`](https://github.com/readr-media/react-feedback/commit/2ec4d1efb6)] - refactor(feedback): update mock data (Tsuki Akiba)
+* \[[`7ce00e55b2`](https://github.com/readr-media/react-feedback/commit/7ce00e55b2)] - refactor(feedback): add mock data of SingleOptionField (Tsuki Akiba)
+* \[[`b98002add9`](https://github.com/readr-media/react-feedback/commit/b98002add9)] - feat(feedback): add SingleOptionField (Tsuki Akiba)
+* \[[`e300679ee6`](https://github.com/readr-media/react-feedback/commit/e300679ee6)] - chore(feedback): bump version to 3.4.0 (Tsuki Akiba)
+* \[[`8bee3207d5`](https://github.com/readr-media/react-feedback/commit/8bee3207d5)] - docs(feedback): update CHANGELOG
+
+## 2023-08-04, Version 3.4.0
+- feat: add shouldShowItemControl option to comment field
+- feat: add commentListTitle option to comment field
+- feat: add identifier option to comment field
+- fix: style issues
+- fix: issues in typedef
+- chore: add type file generation process
+- chore: add font loading to devServer
+- chore: add DS_store to gitignore
+
+### Commits
+* \[[`2ea8118ee4`](https://github.com/readr-media/react-feedback/commit/2ea8118ee4)] - chore(feedback): bump version to 3.4.0
+* \[[`a3b1dab104`](https://github.com/readr-media/react-feedback/commit/a3b1dab104)] - refactor(feedback): update typedef
+* \[[`cc770acf07`](https://github.com/readr-media/react-feedback/commit/cc770acf07)] - chore(feedback): add type file generation process
+* \[[`9d7a08427d`](https://github.com/readr-media/react-feedback/commit/9d7a08427d)] - fix(feedback): issues in typedef
+* \[[`bd08b33be8`](https://github.com/readr-media/react-feedback/commit/bd08b33be8)] - chore(feedback): add DS\_store to gitignore
+* \[[`b222a268fe`](https://github.com/readr-media/react-feedback/commit/b222a268fe)] - feat(feedback): add identifier option to comment field
+* \[[`8fc8e01204`](https://github.com/readr-media/react-feedback/commit/8fc8e01204)] - feat(feedback): add classnames to comment components (Tsuki Akiba)
+* \[[`8c6c443bdd`](https://github.com/readr-media/react-feedback/commit/8c6c443bdd)] - feat(feedback): add shouldShowItemControl option to text field (Tsuki Akiba)
+* \[[`ec47830cad`](https://github.com/readr-media/react-feedback/commit/ec47830cad)] - feat(feedback): add commentListTitle option to text field (Tsuki Akiba)
+* \[[`9d15946c0a`](https://github.com/readr-media/react-feedback/commit/9d15946c0a)] - fix(feedback): style issues (Tsuki Akiba)
+* \[[`8c50404f24`](https://github.com/readr-media/react-feedback/commit/8c50404f24)] - chore(feedback): add font loading to devServer (Tsuki Akiba)
+* \[[`88ca8f0d16`](https://github.com/readr-media/react-feedback/commit/88ca8f0d16)] - docs(feedback): update CHANGELOG (Tsuki Akiba)
+
 ## 2022-11-11, Version 3.3.0
 
 ### Notable Changes

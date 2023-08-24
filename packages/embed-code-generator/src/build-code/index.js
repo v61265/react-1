@@ -14,6 +14,8 @@ import map from 'lodash/map'
 import serialize from 'serialize-javascript'
 import Video from '@readr-media/react-full-screen-video'
 import RandomTextSelector from '@readr-media/react-random-text-selector'
+import Theatre from '@readr-media/react-theatre'
+import rtl from '@readr-media/react-timeline'
 import { ServerStyleSheet } from 'styled-components'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -65,6 +67,10 @@ export function buildKaraokeEmbedCode(data, webpackAssets) {
   return buildEmbeddedCode('react-karaoke', data, webpackAssets)
 }
 
+export function buildTheatreEmbedCode(data, webpackAssets) {
+  return buildEmbeddedCode('react-theatre', data, webpackAssets)
+}
+
 /**
  *
  * @export
@@ -73,7 +79,7 @@ export function buildKaraokeEmbedCode(data, webpackAssets) {
  * 'react-election-widgets-seat-chart'|
  * 'react-election-widgets-votes-comparison'|
  * 'react-three-story-points' | 'react-full-screen-video' |
- * 'react-dual-slides' | 'react-random-text-selector' | 'react-dropping-text')} pkgName
+ * 'react-dual-slides' | 'react-random-text-selector' | 'react-dropping-text'| 'react-theatre')} pkgName
  * @param {Object} data - Data for react component
  * @param {Object} webpackAssets - webpack bundles and chunks
  * @param {string[]} webpackAssets.entrypoints - webpack bundles
@@ -108,6 +114,9 @@ export function buildEmbeddedCode(pkgName, data, webpackAssets) {
     case 'react-live-blog':
       Component = rlb.ReactComponent.LiveBlog
       break
+    case 'react-timeline':
+      Component = rtl.ReactComponent.Timeline
+      break
     case 'react-election-widgets-seat-chart':
       Component = ew.SeatChart.ReactComponent
       break
@@ -128,6 +137,9 @@ export function buildEmbeddedCode(pkgName, data, webpackAssets) {
       break
     case 'react-dropping-text':
       Component = DroppingText
+      break
+    case 'react-theatre':
+      Component = Theatre
       break
     default:
       throw new Error(`pkgName ${pkgName} is not supported`)

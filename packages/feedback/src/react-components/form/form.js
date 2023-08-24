@@ -2,11 +2,18 @@ import React from 'react' // eslint-disable-line
 import styled from 'styled-components'
 import ThumbsField from './thumbs-form/thumbs-field'
 import CommentField from './comment-form/comment-field'
+import SingleOptionField from './single-option-form/single-option-field'
 
 const FormWrapper = styled.form`
   width: auto;
   margin: 0 20px;
   font-family: 'Noto Sans TC', sans-serif;
+
+  input,
+  textarea,
+  button {
+    font-family: 'Noto Sans TC', sans-serif;
+  }
 
   @media ${({ theme }) => theme.breakpoint.tablet} {
     margin: 0 auto;
@@ -31,7 +38,7 @@ const FieldWrapper = styled.div`
  */
 export default function CustomForm({ form, verified }) {
   return (
-    <FormWrapper>
+    <FormWrapper className="form-feedback">
       {form.fields.map((field) => {
         switch (field.type) {
           case 'text':
@@ -44,6 +51,10 @@ export default function CustomForm({ form, verified }) {
               />
             )
           case 'single':
+            if (Array.isArray(field.options) && field.options.length > 0) {
+              return <SingleOptionField formId={form.id} field={field} />
+            }
+
             return <ThumbsField key={field.id} formId={form.id} field={field} />
           default:
             return <FieldWrapper key={field.id}></FieldWrapper>

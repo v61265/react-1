@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import CommentItem from './comment-item'
 
 const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   margin: 80px 0 60px 0;
   width: 100%;
 
@@ -53,22 +55,35 @@ const Button = styled.button`
  * @param {Comment[]}   props.comments
  * @param {ExpandFunc}  props.onExpand
  * @param {boolean}     props.noMoreComment
+ * @param {string}      [props.listTitle='網友回饋']
+ * @param {boolean}     [props.shouldShowControl=true]
  * @return {JSX.Element}
  */
-export default function Comments({ comments, onExpand, noMoreComment }) {
+export default function Comments({
+  comments,
+  onExpand,
+  noMoreComment,
+  listTitle = '網友回饋',
+  shouldShowControl = true,
+}) {
   const clickHandler = (e) => {
     e.preventDefault()
     onExpand()
   }
 
   return (
-    <Wrapper>
-      <Title>網友回饋</Title>
+    <Wrapper className="list-container">
+      {listTitle && <Title>{listTitle}</Title>}
+
       {comments.map((comment) => (
-        <CommentItem key={comment.id} comment={comment} />
+        <CommentItem
+          key={comment.id}
+          comment={comment}
+          shouldShowControl={shouldShowControl}
+        />
       ))}
       {!noMoreComment && (
-        <ButtonWrapper>
+        <ButtonWrapper className="list-control">
           <Button onClick={clickHandler}>展開更多</Button>
         </ButtonWrapper>
       )}

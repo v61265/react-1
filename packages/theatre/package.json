@@ -1,0 +1,49 @@
+{
+  "name": "@readr-media/react-theatre",
+  "version": "1.1.0",
+  "description": "",
+  "main": "lib/cjs/index.js",
+  "module": "lib/esm/index.js",
+  "exports": {
+    "import": "./lib/esm/index.js",
+    "require": "./lib/cjs/index.js"
+  },
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "make dev",
+    "build": "make build",
+    "clean": "make clean",
+    "build-lib": "make build-lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/readr-media/react.git",
+    "directory": "packages/react-theatre"
+  },
+  "keywords": [
+    "react",
+    "theatre"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "styled-components": "^6.0.2"
+  },
+  "dependencies": {
+    "@theatre/core": "0.6.1",
+    "react-transition-group": "^4.4.5",
+    "url": "^0.11.1",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.22.9",
+    "@babel/core": "^7.22.9",
+    "webpack": "^5.88.2"
+  },
+  "files": [
+    "lib",
+    "assets"
+  ]
+}

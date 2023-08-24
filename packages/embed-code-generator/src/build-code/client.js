@@ -8,19 +8,25 @@ const namespace = '@readr-media'
 
 function hydrate(namespace, pkgName, Component) {
   const dataArr = window[namespace][pkgName]
-  const data = Array.isArray(dataArr) ? dataArr.shift() : {}
-  const { uuid, ...dataOfComponent } = data
-  const container = document.getElementById(uuid)
-  hydrateRoot(container, <Component {...dataOfComponent} />)
+  if (Array.isArray(dataArr)) {
+    dataArr.forEach((data) => {
+      const { uuid, ...dataOfComponent } = data
+      const container = document.getElementById(uuid)
+      hydrateRoot(container, <Component {...dataOfComponent} />)
+    })
+  }
 }
 
 function render(namespace, pkgName, Component) {
   const dataArr = window[namespace][pkgName]
-  const data = Array.isArray(dataArr) ? dataArr.shift() : {}
-  const { uuid, ...dataOfComponent } = data
-  const container = document.getElementById(uuid)
-  const root = createRoot(container)
-  root.render(<Component {...dataOfComponent} />)
+  if (Array.isArray(dataArr)) {
+    dataArr.forEach((data) => {
+      const { uuid, ...dataOfComponent } = data
+      const container = document.getElementById(uuid)
+      const root = createRoot(container)
+      root.render(<Component {...dataOfComponent} />)
+    })
+  }
 }
 
 if (window?.[namespace][`react-qa-list${pkgVersion}`]) {
@@ -71,6 +77,18 @@ if (window?.[namespace][`react-live-blog${pkgVersion}`]) {
       namespace,
       `react-live-blog${pkgVersion}`,
       lb.ReactComponent.LiveBlog
+    )
+  })
+}
+
+if (window?.[namespace][`react-timeline${pkgVersion}`]) {
+  import(
+    /* webpackChunkName: "react-timeline" */ '@readr-media/react-timeline'
+  ).then(({ default: tl }) => {
+    hydrate(
+      namespace,
+      `react-timeline${pkgVersion}`,
+      tl.ReactComponent.Timeline
     )
   })
 }
@@ -130,5 +148,13 @@ if (window?.[namespace][`react-dropping-text${pkgVersion}`]) {
     /* webpackChunkName: "react-dropping-text" */ '@readr-media/react-dropping-text'
   ).then(({ default: DroppingText }) => {
     hydrate(namespace, `react-dropping-text${pkgVersion}`, DroppingText)
+  })
+}
+
+if (window?.[namespace][`react-theatre${pkgVersion}`]) {
+  import(
+    /* webpackChunkName: "react-theatre" */ '@readr-media/react-theatre'
+  ).then(({ default: Theatre }) => {
+    hydrate(namespace, `react-theatre${pkgVersion}`, Theatre)
   })
 }
