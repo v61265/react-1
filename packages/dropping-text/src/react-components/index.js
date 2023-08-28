@@ -6,6 +6,7 @@ import { useInView } from 'react-intersection-observer'
 const { Bodies, Body, Common, Composite, Engine } = Matter
 
 const Block = styled.div`
+  background: #ffffff;
   /* font-family set here is for better performance. */
   /* If the webpage uses other font-family, such as adobe fonts, google fonts */
   /* and the dropping effect will be slow and laggy. */
