@@ -5,6 +5,12 @@ import React, { useEffect, useRef } from 'react' // eslint-disable-line
  */
 const REGEX = /(\d+)/
 
+const errorMessage = {
+  unableGetResolution: 'Unable to get resolution',
+  unableLoadImages: 'Unable to load any image',
+  unableLoadDefaultImage: 'Unable to load default image',
+}
+
 /**
  * @param {import('../types/index').ImageProps} props
  * @returns {JSX.Element}
@@ -209,7 +215,8 @@ export default function CustomImage({
       } else if (originalSrc) {
         resolve('original')
       } else {
-        reject()
+        const err = new Error(errorMessage.unableGetResolution)
+        reject(err)
       }
     })
   }
@@ -245,12 +252,22 @@ export default function CustomImage({
    * @param {string} resolution - The resolution determine which URL of image should loaded first.
    * @param {[string,string][]} imagesList - The resolution determine which URL of image should loaded first.
    * @returns {Promise<string>} - The URL of the image should loaded
+   * @throws {Error<string>}
    */
   const loadImages = (resolution, imagesList) => {
     const index = imagesList.findIndex((pair) => pair[0] === resolution)
     const loadList = imagesList.slice(index)
     return loadList.reduce((prevPromise, pair) => {
-      return prevPromise.catch(() => loadImage(pair[1]))
+      return prevPromise.catch(() => {
+        const isLastImageUrl = pair[1] === loadList[loadList.length - 1][1]
+
+        if (isLastImageUrl) {
+          return loadImage(pair[1]).catch(() => {
+            throw new Error(errorMessage.unableLoadImages)
+          })
+        }
+        return loadImage(pair[1])
+      })
     }, Promise.reject())
   }
   /**
@@ -262,38 +279,38 @@ export default function CustomImage({
     imageRef.current.style.filter = 'unset'
   }
 
-  const loadImageProgress = () => {
+  const loadImageProgress = async () => {
     const imagesList = transformImagesContent(images)
-
-    return getResolution(imagesList)
-      .then((resolution) => {
-        loadImages(resolution, imagesList)
-          .then((url) => {
-            setImageUrl(url)
-            printLogInDevMode(
-              `Successfully Load image, current image source is ${url}`
-            )
-          })
-          .catch(() => {
-            if (imageRef.current?.src) {
-              setImageUrl(defaultImage)
-              printLogInDevMode(
-                'Unable to load any image, try to use default image as image src'
-              )
-              imageRef.current.addEventListener('error', () => {
-                printLogInDevMode('Unable to load default image')
-              })
-            }
-          })
-      })
-      .catch(() => {
+    try {
+      const resolution = await getResolution(imagesList)
+      const url = await loadImages(resolution, imagesList)
+      setImageUrl(url)
+      printLogInDevMode(
+        `Successfully Load image, current image source is ${url}`
+      )
+    } catch (e) {
+      switch (e.message) {
+        case errorMessage.unableGetResolution:
+          printLogInDevMode(
+            `${e.message}, which means doesn't provide any url of image, try to use default image as image src`
+          )
+          break
+        case errorMessage.unableLoadImages:
+          printLogInDevMode(
+            `${e.message}, try to use default image as image src`
+          )
+          break
+        default:
+          printLogInDevMode(`Unexpected error, ${e}`)
+          break
+      }
+      if (imageRef?.current?.src) {
         setImageUrl(defaultImage)
-        printLogInDevMode(
-          `Unable to get resolution on ${JSON.stringify(
-            images
-          )}, which means doesn't provide any url of image, try to use default image as image src`
-        )
-      })
+        imageRef?.current.addEventListener('error', () => {
+          printLogInDevMode(`${errorMessage.unableLoadDefaultImage}`)
+        })
+      }
+    }
   }
 
   const callback = (entries, observer) => {
