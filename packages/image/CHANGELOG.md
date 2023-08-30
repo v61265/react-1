@@ -14,8 +14,9 @@
 * \[[`98a0ef9866`](https://github.com/readr-media/react-image/commit/98a0ef9866)] - chore(image): update file import path to support module type (DianYangFu)
 * \[[`8ece49249f`](https://github.com/readr-media/react-image/commit/8ece49249f)] - chore(image): add `.babelrc.js` (DianYangFu)
 * \[[`faf3363155`](https://github.com/readr-media/react-image/commit/faf3363155)] - refactor(image): add folder types to place `@typedef`, export type (DianYangFu)
-* \[[`057f317136`](https://github.com/readr-media/react-image/commit/057f317136)] - doc(image): update README.md (DianYangFu)
-* \[[`6eb802ad88`](https://github.com/readr-media/react-image/commit/6eb802ad88)] - chore(image): bump version into `2.0.0` (DianYangFu)
+* \[[`3de9078e01`](https://github.com/readr-media/react-image/commit/3de9078e01)] - doc(image): update README.md (DianYangFu)
+* \[[`f8203e8527`](https://github.com/readr-media/react-image/commit/f8203e8527)] - chore(image): bump version into `2.0.0` (DianYangFu)
+* \[[`c58f2900e9`](https://github.com/readr-media/react-image/commit/c58f2900e9)] - doc(image): update CHANGELOG.md (DianYangFu)
 
 
 ## 2023-05-14, Version 1.6.0
