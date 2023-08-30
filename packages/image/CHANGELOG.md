@@ -1,6 +1,23 @@
 # @readr-media/react-image Changelog
 
 
+## 2023-08-30, Version 2.0.0
+
+### Notable Changes
+- Support ES Modules
+
+
+### Commits
+* \[[`6a75564022`](https://github.com/readr-media/react-image/commit/6a75564022)] - chore(image): update Makefile, tsconfig, package.json to support ESM (DianYangFu)
+* \[[`069ab5d720`](https://github.com/readr-media/react-image/commit/069ab5d720)] - chore(image): update webpack.config.js to fit module type (DianYangFu)
+* \[[`aac8f3fe8a`](https://github.com/readr-media/react-image/commit/aac8f3fe8a)] - chore(image): add devDep `@babel/plugin-transform-runtime` (DianYangFu)
+* \[[`98a0ef9866`](https://github.com/readr-media/react-image/commit/98a0ef9866)] - chore(image): update file import path to support module type (DianYangFu)
+* \[[`8ece49249f`](https://github.com/readr-media/react-image/commit/8ece49249f)] - chore(image): add `.babelrc.js` (DianYangFu)
+* \[[`faf3363155`](https://github.com/readr-media/react-image/commit/faf3363155)] - refactor(image): add folder types to place `@typedef`, export type (DianYangFu)
+* \[[`057f317136`](https://github.com/readr-media/react-image/commit/057f317136)] - doc(image): update README.md (DianYangFu)
+* \[[`6eb802ad88`](https://github.com/readr-media/react-image/commit/6eb802ad88)] - chore(image): bump version into `2.0.0` (DianYangFu)
+
+
 ## 2023-05-14, Version 1.6.0
 
 ### Notable Changes

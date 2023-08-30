@@ -85,31 +85,45 @@ $ npm run dev
 $ make dev
 ```
 
-## Build (Webpack Bundles and ES5 Transpiling)
+## Build
+Transpile React, ES6 Codes to ES5, and generate two module system (ES module and Commonjs) at the same time
+
 ```
 $ npm run build
 // or
 $ make build
-```
-
-### Build Webpack Bundles 
-```
-$ make build-dist
-```
-
-### Transpile React, ES6 Codes to ES5 
-```
+// or
 $ make build-lib
 ```
 
+
 ### NPM Publish
-After executing `Build` scripts, we will have `./dist` and `/lib` folders,
+After executing `Build` scripts, we will have `/lib` folders,
 and then we can execute publish command,
 ```
 npm publish
 ```
 
 Note: before publish npm package, we need to bump the package version first. 
+
+### Folder Structure of Build File
+```
+@readr-media/react-image
+  |  
+  ├──lib
+  |    └── cjs    // for CommonJS project
+  |    └── esm    // for ES Modules project
+  |    └── types  // for Typescript 
+  |    
+  ├── README.md
+  ├── CHANGELOG.md
+  └── package.json
+```
+
+Note: 
+- If your Node.js project has enable ES Modules, it will use file in `/esm` folder when import this package.
+- If not, it will use file in `/cjs` folder when import this package.
+- See [Node.js Documentation](https://nodejs.org/api/esm.html#modules-ecmascript-modules) to get more info about ES Modules.
 
 
 ## TODOs
