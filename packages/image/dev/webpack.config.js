@@ -1,10 +1,16 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const path = require('path')
+import * as url from 'url'
 
-module.exports = {
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+import path from 'path'
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
+
+export default {
   mode: 'development',
   entry: {
     main: path.resolve(__dirname, './entry.js'),
+  },
+  output: {
+    path: path.resolve(__dirname, './dist'),
   },
   devServer: {
     hot: false,
@@ -22,7 +28,15 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react'],
+            presets: [
+              [
+                '@babel/preset-env',
+                {
+                  modules: false,
+                },
+              ],
+              '@babel/preset-react',
+            ],
           },
         },
       },
