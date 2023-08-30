@@ -37,6 +37,7 @@ export default {
               ],
               '@babel/preset-react',
             ],
+            plugins: ['@babel/plugin-transform-runtime'],
           },
         },
       },
