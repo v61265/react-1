@@ -1,5 +1,19 @@
 # @readr-media/react-image Changelog
 
+## 2023-08-31, Version 2.1.0
+
+### Notable Changes
+- Improve code readability, use `async/await` to replace Promise `.then/.catch`. 
+- Support sequential loading `.webp` images.
+
+
+### Commits
+* \[[`13c393601f`](https://github.com/readr-media/react-image/commit/13c393601f)] - refactor(image): replace Promise `.then/.catch` to `async/await` (DianYangFu)
+* \[[`81ca44c521`](https://github.com/readr-media/react-image/commit/81ca44c521)] - feat(image): support webp format (DianYangFu)
+* \[[`3a8c4e810c`](https://github.com/readr-media/react-image/commit/3a8c4e810c)] - doc(image): update README.md (DianYangFu)
+* \[[`0b41d9e91b`](https://github.com/readr-media/react-image/commit/0b41d9e91b)] - chore(image): bump version to `2.1.0` (DianYangFu)
+
+
 
 ## 2023-08-30, Version 2.0.0
 
