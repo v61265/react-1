@@ -1,9 +1,17 @@
 import React, { useEffect, useRef } from 'react' // eslint-disable-line
 
+const FILE_EXTENSION_WEBP = 'webP'
+
 /**
  * Check an String contain integer, for example, 'w1200' is valid, 'original' or 'randomName' is not valid
  */
 const REGEX = /(\d+)/
+
+const errorMessage = {
+  unableGetResolution: 'Unable to get resolution',
+  unableLoadImages: 'Unable to load any image',
+  unableLoadDefaultImage: 'Unable to load default image',
+}
 
 /**
  * @param {import('../types/index').ImageProps} props
@@ -11,6 +19,7 @@ const REGEX = /(\d+)/
  */
 export default function CustomImage({
   images = { original: '' },
+  imagesWebP = null,
   loadingImage = '',
   defaultImage = '',
   alt = '',
@@ -110,12 +119,18 @@ export default function CustomImage({
    */
   const transformImagesSrcSet = (imagesList) => {
     const str = imagesList
-      .filter((pair) => pair[0] !== 'original')
+      .filter(
+        (pair) =>
+          pair[0] !== 'original' &&
+          pair[0] !== `original-${FILE_EXTENSION_WEBP}`
+      )
       .map((pair) => {
-        const width = pair[0].match(REGEX)[0]
+        const widthText = pair[0].replace(`-${FILE_EXTENSION_WEBP}`, '')
+        const width = widthText.match(REGEX)[0]
         return `${pair[1]} ${width}w`
       })
       .join(',')
+
     return str
   }
 
@@ -209,7 +224,8 @@ export default function CustomImage({
       } else if (originalSrc) {
         resolve('original')
       } else {
-        reject()
+        const err = new Error(errorMessage.unableGetResolution)
+        reject(err)
       }
     })
   }
@@ -245,12 +261,22 @@ export default function CustomImage({
    * @param {string} resolution - The resolution determine which URL of image should loaded first.
    * @param {[string,string][]} imagesList - The resolution determine which URL of image should loaded first.
    * @returns {Promise<string>} - The URL of the image should loaded
+   * @throws {Error<string>}
    */
   const loadImages = (resolution, imagesList) => {
     const index = imagesList.findIndex((pair) => pair[0] === resolution)
     const loadList = imagesList.slice(index)
     return loadList.reduce((prevPromise, pair) => {
-      return prevPromise.catch(() => loadImage(pair[1]))
+      return prevPromise.catch(() => {
+        const isLastImageUrl = pair[1] === loadList[loadList.length - 1][1]
+
+        if (isLastImageUrl) {
+          return loadImage(pair[1]).catch(() => {
+            throw new Error(errorMessage.unableLoadImages)
+          })
+        }
+        return loadImage(pair[1])
+      })
     }, Promise.reject())
   }
   /**
@@ -262,38 +288,89 @@ export default function CustomImage({
     imageRef.current.style.filter = 'unset'
   }
 
-  const loadImageProgress = () => {
+  const getImagesList = (images, imagesWebP) => {
     const imagesList = transformImagesContent(images)
+    const hasWebPImage = !!imagesWebP && !!Object.entries(imagesWebP).length
 
-    return getResolution(imagesList)
-      .then((resolution) => {
-        loadImages(resolution, imagesList)
-          .then((url) => {
-            setImageUrl(url)
-            printLogInDevMode(
-              `Successfully Load image, current image source is ${url}`
-            )
-          })
-          .catch(() => {
-            if (imageRef.current?.src) {
-              setImageUrl(defaultImage)
-              printLogInDevMode(
-                'Unable to load any image, try to use default image as image src'
-              )
-              imageRef.current.addEventListener('error', () => {
-                printLogInDevMode('Unable to load default image')
-              })
-            }
-          })
+    if (hasWebPImage) {
+      const imagesWebPList = transformImagesContent(imagesWebP).map((pair) => {
+        return [`${pair[0]}-${FILE_EXTENSION_WEBP}`, pair[1]]
       })
-      .catch(() => {
+      const imagesListContainWebP = imagesList.concat(imagesWebPList)
+
+      const sortedList = imagesListContainWebP.sort(sortByResolutionAndIsWebP)
+
+      return sortedList
+
+      /**
+       * Function for Sort imagesList containing webP images.
+       * Sorting rule is:
+       *  1. Sort by resolution of images from small to large.
+       *  2. if resolution is same, webP image will be placed forward.
+       * So order after sorting will be:
+       * `w480-webP` -> `w480` -> `w800-webP` -> `w800` ...... -> `original-webP` -> `original`
+       * @param {[string, string]} pairA
+       * @param {[string, string]} pairB
+       * @returns {[string, string][]}
+       */
+      function sortByResolutionAndIsWebP(pairA, pairB) {
+        const getResolution = (str) => {
+          const match = str.match(/\d+/)
+          return match ? parseInt(match[0]) : Infinity
+        }
+
+        const numA = getResolution(pairA[0])
+        const numB = getResolution(pairB[0])
+
+        if (numA !== numB) {
+          return numA - numB
+        }
+
+        const pairAIsWebP = pairA[0].endsWith(`-${FILE_EXTENSION_WEBP}`)
+        const pairBIsWebP = pairB[0].endsWith(`-${FILE_EXTENSION_WEBP}`)
+
+        if (pairAIsWebP !== pairBIsWebP) {
+          return pairAIsWebP ? -1 : 1
+        }
+
+        return 0
+      }
+    } else {
+      return imagesList
+    }
+  }
+  const loadImageProgress = async () => {
+    const imagesList = getImagesList(images, imagesWebP)
+    try {
+      const resolution = await getResolution(imagesList)
+      const url = await loadImages(resolution, imagesList)
+      setImageUrl(url)
+      printLogInDevMode(
+        `Successfully Load image, current image source is ${url}`
+      )
+    } catch (e) {
+      switch (e.message) {
+        case errorMessage.unableGetResolution:
+          printLogInDevMode(
+            `${e.message}, which means doesn't provide any url of image, try to use default image as image src`
+          )
+          break
+        case errorMessage.unableLoadImages:
+          printLogInDevMode(
+            `${e.message}, try to use default image as image src`
+          )
+          break
+        default:
+          printLogInDevMode(`Unexpected error, ${e}`)
+          break
+      }
+      if (imageRef?.current?.src) {
         setImageUrl(defaultImage)
-        printLogInDevMode(
-          `Unable to get resolution on ${JSON.stringify(
-            images
-          )}, which means doesn't provide any url of image, try to use default image as image src`
-        )
-      })
+        imageRef?.current.addEventListener('error', () => {
+          printLogInDevMode(`${errorMessage.unableLoadDefaultImage}`)
+        })
+      }
+    }
   }
 
   const callback = (entries, observer) => {

@@ -19,6 +19,9 @@
  * @property {Object} props.images
  * - list of URL of images want to loaded.
  * - required.
+ * @property {Object | null} [props.imagesWebP]
+ * - list of URL of webP images want to loaded.
+ * - optional, default value in null.
  * @property {String} [props.loadingImage]
  * - placeholder when loading image, it will show when item of `images` is not loaded.
  * - optional, default value is `""`.
