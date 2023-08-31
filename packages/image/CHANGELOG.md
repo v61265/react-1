@@ -1,5 +1,16 @@
 # @readr-media/react-image Changelog
 
+## 2023-08-31, Version 2.1.1
+
+### Notable Changes
+- Fix problem of unable load `.webp` image which size is `original`.
+
+
+### Commits
+* \[[`415a9499bf`](https://github.com/readr-media/react-image/commit/415a9499bf)] - fix(image): unable load webp image of original size (DianYangFu)
+* \[[`a2b28631dd`](https://github.com/readr-media/react-image/commit/a2b28631dd)] - chore(image): bump version into `2.1.1` (DianYangFu)
+
+
 ## 2023-08-31, Version 2.1.0
 
 ### Notable Changes
