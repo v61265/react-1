@@ -188,7 +188,12 @@ export default function CustomImage({
   const getResolution = (imagesList) => {
     const imageSrcSet = transformImagesSrcSet(imagesList)
     const sizes = transformImageSizes(rwd, breakpoint)
-    const originalSrc = images['original']
+
+    const originalWebPSrc = imagesList.find(
+      (pair) => pair[0] === `original-${FILE_EXTENSION_WEBP}`
+    )[1]
+    const originalSrc = imagesList.find((pair) => pair[0] === 'original')[1]
+
     return new Promise((resolve, reject) => {
       if (imageSrcSet) {
         const img = new Image()
@@ -221,6 +226,8 @@ export default function CustomImage({
         img.addEventListener('error', eventHandler)
         img.sizes = sizes
         img.srcset = imageSrcSet
+      } else if (originalWebPSrc) {
+        resolve(`original-${FILE_EXTENSION_WEBP}`)
       } else if (originalSrc) {
         resolve('original')
       } else {
