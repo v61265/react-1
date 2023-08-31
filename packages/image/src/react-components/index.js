@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react' // eslint-disable-line
 
+const FILE_EXTENSION_WEBP = 'webP'
+
 /**
  * Check an String contain integer, for example, 'w1200' is valid, 'original' or 'randomName' is not valid
  */
@@ -17,6 +19,7 @@ const errorMessage = {
  */
 export default function CustomImage({
   images = { original: '' },
+  imagesWebP = null,
   loadingImage = '',
   defaultImage = '',
   alt = '',
@@ -116,12 +119,18 @@ export default function CustomImage({
    */
   const transformImagesSrcSet = (imagesList) => {
     const str = imagesList
-      .filter((pair) => pair[0] !== 'original')
+      .filter(
+        (pair) =>
+          pair[0] !== 'original' &&
+          pair[0] !== `original-${FILE_EXTENSION_WEBP}`
+      )
       .map((pair) => {
-        const width = pair[0].match(REGEX)[0]
+        const widthText = pair[0].replace(`-${FILE_EXTENSION_WEBP}`, '')
+        const width = widthText.match(REGEX)[0]
         return `${pair[1]} ${width}w`
       })
       .join(',')
+
     return str
   }
 
@@ -279,8 +288,59 @@ export default function CustomImage({
     imageRef.current.style.filter = 'unset'
   }
 
-  const loadImageProgress = async () => {
+  const getImagesList = (images, imagesWebP) => {
     const imagesList = transformImagesContent(images)
+    const hasWebPImage = !!imagesWebP && !!Object.entries(imagesWebP).length
+
+    if (hasWebPImage) {
+      const imagesWebPList = transformImagesContent(imagesWebP).map((pair) => {
+        return [`${pair[0]}-${FILE_EXTENSION_WEBP}`, pair[1]]
+      })
+      const imagesListContainWebP = imagesList.concat(imagesWebPList)
+
+      const sortedList = imagesListContainWebP.sort(sortByResolutionAndIsWebP)
+
+      return sortedList
+
+      /**
+       * Function for Sort imagesList containing webP images.
+       * Sorting rule is:
+       *  1. Sort by resolution of images from small to large.
+       *  2. if resolution is same, webP image will be placed forward.
+       * So order after sorting will be:
+       * `w480-webP` -> `w480` -> `w800-webP` -> `w800` ...... -> `original-webP` -> `original`
+       * @param {[string, string]} pairA
+       * @param {[string, string]} pairB
+       * @returns {[string, string][]}
+       */
+      function sortByResolutionAndIsWebP(pairA, pairB) {
+        const getResolution = (str) => {
+          const match = str.match(/\d+/)
+          return match ? parseInt(match[0]) : Infinity
+        }
+
+        const numA = getResolution(pairA[0])
+        const numB = getResolution(pairB[0])
+
+        if (numA !== numB) {
+          return numA - numB
+        }
+
+        const pairAIsWebP = pairA[0].endsWith(`-${FILE_EXTENSION_WEBP}`)
+        const pairBIsWebP = pairB[0].endsWith(`-${FILE_EXTENSION_WEBP}`)
+
+        if (pairAIsWebP !== pairBIsWebP) {
+          return pairAIsWebP ? -1 : 1
+        }
+
+        return 0
+      }
+    } else {
+      return imagesList
+    }
+  }
+  const loadImageProgress = async () => {
+    const imagesList = getImagesList(images, imagesWebP)
     try {
       const resolution = await getResolution(imagesList)
       const url = await loadImages(resolution, imagesList)
