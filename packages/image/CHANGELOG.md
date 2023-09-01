@@ -1,5 +1,15 @@
 # @readr-media/react-image Changelog
 
+## 2023-09-01, Version 2.1.2
+
+### Notable Changes
+- Fix problem of unable load images if not pass props `imagesWebP`.
+
+
+### Commits
+* \[[`daac8a00e0`](https://github.com/readr-media/react-image/commit/daac8a00e0)] - chore(image): bump version into `2.1.2` (DianYangFu)
+
+
 ## 2023-08-31, Version 2.1.1
 
 ### Notable Changes
