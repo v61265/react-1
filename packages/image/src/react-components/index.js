@@ -191,8 +191,8 @@ export default function CustomImage({
 
     const originalWebPSrc = imagesList.find(
       (pair) => pair[0] === `original-${FILE_EXTENSION_WEBP}`
-    )[1]
-    const originalSrc = imagesList.find((pair) => pair[0] === 'original')[1]
+    )?.[1]
+    const originalSrc = imagesList.find((pair) => pair[0] === 'original')?.[1]
 
     return new Promise((resolve, reject) => {
       if (imageSrcSet) {
