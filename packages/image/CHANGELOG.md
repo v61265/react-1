@@ -1,5 +1,16 @@
 # @readr-media/react-image Changelog
 
+## 2023-09-04, Version 2.1.3
+
+### Notable Changes
+- Handle error when params `images` is null.
+
+
+### Commits
+* \[[`9728454bfb`](https://github.com/readr-media/react-image/commit/9728454bfb)] - fix(image): handle error when param `images` is `null` (DianYangFu)
+* \[[`ebcb8b22dd`](https://github.com/readr-media/react-image/commit/ebcb8b22dd)] - chore(image): bump version into `2.1.3` (DianYangFu)
+
+
 ## 2023-09-01, Version 2.1.2
 
 ### Notable Changes
@@ -7,6 +18,7 @@
 
 
 ### Commits
+* \[[`e855d4e8fe`](https://github.com/readr-media/react-image/commit/e855d4e8fe)] - fix(image): unable load image if not pass props `imagesWebP` (DianYangFu)
 * \[[`daac8a00e0`](https://github.com/readr-media/react-image/commit/daac8a00e0)] - chore(image): bump version into `2.1.2` (DianYangFu)
 
 
