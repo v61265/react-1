@@ -8,6 +8,7 @@ const FILE_EXTENSION_WEBP = 'webP'
 const REGEX = /(\d+)/
 
 const errorMessage = {
+  noImageProvided: 'None of Image Provided',
   unableGetResolution: 'Unable to get resolution',
   unableLoadImages: 'Unable to load any image',
   unableLoadDefaultImage: 'Unable to load default image',
@@ -296,8 +297,12 @@ export default function CustomImage({
   }
 
   const getImagesList = (images, imagesWebP) => {
-    const imagesList = transformImagesContent(images)
+    const hasImages = !!images && !!Object.entries(images).length
     const hasWebPImage = !!imagesWebP && !!Object.entries(imagesWebP).length
+    if (!hasImages && !hasWebPImage) {
+      throw new Error(errorMessage.noImageProvided)
+    }
+    const imagesList = transformImagesContent(images)
 
     if (hasWebPImage) {
       const imagesWebPList = transformImagesContent(imagesWebP).map((pair) => {
@@ -347,8 +352,8 @@ export default function CustomImage({
     }
   }
   const loadImageProgress = async () => {
-    const imagesList = getImagesList(images, imagesWebP)
     try {
+      const imagesList = getImagesList(images, imagesWebP)
       const resolution = await getResolution(imagesList)
       const url = await loadImages(resolution, imagesList)
       setImageUrl(url)
@@ -357,6 +362,11 @@ export default function CustomImage({
       )
     } catch (e) {
       switch (e.message) {
+        case errorMessage.noImageProvided:
+          printLogInDevMode(
+            `${e.message}, which means either params images and imagesWebp in null, undefined, or empty object. Try to use default image as image src`
+          )
+          break
         case errorMessage.unableGetResolution:
           printLogInDevMode(
             `${e.message}, which means doesn't provide any url of image, try to use default image as image src`
