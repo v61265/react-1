@@ -993,6 +993,13 @@
   dependencies:
     regenerator-runtime "^0.13.11"
 
+"@babel/runtime@^7.7.2":
+  version "7.22.10"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.22.10.tgz#ae3e9631fd947cb7e3610d3e9d8fef5f76696682"
+  integrity sha512-21t/fkKLMZI4pqP2wlmsQAWnYW1PDyKyyUV4vCi+B25ydmdaYTKXPwCj0BzSUnZf4seIiYvSA3jcZ3gdsMFkLQ==
+  dependencies:
+    regenerator-runtime "^0.14.0"
+
 "@babel/template@^7.18.10", "@babel/template@^7.20.7":
   version "7.20.7"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.20.7.tgz#a15090c2839a83b02aa996c0b4994005841fd5a8"
@@ -1161,12 +1168,19 @@
     matter-js "^0.19.0"
     react-intersection-observer "^9.3.5"
 
-"@readr-media/react-dual-slides@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@readr-media/react-dual-slides/-/react-dual-slides-1.0.1.tgz#aa06718a79f650d938c2cfb9b079b5e14f8dff90"
-  integrity sha512-COKaEMiFzCDs+nhxjf6P1LHNfSZJvY88/IjrFwR5VFsKsQy9cwJWgqBmoYYesiS0AiKgwY4xX7Rub6hEbS6qng==
+"@readr-media/react-dropping-text@1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-dropping-text/-/react-dropping-text-1.0.7.tgz#f30897154e721386d35fe69c6f1d1cd4ba38723e"
+  integrity sha512-49YgIgPrqmI/4wo1d+qBqLs+V7yo0oYbXBMYpfhEMUdJb2/E0eBfPp5mlNMGmmdKnodtfI+V7t8bZF5iFS/qXg==
   dependencies:
-    default-import "^1.1.5"
+    matter-js "^0.19.0"
+    react-intersection-observer "^9.3.5"
+
+"@readr-media/react-dual-slides@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-dual-slides/-/react-dual-slides-1.1.0.tgz#89fff82f38e9bf0aa777b4ccc80aadf173dba1ea"
+  integrity sha512-wHSseX7OkU61MWdXrgzehLzSBnQVNXOfU5Gcvx0dbz57CMXQgAFYE+tpChEU0S1HFhm64d/DG7iebqUVxU/3Mg==
+  dependencies:
     react-intersection-observer "^9.3.5"
     react-transition-group "^4.4.5"
 
@@ -1178,13 +1192,13 @@
     "@twreporter/errors" "^1.1.1"
     axios "^0.27.2"
 
-"@readr-media/react-embed-code-generator@^2.4.0-alpha.24":
-  version "2.4.0-alpha.24"
-  resolved "https://registry.yarnpkg.com/@readr-media/react-embed-code-generator/-/react-embed-code-generator-2.4.0-alpha.24.tgz#67b90eb5814c687608dd8f6636e1d9106ee727bd"
-  integrity sha512-0OOUVHCJPMmbif/9fLlUo0FeC/3BzoTT84th72N/ISavvdl+wloORIPGM/f/y7n6zfkDxpeBEUlqPQTHfvZAfg==
+"@readr-media/react-embed-code-generator@2.4.3-alpha.2":
+  version "2.4.3-alpha.1"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-embed-code-generator/-/react-embed-code-generator-2.4.3-alpha.1.tgz#092054926b2b1f9469b4570fdbd11c15823223a0"
+  integrity sha512-a9gTRzXDI1PNEhcyjeQUHXzFABIGF3WTbVxShXjaGwg9p3nLEZ8s9a6j7eO7bNFU0wPIn0GoeY11Ilbj8GVEzQ==
   dependencies:
     "@readr-media/react-dropping-text" "1.0.6"
-    "@readr-media/react-dual-slides" "1.0.1"
+    "@readr-media/react-dual-slides" "^1.1.0"
     "@readr-media/react-election-widgets" "1.0.2"
     "@readr-media/react-feedback" "^3.0.2"
     "@readr-media/react-full-screen-video" "1.0.5-beta.0"
@@ -1193,9 +1207,9 @@
     "@readr-media/react-qa-list" "2.0.1"
     "@readr-media/react-questionnaire" "2.0.0"
     "@readr-media/react-random-text-selector" "^1.0.2"
-    "@readr-media/react-theatre" "^0.2.0-alpha.10"
+    "@readr-media/react-theatre" "^1.1.0"
     "@readr-media/react-three-story-points" "1.0.2"
-    "@readr-media/react-timeline" "^1.0.0-alpha.14"
+    "@readr-media/react-timeline" "1.1.0-alpha.1"
     lodash "^4.17.21"
     serialize-javascript "^6.0.0"
 
@@ -1276,16 +1290,6 @@
   dependencies:
     axios "^1.3.5"
 
-"@readr-media/react-theatre@^0.2.0-alpha.10":
-  version "0.2.0-alpha.10"
-  resolved "https://registry.yarnpkg.com/@readr-media/react-theatre/-/react-theatre-0.2.0-alpha.10.tgz#59f1979ea71210fe3ea55d2f73799702e2fb3411"
-  integrity sha512-/vZWzYDNQ4w+7+9ZGSIgIHi0ygoXrdDoAHuc71kP5u9gpbQMON9T8Z2XgifwvQMMk4loFH7BI/rh8kTs1FMdBQ==
-  dependencies:
-    "@theatre/core" "0.6.1"
-    react-transition-group "^4.4.5"
-    url "^0.11.1"
-    uuid "^9.0.0"
-
 "@readr-media/react-theatre@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@readr-media/react-theatre/-/react-theatre-1.1.0.tgz#18a8e099f8d22439585403709f67ab5c0301fcbd"
@@ -1307,13 +1311,14 @@
     three "^0.150.1"
     three-story-controls "^1.0.6"
 
-"@readr-media/react-timeline@^1.0.0-alpha.14":
-  version "1.0.0-alpha.14"
-  resolved "https://registry.yarnpkg.com/@readr-media/react-timeline/-/react-timeline-1.0.0-alpha.14.tgz#80cd5820759069223143e153ebf9815694e6b0e2"
-  integrity sha512-xSX/6/zhl+HGhZtpsBqwMx/qFv6y1Ra8bGPpLd3EZdXEu9bn32yVVGMLrFxdZkKr4T0z8ok9yEHa2XTww/QtIw==
+"@readr-media/react-timeline@1.1.0-alpha.1":
+  version "1.1.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-timeline/-/react-timeline-1.1.0-alpha.1.tgz#9b8d16b202dfedbcd08a2cda0c145586a6a58527"
+  integrity sha512-3yNI+DZuJmEAs7mIZJXt4qCHTE8KQqSD01XV1y099BhIpiyzhnN14qGMsMYBHlRd2Zx2a7S62uh2bKwH3ZyVUg==
   dependencies:
     axios "^0.27.2"
     draft-js "^0.11.7"
+    react-virtualized "^9.22.4"
 
 "@svgr/babel-plugin-add-jsx-attribute@^6.5.1":
   version "6.5.1"
@@ -2257,6 +2262,11 @@ clone-deep@^4.0.1:
     kind-of "^6.0.2"
     shallow-clone "^3.0.0"
 
+clsx@^1.0.4:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.2.1.tgz#0ddc4a20a549b59c93a4116bb26f5294ca17dc12"
+  integrity sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==
+
 color-convert@^1.9.0:
   version "1.9.3"
   resolved "https://registry.yarnpkg.com/color-convert/-/color-convert-1.9.3.tgz#bb71850690e1f136567de629d2d5471deda4c1e8"
@@ -2505,11 +2515,6 @@ default-gateway@^6.0.3:
   dependencies:
     execa "^5.0.0"
 
-default-import@^1.1.5:
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/default-import/-/default-import-1.1.5.tgz#6ba81645f79fa2e122bbac09651f30b55a8d9d5d"
-  integrity sha512-aaJ6uzZlmaEcN1U8yvtiyV7MG3/zZQf1XtGSW5dTfAVvfk0VZuriJelXxVL9a0ni42vMkhjWcztFfpIhwFcfOQ==
-
 define-lazy-prop@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/define-lazy-prop/-/define-lazy-prop-2.0.0.tgz#3f7ae421129bcaaac9bc74905c98a0009ec9ee7f"
@@ -2581,7 +2586,7 @@ dom-converter@^0.2.0:
   dependencies:
     utila "~0.4"
 
-dom-helpers@^5.0.1:
+dom-helpers@^5.0.1, dom-helpers@^5.1.3:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/dom-helpers/-/dom-helpers-5.2.1.tgz#d9400536b2bf8225ad98fe052e029451ac40e902"
   integrity sha512-nRCa7CK3VTrM2NmGkIy4cbK7IZlgBE/PYMn55rrXefr5xXDP0LdtfPnblFDoVdcAfslJ7or6iqAUnx0CCGIWQA==
@@ -4480,7 +4485,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.6.2, prop-types@^15.8.1:
+prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -4574,6 +4579,11 @@ react-is@^16.13.1, react-is@^16.7.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
+react-lifecycles-compat@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
+  integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
+
 react-transition-group@^4.4.5:
   version "4.4.5"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-4.4.5.tgz#e53d4e3f3344da8521489fbef8f2581d42becdd1"
@@ -4583,6 +4593,18 @@ react-transition-group@^4.4.5:
     dom-helpers "^5.0.1"
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
+
+react-virtualized@^9.22.4:
+  version "9.22.5"
+  resolved "https://registry.yarnpkg.com/react-virtualized/-/react-virtualized-9.22.5.tgz#bfb96fed519de378b50d8c0064b92994b3b91620"
+  integrity sha512-YqQMRzlVANBv1L/7r63OHa2b0ZsAaDp1UhVNEdUaXI8A5u6hTpA5NYtUueLH2rFuY/27mTGIBl7ZhqFKzw18YQ==
+  dependencies:
+    "@babel/runtime" "^7.7.2"
+    clsx "^1.0.4"
+    dom-helpers "^5.1.3"
+    loose-envify "^1.4.0"
+    prop-types "^15.7.2"
+    react-lifecycles-compat "^3.0.4"
 
 react@18.1.0:
   version "18.1.0"
@@ -4643,6 +4665,11 @@ regenerator-runtime@^0.13.11, regenerator-runtime@^0.13.9:
   version "0.13.11"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.11.tgz#f6dca3e7ceec20590d07ada785636a90cdca17f9"
   integrity sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==
+
+regenerator-runtime@^0.14.0:
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.14.0.tgz#5e19d68eb12d486f797e15a3c6a918f7cec5eb45"
+  integrity sha512-srw17NI0TUWHuGa5CFGGmhfNIeja30WMBfbslPNhf6JrqQlLN5gcrvig1oqPxiVaXb0oW0XRKtH6Nngs5lKCIA==
 
 regenerator-transform@^0.15.1:
   version "0.15.1"

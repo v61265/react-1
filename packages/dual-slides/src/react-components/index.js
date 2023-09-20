@@ -1,11 +1,13 @@
 import Background from './background.js'
-import Forground from './foreground.js'
+import Foreground from './foreground.js'
 import styled from '../styled-components.js'
 import { useState } from 'react'
 
 const Block = styled.div`
   background-color: #fff;
   position: relative;
+  left: calc(50% - 50vw);
+  width: 100vw;
   height: ${/**
    *  @param {Object} props
    *  @param {number} props.slidesLen
@@ -54,7 +56,7 @@ export default function DualSlides({ slides }) {
 
   const foregrounds = slides.map((slide, index) => {
     return (
-      <Forground
+      <Foreground
         key={index}
         slideIndex={index}
         onEnterViewport={(slideIndex) => {

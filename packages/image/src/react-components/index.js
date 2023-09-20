@@ -1,74 +1,26 @@
-import React, { useEffect, useRef } from 'react' // eslint-disable-line
+import React, { useState, useEffect, useRef } from 'react' // eslint-disable-line
 
-/**
- * @typedef {Object} Rwd
- * @property {string} [mobile]
- * @property {string} [tablet]
- * @property {string} [laptop]
- * @property {string} [desktop]
- * @property {string} [default]
- */
-/**
- * @typedef {Object} Breakpoint
- * @property {string} [mobile]
- * @property {string} [tablet]
- * @property {string} [laptop]
- * @property {string} [desktop]
- */
+const FILE_EXTENSION_WEBP = 'webP'
 
 /**
  * Check an String contain integer, for example, 'w1200' is valid, 'original' or 'randomName' is not valid
  */
 const REGEX = /(\d+)/
 
+const errorMessage = {
+  noImageProvided: 'None of Image Provided',
+  unableGetResolution: 'Unable to get resolution',
+  unableLoadImages: 'Unable to load any image',
+  unableLoadDefaultImage: 'Unable to load default image',
+}
+
 /**
- *
- * @param {Object} props
- * @param {Object} props.images
- * - list of URL of images want to loaded.
- * - required.
- * @param {String} [props.loadingImage]
- * - placeholder when loading image, it will show when item of `images` is not loaded.
- * - optional, default value is `""`.
- * @param {String} [props.defaultImage]
- * - default image, it will show if all items of `images` can not be loaded, and would become loading animation if `loadingImage` is not passed in.
- * - optional, default value is `""`.
- * @param {String} [props.alt]
- * - image alt.
- * - optional, default value is `""`.
- * @param {"fill"|"contain"|"cover"|"scale-down"|"none"|"initial"|"inherit"} [props.objectFit] - image CSS property. Optional, default value is `"cover"`.
- * @param {String | Number} [props.width]
- * - image width.
- * - optional, default value is `"100%"`.
- * @param {String | Number} [props.height]
- * - image height.
- * - optional, default value is `"100%"`.
- * @param {boolean} [props.priority]
- * - should preload image
- * @param {Boolean} [props.debugMode]
- * - can set if is in debug mode
- * - if `true`, then will print log after image loaded successfully of occur error.
- * - optional, default value is `false`.
- * @param {Breakpoint} [props.breakpoint]
- * - breakpoint of viewport width.
- * - optional, default value is `{ mobile: '767px', tablet: '1199px', laptop: '1439px', desktop: '2439px'}`
- * - For example, if we set breakpoint as `{ mobile: '767px', tablet: '1199px', laptop: '1439px', desktop: '2439px'}`,
- * - which means if viewport width is not greater then 767px, screen is mobile size, then we will get image sizes by comparing the value of `props.rwd`.
- * - It will affect which url of 'props.images' should loaded first.
- * @param {Rwd} [props.rwd]
- * - can set different sizes of image want to load first on different breakpoint of vw (viewport width),
- * such as {mobile: '300px', tablet: '400px', laptop: '800px', desktop: '1200px', default: '1600px'}.
- * - optional, default value is `{ mobile: '100vw', tablet: '100vw', laptop: '100vw', desktop: '100vw', default: '100vw'}`
- * - using `props.breakpoint` and `props.rwd`, you can decide different sizes of image is on each vw.
- * - if this param is default value, this sizes of images will equal to vw.
- * @param {IntersectionObserverInit} [props.intersectionObserverOptions]
- * - Options of intersection observers, let you control the circumstance of observers.
- * - Optional, default value is `{ root: null, rootMargin: '0px', threshold: 0.25, }`.
- * - See [Mdn Docs](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) to get more information.
+ * @param {import('../types/index').ImageProps} props
  * @returns {JSX.Element}
  */
 export default function CustomImage({
   images = { original: '' },
+  imagesWebP = null,
   loadingImage = '',
   defaultImage = '',
   alt = '',
@@ -97,17 +49,32 @@ export default function CustomImage({
   },
 }) {
   const imageRef = useRef(null)
+  const [imageSrc, setImageSrc] = useState(
+    loadingImage ? loadingImage : defaultImage
+  )
+  const [isImageLoaded, setIsImageLoaded] = useState(false)
+
+  const getImageStyle = () => {
+    return {
+      objectFit,
+      width,
+      height,
+      filter: getFilter(),
+    }
+
+    function getFilter() {
+      if (loadingImage || isImageLoaded) {
+        return 'unset'
+      } else {
+        return 'blur(8px)'
+      }
+    }
+  }
   /**
    * custom image style
    *
    */
-  const imageStyle = {
-    objectFit,
-    width,
-    height,
-    filter: loadingImage ? 'unset' : 'blur(8px)',
-  }
-
+  const imageStyle = getImageStyle()
   /**
    * Print log when `props.debugMode` is true
    * @param {String} message
@@ -168,12 +135,18 @@ export default function CustomImage({
    */
   const transformImagesSrcSet = (imagesList) => {
     const str = imagesList
-      .filter((pair) => pair[0] !== 'original')
+      .filter(
+        (pair) =>
+          pair[0] !== 'original' &&
+          pair[0] !== `original-${FILE_EXTENSION_WEBP}`
+      )
       .map((pair) => {
-        const width = pair[0].match(REGEX)[0]
+        const widthText = pair[0].replace(`-${FILE_EXTENSION_WEBP}`, '')
+        const width = widthText.match(REGEX)[0]
         return `${pair[1]} ${width}w`
       })
       .join(',')
+
     return str
   }
 
@@ -231,7 +204,12 @@ export default function CustomImage({
   const getResolution = (imagesList) => {
     const imageSrcSet = transformImagesSrcSet(imagesList)
     const sizes = transformImageSizes(rwd, breakpoint)
-    const originalSrc = images['original']
+
+    const originalWebPSrc = imagesList.find(
+      (pair) => pair[0] === `original-${FILE_EXTENSION_WEBP}`
+    )?.[1]
+    const originalSrc = imagesList.find((pair) => pair[0] === 'original')?.[1]
+
     return new Promise((resolve, reject) => {
       if (imageSrcSet) {
         const img = new Image()
@@ -264,10 +242,13 @@ export default function CustomImage({
         img.addEventListener('error', eventHandler)
         img.sizes = sizes
         img.srcset = imageSrcSet
+      } else if (originalWebPSrc) {
+        resolve(`original-${FILE_EXTENSION_WEBP}`)
       } else if (originalSrc) {
         resolve('original')
       } else {
-        reject()
+        const err = new Error(errorMessage.unableGetResolution)
+        reject(err)
       }
     })
   }
@@ -303,55 +284,125 @@ export default function CustomImage({
    * @param {string} resolution - The resolution determine which URL of image should loaded first.
    * @param {[string,string][]} imagesList - The resolution determine which URL of image should loaded first.
    * @returns {Promise<string>} - The URL of the image should loaded
+   * @throws {Error<string>}
    */
   const loadImages = (resolution, imagesList) => {
     const index = imagesList.findIndex((pair) => pair[0] === resolution)
     const loadList = imagesList.slice(index)
     return loadList.reduce((prevPromise, pair) => {
-      return prevPromise.catch(() => loadImage(pair[1]))
+      return prevPromise.catch(() => {
+        const isLastImageUrl = pair[1] === loadList[loadList.length - 1][1]
+
+        if (isLastImageUrl) {
+          return loadImage(pair[1]).catch(() => {
+            throw new Error(errorMessage.unableLoadImages)
+          })
+        }
+        return loadImage(pair[1])
+      })
     }, Promise.reject())
   }
   /**
-   * set url on <img> and remove css `filter` property after loaded
+   *
    * @param {string} url
    */
-  const setImageUrl = (url) => {
-    imageRef.current.src = url
-    imageRef.current.style.filter = 'unset'
+  const handleImageOnLoaded = (url) => {
+    setImageSrc(url)
+    setIsImageLoaded(true)
   }
 
-  const loadImageProgress = () => {
+  const getImagesList = (images, imagesWebP) => {
+    const hasImages = !!images && !!Object.entries(images).length
+    const hasWebPImage = !!imagesWebP && !!Object.entries(imagesWebP).length
+    if (!hasImages && !hasWebPImage) {
+      throw new Error(errorMessage.noImageProvided)
+    }
     const imagesList = transformImagesContent(images)
 
-    return getResolution(imagesList)
-      .then((resolution) => {
-        loadImages(resolution, imagesList)
-          .then((url) => {
-            setImageUrl(url)
-            printLogInDevMode(
-              `Successfully Load image, current image source is ${url}`
-            )
-          })
-          .catch(() => {
-            if (imageRef.current?.src) {
-              setImageUrl(defaultImage)
-              printLogInDevMode(
-                'Unable to load any image, try to use default image as image src'
-              )
-              imageRef.current.addEventListener('error', () => {
-                printLogInDevMode('Unable to load default image')
-              })
-            }
-          })
+    if (hasWebPImage) {
+      const imagesWebPList = transformImagesContent(imagesWebP).map((pair) => {
+        return [`${pair[0]}-${FILE_EXTENSION_WEBP}`, pair[1]]
       })
-      .catch(() => {
-        setImageUrl(defaultImage)
-        printLogInDevMode(
-          `Unable to get resolution on ${JSON.stringify(
-            images
-          )}, which means doesn't provide any url of image, try to use default image as image src`
-        )
-      })
+      const imagesListContainWebP = imagesList.concat(imagesWebPList)
+
+      const sortedList = imagesListContainWebP.sort(sortByResolutionAndIsWebP)
+
+      return sortedList
+
+      /**
+       * Function for Sort imagesList containing webP images.
+       * Sorting rule is:
+       *  1. Sort by resolution of images from small to large.
+       *  2. if resolution is same, webP image will be placed forward.
+       * So order after sorting will be:
+       * `w480-webP` -> `w480` -> `w800-webP` -> `w800` ...... -> `original-webP` -> `original`
+       * @param {[string, string]} pairA
+       * @param {[string, string]} pairB
+       * @returns {[string, string][]}
+       */
+      function sortByResolutionAndIsWebP(pairA, pairB) {
+        const getResolution = (str) => {
+          const match = str.match(/\d+/)
+          return match ? parseInt(match[0]) : Infinity
+        }
+
+        const numA = getResolution(pairA[0])
+        const numB = getResolution(pairB[0])
+
+        if (numA !== numB) {
+          return numA - numB
+        }
+
+        const pairAIsWebP = pairA[0].endsWith(`-${FILE_EXTENSION_WEBP}`)
+        const pairBIsWebP = pairB[0].endsWith(`-${FILE_EXTENSION_WEBP}`)
+
+        if (pairAIsWebP !== pairBIsWebP) {
+          return pairAIsWebP ? -1 : 1
+        }
+
+        return 0
+      }
+    } else {
+      return imagesList
+    }
+  }
+  const loadImageProgress = async () => {
+    try {
+      const imagesList = getImagesList(images, imagesWebP)
+      const resolution = await getResolution(imagesList)
+      const url = await loadImages(resolution, imagesList)
+      handleImageOnLoaded(url)
+      printLogInDevMode(
+        `Successfully Load image, current image source is ${url}`
+      )
+    } catch (e) {
+      switch (e.message) {
+        case errorMessage.noImageProvided:
+          printLogInDevMode(
+            `${e.message}, which means either params images and imagesWebp in null, undefined, or empty object. Try to use default image as image src`
+          )
+          break
+        case errorMessage.unableGetResolution:
+          printLogInDevMode(
+            `${e.message}, which means doesn't provide any url of image, try to use default image as image src`
+          )
+          break
+        case errorMessage.unableLoadImages:
+          printLogInDevMode(
+            `${e.message}, try to use default image as image src`
+          )
+          break
+        default:
+          printLogInDevMode(`Unexpected error, ${e}`)
+          break
+      }
+      if (imageRef?.current?.src) {
+        handleImageOnLoaded(defaultImage)
+        imageRef?.current.addEventListener('error', () => {
+          printLogInDevMode(`${errorMessage.unableLoadDefaultImage}`)
+        })
+      }
+    }
   }
 
   const callback = (entries, observer) => {
@@ -364,6 +415,9 @@ export default function CustomImage({
   }
 
   useEffect(() => {
+    if (isImageLoaded) {
+      return
+    }
     try {
       let observer
 
@@ -386,14 +440,19 @@ export default function CustomImage({
       imageRef.current.style.visibility = 'hidden'
       console.error(`Unhandled error happened, hide image element', ${err}`)
     }
-  }, [defaultImage, printLogInDevMode, intersectionObserverOptions])
+  }, [
+    defaultImage,
+    printLogInDevMode,
+    intersectionObserverOptions,
+    isImageLoaded,
+  ])
 
   return (
     <img
       className="readr-media-react-image"
       style={imageStyle}
       ref={imageRef}
-      src={loadingImage ? loadingImage : defaultImage}
+      src={imageSrc}
       alt={alt}
       rel={priority ? 'preload' : ''}
     ></img>

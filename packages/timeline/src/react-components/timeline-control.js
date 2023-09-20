@@ -8,43 +8,12 @@ const Wrapper = styled.div`
   padding-bottom: 4px;
   display: flex;
   flex-direction: column;
-  ${({ stickyStrategy, headerHeight }) => {
-    switch (stickyStrategy) {
-      case 'absolute':
-        return `
-          position: absolute;
-          bottom: 0;
-        `
-      case 'fixed':
-        return `
-          position: fixed;
-          bottom: 0;
-        `
-      case 'absolute-top':
-        return `
-          position: absolute;
-          top: calc(100vh - ${headerHeight}px - 20px - 84px);
-        `
-      case 'absolute-bottom':
-      default:
-        return `
-        position: absolute;
-        bottom: 0;
-
-      `
-    }
-  }}
+  position: absolute;
+  bottom: 0;
   z-index: 10;
 
   @media (min-width: 768px) {
     left: 170px;
-  }
-  @media (min-width: 1200px) {
-    ${({ stickyStrategy }) =>
-      stickyStrategy === 'fixed' &&
-      `
-        left: calc((100vw - 1200px)/2 + 170px);
-      `}
   }
 `
 
@@ -90,37 +59,10 @@ const PcTagsControl = styled.div`
   @media (min-width: 768px) {
     pointer-events: none;
     display: block;
-    margin: 20px 0 0 24px;
-    ${({ stickyStrategy, headerHeight }) => {
-      switch (stickyStrategy) {
-        case 'absolute':
-          return `
-            position: absolute;
-            top: 0px;
-            height: calc(100vh - ${headerHeight}px);
-          `
-        case 'fixed':
-          return `
-            position: fixed;
-            top: ${headerHeight}px;
-            height: calc(100vh - ${headerHeight}px);
-          `
-        case 'absolute-top':
-          return `
-            position: absolute;
-            top: 0;
-            height: calc(100vh - ${headerHeight}px);
-          `
-        case 'absolute-bottom':
-        default:
-          return `
-          position: absolute;
-          bottom: 0;
-          height: calc(100vh - ${headerHeight}px);
-
-        `
-      }
-    }}
+    margin-left: 24px;
+    position: absolute;
+    top: 20px;
+    height: calc(100% - 20px);
   }
 `
 
@@ -185,7 +127,6 @@ export default function TimelineControl({
   maxLevel,
   level,
   updateLevel,
-  stickyStrategy,
   selectedTags,
   headerHeight,
   allTags,
@@ -193,19 +134,10 @@ export default function TimelineControl({
   const { addTag, removeTag } = useContext(TagsContext)
   const disableNarrowDown = level === 1
   const disableScaleUp = level === maxLevel
-  console.log(
-    'level',
-    level,
-    'disableNarrowDown',
-    disableNarrowDown,
-    'disableScaleUp',
-    disableScaleUp,
-    'maxLevel',
-    maxLevel
-  )
+
   return (
     <>
-      <Wrapper stickyStrategy={stickyStrategy} headerHeight={headerHeight}>
+      <Wrapper headerHeight={headerHeight}>
         <LevelControl>
           <LevelControlTopButton
             onClick={() => {
@@ -245,10 +177,7 @@ export default function TimelineControl({
           </MobileTagsControl>
         )}
       </Wrapper>
-      <PcTagsControl
-        stickyStrategy={stickyStrategy}
-        headerHeight={headerHeight}
-      >
+      <PcTagsControl headerHeight={headerHeight}>
         {allTags.map((tag) => {
           const selected = selectedTags.includes(tag)
           return (

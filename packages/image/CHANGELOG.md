@@ -1,5 +1,90 @@
 # @readr-media/react-image Changelog
 
+## 2023-09-20, Version 2.2.1
+
+### Notable Changes
+- Fix wrong variable name `isLoaded` to `isImageLoaded`
+
+### Commits
+* \[[`305a42d919`](https://github.com/readr-media/react-image/commit/305a42d919)] - fix(image): fix wrong variable name `isLoaded` to `isImageLoaded` (DianYangFu)
+* \[[`44221d674f`](https://github.com/readr-media/react-image/commit/44221d674f)] - chore(image): bump version into `2.2.1` (DianYangFu)
+
+
+## 2023-09-20, Version 2.2.0
+
+### Notable Changes
+- Use react `useState` to store image status, such as `src` of image and its loading status.
+
+### Commits
+* \[[`0731954349`](https://github.com/readr-media/react-image/commit/0731954349)] - refactor(image): use `useState` to store image status (DianYangFu)
+* \[[`a5ab61625d`](https://github.com/readr-media/react-image/commit/a5ab61625d)] - chore(image): bump version into `2.2.0` (DianYangFu)
+
+
+## 2023-09-04, Version 2.1.3
+
+### Notable Changes
+- Handle error when params `images` is null.
+
+
+### Commits
+* \[[`9728454bfb`](https://github.com/readr-media/react-image/commit/9728454bfb)] - fix(image): handle error when param `images` is `null` (DianYangFu)
+* \[[`ebcb8b22dd`](https://github.com/readr-media/react-image/commit/ebcb8b22dd)] - chore(image): bump version into `2.1.3` (DianYangFu)
+
+
+## 2023-09-01, Version 2.1.2
+
+### Notable Changes
+- Fix problem of unable load images if not pass props `imagesWebP`.
+
+
+### Commits
+* \[[`e855d4e8fe`](https://github.com/readr-media/react-image/commit/e855d4e8fe)] - fix(image): unable load image if not pass props `imagesWebP` (DianYangFu)
+* \[[`daac8a00e0`](https://github.com/readr-media/react-image/commit/daac8a00e0)] - chore(image): bump version into `2.1.2` (DianYangFu)
+
+
+## 2023-08-31, Version 2.1.1
+
+### Notable Changes
+- Fix problem of unable load `.webp` image which size is `original`.
+
+
+### Commits
+* \[[`415a9499bf`](https://github.com/readr-media/react-image/commit/415a9499bf)] - fix(image): unable load webp image of original size (DianYangFu)
+* \[[`a2b28631dd`](https://github.com/readr-media/react-image/commit/a2b28631dd)] - chore(image): bump version into `2.1.1` (DianYangFu)
+
+
+## 2023-08-31, Version 2.1.0
+
+### Notable Changes
+- Improve code readability, use `async/await` to replace Promise `.then/.catch`. 
+- Support sequential loading `.webp` images.
+
+
+### Commits
+* \[[`13c393601f`](https://github.com/readr-media/react-image/commit/13c393601f)] - refactor(image): replace Promise `.then/.catch` to `async/await` (DianYangFu)
+* \[[`81ca44c521`](https://github.com/readr-media/react-image/commit/81ca44c521)] - feat(image): support webp format (DianYangFu)
+* \[[`3a8c4e810c`](https://github.com/readr-media/react-image/commit/3a8c4e810c)] - doc(image): update README.md (DianYangFu)
+* \[[`0b41d9e91b`](https://github.com/readr-media/react-image/commit/0b41d9e91b)] - chore(image): bump version to `2.1.0` (DianYangFu)
+
+
+
+## 2023-08-30, Version 2.0.0
+
+### Notable Changes
+- Support ES Modules
+
+
+### Commits
+* \[[`6a75564022`](https://github.com/readr-media/react-image/commit/6a75564022)] - chore(image): update Makefile, tsconfig, package.json to support ESM (DianYangFu)
+* \[[`069ab5d720`](https://github.com/readr-media/react-image/commit/069ab5d720)] - chore(image): update webpack.config.js to fit module type (DianYangFu)
+* \[[`aac8f3fe8a`](https://github.com/readr-media/react-image/commit/aac8f3fe8a)] - chore(image): add devDep `@babel/plugin-transform-runtime` (DianYangFu)
+* \[[`98a0ef9866`](https://github.com/readr-media/react-image/commit/98a0ef9866)] - chore(image): update file import path to support module type (DianYangFu)
+* \[[`8ece49249f`](https://github.com/readr-media/react-image/commit/8ece49249f)] - chore(image): add `.babelrc.js` (DianYangFu)
+* \[[`faf3363155`](https://github.com/readr-media/react-image/commit/faf3363155)] - refactor(image): add folder types to place `@typedef`, export type (DianYangFu)
+* \[[`3de9078e01`](https://github.com/readr-media/react-image/commit/3de9078e01)] - doc(image): update README.md (DianYangFu)
+* \[[`f8203e8527`](https://github.com/readr-media/react-image/commit/f8203e8527)] - chore(image): bump version into `2.0.0` (DianYangFu)
+* \[[`c58f2900e9`](https://github.com/readr-media/react-image/commit/c58f2900e9)] - doc(image): update CHANGELOG.md (DianYangFu)
+
 
 ## 2023-05-14, Version 1.6.0
 

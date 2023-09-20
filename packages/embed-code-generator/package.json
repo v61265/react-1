@@ -1,6 +1,6 @@
 {
   "name": "@readr-media/react-embed-code-generator",
-  "version": "2.4.0-alpha.26",
+  "version": "2.4.3-alpha.2",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -28,8 +28,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@readr-media/react-dropping-text": "1.0.6",
-    "@readr-media/react-dual-slides": "1.0.1",
+    "@readr-media/react-dropping-text": "1.0.7",
+    "@readr-media/react-dual-slides": "^1.1.0",
     "@readr-media/react-election-widgets": "1.0.2",
     "@readr-media/react-feedback": "^3.0.2",
     "@readr-media/react-full-screen-video": "1.0.5-beta.0",
@@ -40,7 +40,7 @@
     "@readr-media/react-random-text-selector": "^1.0.2",
     "@readr-media/react-theatre": "^1.1.0",
     "@readr-media/react-three-story-points": "1.0.2",
-    "@readr-media/react-timeline": "^1.0.0-alpha.14",
+    "@readr-media/react-timeline": "1.1.0-alpha.1",
     "lodash": "^4.17.21",
     "serialize-javascript": "^6.0.0"
   },
@@ -50,7 +50,7 @@
     "@babel/eslint-parser": "^7.11.4",
     "@babel/preset-env": "^7.17.12",
     "@babel/preset-react": "^7.17.12",
-    "@readr-media/react-embed-code-generator": "^2.4.0-alpha.24",
+    "@readr-media/react-embed-code-generator": "2.4.3-alpha.2",
     "@svgr/webpack": "^6.2.1",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.5",

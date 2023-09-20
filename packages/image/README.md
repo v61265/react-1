@@ -50,7 +50,8 @@ export default function SomeComponent() {
 
 | 名稱         | 資料型別 | 必須 | 預設值           | 說明                                                                                                                                                                                                                                                    |
 | ------------ | -------- | ---- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| images       | Object   | `V`  | `{original: ""}` | 圖片設定，範例： `{ w400: '400.png',w800 : '800.png', w1200: '1200.png', original: 'original.png' }`。會由`w400`、`w800`、`w1200`、`original`依序載入                                                                                                   |
+| images       | Object   | `V`  | `{original: ""}` | 圖片設定，範例： `{ w400: '400.png', w800: '800.png', w1200: '1200.png', original: 'original.png' }`。圖片載入順序詳見 [Sequence of Loading Images](##sequence-of-loading-images)。|
+| imagesWebP       | Object   |   | `null` | 圖片設定，範例： `{ w400: '400.webp', w800: '800.webp', w1200: '1200.webp', original: 'original.webp' }`。圖片載入順序詳見 [Sequence of Loading Images](##sequence-of-loading-images)。|
 | defaultImage | String   |      | `""`             | 預設圖片。當`image`皆載入失敗時，則載入預設圖片。<br>當`loadingImage`未傳入時，則以預設圖片作為圖片載入動畫效果。                                                                                                                                       |
 | loadingImage | String   |      | `""`             | 載入動畫效果，作為載入圖片的動畫。目前僅接受圖片檔URL。                                                                                                                                                                                                 |
 | alt          | String   |      | `""`             | 替代文字                                                                                                                                                                                                                                                |
@@ -64,8 +65,34 @@ export default function SomeComponent() {
 |intersectionObserverOptions|Object  |      |`{root: null, rootMargin: '0px', threshold: 0.25, }` |intersection observer的選項，用於調整圖片懶載入的條件。僅在參數`priority`為`false`的情況才會生效 |
 
 
+## Sequence of Loading Images
 
+- 當只有傳入 `images` 時，會依據解析度由小至大載入。
+- 如果同時有傳入 `images` 與 `imagesWebP` 時，會依據解析度由小至大載入，若解析度相同，則webP圖片優先載入。
 
+舉例來說，若僅有傳入 `images`，且傳入的 `images` 為：
+```
+{
+      original: 'original.png',
+      w480: 'w480.png',
+      w800: 'w800.png',
+      w1600: 'w1600.png',
+      w2400: 'w2400.png',
+}
+```
+圖片載入順序為 `w480.png` -> `w800.png` -> `w1600.png` -> `w2400.png` -> `original.png`。
+
+如果除了傳入上述 `images` ，亦有傳入 `imagesWebP`，且傳入的 `imagesWebP` 為：
+```
+{
+      original: 'original.webp',
+      w480: 'w480.webp',
+      w800: 'w800.webp',
+      w1600: 'w1600.webp',
+      w2400: 'w2400.webp',
+},
+```
+圖片載入順序為 `w480.webp` -> `w480.png` -> `w800.webp` -> `w800.png` -> `w1600.webp` ->`w1600.png` -> `w2400.webp` -> `w2400.png` -> `original.webp` -> `original.png`。
 
 ## Precautions
 若使用該套件時，禁用了瀏覽器的cache，則同張圖片會載入至少兩次（一次在函式`loadImage()`中載入各個大小的圖片，一次則在useEffect中，將成功載入的圖片掛載至`<img>`上），這是正常的現象。
@@ -85,31 +112,45 @@ $ npm run dev
 $ make dev
 ```
 
-## Build (Webpack Bundles and ES5 Transpiling)
+## Build
+Transpile React, ES6 Codes to ES5, and generate two module system (ES module and Commonjs) at the same time
+
 ```
 $ npm run build
 // or
 $ make build
-```
-
-### Build Webpack Bundles 
-```
-$ make build-dist
-```
-
-### Transpile React, ES6 Codes to ES5 
-```
+// or
 $ make build-lib
 ```
 
+
 ### NPM Publish
-After executing `Build` scripts, we will have `./dist` and `/lib` folders,
+After executing `Build` scripts, we will have `/lib` folders,
 and then we can execute publish command,
 ```
 npm publish
 ```
 
 Note: before publish npm package, we need to bump the package version first. 
+
+### Folder Structure of Build File
+```
+@readr-media/react-image
+  |  
+  ├──lib
+  |    └── cjs    // for CommonJS project
+  |    └── esm    // for ES Modules project
+  |    └── types  // for Typescript 
+  |    
+  ├── README.md
+  ├── CHANGELOG.md
+  └── package.json
+```
+
+Note: 
+- If your Node.js project has enable ES Modules, it will use file in `/esm` folder when import this package.
+- If not, it will use file in `/cjs` folder when import this package.
+- See [Node.js Documentation](https://nodejs.org/api/esm.html#modules-ecmascript-modules) to get more info about ES Modules.
 
 
 ## TODOs
