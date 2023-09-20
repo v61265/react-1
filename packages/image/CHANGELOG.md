@@ -1,5 +1,15 @@
 # @readr-media/react-image Changelog
 
+## 2023-09-20, Version 2.2.1
+
+### Notable Changes
+- Fix wrong variable name `isLoaded` to `isImageLoaded`
+
+### Commits
+* \[[`305a42d919`](https://github.com/readr-media/react-image/commit/305a42d919)] - fix(image): fix wrong variable name `isLoaded` to `isImageLoaded` (DianYangFu)
+* \[[`44221d674f`](https://github.com/readr-media/react-image/commit/44221d674f)] - chore(image): bump version into `2.2.1` (DianYangFu)
+
+
 ## 2023-09-20, Version 2.2.0
 
 ### Notable Changes

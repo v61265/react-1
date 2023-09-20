@@ -63,7 +63,7 @@ export default function CustomImage({
     }
 
     function getFilter() {
-      if (loadingImage || isLoaded) {
+      if (loadingImage || isImageLoaded) {
         return 'unset'
       } else {
         return 'blur(8px)'
