@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react' // eslint-disable-line
+import React, { useState, useEffect, useRef } from 'react' // eslint-disable-line
 
 const FILE_EXTENSION_WEBP = 'webP'
 
@@ -49,17 +49,32 @@ export default function CustomImage({
   },
 }) {
   const imageRef = useRef(null)
+  const [imageSrc, setImageSrc] = useState(
+    loadingImage ? loadingImage : defaultImage
+  )
+  const [isImageLoaded, setIsImageLoaded] = useState(false)
+
+  const getImageStyle = () => {
+    return {
+      objectFit,
+      width,
+      height,
+      filter: getFilter(),
+    }
+
+    function getFilter() {
+      if (loadingImage || isLoaded) {
+        return 'unset'
+      } else {
+        return 'blur(8px)'
+      }
+    }
+  }
   /**
    * custom image style
    *
    */
-  const imageStyle = {
-    objectFit,
-    width,
-    height,
-    filter: loadingImage ? 'unset' : 'blur(8px)',
-  }
-
+  const imageStyle = getImageStyle()
   /**
    * Print log when `props.debugMode` is true
    * @param {String} message
@@ -288,12 +303,12 @@ export default function CustomImage({
     }, Promise.reject())
   }
   /**
-   * set url on <img> and remove css `filter` property after loaded
+   *
    * @param {string} url
    */
-  const setImageUrl = (url) => {
-    imageRef.current.src = url
-    imageRef.current.style.filter = 'unset'
+  const handleImageOnLoaded = (url) => {
+    setImageSrc(url)
+    setIsImageLoaded(true)
   }
 
   const getImagesList = (images, imagesWebP) => {
@@ -356,7 +371,7 @@ export default function CustomImage({
       const imagesList = getImagesList(images, imagesWebP)
       const resolution = await getResolution(imagesList)
       const url = await loadImages(resolution, imagesList)
-      setImageUrl(url)
+      handleImageOnLoaded(url)
       printLogInDevMode(
         `Successfully Load image, current image source is ${url}`
       )
@@ -382,7 +397,7 @@ export default function CustomImage({
           break
       }
       if (imageRef?.current?.src) {
-        setImageUrl(defaultImage)
+        handleImageOnLoaded(defaultImage)
         imageRef?.current.addEventListener('error', () => {
           printLogInDevMode(`${errorMessage.unableLoadDefaultImage}`)
         })
@@ -400,6 +415,9 @@ export default function CustomImage({
   }
 
   useEffect(() => {
+    if (isImageLoaded) {
+      return
+    }
     try {
       let observer
 
@@ -422,14 +440,19 @@ export default function CustomImage({
       imageRef.current.style.visibility = 'hidden'
       console.error(`Unhandled error happened, hide image element', ${err}`)
     }
-  }, [defaultImage, printLogInDevMode, intersectionObserverOptions])
+  }, [
+    defaultImage,
+    printLogInDevMode,
+    intersectionObserverOptions,
+    isImageLoaded,
+  ])
 
   return (
     <img
       className="readr-media-react-image"
       style={imageStyle}
       ref={imageRef}
-      src={loadingImage ? loadingImage : defaultImage}
+      src={imageSrc}
       alt={alt}
       rel={priority ? 'preload' : ''}
     ></img>
