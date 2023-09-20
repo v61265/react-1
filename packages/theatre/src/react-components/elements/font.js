@@ -47,5 +47,7 @@ export default function FontElement({ id, sheet }) {
     })
   }, [object])
 
-  return <FontWrapper style={style}>{content}</FontWrapper>
+  return (
+    <FontWrapper style={style} dangerouslySetInnerHTML={{ __html: content }} />
+  )
 }
