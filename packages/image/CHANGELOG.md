@@ -1,5 +1,15 @@
 # @readr-media/react-image Changelog
 
+## 2023-09-20, Version 2.2.0
+
+### Notable Changes
+- Use react `useState` to store image status, such as `src` of image and its loading status.
+
+### Commits
+* \[[`0731954349`](https://github.com/readr-media/react-image/commit/0731954349)] - refactor(image): use `useState` to store image status (DianYangFu)
+* \[[`a5ab61625d`](https://github.com/readr-media/react-image/commit/a5ab61625d)] - chore(image): bump version into `2.2.0` (DianYangFu)
+
+
 ## 2023-09-04, Version 2.1.3
 
 ### Notable Changes
