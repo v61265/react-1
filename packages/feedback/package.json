@@ -1,6 +1,6 @@
 {
   "name": "@readr-media/react-feedback",
-  "version": "3.5.2",
+  "version": "3.6.0",
   "description": "",
   "main": "lib/index.js",
   "types": "dist/index.d.ts",
