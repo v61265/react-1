@@ -107,6 +107,6 @@ export default {}
 
 /**
  * @typedef {Object}                                    OptionAmountManager
- * @property {Object.<string, number>}                  optionSummary
- * @property {(value: string[]) => Promise<void>}       giveOptions
+ * @property {Object.<string, number> | null}           optionSummary
+ * @property {(defaultOptions: string[], newOptions: string[]) => Promise<void>}       giveOptions
  */
