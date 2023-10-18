@@ -1,5 +1,13 @@
 # @readr-media/react-feedback Changelog
 
+## 2023-08-07, Version 3.6.0
+- fix: errors in statistics handle in single field form
+
+### Commits
+* \[[`e94489d258`](https://github.com/readr-media/react-feedback/commit/e94489d258)] - fix(feedback): errors in statistics handle in single field form (Tsuki Akiba)
+* \[[`f453e538b8`](https://github.com/readr-media/react-feedback/commit/f453e538b8)] - fix(feedback): error in notify handle (Tsuki Akiba)
+* \[[`f474bcafaa`](https://github.com/readr-media/react-feedback/commit/f474bcafaa)] - docs(feedback): update CHANGELOG (Tsuki Akiba)
+
 ## 2023-08-07, Version 3.5.2
 - fix: error in notify handle
 
