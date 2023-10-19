@@ -152,6 +152,7 @@ export default function CommentItem({ comment, shouldShowControl }) {
         <ContentExpander
           className="content-expander"
           onMouseUp={() => setContentExpanded(true)}
+          type="button"
         >
           展開全部
         </ContentExpander>
