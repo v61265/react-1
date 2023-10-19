@@ -1,16 +1,31 @@
 # @readr-media/react-feedback Changelog
 
-## 2023-08-07, Version 3.6.0
-- fix: errors in statistics handle in single field form
+## 2023-10-19, Version 3.7.0
 
+### Notable Changes
+- fix: add missing key attribute
+- refactor: make commentItem cropping behavior configurable
+- fix: remove unwanted form submission behavior
+### Commits
+* \[[`ec869a2d88`](https://github.com/readr-media/react-feedback/commit/ec869a2d88)] - fix(feedback): remove unwanted form submission behavior (Tsuki Akiba)
+* \[[`60b208bd9e`](https://github.com/readr-media/react-feedback/commit/60b208bd9e)] - refactor(feedback): make commentItem cropping behavior configurable (Tsuki Akiba)
+* \[[`fc27855bd4`](https://github.com/readr-media/react-feedback/commit/fc27855bd4)] - fix(feedback): add missing key attribute (Tsuki Akiba)
+* \[[`a2755f24c2`](https://github.com/readr-media/react-feedback/commit/a2755f24c2)] - chore(feedback): bump version to 3.6.0 (Tsuki Akiba)
+* \[[`c849625828`](https://github.com/readr-media/react-feedback/commit/c849625828)] - docs(feedback): update CHANGELOG (Tsuki Akiba)
+
+## 2023-10-19, Version 3.6.0
+
+### Notable Changes
+- fix: errors in statistics handle in single field form
 ### Commits
 * \[[`e94489d258`](https://github.com/readr-media/react-feedback/commit/e94489d258)] - fix(feedback): errors in statistics handle in single field form (Tsuki Akiba)
 * \[[`f453e538b8`](https://github.com/readr-media/react-feedback/commit/f453e538b8)] - fix(feedback): error in notify handle (Tsuki Akiba)
 * \[[`f474bcafaa`](https://github.com/readr-media/react-feedback/commit/f474bcafaa)] - docs(feedback): update CHANGELOG (Tsuki Akiba)
 
 ## 2023-08-07, Version 3.5.2
-- fix: error in notify handle
 
+### Notable Changes
+- fix: error in notify handle
 ### Commits
 * \[[`449bf1c359`](https://github.com/readr-media/react-feedback/commit/449bf1c359)] - chore(feedback): bump version to 3.5.2 (Tsuki Akiba)
 * \[[`d26828f987`](https://github.com/readr-media/react-feedback/commit/d26828f987)] - fix(feedback): error in notify handle (Tsuki Akiba)
@@ -18,17 +33,19 @@
 * \[[`99927ff22c`](https://github.com/readr-media/react-feedback/commit/99927ff22c)] - docs(feedback): update CHNAGELOG (Tsuki Akiba)
 
 ## 2023-08-06, Version 3.5.1
-- fix: collaboration issues
 
+### Notable Changes
+- fix: collaboration issues
 ### Commits
 * \[[`a11e17b802`](https://github.com/readr-media/react-feedback/commit/a11e17b802)] - chore(feedback): bump version to 3.5.1 (Tsuki Akiba)
 * \[[`b25ff1879e`](https://github.com/readr-media/react-feedback/commit/b25ff1879e)] - fix(feedback): collaboration issues (Tsuki Akiba)
 * \[[`3adb94f782`](https://github.com/readr-media/react-feedback/commit/3adb94f782)] - docs(feedback): update CHANGELOG (Tsuki Akiba)
 
 ## 2023-08-06, Version 3.5.0
+
+### Notable Changes
 - feat: add SingleOptionField
 - refactor: update mock data
-
 ### Commits
 * \[[`b87b8cbba3`](https://github.com/readr-media/react-feedback/commit/b87b8cbba3)] - chore(feedback): bump version to 3.5.0 (Tsuki Akiba)
 * \[[`2ec4d1efb6`](https://github.com/readr-media/react-feedback/commit/2ec4d1efb6)] - refactor(feedback): update mock data (Tsuki Akiba)
@@ -38,6 +55,8 @@
 * \[[`8bee3207d5`](https://github.com/readr-media/react-feedback/commit/8bee3207d5)] - docs(feedback): update CHANGELOG
 
 ## 2023-08-04, Version 3.4.0
+
+### Notable Changes
 - feat: add shouldShowItemControl option to comment field
 - feat: add commentListTitle option to comment field
 - feat: add identifier option to comment field
@@ -46,7 +65,6 @@
 - chore: add type file generation process
 - chore: add font loading to devServer
 - chore: add DS_store to gitignore
-
 ### Commits
 * \[[`2ea8118ee4`](https://github.com/readr-media/react-feedback/commit/2ea8118ee4)] - chore(feedback): bump version to 3.4.0
 * \[[`a3b1dab104`](https://github.com/readr-media/react-feedback/commit/a3b1dab104)] - refactor(feedback): update typedef
