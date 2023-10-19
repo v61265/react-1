@@ -102,6 +102,11 @@ const pkgOptions = [
     name: 'Theatre',
     value: 'react-theatre',
   },
+  {
+    id: 'react-360',
+    name: 'React 360 Viewer ',
+    value: 'react-360',
+  },
 ]
 
 const scriptUrlOptios = [

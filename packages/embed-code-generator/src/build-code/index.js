@@ -16,6 +16,7 @@ import Video from '@readr-media/react-full-screen-video'
 import RandomTextSelector from '@readr-media/react-random-text-selector'
 import Theatre from '@readr-media/react-theatre'
 import rtl from '@readr-media/react-timeline'
+import React360 from '@readr-media/react-360'
 import { ServerStyleSheet } from 'styled-components'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -69,6 +70,10 @@ export function buildKaraokeEmbedCode(data, webpackAssets) {
 
 export function buildTheatreEmbedCode(data, webpackAssets) {
   return buildEmbeddedCode('react-theatre', data, webpackAssets)
+}
+
+export function buildReact360EmbedCode(data, webpackAssets) {
+  return buildEmbeddedCode('react-360', data, webpackAssets)
 }
 
 /**
@@ -140,6 +145,9 @@ export function buildEmbeddedCode(pkgName, data, webpackAssets) {
       break
     case 'react-theatre':
       Component = Theatre
+      break
+    case 'react-360':
+      Component = React360
       break
     default:
       throw new Error(`pkgName ${pkgName} is not supported`)
