@@ -15,7 +15,8 @@
     "packages/react-random-text-selector",
     "packages/dropping-text",
     "packages/react-theatre",
-    "packages/timeline"
+    "packages/timeline",
+    "packages/react-360"
   ],
   "scripts": {
     "prepare": "husky install"
