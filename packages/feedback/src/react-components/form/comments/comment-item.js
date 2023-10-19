@@ -1,4 +1,4 @@
-import React/* eslint-disable-line */, { useState, useEffect, useRef } from 'react'
+import React/* eslint-disable-line */, { useState, useRef, useCallback } from 'react'
 import styled from 'styled-components'
 
 import CommentSvg from '../../../static/icon-comment.svg'
@@ -68,25 +68,27 @@ const Time = styled.time`
   color: rgba(0, 9, 40, 30%);
 `
 
+const ContentWrapper = styled.div`
+  overflow: hidden;
+  max-height: 216px;
+  @media (max-width: 768px) {
+    max-height: 96px;
+  }
+
+  &.expanded {
+    max-height: unset;
+  }
+`
+
 const Content = styled.div`
   white-space: pre-line;
   color: rgba(0, 9, 40, 87%);
   font-size: 18px;
   line-height: 36px;
-  overflow: hidden;
   @media (max-width: 768px) {
     font-size: 16px;
     line-height: 32px;
   }
-  ${({ contentTooLong, contentExpand }) =>
-    contentTooLong && !contentExpand
-      ? `
-      max-height: 216px;
-      @media (max-width: 768px) {
-        max-height: 96px;
-      }
-    `
-      : ''}
 `
 
 const ContentExpander = styled.button`
@@ -108,17 +110,19 @@ const ContentExpander = styled.button`
  * @return {JSX.Element}
  */
 export default function CommentItem({ comment, shouldShowControl }) {
-  const [contentExpand, setContentExpand] = useState(false)
-  const [contentTooLong, setContentTooLong] = useState(false)
+  const [contentExpanded, setContentExpanded] = useState(false)
   const contentRef = useRef()
 
-  useEffect(() => {
-    const isMobile = window.innerWidth < 768
-    const limit = isMobile ? 96 : 216
-    if (contentRef.current) {
-      const height = contentRef.current.clientHeight
-      if (height > limit) {
-        setContentTooLong(true)
+  // wrapper is loaded after content
+  const onWrapperLoaded = useCallback((node) => {
+    if (node && contentRef.current) {
+      const wrapperHeight = node.clientHeight
+      const contentHeight = contentRef.current.clientHeight
+
+      if (contentHeight > wrapperHeight) {
+        setContentExpanded(false)
+      } else {
+        setContentExpanded(true)
       }
     }
   }, [])
@@ -134,18 +138,21 @@ export default function CommentItem({ comment, shouldShowControl }) {
           </Control>
         )}
       </Header>
-      <Content
-        className="comment-content"
-        contentTooLong={contentTooLong}
-        contentExpand={contentExpand}
-        ref={contentRef}
+      <ContentWrapper
+        className={`comment-content-wrapper ${
+          contentExpanded ? 'expanded' : ''
+        }`}
+        ref={onWrapperLoaded}
       >
-        {comment.content}
-      </Content>
-      {contentTooLong && !contentExpand && (
+        <Content className="comment-content" ref={contentRef}>
+          {comment.content}
+        </Content>
+      </ContentWrapper>
+      {!contentExpanded && (
         <ContentExpander
           className="content-expander"
-          onMouseUp={() => setContentExpand(true)}
+          onMouseUp={() => setContentExpanded(true)}
+          type="button"
         >
           展開全部
         </ContentExpander>
