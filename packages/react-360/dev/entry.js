@@ -25,6 +25,7 @@ root.render(
       hotspotsConfig={hotspotsConfig}
       caption="some paragraph of caption to describe 360 images"
       isFullScreenWidth={false}
+      isEditMode={true}
     />
 
     <React360
