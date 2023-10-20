@@ -88,9 +88,15 @@ const EditorPanel = styled.textarea`
 `
 
 /**
+ * @typedef {Object} ImageUrls
+ * @property {string} pc
+ * @property {string} mb
+ */
+
+/**
  *
  * @param {Object} props
- * @param {string} props.imageUrl - 360 image url
+ * @param {ImageUrls} props.imageRwdUrls - 360 image url
  * @param {Array} props.hotspotsConfig -  hotspots for 360 image
  * @param {string} props.caption - 360 image caption
  * @param {boolean} props.isFullScreenWidth - decide image width: true for '100vw', false for '100%
@@ -98,7 +104,7 @@ const EditorPanel = styled.textarea`
  * @returns {React.JSX}
  */
 export default function React360({
-  imageUrl,
+  imageRwdUrls,
   hotspotsConfig,
   caption,
   isFullScreenWidth = true,
@@ -118,9 +124,15 @@ export default function React360({
   let hotspots = Array.isArray(hotspotsConfig) ? hotspotsConfig : []
 
   const [imageHeight, setImageHeight] = useState(0)
+  const [device, setDevice] = useState('mb')
+
+  const imageUrl = imageRwdUrls[device]
 
   useEffect(() => {
     setImageHeight(window.innerWidth / 2)
+    if (window.innerWidth > 768) {
+      setDevice('pc')
+    }
   }, [])
 
   /**
@@ -140,7 +152,9 @@ export default function React360({
               單一熱點資料，點擊下方圖片後更新角度資料，請自行修改 text 和 url
               後複製到熱點 json 的 array [] 之中。
             </EditorHint>
-            <EditorPanel value={JSON.stringify(hotspotData)}></EditorPanel>
+            <EditorPanel
+              defaultValue={JSON.stringify(hotspotData)}
+            ></EditorPanel>
           </EditorWrapper>
         </>
       )}
