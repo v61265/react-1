@@ -1,10 +1,7 @@
-import * as url from 'url'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
-import path from 'path'
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const path = require('path')
 
-const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
-
-export default {
+module.exports = {
   mode: 'development',
   entry: {
     main: path.resolve(__dirname, './entry.js'),
@@ -37,10 +34,6 @@ export default {
             ],
           },
         },
-      },
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
       },
     ],
   },
