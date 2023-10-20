@@ -149,11 +149,13 @@ export default function React360({
         <>
           <EditorWrapper>
             <EditorHint>
-              單一熱點資料，點擊下方圖片後更新角度資料，請自行修改 text 和 url
-              後複製到熱點 json 的 array [] 之中。
+              取得單一熱點資料，點擊下方圖片後會自動更新 pitch/yaw
+              的值，確認角度後請複製到熱點 json 的 array [] 之中，並在熱點 json
+              中修改 text 和 url，不需要跳轉的話請直接刪除 url 這個 key。
             </EditorHint>
             <EditorPanel
-              defaultValue={JSON.stringify(hotspotData)}
+              value={JSON.stringify(hotspotData)}
+              onChange={() => {}}
             ></EditorPanel>
           </EditorWrapper>
         </>
