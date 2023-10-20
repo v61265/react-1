@@ -4,7 +4,6 @@ export default function useOnceShown(ref) {
   const [onceShown, setOnceShown] = useState(false)
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
-      console.log('isIntersecting', entry.isIntersecting)
       if (entry.isIntersecting) {
         setOnceShown(true)
         observer.disconnect()

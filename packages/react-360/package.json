@@ -1,14 +1,8 @@
 {
   "name": "@readr-media/react-360",
-  "version": "0.2.8",
+  "version": "0.3.1",
   "description": "",
-  "main": "lib/cjs/index.js",
-  "module": "lib/esm/index.js",
-  "exports": {
-    "import": "./lib/esm/index.js",
-    "require": "./lib/cjs/index.js"
-  },
-  "type": "module",
+  "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "make dev",
@@ -29,10 +23,10 @@
   "peerDependencies": {
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "styled-components": "^6.0.2"
+    "styled-components": "5.3.5"
   },
   "dependencies": {
-    "@readr-media/pannellum-react": "^1.4.1"
+    "@readr-media/pannellum-react": "^1.4.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.22.9",

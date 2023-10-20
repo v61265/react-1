@@ -1,6 +1,10 @@
 export default {
-  imageUrl:
-    'https://v3-statics-dev.mirrormedia.mg/images/548526e4-428a-49ff-b994-719c1e833f95.jpg',
+  imageRwdUrls: {
+    pc:
+      'https://v3-statics-dev.mirrormedia.mg/images/548526e4-428a-49ff-b994-719c1e833f95.webP',
+    mb:
+      'https://v3-statics-dev.mirrormedia.mg/images/548526e4-428a-49ff-b994-719c1e833f95-w2400.webP',
+  },
   hotspotsConfig: JSON.stringify([
     {
       type: 'info',

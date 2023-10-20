@@ -1192,12 +1192,27 @@
     styled-components "^6.1.0"
     video.js "7.18.1"
 
-"@readr-media/react-360@0.2.8":
-  version "0.2.8"
-  resolved "https://registry.yarnpkg.com/@readr-media/react-360/-/react-360-0.2.8.tgz#19db424c415224d15a37a9dca5bd81fc6f262781"
-  integrity sha512-Uf+vP0ICtM6cWa77gedmoJd6ToMR2TgrWRQS6aj5kHA90Of8LtLXcJYhVuXQOVuzNatIiWgkd08NlaZAFhtQjw==
+"@readr-media/pannellum-react@^1.4.2":
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/@readr-media/pannellum-react/-/pannellum-react-1.4.2.tgz#c185f8890f6a5e93ced3e9a8caa1d00ea7171d44"
+  integrity sha512-t9Kl1yF4KrYEym18a6hRHxeZ+h276B1s5xWumuBpbZgZj1TRctLPjFpYboCPqc5gdKGe+AD8YzukiDMpYi183A==
+  dependencies:
+    styled-components "5.3.5"
+    video.js "7.18.1"
+
+"@readr-media/react-360@0.2.9":
+  version "0.2.9"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-360/-/react-360-0.2.9.tgz#85633191ca51c090ac54d5194e187b2c8ab8a75d"
+  integrity sha512-zbo3QvqSgWfRf+cYU/nLMpuuRgwKwkyMR1Ee9FnOSe+/US2VUTIoirQr4wG+uaAkT5ju+30zTweY5083kog/AA==
   dependencies:
     "@readr-media/pannellum-react" "^1.4.1"
+
+"@readr-media/react-360@0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-360/-/react-360-0.3.1.tgz#8d27096de908a9011ddb77f88b7a4784c1d3bc3d"
+  integrity sha512-ccRbYHe5Toa6IvJtL8hcjgHhoHNpqpkxehimFSRk56OWBPdNabrgEwLb2gJmCwMBbCFYX5rCy1lSnk23otuyvg==
+  dependencies:
+    "@readr-media/pannellum-react" "^1.4.2"
 
 "@readr-media/react-dropping-text@1.0.9":
   version "1.0.9"
@@ -1223,11 +1238,12 @@
     "@twreporter/errors" "^1.1.1"
     axios "^0.27.2"
 
-"@readr-media/react-embed-code-generator@2.4.3-alpha.4":
-  version "2.4.3-alpha.4"
-  resolved "https://registry.yarnpkg.com/@readr-media/react-embed-code-generator/-/react-embed-code-generator-2.4.3-alpha.4.tgz#88de7f8daefc2128511b89ac80ea1f18716f95f2"
-  integrity sha512-n9lifay9Oc984s8/sgNo78+BPbU/N2qH19b5YzQwDq57t7r/8ZdeSBj8fZ5ZSgKREXBQug2MNBFZg7dGuXp9Jg==
+"@readr-media/react-embed-code-generator@2.4.3-alpha.8":
+  version "2.4.3-alpha.8"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-embed-code-generator/-/react-embed-code-generator-2.4.3-alpha.8.tgz#310640fcbb9a8da21ccf9f3ae08613d75c6807fd"
+  integrity sha512-2mcz4DzxTpJHedka7hPSILYnGUSfd8+7bKL3AviTTT16+EogRXWpE0e+NlKboAaAaluIn18jKlPJqIf5UsCBZA==
   dependencies:
+    "@readr-media/react-360" "0.2.9"
     "@readr-media/react-dropping-text" "1.0.9"
     "@readr-media/react-dual-slides" "^1.1.0"
     "@readr-media/react-election-widgets" "1.0.2"
