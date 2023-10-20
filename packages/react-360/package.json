@@ -1,6 +1,6 @@
 {
   "name": "@readr-media/react-360",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
