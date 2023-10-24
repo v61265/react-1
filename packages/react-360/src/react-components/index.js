@@ -129,8 +129,11 @@ export default function React360({
   const imageUrl = imageRwdUrls[device]
 
   useEffect(() => {
-    setImageHeight(window.innerWidth / 2)
-    if (window.innerWidth > 768) {
+    if (window.innerWidth <= 768) {
+      setImageHeight(window.innerHeight / 2)
+      setDevice('mb')
+    } else {
+      setImageHeight(window.innerWidth / 2)
       setDevice('pc')
     }
   }, [])
