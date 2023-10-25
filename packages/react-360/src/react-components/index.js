@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import useOnceShown from './hook/useOnceShown.js'
 import ReactPannellum from './components/react-pannellum.js'
+import InteractionHint from './components/interaction-hint.js'
 
 const Wrapper = styled.div``
 
@@ -120,6 +121,7 @@ export default function React360({
     text: 'Change this to desired wording.',
     url: 'Add link or remove to prevent redirect',
   })
+  const [showPannellumHint, setShowPannellumHint] = useState(false)
 
   let hotspots = Array.isArray(hotspotsConfig) ? hotspotsConfig : []
 
@@ -171,12 +173,21 @@ export default function React360({
           <Error>No Image Url Provided! `{imageUrl}`</Error>
         ) : (
           onceShown && (
-            <ReactPannellum
-              ref={pannellumRef}
-              imageUrl={imageUrl}
-              hotspots={hotspots}
-              onEditorClick={isEditMode ? onEditorClick : null}
-            />
+            <>
+              <ReactPannellum
+                ref={pannellumRef}
+                imageUrl={imageUrl}
+                hotspots={hotspots}
+                onEditorClick={isEditMode ? onEditorClick : null}
+                onClick={() => {
+                  setShowPannellumHint(false)
+                }}
+                onPannellumLoaded={() => {
+                  setShowPannellumHint(true)
+                }}
+              />
+              <InteractionHint showHint={showPannellumHint} />
+            </>
           )
         )}
       </PannellumWrapper>
