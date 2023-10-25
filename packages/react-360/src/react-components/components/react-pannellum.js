@@ -2,7 +2,13 @@ import { forwardRef } from 'react'
 import { Pannellum } from '@readr-media/pannellum-react'
 
 export default forwardRef(function ReactPannellum(props, ref) {
-  const { imageUrl, hotspots, onEditorClick } = props
+  const {
+    imageUrl,
+    hotspots,
+    onEditorClick,
+    onClick,
+    onPannellumLoaded,
+  } = props
 
   return (
     <Pannellum
@@ -20,6 +26,7 @@ export default forwardRef(function ReactPannellum(props, ref) {
       showZoomCtrl={false}
       showFullscreenCtrl={false}
       mouseZoom={false}
+      onLoad={onPannellumLoaded}
       onMousedown={(e) => {
         if (onEditorClick) {
           // Calculate the pitch and yaw based on the click coordinates
@@ -28,6 +35,10 @@ export default forwardRef(function ReactPannellum(props, ref) {
           const [pitch, yaw] = pitchYaw
           onEditorClick(pitch, yaw)
         }
+        onClick()
+      }}
+      onTouchstart={() => {
+        onClick()
       }}
     >
       {hotspots.map((hotspot) => (
