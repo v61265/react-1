@@ -1,5 +1,16 @@
 # @readr-media/react-feedback Changelog
 
+## 2023-11-02, Version 3.8.0
+
+### Notable Changes
+- fix: handle behavior under strict mode
+- feat: add defaultText config to text field
+### Commits
+* \[[`f2ac4c0821`](https://github.com/readr-media/react-feedback/commit/f2ac4c0821)] - feat(feedback): add defaultText config to text field (Tsuki Akiba)
+* \[[`aaae3c3104`](https://github.com/readr-media/react-feedback/commit/aaae3c3104)] - fix(feedback): handle behavior under strict mode (Tsuki Akiba)
+* \[[`8d6d108d3d`](https://github.com/readr-media/react-feedback/commit/8d6d108d3d)] - chore(feedback): bump version to 3.7.0 (Tsuki Akiba)
+* \[[`5cc91be486`](https://github.com/readr-media/react-feedback/commit/5cc91be486)] - docs(feedback): update CHANGELOG (Tsuki Akiba)
+
 ## 2023-10-19, Version 3.7.0
 
 ### Notable Changes

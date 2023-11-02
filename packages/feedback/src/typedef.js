@@ -36,6 +36,7 @@ export default {}
 /**
  * @typedef {Object}    TextOnly
  * @property {string}   [commentListTitle]
+ * @property {string}   [defaultText]
  * @property {boolean}  [shouldShowItemControl]
  */
 
