@@ -1,5 +1,14 @@
 # @readr-media/react-feedback Changelog
 
+## 2023-11-03, Version 4.0.0
+
+### Notable Changes
+- refactor: replace sessionStorage with localStorage
+### Commits
+* \[[`1c9113ad6a`](https://github.com/readr-media/react-feedback/commit/1c9113ad6a)] - refactor(feedback): replace sessionStorage with localStorage (Tsuki Akiba)
+* \[[`e591a5cc9f`](https://github.com/readr-media/react-feedback/commit/e591a5cc9f)] - chore(feedback): bump version to 3.8.0 (Tsuki Akiba)
+* \[[`6be61adf9c`](https://github.com/readr-media/react-feedback/commit/6be61adf9c)] - docs(feedback): update CHANGELOG (Tsuki Akiba)
+
 ## 2023-11-02, Version 3.8.0
 
 ### Notable Changes
