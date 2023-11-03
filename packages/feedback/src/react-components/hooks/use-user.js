@@ -13,12 +13,14 @@ export default function useUser() {
   const [userId, setUserId] = useState(null)
 
   useEffect(() => {
-    if (sessionStorage[storageKey]) {
-      setUserId(sessionStorage[storageKey])
+    const userId = localStorage.getItem(storageKey)
+
+    if (userId) {
+      setUserId(userId)
     } else {
       const userId = uuidv4()
       setUserId(userId)
-      sessionStorage[storageKey] = userId
+      localStorage.setItem(storageKey, userId)
     }
   })
 
