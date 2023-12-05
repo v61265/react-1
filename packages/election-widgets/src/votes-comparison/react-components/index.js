@@ -3,7 +3,9 @@
  *  @typedef {import('./typedef').Election} Election
  *  @typedef {import('./typedef').ReferendumElection} ReferendumElection
  *  @typedef {import('./typedef').PresidentElection} PresidentElection
+ *  @typedef {import('./typedef').LegislatorElection} LegislatorElection
  *  @typedef {import('./typedef').LegislatorPartyElection} LegislatorPartyElection
+ *  @typedef {import('./typedef').LegislatorIndigenousElection} LegislatorIndigenousElection
  *  @typedef {import('./manager').DataManager} DataManager
  */
 
@@ -414,7 +416,7 @@ export function CouncilMember({
 /**
  *  @param {Object} props
  *  @param {string} [props.className]
- *  @param {Election | ReferendumElection | PresidentElection | LegislatorPartyElection } props.election
+ *  @param {Election | ReferendumElection | PresidentElection | LegislatorPartyElection | LegislatorIndigenousElection | LegislatorElection } props.election
  *  @param {'mobile'|'rwd'} [props.device='rwd']
  *  @param {'openRelations'|'electionMap'|'mnewsElection2022'} [props.theme='openRelations']
  *  @param {string} [props.stickyTopOffset]
@@ -458,6 +460,9 @@ export default function EVC({
         </ThemeProvider>
       )
     case 'legislator':
+    case 'legislator-district':
+    case 'legislator-mountainIndigenous':
+    case 'legislator-plainIndigenous':
     case 'legislator-party':
     case 'mayor':
     case 'referendum':
