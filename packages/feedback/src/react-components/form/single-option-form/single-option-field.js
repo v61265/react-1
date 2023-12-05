@@ -56,26 +56,34 @@ export default function SingleOptionField({ formId, field }) {
 
   const onOptionSelected = (value) => {
     if (optionSummary && value in optionSummary) {
+      const defaultOptions = field.selectedItem ? [field.selectedItem] : []
+
       if (value === selectedOption) {
         // cancel selection
         setSelectedOption(undefined)
-        giveOptions([])
+        giveOptions(defaultOptions, [])
       } else {
         // select option
         setSelectedOption(value)
-        giveOptions([value])
+        giveOptions(defaultOptions, [value])
       }
     }
   }
 
   if (typeof field.notifyUpstream === 'function') {
     useEffect(() => {
-      field.notifyUpstream({
-        selectedOption,
-        optionSummary,
-      })
-    }, [selectedOption])
+      if (optionSummary) {
+        field.notifyUpstream({
+          selectedOption,
+          optionSummary,
+        })
+      }
+    }, [selectedOption, optionSummary])
   }
+
+  useEffect(() => {
+    setSelectedOption(field.selectedItem)
+  }, [field])
 
   return (
     <Container className="field-container">

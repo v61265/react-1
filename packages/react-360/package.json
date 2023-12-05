@@ -1,0 +1,41 @@
+{
+  "name": "@readr-media/react-360",
+  "version": "0.4.0",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "make dev",
+    "build": "make build",
+    "clean": "make clean",
+    "build-lib": "make build-lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/readr-media/react.git",
+    "directory": "packages/react-360"
+  },
+  "keywords": [
+    "react",
+    "360"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "styled-components": "5.3.5"
+  },
+  "dependencies": {
+    "@readr-media/pannellum-react": "^1.4.2",
+    "react-lottie": "^1.2.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.22.9",
+    "@babel/core": "^7.22.9",
+    "webpack": "^5.88.2"
+  },
+  "files": [
+    "lib",
+    "assets"
+  ]
+}

@@ -21,6 +21,7 @@ export const formsData = {
           type: 'text',
           commentListTitle: '',
           shouldShowItemControl: false,
+          defaultText: '在沒有回覆情況下的預設顯示文字',
         },
       ],
     },

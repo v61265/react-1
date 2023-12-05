@@ -54,13 +54,11 @@ export default function useComments(formId, fieldId, identifier) {
             takeRef.current = 2 * moreCommentCount
           }
           if (formResults.length) {
+            const allCommentsIds = allCommentsRef.current.map(
+              (comment) => comment.id
+            )
             const comments = formResults
-              .filter(
-                ({ id }) =>
-                  !allCommentsRef.current.some(
-                    (oldComment) => oldComment.id === id
-                  )
-              )
+              .filter(({ id }) => allCommentsIds.includes(id) === false)
               .map(({ id, name, result, responseTime }) => ({
                 id,
                 name,
@@ -70,6 +68,12 @@ export default function useComments(formId, fieldId, identifier) {
             if (comments.length !== formResults.length) {
               console.log('filter repitition')
             }
+
+            if (comments.length === 0) {
+              // handle duplicated request during initialization
+              return
+            }
+
             hidingCommentsRef.current = [
               ...hidingCommentsRef.current,
               ...comments,
@@ -82,10 +86,7 @@ export default function useComments(formId, fieldId, identifier) {
             0,
             showCommentCount
           )
-          setShowingComments((showingComments) => [
-            ...showingComments,
-            ...commentsToShow,
-          ])
+          setShowingComments((comments) => [...comments, ...commentsToShow])
         }
       } catch (error) {
         // do nothing for now
@@ -101,9 +102,7 @@ export default function useComments(formId, fieldId, identifier) {
         0,
         moreCommentCount
       )
-      setShowingComments((showingComments) =>
-        [...showingComments].concat(commentsToShow)
-      )
+      setShowingComments((comments) => [...comments, ...commentsToShow])
     }
   }
 
@@ -117,7 +116,7 @@ export default function useComments(formId, fieldId, identifier) {
       content: textareaValue,
       date: convertDateFromISO8601(date),
     }
-    setShowingComments((showingComments) => [newComment, ...showingComments])
+    setShowingComments((comments) => [newComment, ...comments])
     // send request without error handle
     try {
       const result = await postFeedback({ // eslint-disable-line

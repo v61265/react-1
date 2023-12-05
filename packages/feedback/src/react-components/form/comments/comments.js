@@ -21,6 +21,8 @@ const Title = styled.p`
   font-weight: 700;
 `
 
+const DefaultText = styled.p``
+
 const ButtonWrapper = styled.div`
   margin-top: 24px;
   text-align: center;
@@ -57,6 +59,7 @@ const Button = styled.button`
  * @param {boolean}     props.noMoreComment
  * @param {string}      [props.listTitle='網友回饋']
  * @param {boolean}     [props.shouldShowControl=true]
+ * @param {string}      [props.defaultText]
  * @return {JSX.Element}
  */
 export default function Comments({
@@ -65,6 +68,7 @@ export default function Comments({
   noMoreComment,
   listTitle = '網友回饋',
   shouldShowControl = true,
+  defaultText,
 }) {
   const clickHandler = (e) => {
     e.preventDefault()
@@ -73,7 +77,7 @@ export default function Comments({
 
   return (
     <Wrapper className="list-container">
-      {listTitle && <Title>{listTitle}</Title>}
+      {listTitle && <Title className="list-title">{listTitle}</Title>}
 
       {comments.map((comment) => (
         <CommentItem
@@ -82,6 +86,11 @@ export default function Comments({
           shouldShowControl={shouldShowControl}
         />
       ))}
+
+      {comments.length === 0 && defaultText && (
+        <DefaultText className="default-text">{defaultText}</DefaultText>
+      )}
+
       {!noMoreComment && (
         <ButtonWrapper className="list-control">
           <Button onClick={clickHandler}>展開更多</Button>

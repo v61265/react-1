@@ -1,6 +1,6 @@
 {
   "name": "@readr-media/react-embed-code-generator",
-  "version": "2.4.3-alpha.4",
+  "version": "2.4.3-alpha.15",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -28,6 +28,7 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "@readr-media/react-360": "0.4.0",
     "@readr-media/react-dropping-text": "1.0.9",
     "@readr-media/react-dual-slides": "^1.1.0",
     "@readr-media/react-election-widgets": "1.0.2",
@@ -50,7 +51,7 @@
     "@babel/eslint-parser": "^7.11.4",
     "@babel/preset-env": "^7.17.12",
     "@babel/preset-react": "^7.17.12",
-    "@readr-media/react-embed-code-generator": "2.4.3-alpha.4",
+    "@readr-media/react-embed-code-generator": "2.4.3-alpha.8",
     "@svgr/webpack": "^6.2.1",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.5",

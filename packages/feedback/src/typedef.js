@@ -36,6 +36,7 @@ export default {}
 /**
  * @typedef {Object}    TextOnly
  * @property {string}   [commentListTitle]
+ * @property {string}   [defaultText]
  * @property {boolean}  [shouldShowItemControl]
  */
 
@@ -107,6 +108,6 @@ export default {}
 
 /**
  * @typedef {Object}                                    OptionAmountManager
- * @property {Object.<string, number>}                  optionSummary
- * @property {(value: string[]) => Promise<void>}       giveOptions
+ * @property {Object.<string, number> | null}           optionSummary
+ * @property {(defaultOptions: string[], newOptions: string[]) => Promise<void>}       giveOptions
  */

@@ -158,3 +158,11 @@ if (window?.[namespace][`react-theatre${pkgVersion}`]) {
     hydrate(namespace, `react-theatre${pkgVersion}`, Theatre)
   })
 }
+
+if (window?.[namespace][`react-360${pkgVersion}`]) {
+  import(/* webpackChunkName: "react-360" */ '@readr-media/react-360').then(
+    ({ default: React360 }) => {
+      render(namespace, `react-360${pkgVersion}`, React360)
+    }
+  )
+}

@@ -14,15 +14,29 @@ export default function useOptions(formId, fieldId, identifier) {
   const originalOptionSummaryRef = useRef(null)
   const { userId } = useUser()
 
-  const giveOptions = async (options) => {
-    // add statistic before sending request
+  const giveOptions = async (defaultOptions, newOptions) => {
+    // We use defaultOptions and newOptions to handle options change by following rules:
+    // Elements in defaultOptions but not in newOptions will make subscription to summary.
+    // Elements in newOptions but not in defaultOptions will make addition to summary.
+    // Elements both in or not in don't make any effort.
     const originalOptionSummary = originalOptionSummaryRef.current
+    const defaultSet = new Set()
     const memorySet = new Set()
     const filterdOptions = []
 
-    if (options.length > 0) {
+    if (newOptions.length > 0) {
       const copyOptionSummary = Object.assign({}, originalOptionSummary)
-      for (let o of options) {
+
+      if (defaultOptions.length > 0) {
+        for (let o of defaultOptions) {
+          if (defaultSet.has(o) === false) {
+            copyOptionSummary[o] -= 1
+            defaultSet.add(o)
+          }
+        }
+      }
+
+      for (let o of newOptions) {
         if (o in copyOptionSummary && memorySet.has(o) === false) {
           copyOptionSummary[o] += 1
           memorySet.add(o)
@@ -32,7 +46,15 @@ export default function useOptions(formId, fieldId, identifier) {
 
       setOptionSummary(copyOptionSummary)
     } else {
-      setOptionSummary(originalOptionSummary)
+      if (defaultOptions.length > 0) {
+        const copyOptionSummary = Object.assign({}, originalOptionSummary)
+        for (let o of defaultOptions) {
+          copyOptionSummary[o] -= 1
+          setOptionSummary(copyOptionSummary)
+        }
+      } else {
+        setOptionSummary(originalOptionSummary)
+      }
     }
 
     if (!userId) return

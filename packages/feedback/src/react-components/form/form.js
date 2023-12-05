@@ -52,7 +52,13 @@ export default function CustomForm({ form, verified }) {
             )
           case 'single':
             if (Array.isArray(field.options) && field.options.length > 0) {
-              return <SingleOptionField formId={form.id} field={field} />
+              return (
+                <SingleOptionField
+                  key={field.id}
+                  formId={form.id}
+                  field={field}
+                />
+              )
             }
 
             return <ThumbsField key={field.id} formId={form.id} field={field} />
