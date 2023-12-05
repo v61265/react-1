@@ -294,7 +294,7 @@ export class LegislatorPartyDataManager extends DataManager {
    */
   constructor(data) {
     super(data)
-    this.districts = [{ districtName: '全國 (不分區)' }]
+    this.districts = [{ districtName: '全國' }]
   }
 
   /**
@@ -305,7 +305,7 @@ export class LegislatorPartyDataManager extends DataManager {
       ...this.data,
       districts: [
         {
-          districtName: '全國 (不分區)',
+          districtName: '全國',
         },
       ],
     }
@@ -376,7 +376,7 @@ export class LegislatorPartyDataManager extends DataManager {
         cells: [],
       }
 
-      let districtName = '全國 (不分區)'
+      let districtName = '全國'
       row.id = p.candNo
       row.group = districtName
       row.cells = this.buildRowFromParty(p)
@@ -395,7 +395,7 @@ export class LegislatorPartyDataManager extends DataManager {
    *  @param {string} districtName
    *  @returns {Row}
    */
-  findRowByDistrictName(districtName = '全國 (不分區)') {
+  findRowByDistrictName(districtName = '全國') {
     return this.rows.find((r) => {
       return r.group === districtName
     })
@@ -803,7 +803,6 @@ export class PresidentDataManager extends DataManager {
 }
 
 export function dataManagerFactory() {
-  console.log('有進到 dataManagerFactory')
   return {
     /**
      *  @param {Election | ReferendumElection | LegislatorPartyElection | PresidentElection |LegislatorIndigenousElection  } data
@@ -822,7 +821,7 @@ export function dataManagerFactory() {
         case 'legislator-mountainIndigenous':
           return new LegislatorIndigenousDataManager(data)
         case 'legislator-party':
-          return new LegislatorDataManager(data)
+          return new LegislatorPartyDataManager(data)
         case 'referendum':
           return new ReferendumDataManager(data)
         case 'president':
