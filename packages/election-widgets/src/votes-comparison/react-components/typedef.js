@@ -46,9 +46,6 @@ export default {}
  */
 
 /**
- *  @typedef {Election} LegislatorElection
-
-/**
  *  @typedef {Object} PresidentCandidate
  *  @property {string} candNo
  *  @property {Entity[]} names
@@ -67,6 +64,14 @@ export default {}
  */
 
 /**
+ *  @typedef {Object} LegislatorElection
+ *  @property {string} title
+ *  @property {string} year
+ *  @property {'legislator' | 'legislator-district'} [type]
+ *  @property {District[]} [districts]
+ */
+
+/**
  *  @typedef {Object} LegislatorParty
  *  @property {string} candNo
  *  @property {Entity} party
@@ -81,6 +86,24 @@ export default {}
  *  @property {string} year
  *  @property {'legislator-party'} type
  *  @property {LegislatorParty[]} parties
+ */
+
+/**
+ *  @typedef {Object} LegislatorCandidate
+ *  @property {string} candNo
+ *  @property {Entity} name
+ *  @property {Entity} party
+ *  @property {number} tks
+ *  @property {number} tksRate
+ *  @property {boolean} candVictor
+ */
+
+/**
+ *  @typedef {Object} LegislatorIndigenousElection
+ *  @property {string} title
+ *  @property {string} year
+ *  @property {'legislator-mountainIndigenous' | 'legislator-plainIndigenous'} type
+ *  @property {LegislatorCandidate[]} candidates
  */
 
 /**
