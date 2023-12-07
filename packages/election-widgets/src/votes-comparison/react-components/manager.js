@@ -37,6 +37,10 @@ import { AnonymousIcon, ElectedIcon } from './icons'
 
 const ImgBlock = styled.div`
   margin-right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   img,
   svg {
     width: 32px;
@@ -48,6 +52,17 @@ const ImgBlock = styled.div`
 
   ${(props) => {
     switch (props.theme?.device) {
+      case 'mobile': {
+        return `
+          @media ${breakpoint.devices.laptop} {
+            img, svg {
+              width: 32px;
+              height: 32px;
+            }
+          }
+        `
+      }
+
       case 'rwd':
       default: {
         return `
@@ -347,7 +362,7 @@ export class LegislatorPartyDataManager extends DataManager {
       // 得票率
       [
         {
-          label: p?.tksRate?.toLocaleString() ?? '-',
+          label: p?.tksRate1?.toLocaleString() ?? '-',
         },
       ],
       // 當選席次
