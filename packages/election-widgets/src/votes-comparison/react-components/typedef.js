@@ -76,7 +76,8 @@ export default {}
  *  @property {string} candNo
  *  @property {Entity} party
  *  @property {number} tks
- *  @property {number} tksRate
+ *  @property {number} tksRate1 //第一階段得票率
+ *  @property {number} tksRate2 //第二階段得票率
  *  @property {number} seats
  */
 
