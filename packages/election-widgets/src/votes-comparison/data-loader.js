@@ -3,11 +3,12 @@ import errors from '@twreporter/errors'
 import events from 'events'
 
 /**
- *  @typedef {'error'|'councilMember'|'mayor'|'president'|'legislater'|'referendum'} SupportEventType
+ *  @typedef {'error'|'councilMember'|'mayor'|'president'|'legislator'|'referendum'} SupportEventType
  *  @typedef {import('../react-components/votes-comparison/typedef').CouncilMemberElection} CouncilMemberElection
  *  @typedef {import('../react-components/votes-comparison/typedef').CountyMayorElection} CountyMayorElection
  *  @typedef {import('../react-components/votes-comparison/typedef').LegislatorElection} LegislatorElection
  *  @typedef {import('../react-components/votes-comparison/typedef').LegislatorPartyElection} LegislatorPartyElection
+ *   @typedef {import('../react-components/votes-comparison/typedef').LegislatorIndigenousElection} LegislatorIndigenousElection
  *  @typedef {import('../react-components/votes-comparison/typedef').PresidentElection} PresidentElection
  *  @typedef {import('../react-components/votes-comparison/typedef').ReferendumElection} ReferendumElection
  */
@@ -92,15 +93,18 @@ export default class Loader {
    *  @param {Object} props
    *  @param {string} props.year
    *  @param {string} props.type
+   *  @param {string} [props.subType]
    *  @param {string} props.district
    *  @throws Error
    *  @returns {Promise<Object>}
    */
-  async loadData({ year, type, district }) {
+  async loadData({ year, type, subtype, district }) {
     try {
-      const axiosRes = await axios.get(
-        `${this.apiUrl}/${this.version}/${year}/${type}/${district}.json`
-      )
+      const dataUrl = subtype
+        ? `${this.apiUrl}/${this.version}/${year}/${type}/${subtype}/${district}.json`
+        : `${this.apiUrl}/${this.version}/${year}/${type}/${district}.json`
+
+      const axiosRes = await axios.get(dataUrl)
       return axiosRes?.data
     } catch (err) {
       const annotatedErr = errors.helpers.annotateAxiosError(err)
@@ -216,28 +220,26 @@ export default class Loader {
   /**
    *  @param {Object} props
    *  @param {string} props.year
-   *  @param {'indigenous'|'party'|'district'} props.type
-   *  @param {string} [props.district] - avaliable only when `type` is `district`
+   *  @param {'plainIndigenous' | 'mountainIndigenous' | 'party' | 'district'} props.subtype
+   *  @param {string} [props.district] - available only when `type` is `district`
    *  @param {boolean} [props.toLoadPeriodically=false]
    *  @param {number} [props.loadInterval] - available only when `toLoadPeriodically=true`, and its value must be greater than 30. Unit is second.
    *  @throws Error
-   *  @returns {Promise<void|LegislatorElection|LegislatorPartyElection>}
+   *  @returns {Promise<void|LegislatorElection|LegislatorPartyElection|LegislatorIndigenousElection}
    */
-  loadLegislaterData({
+  loadLegislatorData({
     year,
-    type,
+    subtype,
     district: _district,
     toLoadPeriodically = false,
     loadInterval,
   }) {
     let district = ''
-    switch (type) {
-      case 'indigenous': {
-        district = 'indigenous'
-        break
-      }
-      case 'party': {
-        district = 'party'
+    switch (subtype) {
+      case 'party':
+      case 'plainIndigenous':
+      case 'mountainIndigenous': {
+        district = 'all'
         break
       }
       case 'district': {
@@ -245,20 +247,22 @@ export default class Loader {
       }
       default: {
         throw new Error(
-          'type should be either "indigenous", "party" or "district"'
+          'subtype should be either "plainIndigenous", "mountainIndigenous", "party" or "district"'
         )
       }
     }
     if (toLoadPeriodically) {
       return this.loadDataPeriodically({
-        type: 'legislater',
+        type: 'legislator',
+        subtype,
         year,
         district,
         interval: loadInterval,
       })
     }
     return this.loadData({
-      type: 'legislater',
+      type: 'legislator',
+      subtype,
       year,
       district,
     })
@@ -275,7 +279,7 @@ export default class Loader {
   loadPresidentData({ year, toLoadPeriodically = false, loadInterval }) {
     if (toLoadPeriodically) {
       return this.loadDataPeriodically({
-        type: 'presidenet',
+        type: 'president',
         year,
         district: 'all',
         interval: loadInterval,
@@ -432,7 +436,7 @@ Loader.supportTypes = [
   'councilMember',
   'mayor',
   'president',
-  'legislater',
+  'legislator',
   'referendum',
 ]
 Loader.electionTypes = [
