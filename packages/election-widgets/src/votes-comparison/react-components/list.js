@@ -146,6 +146,8 @@ const TCell = styled.div`
    */
   (props) => {
     const baseCss = `
+      position: relative;
+      
       a {
         color: #d6610c;
         text-decoration: none;
@@ -167,7 +169,7 @@ const TCell = styled.div`
           padding: 15px;
           text-align: left;
           line-height: 150%;
-          height: ${props.multiLines ? 'none' : '53px'};
+          height: ${props.multiLines ? 'none' : '53px'}; 
           border-left: 1px solid rgba(0, 0, 0, 0.1);
           &:first-child {
             border-left: none;
@@ -193,13 +195,12 @@ const TCell = styled.div`
             padding: 15px;
             text-align: left;
             line-height: 150%;
-            height: ${props.multiLines ? 'none' : '56px'};
-
             border-left: 1px solid rgba(0, 0, 0, 0.1);
+            height: 56px;
           }
 
           @media ${breakpoint.devices.tabletBelow} {
-            height: ${props.multiLines ? 'none' : '53px'};
+            height: none;
           }
         `
       }
@@ -264,23 +265,118 @@ const THead = styled.div`
 const EntityCell = styled.div`
   ${/**
    *  @param {Object} props
-   *  @param {boolean} props.multiLines
+   *  @param {Object} props.theme
+   *  @param {boolean} [props.multiLines]
    */
   (props) => {
-    return `
-        display: ${props.multiLines ? 'flex' : 'inline-flex'};
-      `
+    const baseCss = `
+      display: ${props.multiLines ? 'flex' : 'inline-flex'};
+      align-items: center;
+      position: relative;
+
+      > a {
+        display: inline-flex;
+        align-items: center;
+      }
+
+      span {
+       margin-right: 22px;
+      }
+    `
+    const intervalTiltCss = `
+      &:not(:first-child):before {
+        content: '/';
+        color: rgba(15, 45, 53, 0.3);
+        font-size: 14px;
+        font-weight: 700;
+        position: absolute;
+        top: 50%;
+        left: -14px;
+        transform: translateY(-50%);
+        width: 6px;
+        height: 21px;
+      }
+    `
+    const intervalEmptyCss = `
+      &:not(:first-child):before {
+        content: '';
+        width: 0;
+        height: 0;
+      }
+    `
+
+    switch (props.theme?.device) {
+      case 'mobile': {
+        return `
+          ${baseCss}
+          ${props.multiLines ? intervalEmptyCss : intervalTiltCss};
+        `
+      }
+      case 'rwd':
+      default: {
+        return `
+          ${baseCss}
+          ${props.multiLines ? intervalEmptyCss : intervalTiltCss};
+
+          @media ${breakpoint.devices.laptop} {
+            ${intervalEmptyCss}
+            width: 100%;
+            min-height: 52px;
+            
+            span {
+              margin-right: 0px;
+            }
+          }
+        `
+      }
+    }
   }}
-  align-items: center;
+`
 
-  > a {
-    display: inline-flex;
-    align-items: center;
-  }
+const LegislatorPartyNotion = styled.span`
+  ${/**
+   *  @param {Object} props
+   *  @param {Object} props.theme
+   */
 
-  span {
-    margin-right: 8px;
-  }
+  (props) => {
+    const baseCss = `
+      position: absolute;
+      color: rgba(15, 45, 53, 0.5);
+      text-align: right;
+      font-size: 10px;
+      max-width: 60px;
+      bottom: -8px;
+      right: 15px;
+    `
+
+    switch (props.theme?.device) {
+      case 'mobile': {
+        return `
+          ${baseCss}
+          line-height: 12px;
+        `
+      }
+      case 'rwd':
+      default: {
+        return `
+          ${baseCss}
+          line-height: 14px;
+
+          @media ${breakpoint.devices.tablet} {
+            bottom: -12px;
+          }
+
+          @media ${breakpoint.devices.laptop} {
+            font-size: 12px;
+            top: -10px;
+            right: 30px;
+            max-width: none;
+          }
+        `
+      }
+    }
+  }}
 `
 
 /**
@@ -292,6 +388,7 @@ const EntityCell = styled.div`
 export default function List({ className, dataManager, scrollTo }) {
   const rows = dataManager.buildListRows()
   const heads = dataManager.buildListHead()
+  const data = dataManager.getData()
 
   const rowId =
     dataManager.findRowByDistrictName(scrollTo)?.id ?? rows?.[0]?.id ?? 'row-1'
@@ -414,6 +511,10 @@ export default function List({ className, dataManager, scrollTo }) {
     )
   })
 
+  // Since election-type `legislator-party` has `tksRate1`（第一階段投票率） & `tksRate2` data, but only need to show `tksRate1` and add notion: `*得票率=第一階段得票率`.
+  // so it's necessary to determine the election type and whether the head is `得票率`.
+  const shouldShowHeadNotion = Boolean(data?.type === 'legislator-party')
+
   return (
     <Table className={className} ref={tableRef}>
       <THead>
@@ -422,6 +523,12 @@ export default function List({ className, dataManager, scrollTo }) {
             return (
               <TCell data-column-id={idx} key={`head_${idx}`}>
                 {head}
+
+                {shouldShowHeadNotion && head === '得票率' && (
+                  <LegislatorPartyNotion>
+                    *得票率 = 第一階段得票率
+                  </LegislatorPartyNotion>
+                )}
               </TCell>
             )
           })}
