@@ -62,6 +62,83 @@ export default class Loader {
       filename: `seat/county/${countyCode}.json`,
     })
   }
+
+  /**
+   *  Load data from web service.
+   *  @param {Object} props
+   *  @param {string} props.year
+   *  @param {string} props.countyCode - county code, see `Loader.countyCodes` for more info
+   *  @throws Error
+   *  @returns {Promise<SeatData>}
+   */
+  loadAreaLegislatorData({ year, countyCode }) {
+    return this.loadData({
+      type: 'legislator',
+      year,
+      filename: `seat/county/normal/${countyCode}.json`,
+    })
+  }
+
+  /**
+   *  Load data from web service.
+   *  @param {Object} props
+   *  @param {string} props.year
+   *  @param {string} props.countyCode - county code, see `Loader.countyCodes` for more info
+   *  @throws Error
+   *  @returns {Promise<SeatData>}
+   */
+  loadAllLegislatorData({ year }) {
+    return this.loadData({
+      type: 'legislator',
+      year,
+      filename: `seat/country/all/country.json`,
+    })
+  }
+
+  /**
+   *  Load data from web service.
+   *  @param {Object} props
+   *  @param {string} props.year
+   *  @throws Error
+   *  @returns {Promise<SeatData>}
+   */
+  loadMountainIndigenousLegislatorData({ year }) {
+    return this.loadData({
+      type: 'legislator',
+      year,
+      filename: `seat/country/mountain-indigenous/country.json`,
+    })
+  }
+
+  /**
+   *  Load data from web service.
+   *  @param {Object} props
+   *  @param {string} props.year
+   *  @throws Error
+   *  @returns {Promise<SeatData>}
+   */
+  loadPlainIndigenousLegislatorData({ year }) {
+    return this.loadData({
+      type: 'legislator',
+      year,
+      filename: `seat/country/plain-indigenous/country.json`,
+    })
+  }
+
+  /**
+   *  Load data from web service.
+   *  @param {Object} props
+   *  @param {string} props.year
+   *  @throws Error
+   *  @returns {Promise<SeatData>}
+   */
+  loadPartyLegislatorData({ year }) {
+    return this.loadData({
+      type: 'legislator',
+      year,
+      filename: `seat/country/party/country.json`,
+    })
+  }
 }
 
 Loader.electionTypes = [
