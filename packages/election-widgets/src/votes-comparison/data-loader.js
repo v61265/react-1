@@ -248,6 +248,7 @@ export default class Loader {
       }
       case 'district': {
         district = _district
+        break
       }
       default: {
         throw new Error(
