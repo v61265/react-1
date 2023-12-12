@@ -155,23 +155,20 @@ export default class Loader {
       if (includes.indexOf(d?.type) > -1) {
         switch (d?.type) {
           case 'plainIndigenous': {
-            d.districtName = `第${d.districtName}選區（平地）`
-            d.fullDistrictName = d.districtName
+            d.fullDistrictName = `第${d.districtName}選區（平地）`
             districts.push(d)
             break
           }
 
           case 'mountainIndigenous': {
-            d.districtName = `第${d.districtName}選區（山地）`
-            d.fullDistrictName = d.districtName
+            d.fullDistrictName = `第${d.districtName}選區（山地）`
             districts.push(d)
             break
           }
 
           case 'indigenous':
           case 'normal': {
-            d.districtName = `第${d.districtName}選區`
-            d.fullDistrictName = d.districtName
+            d.fullDistrictName = `第${d.districtName}選區`
             districts.push(d)
             break
           }
@@ -208,8 +205,15 @@ export default class Loader {
         year,
         district,
         interval: loadInterval,
+      }).then((resolvedData) => {
+        resolvedData.districts = resolvedData.districts.map((district) => ({
+          ...district,
+          fullDistrictName: `第${district.districtName}選區`, //data for `options` & `row.id` & `row.group`
+        }))
+        return resolvedData
       })
     }
+
     return this.loadData({
       type: 'councilMember',
       year,
@@ -258,13 +262,26 @@ export default class Loader {
         year,
         district,
         interval: loadInterval,
+      }).then((resolvedData) => {
+        resolvedData.districts = resolvedData.districts.map((district) => ({
+          ...district,
+          fullDistrictName: `第${district.districtName}選區`, //data for `options` & `row.id` & `row.group`
+        }))
+        return resolvedData
       })
     }
+
     return this.loadData({
       type: 'legislator',
       subtype,
       year,
       district,
+    }).then((resolvedData) => {
+      resolvedData.districts = resolvedData.districts.map((district) => ({
+        ...district,
+        fullDistrictName: `第${district.districtName}選區`, //data for `options` & `row.id` & `row.group`
+      }))
+      return resolvedData
     })
   }
 

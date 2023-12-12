@@ -170,6 +170,14 @@ export class DataManager {
       group: '',
     }
   }
+
+  /**
+   *  @param {string} dn
+   *  @returns {string}
+   */
+  genFullDistrictName(dn) {
+    return dn
+  }
 }
 
 function CandidateImg({ imgSrc }) {
@@ -238,11 +246,10 @@ export class CouncilMemberDataManager extends DataManager {
   }
 
   /**
-   *  @param {string} dn
-   *  @returns {string}
+   *  @override
    */
   genFullDistrictName(dn) {
-    return `第${dn}選舉區`
+    return `第${dn}選區`
   }
 
   /**
@@ -264,15 +271,21 @@ export class CouncilMemberDataManager extends DataManager {
           group: '',
         }
 
-        row.group = d.districtName
-        row.id = `${d.districtName}-${cIdx}`
-        let districtName = ''
+        // `districtName` 為 (1)下拉選單內容 (2)「地區」欄內容 (3)scrollTo 對應的 id 資訊
+        /** @type {string} */
+        let districtName =
+          d.fullDistrictName || this.genFullDistrictName(d.districtName) || ''
+        row.id = `${districtName}-${cIdx}` // data for `data-row-id`
+        row.group = districtName
+
+        //「地區」欄-內容小標（除了 cIdx[0] 外的都不顯示小標）
+        /** @type {string} */
+        let areaLabel = ''
         if (cIdx === 0) {
-          districtName =
-            d.fullDistrictName || this.genFullDistrictName(d.districtName)
+          areaLabel = districtName
         }
         row.cells = this.buildRowFromCandidate(c)
-        row.cells.unshift([{ label: districtName }])
+        row.cells.unshift([{ label: areaLabel }])
         this.rows.push(row)
       })
     })
@@ -284,7 +297,7 @@ export class CouncilMemberDataManager extends DataManager {
    *  @param {string} districtName
    *  @returns {Row}
    */
-  findRowByDistrictName(districtName = '01') {
+  findRowByDistrictName(districtName = '第01選區') {
     return this.rows.find((r) => {
       return r.group === districtName
     })
@@ -352,7 +365,7 @@ export class LegislatorPartyDataManager extends DataManager {
         },
       ],
       // 政黨
-      this.buildPartyCell([p.party]),
+      this.buildPartyCell([p?.party]),
       // 得票數
       [
         {
@@ -362,7 +375,7 @@ export class LegislatorPartyDataManager extends DataManager {
       // 得票率
       [
         {
-          label: p?.tksRate1?.toLocaleString() ?? '-',
+          label: typeof p?.tksRate1 === 'number' ? `${p?.tksRate1}%` : '-',
         },
       ],
       // 當選席次
