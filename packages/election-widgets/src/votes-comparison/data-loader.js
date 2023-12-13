@@ -218,6 +218,12 @@ export default class Loader {
       type: 'councilMember',
       year,
       district,
+    }).then((resolvedData) => {
+      resolvedData.districts = resolvedData.districts.map((district) => ({
+        ...district,
+        fullDistrictName: `第${district.districtName}選區`, //data for `options` & `row.id` & `row.group`
+      }))
+      return resolvedData
     })
   }
 
