@@ -205,12 +205,6 @@ export default class Loader {
         year,
         district,
         interval: loadInterval,
-      }).then((resolvedData) => {
-        resolvedData.districts = resolvedData.districts.map((district) => ({
-          ...district,
-          fullDistrictName: `第${district.districtName}選區`, //data for `options` & `row.id` & `row.group`
-        }))
-        return resolvedData
       })
     }
 
@@ -218,12 +212,6 @@ export default class Loader {
       type: 'councilMember',
       year,
       district,
-    }).then((resolvedData) => {
-      resolvedData.districts = resolvedData.districts.map((district) => ({
-        ...district,
-        fullDistrictName: `第${district.districtName}選區`, //data for `options` & `row.id` & `row.group`
-      }))
-      return resolvedData
     })
   }
 
@@ -269,14 +257,6 @@ export default class Loader {
         year,
         district,
         interval: loadInterval,
-      }).then((data) => {
-        if (subtype === 'district') {
-          data.districts = data.districts?.map((district) => ({
-            ...district,
-            fullDistrictName: `第${district.districtName}選區`, //data for `options` & `row.id` & `row.group`
-          }))
-        }
-        return data
       })
     }
 
@@ -285,14 +265,6 @@ export default class Loader {
       subtype,
       year,
       district,
-    }).then((data) => {
-      if (subtype === 'district') {
-        data.districts = data.districts?.map((district) => ({
-          ...district,
-          fullDistrictName: `第${district.districtName}選區`, //data for `options` & `row.id` & `row.group`
-        }))
-      }
-      return data
     })
   }
 
