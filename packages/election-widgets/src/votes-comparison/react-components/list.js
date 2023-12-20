@@ -32,7 +32,7 @@ const Table = styled.div`
       default: {
         return `
           @media ${breakpoint.devices.laptop} {
-            width: 1120px;
+            width: 1160px;
           }
 
           @media ${breakpoint.devices.laptopBelow} {
