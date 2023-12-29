@@ -105,7 +105,7 @@ export default function LiveBlogItem({
     onChange({
       eventName: 'Click',
       eventTarget: '繼續閱讀按鈕',
-      eventValue: expanded ? '收合' : '展開',
+      eventValue: expanded ? '展開較少' : '繼續閱讀',
       metadata: {
         article: {
           title: article.title,
@@ -116,10 +116,30 @@ export default function LiveBlogItem({
 
   const showLightboxClickedHandler = () => {
     setShowAsLightbox((showLightbox) => !showLightbox)
+    onChange({
+      eventName: 'Click',
+      eventTarget: 'lightbox按鈕',
+      eventValue: showAsLightbox ? '收合' : '展開',
+      metadata: {
+        article: {
+          title: article.title,
+        },
+      },
+    })
   }
 
   const closeLighboxClickedHandler = () => {
     setShowAsLightbox(false)
+    onChange({
+      eventName: 'Click',
+      eventTarget: 'lightbox按鈕',
+      eventValue: '收合',
+      metadata: {
+        article: {
+          title: article.title,
+        },
+      },
+    })
   }
 
   const copyLiveblogItemUrl = () => {
@@ -141,6 +161,7 @@ export default function LiveBlogItem({
     onChange({
       eventName: 'Click',
       eventTarget: '複製按鈕',
+      eventValue: '複製連結',
       metadata: {
         article: {
           title: article.title,
