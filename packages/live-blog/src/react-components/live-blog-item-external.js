@@ -53,7 +53,7 @@ export default function LiveBlogItemExternal({
     onChange({
       eventName: 'Click',
       eventTarget: '繼續閱讀按鈕',
-      eventValue: expanded ? '收合' : '展開',
+      eventValue: expanded ? '展開較少' : '繼續閱讀',
       metadata: {
         article: {
           title: article.title,
