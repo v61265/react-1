@@ -103,10 +103,9 @@ export default function LiveBlogItem({
     e.stopPropagation()
     setExpanded((expanded) => !expanded)
     onChange({
-      category: 'liveBlogItem',
-      eventName: 'click',
+      eventName: 'Click',
       eventTarget: '繼續閱讀按鈕',
-      eventValue: expanded ? '顯示較少' : '繼續閱讀',
+      eventValue: expanded ? '收合' : '展開',
       metadata: {
         article: {
           title: article.title,
@@ -139,6 +138,15 @@ export default function LiveBlogItem({
     setTimeout(() => {
       setToast({ show: false, mesrsage: '' })
     }, 500)
+    onChange({
+      eventName: 'Click',
+      eventTarget: '複製按鈕',
+      metadata: {
+        article: {
+          title: article.title,
+        },
+      },
+    })
   }
 
   const LiveBlogItem = (
