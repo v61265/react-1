@@ -85,7 +85,7 @@ export default class Loader {
   }) {
     this.eventEmitter = new events.EventEmitter()
     this.apiUrl = apiUrl
-    this.version = version === 'v1' ? '' : version
+    this.version = version
   }
 
   /**
