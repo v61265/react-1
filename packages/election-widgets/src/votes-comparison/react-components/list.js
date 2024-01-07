@@ -32,7 +32,7 @@ const Table = styled.div`
       default: {
         return `
           @media ${breakpoint.devices.laptop} {
-            width: 1160px;
+            width: 1200px;
           }
 
           @media ${breakpoint.devices.laptopBelow} {
@@ -411,49 +411,6 @@ export default function List({ className, dataManager, scrollTo }) {
       node.scrollLeft = offsetLeft
     }, 0)
   }, [scrollTo])
-
-  // useEffect(() => {
-  //   // This effect hook is to set list row the same height.
-  //   // For laptop version, the list is a `table`,
-  //   // therefore, browser will automatically calculate the height and width for each row and column.
-  //   // But, in mobile/tablet version, the list is built from `flex`, rather than `table`;
-  //   // we need to adjust the list cell height and width if we want present multiple lines.
-  //   // And the following codes does that.
-  //   //
-  //   // By the way, the reasons we don't render `table` for table/mobile version are:
-  //   // 1. mobile/tablet mockups have vertical headers, but laptop has horizontal headers
-  //   // 2. the mockups modified multiple times. At first, the cell does not support multiple lines.
-  //   //    Therefore, `flex` is a easy way for implementation.
-  //   // 3. if we want to change `flex` to `table`, we have to have two different code blocks to render
-  //   //    mobile/tablet and laptop version.
-
-  //   const node = tableRef.current
-
-  //   // query table cell with multiple lines
-  //   const multiLineCells = node?.querySelectorAll(`[data-multi-lines="true"]`)
-
-  //   //mapping table: key is column id and value is maxHeight.
-  //   //It is used to record which table cell having max height.
-  //   let maxHeightMap = {}
-
-  //   // calculate max height of table cells with the certain `data-column-id` attribute
-  //   multiLineCells?.forEach((cell) => {
-  //     const colId = cell?.getAttribute('data-column-id')
-  //     if (!maxHeightMap.hasOwnProperty(colId)) {
-  //       maxHeightMap[colId] = cell.offsetHeight
-  //     } else if (maxHeightMap[colId] < cell?.offsetHeight) {
-  //       maxHeightMap[colId] = cell.offsetHeight
-  //     }
-  //   })
-
-  //   // set the cells, with the same `data-column-id`, the same height
-  //   for (const colId in maxHeightMap) {
-  //     const cells = node?.querySelectorAll(`[data-column-id="${colId}"]`)
-  //     cells?.forEach((cell) => {
-  //       cell.style.height = `${maxHeightMap[colId]}px`
-  //     })
-  //   }
-  // }, [dataManager])
 
   let previousBgColor = 'dark'
   const rowsJsx = rows.map((row, rowIdx) => {
