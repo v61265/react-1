@@ -461,6 +461,7 @@ Loader.electionYears = [
   '2018',
   '2020',
   '2022',
+  '2024',
 ]
 Loader.electionDistricts = [
   'taipeiCity',
