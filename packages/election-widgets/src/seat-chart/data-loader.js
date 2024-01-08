@@ -8,20 +8,14 @@ import errors from '@twreporter/errors'
 
 export default class Loader {
   apiUrl = 'https://whoareyou-gcs.readr.tw/elections'
-  version = 'v1'
 
   /**
    *  @constructor
    *  @param {Object} props
    *  @param {string} [props.apiUrl='https://whoareyou-gcs.readr.tw']
-   *  @param {string} [props.version=v2]
    */
-  constructor({
-    apiUrl = 'https://whoareyou-gcs.readr.tw/elections',
-    version = 'v1',
-  }) {
+  constructor({ apiUrl = 'https://whoareyou-gcs.readr.tw/elections' }) {
     this.apiUrl = apiUrl
-    this.version = version === 'v1' ? '' : version
   }
 
   /**
@@ -36,9 +30,7 @@ export default class Loader {
   async loadData({ year, type, filename }) {
     try {
       const axiosRes = await axios.get(
-        this.version
-          ? `${this.apiUrl}/${this.version}/${year}/${type}/${filename}`
-          : `${this.apiUrl}/${year}/${type}/${filename}`
+        `${this.apiUrl}/${year}/${type}/${filename}`
       )
       return axiosRes?.data
     } catch (err) {

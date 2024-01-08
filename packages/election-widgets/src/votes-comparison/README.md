@@ -11,7 +11,7 @@
 - `mayor`: 縣市長
 - `president`: 總統
 - `referendum`: 公投
-- `legislator`: 立法委員(包含：區域/平地原住民/山地原住民/不分區政黨)
+- `legislator`: 立法委員（包含：區域/平地原住民/山地原住民/不分區政黨）
 
 年份（`year`）的部分，根據不同的選舉類型，有不同的選舉年份。
 目前支援的年份包括：
@@ -31,8 +31,9 @@
 - 2024
 
 然而，因為每種選舉的資料維度不盡相同，
-所以在使用 `DataLoader` 時，需要提供「區域」（`districts`）。
-「縣市議員」和「立法委員（區域）」可以提供的區域包含：
+所以在使用 `DataLoader` 時，需要提供「區域」（`district`）。
+
+1. 「縣市議員」和「立法委員（區域）」可以提供的區域包含：
 
 - `taipeiCity`
 - `newTaipeiCity`
@@ -57,8 +58,14 @@
 - `hsinchuCity`
 - `chiayiCity`
 
-「總統」、「公投」和「縣市首長」的區域為 `all`。
-「立法委員（平地原住民）」、「立法委員（山地原住民）」、「立法委員（不分區）」的區域也為 `all`。
+1. 其餘選舉類型的區域皆為 `all`：
+
+- 縣市長
+- 總統
+- 公投
+- 立法委員（平地原住民）
+- 立法委員（山地原住民）
+- 立法委員（不分區）
 
 範例：
 
@@ -72,7 +79,7 @@ let ldr
 ldr = new DataLoader({
   type: 'councilMember',
   year: '2018',
-  districts: 'taipeiCity',
+  district: 'taipeiCity',
 })
 const data = await ldr.loadData()
 
@@ -80,15 +87,16 @@ const data = await ldr.loadData()
 ldr = new DataLoader({
   type: 'president',
   year: '2020',
-  districts: 'all',
+  district: 'all',
 })
 const data = await ldr.loadData()
 
 // 抓取「2020 年不分區立法委員」選舉結果
 ldr = new DataLoader({
   type: 'legislator',
+  subtype: 'party'
   year: '2020',
-  districts: 'party',
+  district: 'all',
 })
 const data = await ldr.loadData()
 
@@ -96,7 +104,7 @@ const data = await ldr.loadData()
 ldr = new DataLoader({
   type: 'referendum',
   year: '2022',
-  districts: 'all',
+  district: 'all',
 })
 const data = await ldr.loadData()
 ```
@@ -127,7 +135,7 @@ function AnotherComponent(props) {
     let dataLoader = new DataLoader({
       year: '2018', // 年份
       type: 'councilMember', // 選舉類型
-      area: 'taipeiCity', // 縣市
+      district: 'taipeiCity', // 縣市
     })
 
     const handleError = (errMsg, errObj) => {
@@ -186,7 +194,7 @@ async function load() {
   const dataLoader = new DataLoader({
     year: '2018', // 年份
     type: 'councilMember', // 選舉類型
-    area: 'taipeiCity', // 縣市
+    district: 'taipeiCity', // 縣市
   })
 
   let data

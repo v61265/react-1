@@ -85,7 +85,7 @@ export default class Loader {
   }) {
     this.eventEmitter = new events.EventEmitter()
     this.apiUrl = apiUrl
-    this.version = version === 'v1' ? '' : version
+    this.version = version
   }
 
   /**
@@ -461,6 +461,7 @@ Loader.electionYears = [
   '2018',
   '2020',
   '2022',
+  '2024',
 ]
 Loader.electionDistricts = [
   'taipeiCity',
