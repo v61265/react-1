@@ -65,7 +65,7 @@ const partiesColor = [
   },
   {
     index: 998,
-    name: '開票中',
+    name: '席次尚未確認',
     colors: ['#fff', '#fff', '#fff', '#fff', '#fff'],
   },
   {
@@ -82,7 +82,7 @@ const partiesColor = [
 
 const getPartyColor = (party) => {
   const color =
-    partiesColor.find((partyColor) => party.startsWith(partyColor.name))
+    partiesColor.find((partyColor) => party?.startsWith(partyColor.name))
       ?.colors[2] || partiesColor[partiesColor.length - 1].colors[2]
   return color
 }
