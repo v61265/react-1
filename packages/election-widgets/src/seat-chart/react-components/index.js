@@ -237,6 +237,7 @@ export default function SeatsChart({ data, meta, className }) {
               {meta.switchInfo.onText}
             </SeatsSwitchOption>
             <SeatsSwitch
+              isOn={meta.switchInfo.isOn}
               onChange={(switchOn) => {
                 meta.switchInfo.onChange(switchOn)
               }}
