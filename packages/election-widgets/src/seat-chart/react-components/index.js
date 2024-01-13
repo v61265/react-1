@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import SeatsSwitch from './switch'
 
 const partiesColor = [
@@ -186,6 +186,21 @@ const SeatsSwitchOption = styled.span`
   ({ isActive }) => isActive && `font-weight: 900;`}
 `
 
+function sortPartiesAndUndefinedParty(rawParties) {
+  let parties = rawParties
+  const undefinedPartyIndex = parties.findIndex(
+    (party) => party.label === '席次尚未確認'
+  )
+  if (undefinedPartyIndex !== -1) {
+    const undefinedParty = parties.splice(undefinedPartyIndex, 1)
+    parties.sort((a, b) => b.seats - a.seats)
+    parties.push(undefinedParty[0])
+  } else {
+    parties.sort((a, b) => b.seats - a.seats)
+  }
+  return parties
+}
+
 /**
  * @typedef {Object} Party
  * @property {string} label
@@ -220,6 +235,13 @@ export default function SeatsChart({ data, meta, className }) {
     party: '',
     coordinate: [],
   })
+
+  const parties = useMemo(() => {
+    return sortPartiesAndUndefinedParty(
+      data.parties && Array.isArray(data.parties) ? [...data.parties] : []
+    )
+  }, [data.parties])
+
   return (
     <SeatsChartWrapper className={className}>
       <SeatsChartYear>{meta.year}</SeatsChartYear>
@@ -247,7 +269,7 @@ export default function SeatsChart({ data, meta, className }) {
             </SeatsSwitchOption>
           </SeatsSwitchWrapper>
         )}
-        {data.parties.reduce((total, party) => {
+        {parties.reduce((total, party) => {
           const color = getPartyColor(party.label)
           return total.concat(
             [...Array(party.seats)].map((empty, i) => {
