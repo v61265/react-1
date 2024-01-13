@@ -50,13 +50,15 @@ const Input = styled.input`
  *
  * @param {Object} props
  * @param {(value: boolean) => void} props.onChange
+ * @param {boolean} props.isOn
  * @returns {JSX.Element}
  */
-export default function SeatsSwitch({ onChange }) {
+export default function SeatsSwitch({ onChange, isOn }) {
   return (
     <Label>
       <Input
         type="checkbox"
+        checked={isOn}
         onChange={(e) => {
           const switchOn = e.target.checked
           onChange(switchOn)
