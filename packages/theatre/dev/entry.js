@@ -7,8 +7,12 @@ const container = document.getElementById(reactRootId)
 const root = createRoot(container)
 
 const objectJson = [
-  { id: 'font-001', type: 'FONT' },
-  { id: 'img-001', type: 'IMAGE' },
+  {
+    id: 'bgVideo-001',
+    type: 'BGVIDEO',
+    src:
+      'https://storage.googleapis.com/statics-readr-tw-dev/files/clfcb3ebh000h11yic03ehcv6.mp4',
+  },
 ]
 
 const animateJson = {
@@ -16,36 +20,12 @@ const animateJson = {
     Scene: {
       staticOverrides: {
         byObject: {
-          'img-001': {
-            zIndex: 'bottom',
-            position: { x: 50, y: 50 },
-            size: { width: 300 },
-            border: { size: 0, color: { r: 0, g: 0, b: 0, a: 1 }, radius: 0 },
-            url:
-              'https://storage.googleapis.com/statics-readr-tw-dev/images/955e7a43-b895-4f4e-ab1b-60de852dbcf7.png',
-            opacity: 1,
+          'bgVideo-001': {
+            scale: 0.7000000000000001,
+            position: { x: 24.30555555555556, y: 23.940949935815148 },
+            size: { width: 100, height: 100 },
             visible: true,
-            scale: 1,
-          },
-          'font-001': {
-            zIndex: '100',
-            position: { x: 50, y: 50 },
-            size: { width: 200 },
-            bgColor: { r: 0, g: 0, b: 0, a: 1 },
-            font: {
-              size: 16,
-              color: { r: 1, g: 1, b: 1, a: 1 },
-              weight: 200,
-              spacing: 0.6,
-            },
-            border: { size: 0, color: { r: 0, g: 0, b: 0, a: 1 }, radius: 4 },
-            content: '請輸入文字',
-            opacity: 1,
-            padding: 32,
-            visible: true,
-            lineHeight: 27,
-            textAlign: 'justify',
-            scale: 1,
+            zIndex: '10',
           },
         },
       },
@@ -502,6 +482,6 @@ root.render(
     animateJson={animateJson}
     mobileObjectJson={mobileObjectJson}
     mobileAnimateJson={mobileAnimateJson}
-    type="video"
+    type="scroll"
   />
 )
