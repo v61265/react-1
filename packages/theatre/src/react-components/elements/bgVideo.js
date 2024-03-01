@@ -100,7 +100,6 @@ export default function BgVideoElement({ id, sheet, source, onError }) {
         studio.setSelection([object])
       }}
       onError={onError}
-      controls
     >
       <source src={source} />
     </Video>
