@@ -1,6 +1,6 @@
 {
   "name": "@readr-media/react-embed-code-generator",
-  "version": "2.4.3-alpha.18",
+  "version": "2.4.3-alpha.19",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -39,7 +39,7 @@
     "@readr-media/react-qa-list": "2.0.1",
     "@readr-media/react-questionnaire": "2.0.0",
     "@readr-media/react-random-text-selector": "^1.0.2",
-    "@readr-media/react-theatre": "^1.4.0-alpha.1",
+    "@readr-media/react-theatre": "^1.4.0-alpha.2",
     "@readr-media/react-three-story-points": "1.0.2",
     "@readr-media/react-timeline": "1.1.0-alpha.1",
     "lodash": "^4.17.21",
