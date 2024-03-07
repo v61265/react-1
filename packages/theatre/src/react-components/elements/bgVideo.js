@@ -2,25 +2,16 @@ import React, { useState, useEffect, useRef } from 'react' // eslint-disable-lin
 import styled from '../../styled-components.js'
 import { initialConfig } from '../constants/index.js'
 
-const Video = styled.video`
+const BgVideo = styled.video`
   position: absolute;
   display: block;
   height: auto;
   box-sizing: border-box;
-
-  /* hide controls on iOS */
-  /* &::-webkit-media-controls-panel,
-  &::-webkit-media-controls-play-button,
-  &::-webkit-media-controls-start-playback-button {
-    display: none !important;
-    -webkit-appearance: none !important;
-  } */
-
   width: 100vw;
   height: 100vh;
 `
 
-export default function BgVideoElement({ id, sheet, source, onError }) {
+export default function BgVideoElement({ id, sheet, source, onLoad, onError }) {
   const object = sheet.object(id, {
     ...initialConfig.BGVIDEO,
   })
@@ -29,10 +20,12 @@ export default function BgVideoElement({ id, sheet, source, onError }) {
 
   // Style setting ----------------------
   const [style, setStyle] = useState({})
+  const [scrollSpeed, setScrollSpeed] = useState(2000)
 
   useEffect(() => {
     object.onValuesChange((newValue) => {
       setIsVisible(newValue.visible)
+      setScrollSpeed(newValue.speed)
       setStyle({
         left: `${newValue.position.x}%`,
         top: `${newValue.position.y}%`,
@@ -41,6 +34,7 @@ export default function BgVideoElement({ id, sheet, source, onError }) {
         height: `${newValue.size.height}%`,
         zIndex: `${newValue.zIndex}`,
         transform: `scale(${newValue.scale}) translate(-50%, -50%)`,
+        opacity: `${newValue.opacity}`,
       })
     })
   }, [object])
@@ -58,7 +52,7 @@ export default function BgVideoElement({ id, sheet, source, onError }) {
     const handleScroll = () => {
       const currentScrollPos = window.scrollY
       const scrollDistance = currentScrollPos - initialScrollPos
-      const scrollRatio = scrollDistance / 300
+      const scrollRatio = scrollDistance / scrollSpeed //每滾動 scrollSpeed px 會播放 1s 影片
 
       let newTime
       if (scrollDistance < 0) {
@@ -86,22 +80,74 @@ export default function BgVideoElement({ id, sheet, source, onError }) {
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
-  }, [isVisible])
+  }, [isVisible, scrollSpeed])
+
+  // get buffer time ----------------------
+  const [bufferTime, setBufferTime] = useState(0)
+
+  useEffect(() => {
+    const video = videoRef.current
+
+    const handleProgress = () => {
+      const bufferedTimeRanges = video.buffered
+      if (bufferedTimeRanges.length > 0) {
+        const bufferedTime = bufferedTimeRanges.end(
+          bufferedTimeRanges.length - 1
+        )
+        setBufferTime(bufferedTime)
+      }
+    }
+
+    if (video) {
+      video.addEventListener('progress', handleProgress)
+
+      return () => {
+        video.removeEventListener('progress', handleProgress)
+      }
+    }
+  }, [videoRef])
+
+  // Loading setting ----------------------
+  const [isVideoLoading, setIsVideoLoading] = useState(true)
+
+  useEffect(() => {
+    let videoDuration = videoRef.current.duration || 0
+    let threshold = videoDuration / 4 > 10 ? 10 : videoDuration / 4
+
+    if (!isVideoLoading && bufferTime > threshold) {
+      onLoad()
+    }
+  }, [isVideoLoading, bufferTime])
 
   return (
-    <Video
-      className="video"
+    <BgVideo
       muted
       autoPlay={false}
       ref={setMultipleRefs}
       style={style}
       preload="auto"
+      playsInline={true}
       onClick={() => {
         studio.setSelection([object])
       }}
-      onError={onError}
+      onWaiting={() => {
+        setIsVideoLoading(true)
+      }}
+      onCanPlay={() => {
+        setIsVideoLoading(false)
+      }}
+      onPlay={(e) => {
+        e.target.pause()
+      }}
+      onEnded={(e) => {
+        e.target.pause()
+      }}
+      onError={() => {
+        onError()
+        setIsVideoLoading(false)
+      }}
     >
       <source src={source} />
-    </Video>
+    </BgVideo>
   )
 }
