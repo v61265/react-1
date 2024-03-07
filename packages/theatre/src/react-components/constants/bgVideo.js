@@ -9,6 +9,14 @@ export const BGVIDEO = {
       nudgeMultiplier: 0.5,
     }),
   }),
+  opacity: types.number(1, {
+    range: [0, 1],
+    nudgeMultiplier: 0.05,
+  }),
+  speed: types.number(2000, {
+    range: [1000, 5000],
+    nudgeMultiplier: 100,
+  }),
   size: types.compound({
     width: types.number(100, {
       nudgeMultiplier: 0.5,
