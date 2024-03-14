@@ -21,6 +21,7 @@ export default function Stage({
   sheet,
   setLoadedMedias = () => {},
   setHasMediaError = () => {},
+  setIsLoading = () => {},
 }) {
   if (!objectJson.length) {
     return null
@@ -96,6 +97,7 @@ export default function Stage({
           sheet={sheet}
           onLoad={handleOnLoad}
           onError={handleOnError}
+          setIsLoading={setIsLoading}
         />
       )
     })
