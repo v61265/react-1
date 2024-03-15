@@ -1316,10 +1316,10 @@
     url "^0.11.1"
     uuid "^9.0.0"
 
-"@readr-media/react-theatre@^1.4.0-alpha.3":
-  version "1.4.0-alpha.3"
-  resolved "https://registry.yarnpkg.com/@readr-media/react-theatre/-/react-theatre-1.4.0-alpha.3.tgz#a0e2421766bffcba08ac17b4c130ab176beed8fd"
-  integrity sha512-8SHfSp0P6OV3Uf5TynDwZw1LKHbXjum+E/sLEZ2h3shnMEkdZuf0e5Y6JbTidzVoMEez/xIqKo0BsMMnBKA5lQ==
+"@readr-media/react-theatre@^1.4.0-alpha.4":
+  version "1.4.0-alpha.4"
+  resolved "https://registry.yarnpkg.com/@readr-media/react-theatre/-/react-theatre-1.4.0-alpha.4.tgz#1cb53ddeb9363a034c77ad140654b4cef6b4e9c7"
+  integrity sha512-uwDmS8Tld/RnrNfNSF+urfOHmxs7hnSbG7vW0tMt9I+nb4AFY6vcC3ZJY7SZk8x/t2NXCyV94QIj+QrxPZA86A==
   dependencies:
     "@theatre/core" "0.6.1"
     react-transition-group "^4.4.5"

@@ -11,7 +11,14 @@ const BgVideo = styled.video`
   height: 100vh;
 `
 
-export default function BgVideoElement({ id, sheet, source, onLoad, onError }) {
+export default function BgVideoElement({
+  id,
+  sheet,
+  source,
+  onLoad,
+  onError,
+  setIsLoading,
+}) {
   const object = sheet.object(id, {
     ...initialConfig.BGVIDEO,
   })
@@ -83,41 +90,58 @@ export default function BgVideoElement({ id, sheet, source, onLoad, onError }) {
   }, [isVisible, scrollSpeed])
 
   // get buffer time ----------------------
-  const [bufferTime, setBufferTime] = useState(0)
+  // const [bufferTime, setBufferTime] = useState(0)
 
-  useEffect(() => {
-    const video = videoRef.current
+  // useEffect(() => {
+  //   const video = videoRef.current
 
-    const handleProgress = () => {
-      const bufferedTimeRanges = video.buffered
-      if (bufferedTimeRanges.length > 0) {
-        const bufferedTime = bufferedTimeRanges.end(
-          bufferedTimeRanges.length - 1
-        )
-        setBufferTime(bufferedTime)
-      }
-    }
+  //   const handleProgress = () => {
+  //     const bufferedTimeRanges = video.buffered
+  //     if (bufferedTimeRanges.length > 0) {
+  //       const bufferedTime = bufferedTimeRanges.end(
+  //         bufferedTimeRanges.length - 1
+  //       )
+  //       setBufferTime(bufferedTime)
+  //     }
+  //   }
 
-    if (video) {
-      video.addEventListener('progress', handleProgress)
+  //   if (video) {
+  //     video.addEventListener('progress', handleProgress)
 
-      return () => {
-        video.removeEventListener('progress', handleProgress)
-      }
-    }
-  }, [videoRef])
+  //     return () => {
+  //       video.removeEventListener('progress', handleProgress)
+  //     }
+  //   }
+  // }, [videoRef])
 
   // Loading setting ----------------------
   const [isVideoLoading, setIsVideoLoading] = useState(true)
 
   useEffect(() => {
-    let videoDuration = videoRef.current.duration || 0
-    let threshold = videoDuration / 4 > 10 ? 10 : videoDuration / 4
+    // 由於 bufferTime > threshold 條件會導致 loading 過久，且在不同瀏覽器下會有持續載入中狀況，故暫時註解
 
-    if (!isVideoLoading && bufferTime > threshold) {
+    // let videoDuration = videoRef.current.duration || 0
+    // let threshold = videoDuration / 4 > 10 ? 10 : videoDuration / 4
+
+    // if (!isVideoLoading && bufferTime > threshold) {
+    //   onLoad()
+    // }
+
+    if (!isVideoLoading) {
       onLoad()
+      console.log('捲動式影片已載入')
     }
-  }, [isVideoLoading, bufferTime])
+  }, [isVideoLoading, source])
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.src = source
+      videoRef.current.load()
+      setIsVideoLoading(true)
+      setIsLoading(true)
+    }
+    console.log('執行捲動式影片更新')
+  }, [source])
 
   return (
     <BgVideo

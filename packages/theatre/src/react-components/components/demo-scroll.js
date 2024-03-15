@@ -129,6 +129,7 @@ export default function DemoScroll({
         <Stage
           objectJson={objectJson}
           sheet={sheet}
+          setIsLoading={setIsLoading}
           setHasMediaError={setHasMediaError}
           setLoadedMedias={setLoadedMedias}
         />
