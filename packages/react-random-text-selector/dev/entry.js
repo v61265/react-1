@@ -17,7 +17,7 @@ const MockContentBlock = styled.div`
 const TestWrapper = styled.div`
   margin: 0 auto;
 `
-asdasdsada
+
 root.render(
   <TestWrapper>
     <ReactRandomTextSelector
